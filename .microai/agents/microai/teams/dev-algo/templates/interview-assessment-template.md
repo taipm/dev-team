@@ -1,0 +1,241 @@
+---
+template_type: interview-assessment
+version: "1.0"
+team: dev-algo
+---
+
+# Interview Assessment Report
+
+## Session Info
+
+| Field | Value |
+|-------|-------|
+| Session ID | {{session_id}} |
+| Date | {{date}} |
+| Mode | Interview Prep |
+| Duration | {{duration}} |
+| Difficulty | {{difficulty}} |
+
+---
+
+## Problem Given
+
+### Statement
+{{problem_statement}}
+
+### Constraints
+{{#each constraints}}
+- {{this}}
+{{/each}}
+
+### Examples
+```
+Input: {{example_input}}
+Output: {{example_output}}
+```
+
+---
+
+## Candidate Performance
+
+### Timeline
+
+| Time | Event |
+|------|-------|
+| 0:00 | Problem presented |
+| {{clarify_time}} | Finished clarifying questions |
+| {{approach_time}} | Explained approach |
+| {{code_start}} | Started coding |
+| {{code_end}} | Finished coding |
+| {{test_time}} | Tested solution |
+| {{optimize_time}} | Discussed optimization |
+
+### Approach Evolution
+
+1. **Initial Thought:** {{initial_thought}}
+2. **After Hints:** {{after_hints}}
+3. **Final Approach:** {{final_approach}}
+
+---
+
+## Assessment Criteria
+
+### 1. Problem Understanding
+
+**Score:** {{understanding_score}}/5
+
+| Aspect | Observation |
+|--------|-------------|
+| Clarifying questions | {{clarify_quality}} |
+| Edge case identification | {{edge_identification}} |
+| Constraint awareness | {{constraint_awareness}} |
+
+**Notes:**
+{{understanding_notes}}
+
+### 2. Approach Selection
+
+**Score:** {{approach_score}}/5
+
+| Aspect | Observation |
+|--------|-------------|
+| Algorithm choice | {{algo_choice}} |
+| Data structure choice | {{ds_choice}} |
+| Trade-off analysis | {{tradeoff_analysis}} |
+
+**Notes:**
+{{approach_notes}}
+
+### 3. Coding Quality
+
+**Score:** {{coding_score}}/5
+
+| Aspect | Observation |
+|--------|-------------|
+| Code correctness | {{correctness}} |
+| Code readability | {{readability}} |
+| Syntax accuracy | {{syntax}} |
+| Variable naming | {{naming}} |
+
+**Notes:**
+{{coding_notes}}
+
+### 4. Testing & Debugging
+
+**Score:** {{testing_score}}/5
+
+| Aspect | Observation |
+|--------|-------------|
+| Test case selection | {{test_selection}} |
+| Edge case coverage | {{edge_coverage}} |
+| Debugging approach | {{debugging}} |
+
+**Notes:**
+{{testing_notes}}
+
+### 5. Communication
+
+**Score:** {{communication_score}}/5
+
+| Aspect | Observation |
+|--------|-------------|
+| Clarity of explanation | {{explanation_clarity}} |
+| Thought process verbalization | {{verbalization}} |
+| Response to feedback | {{feedback_response}} |
+
+**Notes:**
+{{communication_notes}}
+
+---
+
+## Solution Analysis
+
+### Candidate's Solution
+
+```{{language}}
+{{candidate_solution}}
+```
+
+### Complexity
+
+| Metric | Candidate's Answer | Actual | Correct? |
+|--------|-------------------|--------|----------|
+| Time | O({{claimed_time}}) | O({{actual_time}}) | {{time_correct}} |
+| Space | O({{claimed_space}}) | O({{actual_space}}) | {{space_correct}} |
+
+### Correctness Issues
+
+{{#each correctness_issues}}
+- **Issue:** {{this.issue}}
+- **Impact:** {{this.impact}}
+- **Would cause:** {{this.result}}
+{{/each}}
+
+### Optimal Solution
+
+```{{language}}
+{{optimal_solution}}
+```
+
+**Optimal Complexity:** Time O({{optimal_time}}), Space O({{optimal_space}})
+
+---
+
+## Hints Given
+
+| # | Hint Level | Hint Content | Candidate Response |
+|---|------------|--------------|-------------------|
+{{#each hints}}
+| {{@index}} | {{this.level}} | {{this.content}} | {{this.response}} |
+{{/each}}
+
+---
+
+## Score Summary
+
+| Criteria | Score | Weight | Weighted |
+|----------|-------|--------|----------|
+| Problem Understanding | {{understanding_score}}/5 | 15% | {{understanding_weighted}} |
+| Approach Selection | {{approach_score}}/5 | 25% | {{approach_weighted}} |
+| Coding Quality | {{coding_score}}/5 | 30% | {{coding_weighted}} |
+| Testing & Debugging | {{testing_score}}/5 | 15% | {{testing_weighted}} |
+| Communication | {{communication_score}}/5 | 15% | {{communication_weighted}} |
+| **Total** | | 100% | **{{total_score}}/5** |
+
+---
+
+## Final Verdict
+
+### Decision
+
+**Result:** {{verdict}}
+
+| Verdict | Criteria |
+|---------|----------|
+| Strong Hire | 4.5+ overall, optimal solution, excellent communication |
+| Hire | 3.5-4.4, working solution, good communication |
+| Borderline | 2.5-3.4, partial solution with guidance |
+| No Hire | <2.5, could not solve with hints |
+
+### Reasoning
+
+{{verdict_reasoning}}
+
+---
+
+## Feedback for Candidate
+
+### Strengths
+
+{{#each strengths}}
+- {{this}}
+{{/each}}
+
+### Areas for Improvement
+
+{{#each improvements}}
+- {{this}}
+{{/each}}
+
+### Recommended Practice
+
+{{#each recommendations}}
+- **Topic:** {{this.topic}}
+- **Resources:** {{this.resources}}
+{{/each}}
+
+---
+
+## Sign-off
+
+| Agent | Role | Status |
+|-------|------|--------|
+| Algo-Master 🧙 | Interviewer | {{algo_status}} |
+| Code Reviewer 🔍 | Evaluator | {{reviewer_status}} |
+| Developer 👨‍💻 | Candidate | {{dev_status}} |
+
+---
+
+**Generated by Dev-Algo Team Simulation**
+**Interview Duration:** {{duration}}
+**Total Turns:** {{turn_count}}

@@ -1,0 +1,120 @@
+version: "1.0"
+team: dev-algo
+description: Algorithm patterns and techniques for competitive programming
+
+files:
+  - id: dp-patterns
+    path: ./01-dp-patterns.md
+    title: "Dynamic Programming Patterns"
+    description: "1D/2D DP, State compression, Bitmask DP, Digit DP, Tree DP, DP on Intervals"
+    tokens_estimate: 3500
+
+  - id: graph-algorithms
+    path: ./02-graph-algorithms.md
+    title: "Graph Algorithms"
+    description: "BFS, DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST, Topological Sort, SCC"
+    tokens_estimate: 3000
+
+  - id: greedy-dc
+    path: ./03-greedy-divide-conquer.md
+    title: "Greedy & Divide-Conquer"
+    description: "Greedy proofs, Binary search patterns, Merge sort, Segment trees"
+    tokens_estimate: 2500
+
+  - id: complexity
+    path: ./04-complexity-analysis.md
+    title: "Complexity Analysis"
+    description: "Big-O notation, Amortized analysis, Common complexities, Constraint analysis"
+    tokens_estimate: 1800
+
+  - id: interview-patterns
+    path: ./05-interview-patterns.md
+    title: "Interview Patterns"
+    description: "Two pointers, Sliding window, Stack tricks, Hash map patterns, Top-K problems"
+    tokens_estimate: 2800
+
+  - id: optimization
+    path: ./06-optimization-techniques.md
+    title: "Optimization Techniques"
+    description: "Constant factor optimization, Cache locality, Bit manipulation, I/O tricks"
+    tokens_estimate: 2000
+
+auto_load:
+  by_mode:
+    solve:
+      - dp-patterns
+      - graph-algorithms
+      - complexity
+    review:
+      - complexity
+      - optimization
+    interview:
+      - interview-patterns
+      - complexity
+
+  by_keyword:
+    # Dynamic Programming
+    dp: [dp-patterns]
+    dynamic: [dp-patterns]
+    memoization: [dp-patterns]
+    knapsack: [dp-patterns]
+    lcs: [dp-patterns]
+    lis: [dp-patterns]
+    subsequence: [dp-patterns]
+
+    # Graph
+    graph: [graph-algorithms]
+    bfs: [graph-algorithms]
+    dfs: [graph-algorithms]
+    dijkstra: [graph-algorithms]
+    bellman: [graph-algorithms]
+    floyd: [graph-algorithms]
+    shortest: [graph-algorithms]
+    mst: [graph-algorithms]
+    topological: [graph-algorithms]
+    connected: [graph-algorithms]
+
+    # Greedy & D&C
+    greedy: [greedy-dc]
+    interval: [greedy-dc]
+    binary_search: [greedy-dc]
+    divide: [greedy-dc]
+    segment_tree: [greedy-dc]
+    merge_sort: [greedy-dc]
+
+    # Interview
+    two_pointer: [interview-patterns]
+    sliding_window: [interview-patterns]
+    window: [interview-patterns]
+    stack: [interview-patterns]
+    monotonic: [interview-patterns]
+    hash: [interview-patterns]
+    prefix_sum: [interview-patterns]
+    top_k: [interview-patterns]
+    faang: [interview-patterns]
+
+    # Optimization
+    tle: [optimization, complexity]
+    optimize: [optimization]
+    performance: [optimization]
+    fast: [optimization]
+    slow: [optimization]
+    timeout: [optimization]
+
+priority:
+  high:
+    - complexity
+    - dp-patterns
+  medium:
+    - graph-algorithms
+    - interview-patterns
+  low:
+    - greedy-dc
+    - optimization
+
+token_budget:
+  max_auto_load: 8000
+  per_mode:
+    solve: 7000
+    review: 4000
+    interview: 5000
