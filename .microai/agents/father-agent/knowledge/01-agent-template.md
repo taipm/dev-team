@@ -17,6 +17,10 @@ Sử dụng template này khi tạo agent mới. Copy và fill in các placehold
 | `language` | ✓ | enum | `vi`, `en` |
 | `color` | ★ | string | `purple`, `red`, `green`, ... |
 | `icon` | ★ | emoji | `"🤖"` |
+| `skills` | ○ | array | `[pdf, webapp-testing]` |
+| `persona` | ○ | dict | `{role, identity, communication_style, principles}` |
+| `thinking` | ○ | multi-line | Reasoning guidelines |
+| `critical_actions` | ○ | array | Init actions on startup |
 | `knowledge` | ○ | dict | `{shared: [], specific: []}` |
 | `team` | ○ | string | `go-team` |
 | `version` | ○ | semver | `"1.0"` |
@@ -81,6 +85,52 @@ tools:
 # LOCALIZATION (Required)
 # ═══════════════════════════════════════════════════════════════
 language: vi
+
+# ═══════════════════════════════════════════════════════════════
+# SKILLS (Optional - from .microai/skills/)
+# ═══════════════════════════════════════════════════════════════
+# skills:
+#   - pdf              # document-skills/pdf
+#   - docx             # document-skills/docx
+#   - webapp-testing   # development-skills/webapp-testing
+#   - mcp-builder      # development-skills/mcp-builder
+#   - frontend-design  # design-skills/frontend-design
+#   - doc-coauthoring  # communication-skills/doc-coauthoring
+
+# ═══════════════════════════════════════════════════════════════
+# PERSONA (Optional - for agents needing clear identity)
+# ═══════════════════════════════════════════════════════════════
+# persona:
+#   role: |
+#     {Primary role and responsibilities}
+#   identity: |
+#     {Background, experience, personality}
+#   communication_style:
+#     - {How agent communicates - style 1}
+#     - {How agent communicates - style 2}
+#   principles:
+#     - "{Core principle 1}"
+#     - "{Core principle 2}"
+
+# ═══════════════════════════════════════════════════════════════
+# THINKING (Optional - reasoning guidelines)
+# ═══════════════════════════════════════════════════════════════
+# thinking: |
+#   {How to approach problems - step by step}
+#   1. {Step 1}
+#   2. {Step 2}
+#
+#   {Priority order for decisions}
+#   - {Priority 1}
+#   - {Priority 2}
+
+# ═══════════════════════════════════════════════════════════════
+# CRITICAL ACTIONS (Optional - startup actions)
+# ═══════════════════════════════════════════════════════════════
+# critical_actions:
+#   - "Load project configuration from {path}"
+#   - "Check current state via {command/file}"
+#   - "Read relevant context from {source}"
 
 # ═══════════════════════════════════════════════════════════════
 # KNOWLEDGE BASE (Optional - for structured teams)

@@ -1,7 +1,7 @@
 # Father Agent Knowledge Index
 # Meta-agent cho việc tạo agents
 
-version: "1.1"
+version: "1.2"
 agent: father-agent
 
 # Core files - luôn load
@@ -9,6 +9,7 @@ core_files:
   - 01-agent-template.md
   - 05-review-checklist.md
   - 06-memory-template.md
+  - 10-agent-metadata-spec.md
 
 # Keyword mapping
 keyword_mapping:
@@ -124,6 +125,20 @@ keyword_mapping:
     priority: 2
   model:
     files: [10-agent-metadata-spec.md]
+    priority: 2
+
+  # Skills
+  skills:
+    files: [10-agent-metadata-spec.md, 11-skills-mapping.md]
+    priority: 1
+  skill:
+    files: [11-skills-mapping.md]
+    priority: 1
+  mapping:
+    files: [11-skills-mapping.md]
+    priority: 2
+  integrate:
+    files: [11-skills-mapping.md]
     priority: 2
 
   # Memory system
@@ -263,6 +278,11 @@ files:
     lines: ~300
 
   10-agent-metadata-spec.md:
-    title: "Agent Metadata Specification v1.0"
-    description: "Quy chuẩn thống nhất cho metadata (frontmatter) của agents. Bao gồm required fields, style fields, optional fields, validation checklist, và migration guide."
-    lines: ~450
+    title: "Agent Metadata Specification v1.1"
+    description: "Quy chuẩn thống nhất cho metadata (frontmatter) của agents. Bao gồm required fields, style fields, optional fields (including skills), validation checklist, và migration guide."
+    lines: ~500
+
+  11-skills-mapping.md:
+    title: "Skills Mapping Guide"
+    description: "Hướng dẫn chọn skills phù hợp cho từng loại agent. Bao gồm skill matrix, mapping by domain, và best practices."
+    lines: ~300

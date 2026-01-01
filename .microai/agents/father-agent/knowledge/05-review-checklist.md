@@ -48,13 +48,14 @@ Sử dụng checklist này khi review agents (command `*review`).
 □ [1] Field order: name → description → model → color → icon → tools → language
 ```
 
-### Optional Fields (5 points)
+### Optional Fields (6 points)
 ```
 □ [1] knowledge: có structure {shared: [], specific: []}
 □ [1] team: specified nếu là team agent
 □ [1] version: semver format ("1.0")
 □ [1] tags: array of categorization tags
 □ [1] alias: human-friendly name (nếu khác name)
+□ [1] skills: array of skill names from .microai/skills/
 ```
 
 ---
@@ -153,6 +154,8 @@ Sử dụng checklist này khi review agents (command `*review`).
 | CamelCase name | Convert to kebab-case |
 | Inline description | Convert to multi-line with `|` |
 | Wrong field order | Reorder: name → description → model → color → icon → tools → language |
+| Invalid skills | Use valid skill names from .microai/skills/ |
+| Wrong skills for domain | Match skills to agent's domain (dev→dev-skills, doc→doc-skills) |
 
 ### Activation Issues
 

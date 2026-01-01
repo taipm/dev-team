@@ -355,6 +355,188 @@ tags:
 
 ---
 
+### 4.6 `skills`
+**Type**: Array of Strings
+**Purpose**: Reference to skills từ `.microai/skills/` mà agent có thể sử dụng
+
+```yaml
+skills:
+  - pdf
+  - docx
+  - webapp-testing
+  - mcp-builder
+```
+
+**Location**: Skills nằm trong `.microai/skills/{category}/{skill-name}/`
+
+**Available Skills by Category**:
+
+| Category | Skills | Purpose |
+|----------|--------|---------|
+| **document-skills** | `docx`, `pdf`, `pptx`, `xlsx` | Office/PDF processing |
+| **development-skills** | `mcp-builder`, `skill-creator`, `webapp-testing`, `web-artifacts-builder` | Dev tools |
+| **design-skills** | `algorithmic-art`, `canvas-design`, `frontend-design`, `theme-factory` | Visual design |
+| **communication-skills** | `doc-coauthoring`, `internal-comms`, `slack-gif-creator` | Enterprise comms |
+
+**Skill Mapping by Agent Role**:
+
+```yaml
+# Document/Report agents
+skills: [pdf, docx, pptx, xlsx]
+
+# Development agents
+skills: [mcp-builder, webapp-testing]
+
+# Frontend/Design agents
+skills: [frontend-design, theme-factory, canvas-design]
+
+# Documentation agents
+skills: [doc-coauthoring, internal-comms]
+
+# Meta agents (father-agent)
+skills: [skill-creator]
+```
+
+**Rules**:
+- Chỉ list skills LIÊN QUAN đến domain của agent
+- Skills là optional - agent vẫn hoạt động không cần skills
+- Skills cung cấp additional capabilities, không thay thế agent knowledge
+
+---
+
+### 4.7 `persona`
+**Type**: Dictionary
+**Purpose**: Định nghĩa identity và communication style của agent
+
+```yaml
+persona:
+  role: |
+    Expert software architect specializing in Go and distributed systems.
+    Responsible for code quality, architecture decisions, and team mentoring.
+  identity: |
+    Senior engineer with 15+ years experience.
+    Pragmatic, focused on maintainability over cleverness.
+  communication_style:
+    - Uses clear, direct language
+    - Provides examples with explanations
+    - References best practices and patterns
+  principles:
+    - "Simple is better than complex"
+    - "Make it work, then make it right, then make it fast"
+    - "Code is read more often than written"
+```
+
+**Sub-fields**:
+| Field | Type | Description |
+|-------|------|-------------|
+| `role` | String | Vai trò chính và responsibilities |
+| `identity` | String | Background, experience, personality |
+| `communication_style` | Array | Cách giao tiếp với user |
+| `principles` | Array | Nguyên tắc làm việc cốt lõi |
+
+**When to Use**:
+- Agents cần personality rõ ràng (mentors, reviewers)
+- Team agents với roles cụ thể
+- Agents tương tác nhiều với user
+
+**Minimal Example**:
+```yaml
+persona:
+  role: Go code reviewer
+  principles:
+    - "Readability first"
+    - "Test everything"
+```
+
+---
+
+### 4.8 `thinking`
+**Type**: String (multi-line)
+**Purpose**: Hướng dẫn reasoning và thinking process cho agent
+
+```yaml
+thinking: |
+  Before responding, always:
+  1. Understand the full context and constraints
+  2. Consider multiple approaches before choosing
+  3. Evaluate trade-offs explicitly
+  4. Validate assumptions with user if unclear
+
+  When solving problems:
+  - Break down into smaller sub-problems
+  - Start with the simplest solution that works
+  - Iterate based on feedback
+
+  When reviewing code:
+  - Check correctness first, then style
+  - Consider maintainability over cleverness
+  - Look for security implications
+```
+
+**Guidelines**:
+- Use structured format (numbered lists, bullets)
+- Focus on HOW to think, not WHAT to do
+- Keep concise (5-15 lines recommended)
+- Specific to agent's domain
+
+**Examples by Role**:
+```yaml
+# For code reviewer
+thinking: |
+  Review order: Security → Correctness → Performance → Style
+  Ask: "Would I understand this code in 6 months?"
+
+# For architect
+thinking: |
+  Consider: Scalability, Maintainability, Cost, Team capability
+  Default to boring technology unless innovation is required.
+
+# For debugger
+thinking: |
+  1. Reproduce the issue first
+  2. Form hypothesis before adding logs
+  3. Binary search to isolate the problem
+```
+
+---
+
+### 4.9 `critical_actions`
+**Type**: Array of Strings
+**Purpose**: Actions agent PHẢI thực hiện khi khởi động
+
+```yaml
+critical_actions:
+  - "Load project configuration from .microai/config.yaml"
+  - "Check current git branch and status"
+  - "Read existing code style from .editorconfig"
+  - "Identify active TODO items in codebase"
+```
+
+**Use Cases**:
+| Scenario | Critical Actions |
+|----------|------------------|
+| Code agent | Load project structure, check dependencies |
+| Review agent | Read style guide, check PR context |
+| Docs agent | Load existing docs structure, check templates |
+| Test agent | Check test framework, load fixtures |
+
+**Format Rules**:
+- Imperative verbs: "Load", "Check", "Read", "Identify"
+- Specific file paths when applicable
+- Order by priority (most critical first)
+- Max 5-7 actions recommended
+
+**Example for Go Dev Agent**:
+```yaml
+critical_actions:
+  - "Run 'go mod tidy' to check dependencies"
+  - "Read go.mod for module path and Go version"
+  - "Check Makefile for available commands"
+  - "Identify main.go or cmd/ entry points"
+```
+
+---
+
 ## 5. Field Order Convention
 
 ```yaml
@@ -378,6 +560,29 @@ tools:
 
 # LOCALIZATION (required)
 language: vi
+
+# SKILLS (optional) - NEW in v1.1
+skills:
+  - skill-name-1
+  - skill-name-2
+
+# PERSONA (optional) - NEW in v1.2
+persona:
+  role: Agent role description
+  identity: Agent identity/background
+  communication_style:
+    - Style guideline 1
+  principles:
+    - "Core principle 1"
+
+# THINKING (optional) - NEW in v1.2
+thinking: |
+  Reasoning guidelines for the agent...
+
+# CRITICAL ACTIONS (optional) - NEW in v1.2
+critical_actions:
+  - "Action 1 on startup"
+  - "Action 2 on startup"
 
 # KNOWLEDGE (optional)
 knowledge:
@@ -534,6 +739,76 @@ tags:
 ---
 ```
 
+### 7.4 Full-Featured Agent (with persona, thinking, critical_actions)
+```yaml
+---
+name: senior-go-reviewer
+description: |
+  Senior Go code reviewer với deep expertise. Sử dụng khi cần:
+  - Thorough code review với security focus
+  - Architecture và design pattern guidance
+  - Performance optimization recommendations
+
+  Examples:
+  - "Review this PR for production readiness"
+  - "Check security implications of this change"
+
+model: opus
+color: green
+icon: "🔍"
+tools:
+  - Read
+  - Glob
+  - Grep
+  - LSP
+  - TodoWrite
+language: vi
+
+skills:
+  - webapp-testing
+
+persona:
+  role: |
+    Senior Go engineer với 10+ years experience.
+    Code reviewer focusing on quality, security, and maintainability.
+  identity: |
+    Pragmatic engineer who values simplicity over cleverness.
+    Believes good code is self-documenting.
+  communication_style:
+    - Direct but respectful feedback
+    - Always explains the "why" behind suggestions
+    - Provides concrete examples when possible
+  principles:
+    - "Simple is better than complex"
+    - "Explicit is better than implicit"
+    - "Security is not optional"
+
+thinking: |
+  Review priority order:
+  1. Security vulnerabilities first
+  2. Correctness and logic errors
+  3. Performance implications
+  4. Code style and readability
+
+  For each issue, ask:
+  - Is this a blocker or a suggestion?
+  - Can I provide a concrete fix?
+  - Does this match team conventions?
+
+critical_actions:
+  - "Read project's CONTRIBUTING.md if exists"
+  - "Check .golangci.yml for linting rules"
+  - "Identify the scope of changes in the PR"
+  - "Look for related test files"
+
+version: "1.0"
+tags:
+  - golang
+  - code-review
+  - security
+---
+```
+
 ---
 
 ## 8. Migration Guide
@@ -595,4 +870,6 @@ grep -l "^color:" .microai/agents/*/agent.md
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2 | 2026-01 | Added `persona`, `thinking`, `critical_actions` fields |
+| 1.1 | 2026-01 | Added `skills` field for skill integration |
 | 1.0 | 2025-01 | Initial specification |
