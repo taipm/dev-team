@@ -10,6 +10,7 @@ description: |
   - "Add user activity logging"
 model: opus
 color: green
+icon: "🤖"
 tools:
   - Bash
   - Read

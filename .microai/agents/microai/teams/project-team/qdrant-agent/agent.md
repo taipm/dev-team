@@ -10,6 +10,7 @@ description: |
   - "Fix embedding dimension mismatch"
 model: opus
 color: purple
+icon: "🤖"
 tools:
   - Bash
   - Read

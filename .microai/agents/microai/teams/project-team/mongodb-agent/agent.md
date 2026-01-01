@@ -10,6 +10,7 @@ description: |
   - "Fix index missing issue"
 model: opus
 color: green
+icon: "🤖"
 tools:
   - Bash
   - Read

@@ -34,6 +34,7 @@ description: |
 
 model: haiku
 color: blue
+icon: "📋"
 tools:
   - Read
   - Write

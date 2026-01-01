@@ -10,6 +10,7 @@ description: |
   - "Review pattern publishing flow"
 model: opus
 color: purple
+icon: "🤖"
 tools:
   - Bash
   - Read

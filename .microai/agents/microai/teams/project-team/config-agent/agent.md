@@ -10,6 +10,7 @@ description: |
   - "Implement config hot-reload"
 model: opus
 color: orange
+icon: "⚙️"
 tools:
   - Bash
   - Read

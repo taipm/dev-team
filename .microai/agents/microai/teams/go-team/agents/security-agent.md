@@ -2,6 +2,8 @@
 name: security-agent
 description: Security Agent - Chuyên gia bảo mật, SAST/DAST scanning, vulnerability detection, secrets scanning
 model: opus
+color: red
+icon: "🔒"
 tools:
   - Read
   - Bash

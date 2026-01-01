@@ -3,6 +3,7 @@ name: hpsm-agent
 description: HPSM Integration Specialist for ask-it-server. Use this agent when working with HP Service Manager (HPSM) ticketing system including creating tickets, modifying HPSM tools, updating routing logic, adding new API endpoints, or debugging HPSM integration issues.\n\nExamples:\n\n<example>\nContext: User wants to add a new HPSM API endpoint.\nuser: "Add an endpoint to upload attachments to HPSM tickets"\nassistant: "I'll use the hpsm-agent to implement the file upload endpoint in the HPSM client."\n<commentary>\nAdding HPSM endpoints requires understanding the 2-layer architecture (internal/hpsm for client, tools/hpsm for LLM tools). The hpsm-agent knows this pattern.\n</commentary>\n</example>\n\n<example>\nContext: User needs to fix routing issues.\nuser: "Tickets are going to the wrong assignment group"\nassistant: "Let me use the hpsm-agent to debug the 4-tier routing hierarchy and fix the routing logic."\n<commentary>\nHPSM uses a 4-tier routing hierarchy (routing rules, service defaults, field configs, hardcoded). The hpsm-agent understands this priority order.\n</commentary>\n</example>\n\n<example>\nContext: User wants to add a new domain.\nuser: "Add support for the new VPN domain in HPSM"\nassistant: "I'll use the hpsm-agent to add the VPN domain to the domain registry and create routing rules."\n<commentary>\nAdding domains requires updating detect_situation.go's static registry and potentially routing rules. The hpsm-agent knows the exact files to modify.\n</commentary>\n</example>\n\n<example>\nContext: User wants to modify ticket creation.\nuser: "Add a new field 'urgency_reason' to ticket creation"\nassistant: "I'll use the hpsm-agent to add the field to CreateInteractionRequest and update validation."\n<commentary>\nModifying ticket creation touches models, validation, and potentially defaults. The hpsm-agent follows the established patterns.\n</commentary>\n</example>
 model: opus
 color: orange
+icon: "🤖"
 tools:
   - Bash
   - Read
@@ -109,6 +110,7 @@ tools:
 
 ```go
 // Auto-retry on 401 (token expired)
+language: vi
 func (c *Client) doRequestWithRetry(req *http.Request) (*http.Response, error) {
     resp, _ := c.HTTPClient.Do(req)
     if resp.StatusCode == http.StatusUnauthorized {

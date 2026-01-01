@@ -2,6 +2,8 @@
 name: optimizer-agent
 description: Optimizer Agent - Tối ưu concurrency, memory, performance bottleneck
 model: opus
+color: blue
+icon: "🤖"
 tools:
   - Read
   - Bash

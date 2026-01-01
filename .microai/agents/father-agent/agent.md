@@ -12,6 +12,7 @@ description: |
   - "Clone gateway-agent cho project mới"
 model: opus
 color: purple
+icon: "👨‍👦"
 tools:
   - Bash
   - Read

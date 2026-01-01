@@ -10,6 +10,7 @@ description: |
   - "Add new pricing model"
 model: opus
 color: orange
+icon: "🤖"
 tools:
   - Bash
   - Read

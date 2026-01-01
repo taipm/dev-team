@@ -6,6 +6,7 @@ description: |
   - PROJECT knowledge: Project-specific conventions and learnings
 model: opus
 color: green
+icon: "🤖"
 ---
 
 # Go Refactor Agent - Portable Edition

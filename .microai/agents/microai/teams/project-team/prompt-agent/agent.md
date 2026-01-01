@@ -10,6 +10,7 @@ description: |
   - "Fix prompt metrics tracking"
 model: opus
 color: yellow
+icon: "🤖"
 tools:
   - Bash
   - Read

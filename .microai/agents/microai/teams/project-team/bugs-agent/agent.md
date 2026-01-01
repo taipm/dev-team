@@ -10,6 +10,7 @@ description: |
   - "Tổng hợp bugs cần fix cho sprint"
 model: sonnet
 color: red
+icon: "🤖"
 tools:
   - Read
   - Write

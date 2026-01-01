@@ -13,6 +13,7 @@ description: |
   - "Setup scoped package @myorg/mypackage"
 model: sonnet
 color: red
+icon: "📦"
 tools:
   - Bash
   - Read

@@ -2,6 +2,8 @@
 name: go-coder-agent
 description: Go Coder Agent - Sinh code Go theo spec, idiomatic Go, error handling, context
 model: opus
+color: red
+icon: "🤖"
 tools:
   - Read
   - Write

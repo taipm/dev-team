@@ -2,6 +2,8 @@
 name: devops-agent
 description: DevOps/Release Agent - Dockerfile, CI, build flags, versioning, release
 model: opus
+color: red
+icon: "🔧"
 tools:
   - Read
   - Write

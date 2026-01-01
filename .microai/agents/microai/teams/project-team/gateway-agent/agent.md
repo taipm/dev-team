@@ -3,6 +3,7 @@ name: gateway-agent
 description: Gateway Development Agent - chuyên gia về API Gateway patterns, reverse proxy, middleware chains, rate limiting, authentication, và service routing. Sử dụng agent này khi làm việc với gateway-server hoặc bất kỳ API gateway nào trong dự án.
 model: opus
 color: blue
+icon: "🌐"
 tools:
   - Bash
   - Read

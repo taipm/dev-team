@@ -2,6 +2,8 @@
 name: doc-agent
 description: Documentation Specialist - README, API docs, godoc comments, CHANGELOG, ADRs
 model: sonnet
+color: yellow
+icon: "📝"
 tools:
   - Read
   - Write

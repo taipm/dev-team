@@ -2,6 +2,8 @@
 name: test-agent
 description: Test Agent - Sinh unit test / integration test, table-driven, mock interface
 model: opus
+color: green
+icon: "🧪"
 tools:
   - Read
   - Write

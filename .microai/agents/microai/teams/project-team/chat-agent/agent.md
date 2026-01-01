@@ -10,6 +10,7 @@ description: |
   - "Optimize chat response processing"
 model: opus
 color: cyan
+icon: "🤖"
 tools:
   - Bash
   - Read

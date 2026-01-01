@@ -2,6 +2,8 @@
 name: pm-agent
 description: Product/Requirement Agent - Hiểu yêu cầu, viết user story, acceptance criteria
 model: opus
+color: blue
+icon: "🤖"
 tools:
   - Read
 language: vi

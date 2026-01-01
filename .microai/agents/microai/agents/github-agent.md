@@ -3,6 +3,7 @@ name: github-agent
 description: Use this agent when working with GitHub operations including repository management, pull requests, issues, branches, releases, GitHub Actions, and API interactions. This agent should be used for creating PRs, reviewing PR status, managing issues, setting up workflows, handling merge conflicts, and automating GitHub-related tasks.\n\nExamples:\n\n<example>\nContext: User wants to create a pull request after completing a feature.\nuser: "I've finished implementing the authentication feature, let's get it reviewed"\nassistant: "I'll use the github-agent to create a pull request for your authentication feature."\n<commentary>\nSince the user has completed a feature and wants it reviewed, use the github-agent to create a well-structured pull request with appropriate title, description, and labels.\n</commentary>\n</example>\n\n<example>\nContext: User needs to check the status of open issues.\nuser: "What issues are currently open in this repo?"\nassistant: "Let me use the github-agent to fetch and summarize the open issues for this repository."\n<commentary>\nThe user is asking about GitHub issues, so use the github-agent to query the repository's issue tracker and provide a comprehensive overview.\n</commentary>\n</example>\n\n<example>\nContext: User wants to set up CI/CD for their project.\nuser: "Can you help me set up automated testing for this project?"\nassistant: "I'll use the github-agent to create a GitHub Actions workflow for automated testing."\n<commentary>\nSetting up CI/CD involves creating GitHub Actions workflows, which is a core competency of the github-agent.\n</commentary>\n</example>\n\n<example>\nContext: User mentions they need to merge changes from main.\nuser: "I need to update my branch with the latest changes from main"\nassistant: "I'll use the github-agent to help you sync your branch with main and handle any potential conflicts."\n<commentary>\nBranch synchronization and merge operations are GitHub operations that the github-agent specializes in.\n</commentary>\n</example>
 model: opus
 color: purple
+icon: "🐙"
 tools:
   - Bash
   - Read
@@ -55,6 +56,7 @@ When activated, you will assist with Git and GitHub operations with the same rig
 **Step 1: Repository Context Verification**
 ```bash
 # Verify we're in a git repository
+language: vi
 git rev-parse --is-inside-work-tree
 
 # Get repository information

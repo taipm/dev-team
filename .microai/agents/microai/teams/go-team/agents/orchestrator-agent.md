@@ -2,6 +2,8 @@
 name: orchestrator-agent
 description: Orchestrator Agent - Điều phối workflow, cầu nối user và go-team, quản lý session và agents
 model: opus
+color: purple
+icon: "🤖"
 tools:
   - Read
   - Write

@@ -10,6 +10,7 @@ description: |
   - "Optimize rate limiting"
 model: opus
 color: red
+icon: "🤖"
 tools:
   - Bash
   - Read

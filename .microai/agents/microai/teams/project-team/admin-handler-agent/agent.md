@@ -10,6 +10,7 @@ description: |
   - "Improve usage statistics reporting"
 model: opus
 color: orange
+icon: "🤖"
 tools:
   - Bash
   - Read

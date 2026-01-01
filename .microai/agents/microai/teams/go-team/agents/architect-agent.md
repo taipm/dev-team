@@ -2,6 +2,8 @@
 name: architect-agent
 description: System Architect Agent - Thiết kế hệ thống, chọn pattern, quyết định packages
 model: opus
+color: blue
+icon: "🏗️"
 tools:
   - Read
   - Glob

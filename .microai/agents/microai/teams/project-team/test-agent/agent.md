@@ -10,6 +10,7 @@ description: |
   - "Improve test coverage for chat handlers"
 model: opus
 color: green
+icon: "🧪"
 tools:
   - Bash
   - Read

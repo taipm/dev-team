@@ -10,6 +10,7 @@ description: |
   - "Add new HTTP endpoint"
 model: opus
 color: cyan
+icon: "🌐"
 tools:
   - Bash
   - Read

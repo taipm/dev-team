@@ -3,6 +3,7 @@ name: go-review-linus-agent
 description: Go Code Review Specialist - brutally honest Linus Torvalds style reviews. Use for comprehensive code review, security scanning, hardcode detection, concurrency analysis, and performance assessment.\n\nExamples:\n\n<example>\nContext: User wants a comprehensive code review.\nuser: "Review the chatbot-memory example"\nassistant: "I'll use the go-review-linus-agent for a brutally honest code review."\n<Task tool invocation with go-review-linus-agent>\n</example>\n\n<example>\nContext: User needs to find hardcoded values.\nuser: "Check for hardcoded secrets in my Go code"\nassistant: "Let me launch the go-review-linus-agent to hunt down hardcoded values and security issues."\n<Task tool invocation with go-review-linus-agent>\n</example>\n\n<example>\nContext: User wants security analysis.\nuser: "Scan my code for security vulnerabilities"\nassistant: "I'll use the go-review-linus-agent for a security-focused scan."\n<Task tool invocation with go-review-linus-agent>\n</example>
 model: opus
 color: red
+icon: "🤖"
 tools:
   - Bash
   - Read

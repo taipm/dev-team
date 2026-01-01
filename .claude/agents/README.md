@@ -11,7 +11,10 @@ Create a new agent by adding a `.md` file with YAML frontmatter:
 name: my-agent
 description: "Use this agent when [specific trigger]"
 tools: Read, Grep, Edit, Bash
+language: vi
 model: sonnet
+color: blue
+icon: "🤖"
 ---
 
 [Your agent's system prompt here]
@@ -27,7 +30,10 @@ description: "..."            # When to use this agent (include trigger keywords
 
 # Optional fields
 tools: Tool1, Tool2           # Comma-separated list of allowed tools
+language: vi
 model: sonnet                 # sonnet (default), opus, haiku
+color: blue
+icon: "🤖"
 permissionMode: default       # default, acceptEdits, bypassPermissions, plan
 skills: skill1, skill2        # Auto-load specific skills
 ---
@@ -75,7 +81,10 @@ Common tools you can specify:
 name: code-reviewer
 description: "PROACTIVELY use for code review, security analysis, and quality assessment"
 tools: Read, Grep, Glob
+language: vi
 model: sonnet
+color: blue
+icon: "🤖"
 ---
 
 You are a code review specialist...
@@ -88,7 +97,10 @@ You are a code review specialist...
 name: doc-writer
 description: "Use when writing or updating documentation"
 tools: Read, Write, Glob
+language: vi
 model: haiku
+color: blue
+icon: "🤖"
 ---
 
 You are a documentation specialist...

@@ -2,6 +2,8 @@
 name: reviewer-agent
 description: Reviewer Agent - Review code như senior Go dev, check race condition, goroutine leak, style
 model: opus
+color: blue
+icon: "🤖"
 tools:
   - Read
   - Bash

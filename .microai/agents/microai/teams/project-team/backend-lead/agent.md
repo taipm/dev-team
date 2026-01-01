@@ -10,6 +10,7 @@ description: |
   - "Refactor budget tracking"
 model: opus
 color: blue
+icon: "🤖"
 tools:
   - Bash
   - Read
@@ -593,6 +594,7 @@ description: |
   - "{example task 2}"
 model: opus
 color: {color}
+icon: "🤖"
 tools:
   - Bash
   - Read

@@ -2,6 +2,8 @@
 name: fixer-agent
 description: Fixer Agent - Quick Fix Specialist for review loop, handles small fixes from Reviewer/Security feedback
 model: sonnet
+color: blue
+icon: "🤖"
 tools:
   - Read
   - Edit

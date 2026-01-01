@@ -11,6 +11,7 @@ description: |
   - "Implement user activity tracking"
 model: opus
 color: cyan
+icon: "🤖"
 tools:
   - Bash
   - Read
