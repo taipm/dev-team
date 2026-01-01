@@ -1,0 +1,149 @@
+# Skills Registry
+# Registry of all available skills in .microai/skills
+# Source: https://github.com/anthropics/skills
+
+version: "1.0"
+source: anthropic/skills
+last_updated: "2026-01-01"
+
+categories:
+  document-skills:
+    description: "Office document and PDF processing"
+    description_vi: "Xử lý tài liệu Office và PDF"
+
+  development-skills:
+    description: "Software development tools and integrations"
+    description_vi: "Công cụ phát triển phần mềm và tích hợp"
+
+  design-skills:
+    description: "Creative and visual design"
+    description_vi: "Thiết kế sáng tạo và visual"
+
+  communication-skills:
+    description: "Enterprise writing and communications"
+    description_vi: "Viết và giao tiếp doanh nghiệp"
+
+skills:
+  # Document Skills
+  - name: docx
+    category: document-skills
+    path: document-skills/docx
+    description: "Word document creation, editing, and analysis"
+    description_vi: "Tạo, chỉnh sửa và phân tích tài liệu Word"
+    tags: [document, word, office, docx]
+    license: proprietary
+
+  - name: pdf
+    category: document-skills
+    path: document-skills/pdf
+    description: "PDF manipulation, extraction, and forms"
+    description_vi: "Xử lý PDF: trích xuất, merge/split, forms"
+    tags: [document, pdf, forms]
+    license: proprietary
+
+  - name: pptx
+    category: document-skills
+    path: document-skills/pptx
+    description: "PowerPoint presentation creation and editing"
+    description_vi: "Tạo và chỉnh sửa bài thuyết trình PowerPoint"
+    tags: [document, powerpoint, presentation, slides]
+    license: proprietary
+
+  - name: xlsx
+    category: document-skills
+    path: document-skills/xlsx
+    description: "Excel spreadsheet with formulas and visualization"
+    description_vi: "Bảng tính Excel với công thức và visualization"
+    tags: [document, excel, spreadsheet, formulas]
+    license: proprietary
+
+  # Development Skills
+  - name: mcp-builder
+    category: development-skills
+    path: development-skills/mcp-builder
+    description: "Build MCP servers for LLM integration"
+    description_vi: "Xây dựng MCP servers cho tích hợp LLM"
+    tags: [development, mcp, integration, api]
+    license: apache-2.0
+
+  - name: skill-creator
+    category: development-skills
+    path: development-skills/skill-creator
+    description: "Create new Claude skills"
+    description_vi: "Tạo skills mới cho Claude"
+    tags: [development, skill, meta]
+    license: apache-2.0
+
+  - name: webapp-testing
+    category: development-skills
+    path: development-skills/webapp-testing
+    description: "Test web applications with Playwright"
+    description_vi: "Test ứng dụng web với Playwright"
+    tags: [development, testing, playwright, automation]
+    license: apache-2.0
+
+  - name: web-artifacts-builder
+    category: development-skills
+    path: development-skills/web-artifacts-builder
+    description: "Build complex web artifacts with React"
+    description_vi: "Tạo web artifacts phức tạp với React"
+    tags: [development, react, frontend, artifacts]
+    license: apache-2.0
+
+  # Design Skills
+  - name: algorithmic-art
+    category: design-skills
+    path: design-skills/algorithmic-art
+    description: "Generative art with p5.js"
+    description_vi: "Nghệ thuật thuật toán với p5.js"
+    tags: [design, art, generative, p5js]
+    license: apache-2.0
+
+  - name: canvas-design
+    category: design-skills
+    path: design-skills/canvas-design
+    description: "Visual art for posters and designs"
+    description_vi: "Thiết kế visual art cho posters"
+    tags: [design, art, poster, visual]
+    license: apache-2.0
+
+  - name: frontend-design
+    category: design-skills
+    path: design-skills/frontend-design
+    description: "Production-grade UI design"
+    description_vi: "Thiết kế UI production-grade"
+    tags: [design, ui, frontend, web]
+    license: apache-2.0
+
+  - name: theme-factory
+    category: design-skills
+    path: design-skills/theme-factory
+    description: "Apply themes to artifacts"
+    description_vi: "Áp dụng themes cho artifacts"
+    tags: [design, theme, styling]
+    license: apache-2.0
+
+  # Communication Skills
+  - name: doc-coauthoring
+    category: communication-skills
+    path: communication-skills/doc-coauthoring
+    description: "Co-author documentation collaboratively"
+    description_vi: "Cộng tác viết tài liệu"
+    tags: [communication, documentation, writing]
+    license: apache-2.0
+
+  - name: internal-comms
+    category: communication-skills
+    path: communication-skills/internal-comms
+    description: "Internal communications and reports"
+    description_vi: "Viết internal communications và reports"
+    tags: [communication, internal, reports]
+    license: apache-2.0
+
+  - name: slack-gif-creator
+    category: communication-skills
+    path: communication-skills/slack-gif-creator
+    description: "Animated GIFs optimized for Slack"
+    description_vi: "Tạo GIFs động tối ưu cho Slack"
+    tags: [communication, slack, gif, animation]
+    license: apache-2.0

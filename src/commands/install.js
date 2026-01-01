@@ -186,7 +186,7 @@ export async function install(options) {
   }
 
   // Select components to install
-  let components = ['claude-md', 'settings', 'agents', 'skills', 'commands', 'microai', 'hooks'];
+  let components = ['claude-md', 'settings', 'agents', 'skills', 'commands', 'microai', 'microai-skills', 'hooks'];
 
   if (options.interactive !== false) {
     const { selectedComponents } = await inquirer.prompt([
@@ -203,6 +203,7 @@ export async function install(options) {
           { name: 'commands/ (command templates)', value: 'commands', checked: true },
           { name: chalk.cyan('─── .microai/ ───'), value: 'separator2', disabled: true },
           { name: chalk.yellow('★ MicroAI Framework (agents, teams, commands)'), value: 'microai', checked: true },
+          { name: chalk.magenta('★ Anthropic Skills (document, development, design)'), value: 'microai-skills', checked: true },
           { name: chalk.green('★ Hooks (logging, security, protection)'), value: 'hooks', checked: true }
         ]
       }
@@ -291,6 +292,22 @@ export async function install(options) {
       }
     }
 
+    // Install Anthropic Skills
+    if (components.includes('microai-skills')) {
+      spinner.text = 'Installing Anthropic Skills...';
+      const src = join(TEMPLATES_DIR, '.microai', 'skills');
+      const dest = join(microaiDir, 'skills');
+      if (existsSync(src)) {
+        if (options.force) {
+          copyDirSync(src, dest);
+        } else {
+          mergeDirSync(src, dest);
+        }
+        // Make skill scripts executable
+        makeScriptsExecutable(dest);
+      }
+    }
+
     // Install Hooks
     if (components.includes('hooks')) {
       spinner.text = 'Installing hooks...';
@@ -376,7 +393,7 @@ export async function install(options) {
     }
 
     // .microai structure
-    if (components.includes('microai') || components.includes('hooks')) {
+    if (components.includes('microai') || components.includes('microai-skills') || components.includes('hooks')) {
       console.log(chalk.yellow('\n.microai/'));
       if (components.includes('microai')) {
         console.log(chalk.gray('├── agents/         # Agent definitions'));
@@ -386,6 +403,13 @@ export async function install(options) {
         console.log(chalk.gray('├── commands/       # Team commands'));
         console.log(chalk.gray('├── kanban/         # Kanban board'));
         console.log(chalk.gray('├── go-refactor/    # Go refactoring patterns'));
+      }
+      if (components.includes('microai-skills')) {
+        console.log(chalk.magenta('├── skills/         # Anthropic Skills (15 skills)'));
+        console.log(chalk.gray('│   ├── document-skills/     # docx, pdf, pptx, xlsx'));
+        console.log(chalk.gray('│   ├── development-skills/  # mcp-builder, skill-creator'));
+        console.log(chalk.gray('│   ├── design-skills/       # algorithmic-art, frontend'));
+        console.log(chalk.gray('│   └── communication-skills/# doc-coauthoring, internal-comms'));
       }
       if (components.includes('hooks')) {
         console.log(chalk.green('├── hooks/          # Automation hooks'));
@@ -415,6 +439,15 @@ export async function install(options) {
       console.log('   • UserPromptSubmit: Log prompts history');
       console.log('   • SessionStart: Initialize environment');
       console.log(chalk.gray('   Logs: .microai/logs/'));
+    }
+
+    if (components.includes('microai-skills')) {
+      console.log(chalk.magenta('\n📚 Installed Skills:'));
+      console.log('   • Document: docx, pdf, pptx, xlsx processing');
+      console.log('   • Development: mcp-builder, skill-creator, webapp-testing');
+      console.log('   • Design: algorithmic-art, canvas-design, frontend-design');
+      console.log('   • Communication: doc-coauthoring, internal-comms, slack-gif');
+      console.log(chalk.gray('   See .microai/skills/README.md for usage'));
     }
 
     console.log(chalk.gray('\nSee README files in each directory for details.\n'));
