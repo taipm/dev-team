@@ -28,14 +28,33 @@ Sử dụng checklist này khi review agents (command `*review`).
 
 ---
 
-## Frontmatter Check (20 points)
+## Metadata Check (25 points)
 
+> **Reference**: `10-agent-metadata-spec.md` for detailed field specifications.
+
+### Required Fields (15 points)
 ```
-□ [4] name: present, lowercase, hyphenated
-□ [4] description: present, has examples
-□ [4] model: valid (opus/sonnet/haiku)
-□ [4] tools: list present
-□ [4] language: present (vi/en)
+□ [3] name: present, lowercase, kebab-case, unique
+□ [3] description: multi-line với 3 sections (purpose, capabilities, examples)
+□ [3] model: valid enum (opus/sonnet/haiku)
+□ [3] tools: array present với valid tool names
+□ [3] language: explicit (vi/en) - NO DEFAULT
+```
+
+### Style Fields (5 points)
+```
+□ [2] color: from standard palette (purple/red/green/orange/blue/cyan/yellow/pink)
+□ [2] icon: quoted emoji ("🤖")
+□ [1] Field order: name → description → model → color → icon → tools → language
+```
+
+### Optional Fields (5 points)
+```
+□ [1] knowledge: có structure {shared: [], specific: []}
+□ [1] team: specified nếu là team agent
+□ [1] version: semver format ("1.0")
+□ [1] tags: array of categorization tags
+□ [1] alias: human-friendly name (nếu khác name)
 ```
 
 ---
@@ -100,11 +119,14 @@ Sử dụng checklist này khi review agents (command `*review`).
 
 | Score | Grade | Status |
 |-------|-------|--------|
-| 90-100 | A | Excellent - Production ready |
-| 80-89 | B | Good - Minor improvements needed |
-| 70-79 | C | Fair - Some issues to fix |
-| 60-69 | D | Poor - Significant work needed |
-| <60 | F | Failing - Major rework required |
+| 95-110 | A+ | Excellent - Full compliance with spec |
+| 85-94 | A | Production ready - Minor style issues |
+| 75-84 | B | Good - Some improvements needed |
+| 65-74 | C | Fair - Multiple issues to fix |
+| 55-64 | D | Poor - Significant work needed |
+| <55 | F | Failing - Major rework required |
+
+> **Note**: Total possible = 100 base + 10 optional + 20 team bonus = 130 points
 
 ---
 
@@ -118,13 +140,19 @@ Sử dụng checklist này khi review agents (command `*review`).
 | Missing command | Create `.claude/commands/{name}.md` |
 | Wrong path in command | Update `@` path to correct location |
 
-### Frontmatter Issues
+### Metadata Issues
 
 | Issue | Fix |
 |-------|-----|
-| Missing description | Add với use cases và examples |
+| Missing description | Add multi-line với 3 sections |
 | Invalid model | Change to opus/sonnet/haiku |
-| Missing tools | Add required tools list |
+| Missing tools | Add required tools array |
+| Missing language | Add explicit `language: vi` or `language: en` |
+| Missing color | Add from palette: purple/red/green/orange/blue/cyan |
+| Missing icon | Add quoted emoji: `icon: "🤖"` |
+| CamelCase name | Convert to kebab-case |
+| Inline description | Convert to multi-line with `|` |
+| Wrong field order | Reorder: name → description → model → color → icon → tools → language |
 
 ### Activation Issues
 

@@ -1,8 +1,19 @@
-# Knowledge Index Template
-# Copy và customize cho agent mới
-
 # ============================================================
-# TEMPLATE - Replace placeholders với actual values
+# SIMPLE KNOWLEDGE INDEX TEMPLATE
+# Template cơ bản cho agents đơn giản
+# ============================================================
+#
+# USE CASE:
+# - Agent đơn giản với keyword→file mapping
+# - Không cần conditional loading phức tạp
+# - Quick setup cho agents mới
+#
+# OTHER TEMPLATES (progressive complexity):
+# - 04a-index-advanced.yaml   → Contextual loading, priority, load_when
+# - 04b-index-team.yaml       → Team coordination, mode/phase triggers
+# - 04c-index-smart-detection.yaml → Weighted scoring, disambiguation
+#
+# USAGE: Copy file này và replace placeholders với actual values
 # ============================================================
 
 version: "1.0"

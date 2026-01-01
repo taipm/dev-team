@@ -1,0 +1,238 @@
+# ============================================================
+# TEAM KNOWLEDGE INDEX TEMPLATE
+# Cho team agents với mode-based và phase-based coordination
+# ============================================================
+#
+# USE CASE:
+# - Team agents với nhiều modes (testplan, bug, review)
+# - Dialogue có phases (requirements, design, synthesis)
+# - Agents khác nhau cần knowledge khác nhau
+# - Cần keyword triggers với regex patterns
+#
+# REFERENCE: Dev-QA Team pattern
+# SEE ALSO: 04-index-template.yaml (simple), 04a (advanced), 04c (smart)
+# ============================================================
+
+version: "1.0"
+team: "{team-name}"
+
+# ─────────────────────────────────────────────────────────────
+# FILES - Core knowledge files với metadata
+# ─────────────────────────────────────────────────────────────
+files:
+  - id: "{file-id-1}"
+    path: "{number}-{topic-1}.md"
+    description: "{Mô tả chi tiết}"
+    keywords:
+      - "{keyword-1}"
+      - "{keyword-2}"
+      - "{keyword-3}"
+    priority: high    # high | medium | low
+
+  - id: "{file-id-2}"
+    path: "{number}-{topic-2}.md"
+    description: "{Mô tả chi tiết}"
+    keywords:
+      - "{keyword-4}"
+      - "{keyword-5}"
+    priority: medium
+
+  - id: "{file-id-3}"
+    path: "{number}-{topic-3}.md"
+    description: "{Mô tả chi tiết}"
+    keywords:
+      - "{keyword-6}"
+      - "{keyword-7}"
+    priority: low
+
+# ─────────────────────────────────────────────────────────────
+# MODE TRIGGERS - Load based on session mode
+# ─────────────────────────────────────────────────────────────
+mode_triggers:
+  "{mode-1}":    # VD: testplan, bug, review, design
+    always_load:
+      - "{file-id-1}"
+    on_keywords:
+      - "{file-id-2}": ["{keyword}", "{keyword}"]
+      - "{file-id-3}": ["{keyword}", "{keyword}"]
+
+  "{mode-2}":
+    always_load:
+      - "{file-id-2}"
+    on_keywords:
+      - "{file-id-1}": ["{keyword}", "{keyword}"]
+
+  "{mode-3}":
+    always_load:
+      - "{file-id-3}"
+    on_keywords:
+      - "{file-id-1}": ["{keyword}", "{keyword}"]
+
+# ─────────────────────────────────────────────────────────────
+# PHASE TRIGGERS - Load based on dialogue phase
+# ─────────────────────────────────────────────────────────────
+phase_triggers:
+  requirements:
+    load: "{file-id-1}"
+    reason: "{Tại sao cần load file này ở phase này}"
+
+  dialogue:
+    load_on_keywords:
+      - "{file-id-1}": ["{keyword}", "{keyword}"]
+      - "{file-id-2}": ["{keyword}", "{keyword}"]
+
+  synthesis:
+    load: "{file-id-2}"
+    reason: "{Tại sao cần load file này ở phase này}"
+
+# ─────────────────────────────────────────────────────────────
+# AGENT-SPECIFIC KNOWLEDGE
+# ─────────────────────────────────────────────────────────────
+agent_knowledge:
+  "{agent-role-1}":    # VD: developer, qa-engineer, architect
+    primary:
+      - "{file-id-1}"
+      - "{file-id-2}"
+    secondary:
+      - "{file-id-3}"
+
+  "{agent-role-2}":
+    primary:
+      - "{file-id-2}"
+    secondary:
+      - "{file-id-1}"
+      - "{file-id-3}"
+
+# ─────────────────────────────────────────────────────────────
+# KEYWORD TRIGGERS - Regex-based auto-load during dialogue
+# ─────────────────────────────────────────────────────────────
+keyword_triggers:
+  # Group 1: {Topic name}
+  "{regex-pattern-1}|{pattern-2}|{pattern-3}":
+    load: "{file-id-1}"
+    section: "{Section name trong file}"
+
+  "{regex-pattern-4}|{pattern-5}":
+    load: "{file-id-1}"
+    section: "{Section name}"
+
+  # Group 2: {Topic name}
+  "{regex-pattern-6}|{pattern-7}":
+    load: "{file-id-2}"
+    section: "{Section name}"
+
+  "{regex-pattern-8}|{pattern-9}":
+    load: "{file-id-2}"
+    section: "{Section name}"
+
+  # Group 3: {Topic name}
+  "{regex-pattern-10}|{pattern-11}":
+    load: "{file-id-3}"
+    section: "{Section name}"
+
+# ─────────────────────────────────────────────────────────────
+# CONFLICT DETECTION - Phát hiện bất đồng trong dialogue
+# ─────────────────────────────────────────────────────────────
+conflict_keywords:
+  - "không đồng ý"
+  - "nhưng tôi nghĩ"
+  - "có vấn đề"
+  - "không chấp nhận"
+  - "cần thảo luận thêm"
+  - "disagree"
+  - "but I think"
+
+conflict_action:
+  load: "{file-id-for-resolution}"
+  section: "{Section for conflict resolution}"
+  message: "Detected disagreement - loading resolution framework"
+
+# ============================================================
+# EXAMPLE: Dev-QA Team
+# ============================================================
+#
+# version: "1.0"
+# team: dev-qa
+#
+# files:
+#   - id: testing-strategies
+#     path: 01-testing-strategies.md
+#     description: "Test pyramid, risk-based testing, edge case discovery"
+#     keywords: [test, testing, strategy, pyramid, risk, edge case]
+#     priority: high
+#
+#   - id: bug-reporting
+#     path: 02-bug-reporting-guide.md
+#     description: "Bug report structure, severity/priority matrix"
+#     keywords: [bug, defect, severity, priority, reproduce]
+#     priority: high
+#
+#   - id: testability-review
+#     path: 03-testability-review.md
+#     description: "Code testability checklist, dependency injection"
+#     keywords: [testability, review, mock, dependency, coverage]
+#     priority: medium
+#
+# mode_triggers:
+#   testplan:
+#     always_load: [testing-strategies]
+#     on_keywords:
+#       - testability-review: ["code", "review", "architecture"]
+#
+#   bug:
+#     always_load: [bug-reporting]
+#     on_keywords:
+#       - testing-strategies: ["reproduce", "edge case"]
+#
+#   review:
+#     always_load: [testability-review]
+#     on_keywords:
+#       - testing-strategies: ["test coverage", "unit test"]
+#
+# phase_triggers:
+#   requirements:
+#     load: testing-strategies
+#     reason: "Understand testing scope early"
+#
+#   dialogue:
+#     load_on_keywords:
+#       - bug-reporting: ["bug", "issue", "defect"]
+#       - testability-review: ["mock", "inject", "coverage"]
+#
+#   synthesis:
+#     load: bug-reporting
+#     reason: "Structure output correctly"
+#
+# agent_knowledge:
+#   qa-engineer:
+#     primary: [testing-strategies, bug-reporting]
+#     secondary: [testability-review]
+#
+#   developer:
+#     primary: [testability-review]
+#     secondary: [bug-reporting, testing-strategies]
+#
+# keyword_triggers:
+#   "edge case|boundary|limit":
+#     load: testing-strategies
+#     section: "Edge Case Discovery Techniques"
+#
+#   "severity|priority|critical|high|medium|low":
+#     load: bug-reporting
+#     section: "Severity vs Priority Matrix"
+#
+#   "mock|stub|fake|test double":
+#     load: testability-review
+#     section: "Dependency Injection Patterns"
+#
+# conflict_keywords:
+#   - "không đồng ý"
+#   - "có vấn đề"
+#   - "cần thảo luận thêm"
+#
+# conflict_action:
+#   load: testing-strategies
+#   section: "Risk-Based Testing Prioritization"
+#   message: "Detected disagreement - loading prioritization framework"
+#
+# ============================================================

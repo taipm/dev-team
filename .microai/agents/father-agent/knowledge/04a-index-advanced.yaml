@@ -1,0 +1,134 @@
+# ============================================================
+# ADVANCED KNOWLEDGE INDEX TEMPLATE
+# Cho agents cần contextual loading với conditions
+# ============================================================
+#
+# USE CASE:
+# - Agent có nhiều scenarios khác nhau (translate, review, build)
+# - Files cần load conditionally based on task
+# - Cần priority levels để optimize loading
+#
+# REFERENCE: Ollama Agent pattern
+# SEE ALSO: 04-index-template.yaml (simple), 04b (team), 04c (smart detection)
+# ============================================================
+
+version: "1.0"
+agent: "{agent-name}"
+
+# ─────────────────────────────────────────────────────────────
+# CORE FILES với conditional loading
+# ─────────────────────────────────────────────────────────────
+core_files:
+  - file: "{number}-{critical-topic}.md"
+    description: "{Mô tả ngắn gọn}"
+    load_when:
+      - "{scenario-1}"    # VD: translate, build, review
+      - "{scenario-2}"
+      - "{scenario-3}"
+
+  - file: "{number}-{topic-2}.md"
+    description: "{Mô tả ngắn gọn}"
+    load_when:
+      - "{scenario-1}"
+      - "{scenario-4}"
+
+# ─────────────────────────────────────────────────────────────
+# KEYWORD MAPPING
+# ─────────────────────────────────────────────────────────────
+keywords:
+  "{keyword-1}":
+    - "{number}-{topic-1}.md"
+    - "{number}-{topic-2}.md"
+
+  "{keyword-2}":
+    - "{number}-{topic-2}.md"
+
+  "{keyword-3}":
+    - "{number}-{topic-3}.md"
+
+# ─────────────────────────────────────────────────────────────
+# DEFAULT LOAD - Files load khi không match keywords
+# ─────────────────────────────────────────────────────────────
+default_load:
+  - "{number}-{most-critical}.md"
+
+# ─────────────────────────────────────────────────────────────
+# LOADING STRATEGY - Text guidance cho agent
+# ─────────────────────────────────────────────────────────────
+loading_strategy: |
+  1. Always load {critical-file} for any {task-type} task
+  2. Load {secondary-file} when dealing with {specific-case}
+  3. Load {optional-file} only when {condition}
+  4. Check memory/{persistent-data}.md before each session
+
+# ─────────────────────────────────────────────────────────────
+# PRIORITY LEVELS
+# ─────────────────────────────────────────────────────────────
+priority:
+  high:
+    - memory/{persistent-data}.md     # Agent memory (nếu có)
+    - "{number}-{critical}.md"
+  medium:
+    - "{number}-{secondary}.md"
+  low:
+    - "{number}-{reference}.md"
+
+# ============================================================
+# EXAMPLE: Translation Agent
+# ============================================================
+#
+# version: "1.0"
+# agent: translation-agent
+#
+# core_files:
+#   - file: 01-translation-guidelines.md
+#     description: Quy tắc dịch EN→VI cơ bản
+#     load_when:
+#       - translate
+#       - review
+#       - quality_check
+#
+#   - file: 02-technical-terms.md
+#     description: Glossary thuật ngữ kỹ thuật
+#     load_when:
+#       - translate
+#       - glossary
+#       - terminology
+#
+#   - file: 03-markdown-handling.md
+#     description: Xử lý markdown formatting
+#     load_when:
+#       - translate
+#       - format_check
+#
+# keywords:
+#   translate:
+#     - 01-translation-guidelines.md
+#     - 03-markdown-handling.md
+#   glossary:
+#     - 02-technical-terms.md
+#   format:
+#     - 03-markdown-handling.md
+#   quality:
+#     - 01-translation-guidelines.md
+#     - 02-technical-terms.md
+#
+# default_load:
+#   - 01-translation-guidelines.md
+#
+# loading_strategy: |
+#   1. Always load glossary from memory/glossary.md
+#   2. Load 01-translation-guidelines.md for any translation task
+#   3. Load 03-markdown-handling.md for complex documents
+#   4. Load 02-technical-terms.md when adding new terms
+#
+# priority:
+#   high:
+#     - memory/glossary.md
+#     - 01-translation-guidelines.md
+#   medium:
+#     - 03-markdown-handling.md
+#   low:
+#     - 02-technical-terms.md
+#
+# ============================================================

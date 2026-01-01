@@ -1,0 +1,298 @@
+# ============================================================
+# SMART DETECTION KNOWLEDGE INDEX TEMPLATE
+# Cho agents cần phân loại input với weighted scoring
+# ============================================================
+#
+# USE CASE:
+# - Agent nhận input đa dạng, cần classify chính xác
+# - Multiple categories có thể overlap
+# - Cần disambiguation khi ambiguous
+# - Framework selection dựa trên category
+#
+# REFERENCE: Deep Question Agent pattern
+# SEE ALSO: 04-index-template.yaml (simple), 04a (advanced), 04b (team)
+# ============================================================
+
+version: "1.0"
+agent: "{agent-name}"
+
+# ─────────────────────────────────────────────────────────────
+# FILES - Knowledge files với metadata và keywords
+# ─────────────────────────────────────────────────────────────
+files:
+  - filename: "{number}-{topic-1}.md"
+    title: "{Human-readable title}"
+    description: "{Mô tả chi tiết}"
+    keywords:
+      - "{keyword-1}"
+      - "{keyword-2}"
+      - "{keyword-3}"
+    when_to_load: "Always on agent activation"
+    load_priority: 1    # 1 = highest
+
+  - filename: "{number}-{topic-2}.md"
+    title: "{Human-readable title}"
+    description: "{Mô tả chi tiết}"
+    keywords:
+      - "{keyword-4}"
+      - "{keyword-5}"
+    when_to_load: "When topic type is {category-1}"
+    load_priority: 2
+
+  - filename: "{number}-{topic-3}.md"
+    title: "{Human-readable title}"
+    description: "{Mô tả chi tiết}"
+    keywords:
+      - "{keyword-6}"
+      - "{keyword-7}"
+    when_to_load: "When topic type is {category-2}"
+    load_priority: 2
+
+# ─────────────────────────────────────────────────────────────
+# TOPIC DETECTION V2 - Weighted Scoring System
+# ─────────────────────────────────────────────────────────────
+topic_detection_v2:
+  # Scoring thresholds
+  thresholds:
+    clear_winner: 15    # Score > 15 → dùng category đó
+    ambiguous: 10       # Multiple scores > 10 → hỏi user
+    unclear: 10         # All scores < 10 → default category
+
+  # Category scoring với weighted indicators
+  categories:
+    "{category-1}":
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "{regex-strong-1}"
+          weight: 10
+        - pattern: "{regex-strong-2}"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "{regex-medium-1}"
+          weight: 8
+        - pattern: "{regex-medium-2}"
+          weight: 7
+        # Weak signals (3-5 points)
+        - pattern: "{regex-weak-1}"
+          weight: 5
+        - pattern: "{regex-weak-2}"
+          weight: 4
+      load_files:
+        - "{number}-{topic-1}.md"
+        - "{number}-{topic-2}.md"
+      primary_framework: "{Framework-A}"
+      secondary_framework: "{Framework-B}"
+
+    "{category-2}":
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "{regex-strong-3}"
+          weight: 10
+        - pattern: "{regex-strong-4}"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "{regex-medium-3}"
+          weight: 7
+        - pattern: "{regex-medium-4}"
+          weight: 6
+        # Weak signals (3-5 points)
+        - pattern: "{regex-weak-3}"
+          weight: 5
+      load_files:
+        - "{number}-{topic-1}.md"
+        - "{number}-{topic-3}.md"
+      primary_framework: "{Framework-C}"
+      secondary_framework: "{Framework-D}"
+
+    "{category-3}":
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "{regex-strong-5}"
+          weight: 10
+        - pattern: "{regex-strong-6}"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "{regex-medium-5}"
+          weight: 8
+        - pattern: "{regex-medium-6}"
+          weight: 7
+        # Weak signals (3-5 points)
+        - pattern: "{regex-weak-4}"
+          weight: 5
+      load_files:
+        - "{number}-{topic-1}.md"
+        - "{number}-{topic-3}.md"
+      primary_framework: "{Framework-E}"
+      secondary_framework: "{Framework-F}"
+
+  # Default khi unclear
+  default:
+    category: "{default-category}"
+    framework: "{Default-Framework}"
+    message: "Tôi sẽ bắt đầu với {approach description}"
+
+  # Disambiguation prompt khi ambiguous (multiple high scores)
+  disambiguation_prompt: |
+    Tôi thấy vấn đề của bạn có thể approach từ nhiều góc:
+
+    {options}
+
+    Bạn muốn focus vào góc nào trước?
+    (Hoặc gõ số 1-{n} để chọn nhanh)
+
+# ─────────────────────────────────────────────────────────────
+# LEGACY TOPIC DETECTION - Simple keyword matching (backward compatible)
+# ─────────────────────────────────────────────────────────────
+topic_detection:
+  "{category-1}":
+    indicators:
+      - "{indicator-description-1}"
+      - "{indicator-description-2}"
+    load_files:
+      - "{number}-{topic-1}.md"
+      - "{number}-{topic-2}.md"
+    primary_framework: "{Framework-A}"
+    secondary_framework: "{Framework-B}"
+
+  "{category-2}":
+    indicators:
+      - "{indicator-description-3}"
+      - "{indicator-description-4}"
+    load_files:
+      - "{number}-{topic-1}.md"
+      - "{number}-{topic-3}.md"
+    primary_framework: "{Framework-C}"
+    secondary_framework: "{Framework-D}"
+
+# ─────────────────────────────────────────────────────────────
+# FRAMEWORK SELECTION GUIDE
+# ─────────────────────────────────────────────────────────────
+framework_selection:
+  by_goal:
+    "{goal-1}": "{Framework-A}"
+    "{goal-2}": "{Framework-B}"
+    "{goal-3}": "{Framework-C}"
+    "{goal-4}": "{Framework-D}"
+
+  by_situation:
+    "{situation-1}": ["{Framework-A}", "{Framework-B}"]
+    "{situation-2}": ["{Framework-C}", "{Framework-D}"]
+    "{situation-3}": ["{Framework-A}", "{Framework-C}"]
+
+# ============================================================
+# EXAMPLE: Deep Question Agent
+# ============================================================
+#
+# version: "1.0"
+# agent: deep-question-agent
+#
+# files:
+#   - filename: "01-thinking-frameworks.md"
+#     title: "7 Phương pháp Tư duy Cốt lõi"
+#     description: "Socratic, First Principles, 5 Whys, 6W2H, Pre-mortem..."
+#     keywords: [framework, tư duy, socratic, first principles]
+#     when_to_load: "Always on agent activation"
+#     load_priority: 1
+#
+#   - filename: "02-code-analysis-questions.md"
+#     title: "Code Analysis Question Library"
+#     description: "Câu hỏi cho phân tích code, architecture"
+#     keywords: [code, architecture, api, database, technical]
+#     when_to_load: "When topic type is code/architecture"
+#     load_priority: 2
+#
+#   - filename: "03-topic-analysis-questions.md"
+#     title: "Topic Analysis Question Library"
+#     description: "Câu hỏi cho problem solving, decision making"
+#     keywords: [problem, decision, strategy, planning, goal]
+#     when_to_load: "When topic type is general/problem/decision"
+#     load_priority: 2
+#
+# topic_detection_v2:
+#   thresholds:
+#     clear_winner: 15
+#     ambiguous: 10
+#     unclear: 10
+#
+#   categories:
+#     code:
+#       indicators:
+#         - pattern: "```"
+#           weight: 10
+#         - pattern: "function|class|method|def "
+#           weight: 10
+#         - pattern: "\\.go|\\.py|\\.js|\\.ts"
+#           weight: 10
+#         - pattern: "api|endpoint|database"
+#           weight: 8
+#         - pattern: "architecture|microservice"
+#           weight: 7
+#         - pattern: "code|implement|deploy"
+#           weight: 5
+#       load_files:
+#         - "01-thinking-frameworks.md"
+#         - "02-code-analysis-questions.md"
+#       primary_framework: "6W2H"
+#       secondary_framework: "First Principles"
+#
+#     problem:
+#       indicators:
+#         - pattern: "bug|error|exception|crash"
+#           weight: 10
+#         - pattern: "không hoạt động|fail|broken"
+#           weight: 10
+#         - pattern: "tại sao.*không|why.*not"
+#           weight: 10
+#         - pattern: "issue|problem|vấn đề"
+#           weight: 7
+#         - pattern: "fix|sửa|resolve"
+#           weight: 6
+#       load_files:
+#         - "01-thinking-frameworks.md"
+#         - "03-topic-analysis-questions.md"
+#       primary_framework: "5 Whys"
+#       secondary_framework: "Socratic"
+#
+#     decision:
+#       indicators:
+#         - pattern: "quyết định|decide|decision"
+#           weight: 10
+#         - pattern: "nên chọn|should.*choose"
+#           weight: 10
+#         - pattern: "trade-off|pros.*cons"
+#           weight: 8
+#         - pattern: "compare|so sánh|versus"
+#           weight: 7
+#       load_files:
+#         - "01-thinking-frameworks.md"
+#         - "03-topic-analysis-questions.md"
+#       primary_framework: "Pre-mortem"
+#       secondary_framework: "Devil's Advocate"
+#
+#   default:
+#     category: "comprehensive"
+#     framework: "6W2H"
+#     message: "Tôi sẽ bắt đầu với phân tích toàn diện (6W2H)"
+#
+#   disambiguation_prompt: |
+#     Tôi thấy vấn đề của bạn có thể approach từ nhiều góc:
+#
+#     {options}
+#
+#     Bạn muốn focus vào góc nào trước?
+#
+# framework_selection:
+#   by_goal:
+#     find_root_cause: "5 Whys"
+#     challenge_assumptions: "First Principles"
+#     comprehensive_coverage: "6W2H"
+#     anticipate_failure: "Pre-mortem"
+#     stress_test_idea: "Devil's Advocate"
+#
+#   by_situation:
+#     new_project: ["6W2H", "Pre-mortem"]
+#     debugging: ["5 Whys", "Socratic"]
+#     architecture_review: ["6W2H", "First Principles"]
+#     decision_making: ["Pre-mortem", "Devil's Advocate"]
+#
+# ============================================================

@@ -58,8 +58,73 @@ keyword_mapping:
     files: [03-knowledge-template.md, 04-index-template.yaml]
     priority: 1
   index:
-    files: [04-index-template.yaml]
+    files: [04-index-template.yaml, 04a-index-advanced.yaml, 04b-index-team.yaml, 04c-index-smart-detection.yaml]
     priority: 1
+  advanced:
+    files: [04a-index-advanced.yaml]
+    priority: 1
+  contextual:
+    files: [04a-index-advanced.yaml]
+    priority: 1
+  conditional:
+    files: [04a-index-advanced.yaml]
+    priority: 2
+  team-index:
+    files: [04b-index-team.yaml]
+    priority: 1
+  mode:
+    files: [04b-index-team.yaml]
+    priority: 1
+  phase:
+    files: [04b-index-team.yaml]
+    priority: 1
+  trigger:
+    files: [04b-index-team.yaml]
+    priority: 2
+  smart:
+    files: [04c-index-smart-detection.yaml]
+    priority: 1
+  detection:
+    files: [04c-index-smart-detection.yaml]
+    priority: 1
+  weighted:
+    files: [04c-index-smart-detection.yaml, 08-deep-question-example.md]
+    priority: 1
+  scoring:
+    files: [04c-index-smart-detection.yaml]
+    priority: 1
+  disambiguation:
+    files: [04c-index-smart-detection.yaml, 08-deep-question-example.md]
+    priority: 1
+
+  # Metadata specification
+  metadata:
+    files: [10-agent-metadata-spec.md]
+    priority: 1
+  frontmatter:
+    files: [10-agent-metadata-spec.md, 01-agent-template.md]
+    priority: 1
+  spec:
+    files: [10-agent-metadata-spec.md]
+    priority: 1
+  fields:
+    files: [10-agent-metadata-spec.md]
+    priority: 1
+  validation:
+    files: [10-agent-metadata-spec.md, 05-review-checklist.md]
+    priority: 1
+  color:
+    files: [10-agent-metadata-spec.md]
+    priority: 2
+  icon:
+    files: [10-agent-metadata-spec.md]
+    priority: 2
+  tools:
+    files: [10-agent-metadata-spec.md]
+    priority: 2
+  model:
+    files: [10-agent-metadata-spec.md]
+    priority: 2
 
   # Memory system
   memory:
@@ -153,9 +218,24 @@ files:
     lines: ~180
 
   04-index-template.yaml:
-    title: "Knowledge Index Template"
-    description: "Template for knowledge-index.yaml với keyword mapping"
-    lines: ~100
+    title: "Simple Knowledge Index Template"
+    description: "Template cơ bản cho keyword→file mapping đơn giản"
+    lines: ~120
+
+  04a-index-advanced.yaml:
+    title: "Advanced Knowledge Index Template"
+    description: "Template với contextual loading, load_when conditions, priority levels"
+    lines: ~150
+
+  04b-index-team.yaml:
+    title: "Team Knowledge Index Template"
+    description: "Template cho team agents với mode_triggers, phase_triggers, agent_knowledge, conflict detection"
+    lines: ~200
+
+  04c-index-smart-detection.yaml:
+    title: "Smart Detection Knowledge Index Template"
+    description: "Template với weighted scoring, topic_detection_v2, disambiguation, framework selection"
+    lines: ~250
 
   05-review-checklist.md:
     title: "Review Checklist"
@@ -181,3 +261,8 @@ files:
     title: "Document Organization Best Practices"
     description: "Convention for separating agent internals from user-facing outputs. Includes team-specific guidelines, migration checklist, and gitignore recommendations."
     lines: ~300
+
+  10-agent-metadata-spec.md:
+    title: "Agent Metadata Specification v1.0"
+    description: "Quy chuẩn thống nhất cho metadata (frontmatter) của agents. Bao gồm required fields, style fields, optional fields, validation checklist, và migration guide."
+    lines: ~450

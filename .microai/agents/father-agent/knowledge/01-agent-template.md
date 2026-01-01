@@ -2,34 +2,101 @@
 
 Sử dụng template này khi tạo agent mới. Copy và fill in các placeholders.
 
+> **Spec Reference**: Xem `10-agent-metadata-spec.md` để hiểu chi tiết về mỗi field.
+
+---
+
+## Metadata Fields Quick Reference
+
+| Field | Required | Type | Example |
+|-------|----------|------|---------|
+| `name` | ✓ | kebab-case | `my-agent` |
+| `description` | ✓ | multi-line | See below |
+| `model` | ✓ | enum | `opus`, `sonnet`, `haiku` |
+| `tools` | ✓ | array | `[Read, Write, ...]` |
+| `language` | ✓ | enum | `vi`, `en` |
+| `color` | ★ | string | `purple`, `red`, `green`, ... |
+| `icon` | ★ | emoji | `"🤖"` |
+| `knowledge` | ○ | dict | `{shared: [], specific: []}` |
+| `team` | ○ | string | `go-team` |
+| `version` | ○ | semver | `"1.0"` |
+| `tags` | ○ | array | `[golang, testing]` |
+
+**Legend**: ✓ Required, ★ Recommended, ○ Optional
+
 ---
 
 ## Template
 
 ```markdown
 ---
+# ═══════════════════════════════════════════════════════════════
+# IDENTIFICATION (Required)
+# ═══════════════════════════════════════════════════════════════
 name: {agent-name}
 description: |
-  {Short description - 1 line}. Sử dụng agent này khi:
-  - {Use case 1}
-  - {Use case 2}
-  - {Use case 3}
+  {One-liner purpose}. Sử dụng agent này khi cần:
+  - {Capability 1}
+  - {Capability 2}
+  - {Capability 3}
 
   Examples:
   - "{Example prompt 1}"
   - "{Example prompt 2}"
+
+# ═══════════════════════════════════════════════════════════════
+# MODEL SELECTION (Required)
+# ═══════════════════════════════════════════════════════════════
+# opus   = Complex reasoning, architecture, multi-step
+# sonnet = Balanced analysis, documentation, review
+# haiku  = Simple tasks, fast, lightweight
 model: opus
-color: {blue/red/green/purple/orange}
+
+# ═══════════════════════════════════════════════════════════════
+# STYLE (Recommended)
+# ═══════════════════════════════════════════════════════════════
+# Colors: purple(meta), red(dev), green(test), orange(config),
+#         blue(analysis), cyan(comm), yellow(docs), pink(creative)
+color: purple
+icon: "🤖"
+
+# ═══════════════════════════════════════════════════════════════
+# CAPABILITIES (Required)
+# ═══════════════════════════════════════════════════════════════
 tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - TodoWrite
-  - AskUserQuestion
+  - Bash           # Shell commands
+  - Read           # Read files
+  - Write          # Create/overwrite files
+  - Edit           # Edit existing files
+  - Glob           # Pattern file search
+  - Grep           # Content search
+  - TodoWrite      # Task management
+  - AskUserQuestion # User interaction
+  # - LSP          # Language Server Protocol
+  # - Task         # Spawn sub-agents
+  # - WebFetch     # Fetch URLs
+  # - WebSearch    # Web search
+
+# ═══════════════════════════════════════════════════════════════
+# LOCALIZATION (Required)
+# ═══════════════════════════════════════════════════════════════
 language: vi
+
+# ═══════════════════════════════════════════════════════════════
+# KNOWLEDGE BASE (Optional - for structured teams)
+# ═══════════════════════════════════════════════════════════════
+# knowledge:
+#   shared:
+#     - ../knowledge/shared/01-fundamentals.md
+#   specific:
+#     - ./knowledge/01-agent-patterns.md
+
+# ═══════════════════════════════════════════════════════════════
+# ORGANIZATION (Optional)
+# ═══════════════════════════════════════════════════════════════
+# team: go-team
+# version: "1.0"
+# tags: [golang, backend]
 ---
 
 # {Agent Title}
