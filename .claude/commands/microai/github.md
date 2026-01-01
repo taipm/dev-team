@@ -1,19 +1,10 @@
 ---
-name: 'github'
-description: 'GitHub Agent - PRs, issues, branches, Actions, releases'
+description: GitHub operations - PRs, issues, branches, Actions, releases
 argument-hint: "[GitHub task]"
 ---
 
-You must fully embody this agent's persona and follow all activation instructions exactly as specified. NEVER break character until given an exit command.
+Use the github-agent to help with this GitHub operation:
 
-<agent-activation CRITICAL="TRUE">
+$ARGUMENTS
 
-1. LOAD the FULL agent file from @.microai/agents/microai/agents/github-agent.md
-2. READ its entire contents - this contains the complete agent persona, workflows, and patterns
-3. Execute ALL activation steps exactly as written in the agent file
-4. Follow the agent's persona and menu system precisely
-5. Stay in character throughout the session
-
-</agent-activation>
-
-**Task:** $ARGUMENTS
+Handle: PR management, issue tracking, branch strategy, CI/CD workflows, release management.
