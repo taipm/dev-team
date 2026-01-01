@@ -66,17 +66,27 @@ else
     exit 1
 fi
 
-# Check command file (try both full name and short name)
-CMD_PATH=".microai/commands/$AGENT_NAME.md"
-CMD_PATH_SHORT=".microai/commands/${AGENT_NAME%-agent}.md"
-if [ -f "$CMD_PATH" ]; then
-    print_pass "Command file exists at $CMD_PATH"
-    ACTIVE_CMD_PATH="$CMD_PATH"
-elif [ -f "$CMD_PATH_SHORT" ]; then
-    print_pass "Command file exists at $CMD_PATH_SHORT"
-    ACTIVE_CMD_PATH="$CMD_PATH_SHORT"
+# Check command file - MUST be in .claude/commands/microai/ (NOT .microai/commands/)
+# Claude Code only reads from .claude/commands/
+CMD_PATH_CORRECT=".claude/commands/microai/${AGENT_NAME%-agent}.md"
+CMD_PATH_CORRECT_FULL=".claude/commands/microai/$AGENT_NAME.md"
+CMD_PATH_WRONG=".microai/commands/$AGENT_NAME.md"
+CMD_PATH_WRONG_SHORT=".microai/commands/${AGENT_NAME%-agent}.md"
+
+if [ -f "$CMD_PATH_CORRECT" ]; then
+    print_pass "Command file exists at $CMD_PATH_CORRECT (correct location)"
+    ACTIVE_CMD_PATH="$CMD_PATH_CORRECT"
+elif [ -f "$CMD_PATH_CORRECT_FULL" ]; then
+    print_pass "Command file exists at $CMD_PATH_CORRECT_FULL (correct location)"
+    ACTIVE_CMD_PATH="$CMD_PATH_CORRECT_FULL"
+elif [ -f "$CMD_PATH_WRONG" ] || [ -f "$CMD_PATH_WRONG_SHORT" ]; then
+    print_fail "Command file in WRONG location (.microai/commands/)"
+    print_fail "MUST be at .claude/commands/microai/{name}.md"
+    print_info "Fix: mv .microai/commands/{name}.md .claude/commands/microai/"
+    ERRORS=$((ERRORS + 1))
+    ACTIVE_CMD_PATH=""
 else
-    print_warn "Command file not found (tried $CMD_PATH and $CMD_PATH_SHORT)"
+    print_warn "Command file not found at .claude/commands/microai/"
     WARNINGS=$((WARNINGS + 1))
     ACTIVE_CMD_PATH=""
 fi

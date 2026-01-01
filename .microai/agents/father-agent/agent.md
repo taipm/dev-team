@@ -153,7 +153,8 @@ WORKFLOW: Create New Agent
 
 6. Create command entry
    6.1 Load template từ knowledge/02-command-template.md
-   6.2 Write to .claude/commands/{agent-name}.md
+   6.2 Write to .claude/commands/microai/{agent-name}.md
+       CRITICAL: PHẢI là .claude/commands/microai/ không phải .microai/commands/
 
 7. Verify
    7.1 Check tất cả files đã tạo
@@ -299,10 +300,15 @@ PHASE 3: CONTENT GENERATION
 PHASE 4: REGISTRATION
 │
 ├─→ 4.1 Create command entry
-│       .claude/commands/{name}.md
+│       CRITICAL: Command files PHẢI ở .claude/commands/microai/{name}.md
+│       KHÔNG PHẢI .microai/commands/ (Claude Code không đọc được)
+│
+│       Path đúng: .claude/commands/microai/{name}.md
+│       Path sai:  .microai/commands/{name}.md ❌
 │
 └─→ 4.2 Verify paths
-        - agent.md accessible
+        - agent.md accessible at .microai/agents/{name}/agent.md
+        - Command file at .claude/commands/microai/{name}.md
         - Knowledge files accessible
 
 PHASE 5: VERIFICATION
@@ -394,10 +400,10 @@ PHASE 9: TESTING & VALIDATION
 │       Command: ls -la .microai/agents/{name}/
 │
 ├─→ 9.3 Command Registration Test
-│       □ Command file path correct
+│       □ Command file at .claude/commands/microai/{name}.md (NOT .microai/commands/)
 │       □ Frontmatter has name and description
 │       □ LOAD path points to correct agent.md
-│       Command: cat .microai/commands/{name}.md
+│       Command: cat .claude/commands/microai/{name}.md
 │
 ├─→ 9.4 Activation Test (Manual)
 │       □ Start new Claude Code session
@@ -423,7 +429,7 @@ PHASE 10: DEPLOYMENT & CONFIRMATION
 │       □ Stage all new files
 │       □ Write descriptive commit message
 │       □ Include: feat(agents): add {agent-name}
-│       Command: git add .microai/agents/{name}/ .microai/commands/{name}.md
+│       Command: git add .microai/agents/{name}/ .claude/commands/microai/{name}.md
 │
 ├─→ 10.2 Push to Remote
 │       □ Push to main/develop branch
@@ -546,8 +552,8 @@ PHASE 1: SYNTAX & STRUCTURE
 □ [  ] YAML frontmatter valid
 □ [  ] Required fields: name, description, model, tools, language
 □ [  ] Style fields: color, icon
-□ [  ] agent.md in correct location
-□ [  ] Command file in .microai/commands/
+□ [  ] agent.md in correct location (.microai/agents/{name}/agent.md)
+□ [  ] Command file in .claude/commands/microai/{name}.md (NOT .microai/commands/)
 
 PHASE 2: COMMAND REGISTRATION
 □ [  ] Command file has correct frontmatter
@@ -648,12 +654,16 @@ Verified by: _________________ Date: _________
 ### Command Entry Checklist
 
 ```
+□ Location (CRITICAL)
+  □ File at .claude/commands/microai/{name}.md
+  □ NOT at .microai/commands/ (Claude Code không đọc được)
+
 □ Frontmatter
   □ name matches agent
   □ description concise
 
 □ Activation Block
-  □ LOAD instruction với đúng path
+  □ LOAD instruction với đúng path (.microai/agents/{name}/agent.md)
   □ READ và EXECUTE steps
   □ Stay in character instruction
 
