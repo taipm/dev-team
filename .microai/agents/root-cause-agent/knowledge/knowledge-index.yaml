@@ -1,0 +1,57 @@
+# Knowledge Index for Root Cause Agent
+# Version: 1.0
+
+version: "1.0"
+agent: root-cause-agent
+
+# Core files - always available
+core_files:
+  - agent.md
+
+# Keyword-based loading
+keywords:
+  # Problem types
+  performance:
+    files: [01-analysis-templates.md]
+    priority: 1
+  memory:
+    files: [01-analysis-templates.md]
+    priority: 1
+  leak:
+    files: [01-analysis-templates.md]
+    priority: 1
+  intermittent:
+    files: [01-analysis-templates.md]
+    priority: 1
+  flaky:
+    files: [01-analysis-templates.md]
+    priority: 1
+  inconsistency:
+    files: [01-analysis-templates.md]
+    priority: 1
+  build:
+    files: [01-analysis-templates.md]
+    priority: 1
+  deploy:
+    files: [01-analysis-templates.md]
+    priority: 1
+  bug:
+    files: [01-analysis-templates.md]
+    priority: 1
+
+  # Analysis methods
+  template:
+    files: [01-analysis-templates.md]
+    priority: 1
+  checklist:
+    files: [01-analysis-templates.md]
+    priority: 1
+
+# File descriptions
+files:
+  agent.md:
+    description: "Main agent definition với 9-step framework"
+    lines: ~550
+  01-analysis-templates.md:
+    description: "Templates cho các loại vấn đề thường gặp"
+    lines: ~350
