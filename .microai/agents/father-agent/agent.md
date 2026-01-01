@@ -377,6 +377,212 @@ PHASE 8: OUTPUT LOCATIONS (Teams Only)
 └─→ 8.4 Verify separation
         - Memory in .microai/ (agent internals)
         - Outputs in docs/ (user-facing)
+
+PHASE 9: TESTING & VALIDATION
+│
+├─→ 9.1 Syntax Validation
+│       □ YAML frontmatter valid (no tabs, proper indentation)
+│       □ All required fields present
+│       □ Field values match spec (model, language, etc.)
+│       Command: Run validation script
+│
+├─→ 9.2 Structure Validation
+│       □ agent.md exists and readable
+│       □ Command file in correct location (.microai/commands/)
+│       □ Knowledge files exist (if referenced)
+│       □ knowledge-index.yaml valid (if exists)
+│       Command: ls -la .microai/agents/{name}/
+│
+├─→ 9.3 Command Registration Test
+│       □ Command file path correct
+│       □ Frontmatter has name and description
+│       □ LOAD path points to correct agent.md
+│       Command: cat .microai/commands/{name}.md
+│
+├─→ 9.4 Activation Test (Manual)
+│       □ Start new Claude Code session
+│       □ Run: /microai:{agent-name}
+│       □ Verify: Agent displays welcome/menu
+│       □ Verify: Agent responds in correct language
+│       □ Verify: Agent stays in character
+│
+├─→ 9.5 Functional Test
+│       □ Test primary use case với sample input
+│       □ Verify output format matches spec
+│       □ Verify tools work (if agent uses Bash, Read, etc.)
+│       □ Test edge cases
+│
+└─→ 9.6 Integration Test (for team agents)
+        □ Agent can call other agents (if applicable)
+        □ Handoffs work correctly
+        □ Shared memory accessible
+
+PHASE 10: DEPLOYMENT & CONFIRMATION
+│
+├─→ 10.1 Git Commit
+│       □ Stage all new files
+│       □ Write descriptive commit message
+│       □ Include: feat(agents): add {agent-name}
+│       Command: git add .microai/agents/{name}/ .microai/commands/{name}.md
+│
+├─→ 10.2 Push to Remote
+│       □ Push to main/develop branch
+│       □ Verify push successful
+│       Command: git push origin main
+│
+├─→ 10.3 Post-Deploy Verification
+│       □ Pull on another machine (if applicable)
+│       □ Test activation works after fresh clone
+│       □ Confirm command recognized by Claude Code
+│
+├─→ 10.4 Documentation Update
+│       □ Add to agents list/registry (if exists)
+│       □ Update README if significant agent
+│       □ Notify team (if team project)
+│
+└─→ 10.5 Success Confirmation
+        □ Agent responds to command
+        □ Agent performs primary function
+        □ No errors in console
+        □ User confirms satisfaction
+
+        OUTPUT: "Agent {name} created and verified successfully!"
+```
+
+---
+
+## Validation Scripts
+
+### Quick Validation Script
+
+```bash
+#!/bin/bash
+# validate-agent.sh - Quick agent validation
+
+AGENT_NAME=$1
+
+if [ -z "$AGENT_NAME" ]; then
+    echo "Usage: ./validate-agent.sh <agent-name>"
+    exit 1
+fi
+
+echo "=== Validating $AGENT_NAME ==="
+
+# Check agent.md exists
+AGENT_PATH=".microai/agents/$AGENT_NAME/agent.md"
+if [ -f "$AGENT_PATH" ]; then
+    echo "✓ agent.md exists"
+else
+    echo "✗ agent.md NOT FOUND at $AGENT_PATH"
+    exit 1
+fi
+
+# Check command file exists
+CMD_PATH=".microai/commands/$AGENT_NAME.md"
+if [ -f "$CMD_PATH" ]; then
+    echo "✓ command file exists"
+else
+    echo "⚠ command file NOT FOUND (optional)"
+fi
+
+# Check required frontmatter fields
+echo ""
+echo "=== Frontmatter Check ==="
+for field in "name:" "description:" "model:" "tools:" "language:"; do
+    if grep -q "^$field" "$AGENT_PATH"; then
+        echo "✓ $field present"
+    else
+        echo "✗ $field MISSING"
+    fi
+done
+
+# Check recommended fields
+echo ""
+echo "=== Recommended Fields ==="
+for field in "color:" "icon:"; do
+    if grep -q "^$field" "$AGENT_PATH"; then
+        echo "✓ $field present"
+    else
+        echo "⚠ $field missing (recommended)"
+    fi
+done
+
+# Check v1.2 optional fields
+echo ""
+echo "=== v1.2 Optional Fields ==="
+for field in "persona:" "thinking:" "critical_actions:"; do
+    if grep -q "^$field" "$AGENT_PATH"; then
+        echo "✓ $field present"
+    else
+        echo "○ $field not used (optional)"
+    fi
+done
+
+echo ""
+echo "=== Validation Complete ==="
+```
+
+### Usage
+
+```bash
+# Make executable
+chmod +x .microai/agents/father-agent/scripts/validate-agent.sh
+
+# Run validation
+./validate-agent.sh root-cause-agent
+```
+
+---
+
+## Testing Checklist Template
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  AGENT TESTING CHECKLIST: {agent-name}                          │
+│  Date: ____________________                                     │
+└─────────────────────────────────────────────────────────────────┘
+
+PHASE 1: SYNTAX & STRUCTURE
+□ [  ] YAML frontmatter valid
+□ [  ] Required fields: name, description, model, tools, language
+□ [  ] Style fields: color, icon
+□ [  ] agent.md in correct location
+□ [  ] Command file in .microai/commands/
+
+PHASE 2: COMMAND REGISTRATION
+□ [  ] Command file has correct frontmatter
+□ [  ] LOAD path points to agent.md
+□ [  ] Command name matches agent name
+
+PHASE 3: ACTIVATION TEST
+□ [  ] New session started
+□ [  ] Command recognized: /microai:{name}
+□ [  ] Welcome message displayed
+□ [  ] Correct language used
+□ [  ] Persona loaded correctly
+
+PHASE 4: FUNCTIONAL TEST
+Test case 1: _________________________________
+□ [  ] Input: ________________________________
+□ [  ] Expected: _____________________________
+□ [  ] Actual: _______________________________
+□ [  ] PASS / FAIL
+
+Test case 2: _________________________________
+□ [  ] Input: ________________________________
+□ [  ] Expected: _____________________________
+□ [  ] Actual: _______________________________
+□ [  ] PASS / FAIL
+
+PHASE 5: DEPLOYMENT
+□ [  ] Git commit created
+□ [  ] Pushed to remote
+□ [  ] Post-deploy test passed
+
+SIGN-OFF
+□ [  ] All tests passed
+□ [  ] Agent ready for use
+Verified by: _________________ Date: _________
 ```
 
 ---
