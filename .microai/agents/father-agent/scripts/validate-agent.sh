@@ -66,29 +66,39 @@ else
     exit 1
 fi
 
-# Check command file - MUST be in .claude/commands/microai/ (NOT .microai/commands/)
-# Claude Code only reads from .claude/commands/
-CMD_PATH_CORRECT=".claude/commands/microai/${AGENT_NAME%-agent}.md"
-CMD_PATH_CORRECT_FULL=".claude/commands/microai/$AGENT_NAME.md"
-CMD_PATH_WRONG=".microai/commands/$AGENT_NAME.md"
-CMD_PATH_WRONG_SHORT=".microai/commands/${AGENT_NAME%-agent}.md"
+# Check command file - 2-step process:
+# Step 1 (BUILD): .microai/commands/{name}.md (source/library)
+# Step 2 (REGISTER): .claude/commands/microai/{name}.md (runtime - copy/symlink from source)
 
-if [ -f "$CMD_PATH_CORRECT" ]; then
-    print_pass "Command file exists at $CMD_PATH_CORRECT (correct location)"
-    ACTIVE_CMD_PATH="$CMD_PATH_CORRECT"
-elif [ -f "$CMD_PATH_CORRECT_FULL" ]; then
-    print_pass "Command file exists at $CMD_PATH_CORRECT_FULL (correct location)"
-    ACTIVE_CMD_PATH="$CMD_PATH_CORRECT_FULL"
-elif [ -f "$CMD_PATH_WRONG" ] || [ -f "$CMD_PATH_WRONG_SHORT" ]; then
-    print_fail "Command file in WRONG location (.microai/commands/)"
-    print_fail "MUST be at .claude/commands/microai/{name}.md"
-    print_info "Fix: mv .microai/commands/{name}.md .claude/commands/microai/"
-    ERRORS=$((ERRORS + 1))
-    ACTIVE_CMD_PATH=""
+CMD_SOURCE=".microai/commands/${AGENT_NAME%-agent}.md"
+CMD_SOURCE_FULL=".microai/commands/$AGENT_NAME.md"
+CMD_RUNTIME=".claude/commands/microai/${AGENT_NAME%-agent}.md"
+CMD_RUNTIME_FULL=".claude/commands/microai/$AGENT_NAME.md"
+
+# Check source (library)
+if [ -f "$CMD_SOURCE" ]; then
+    print_pass "Source command: $CMD_SOURCE"
+    ACTIVE_CMD_PATH="$CMD_SOURCE"
+elif [ -f "$CMD_SOURCE_FULL" ]; then
+    print_pass "Source command: $CMD_SOURCE_FULL"
+    ACTIVE_CMD_PATH="$CMD_SOURCE_FULL"
 else
-    print_warn "Command file not found at .claude/commands/microai/"
+    print_warn "Source command not found in .microai/commands/"
     WARNINGS=$((WARNINGS + 1))
     ACTIVE_CMD_PATH=""
+fi
+
+# Check runtime (registered)
+if [ -f "$CMD_RUNTIME" ] || [ -f "$CMD_RUNTIME_FULL" ]; then
+    print_pass "Runtime registered: .claude/commands/microai/"
+else
+    if [ -n "$ACTIVE_CMD_PATH" ]; then
+        print_warn "Not registered yet. Run: cp $ACTIVE_CMD_PATH .claude/commands/microai/"
+        WARNINGS=$((WARNINGS + 1))
+    else
+        print_warn "Runtime not registered in .claude/commands/microai/"
+        WARNINGS=$((WARNINGS + 1))
+    fi
 fi
 
 # Check knowledge directory

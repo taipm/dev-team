@@ -151,10 +151,11 @@ WORKFLOW: Create New Agent
        → Include anti-patterns
    5.2 Tạo knowledge-index.yaml
 
-6. Create command entry
+6. Create command entry (2-Step)
    6.1 Load template từ knowledge/02-command-template.md
-   6.2 Write to .claude/commands/microai/{agent-name}.md
-       CRITICAL: PHẢI là .claude/commands/microai/ không phải .microai/commands/
+   6.2 Step 1 - BUILD: Write to .microai/commands/{agent-name}.md (source/library)
+   6.3 Step 2 - REGISTER: Copy to .claude/commands/microai/{agent-name}.md (runtime)
+       Command: cp .microai/commands/{name}.md .claude/commands/microai/
 
 7. Verify
    7.1 Check tất cả files đã tạo
@@ -297,18 +298,26 @@ PHASE 3: CONTENT GENERATION
         - Keyword mapping
         - File descriptions
 
-PHASE 4: REGISTRATION
+PHASE 4: REGISTRATION (2-Step Process)
 │
-├─→ 4.1 Create command entry
-│       CRITICAL: Command files PHẢI ở .claude/commands/microai/{name}.md
-│       KHÔNG PHẢI .microai/commands/ (Claude Code không đọc được)
+├─→ 4.1 Step 1: BUILD - Create command in LIBRARY
+│       Write to: .microai/commands/{name}.md
+│       This is the SOURCE/LIBRARY location
+│       → Validate với validation script
 │
-│       Path đúng: .claude/commands/microai/{name}.md
-│       Path sai:  .microai/commands/{name}.md ❌
+├─→ 4.2 Step 2: REGISTER - Copy to RUNTIME
+│       Copy to: .claude/commands/microai/{name}.md
+│       Command: cp .microai/commands/{name}.md .claude/commands/microai/
+│       → This enables the slash command in Claude Code
 │
-└─→ 4.2 Verify paths
-        - agent.md accessible at .microai/agents/{name}/agent.md
-        - Command file at .claude/commands/microai/{name}.md
+│       Structure:
+│       .microai/commands/{name}.md           ← Source (library)
+│       .claude/commands/microai/{name}.md    ← Runtime (activated)
+│
+└─→ 4.3 Verify paths
+        - agent.md at .microai/agents/{name}/agent.md
+        - Source command at .microai/commands/{name}.md
+        - Runtime command at .claude/commands/microai/{name}.md
         - Knowledge files accessible
 
 PHASE 5: VERIFICATION
@@ -394,16 +403,19 @@ PHASE 9: TESTING & VALIDATION
 │
 ├─→ 9.2 Structure Validation
 │       □ agent.md exists and readable
-│       □ Command file in correct location (.microai/commands/)
+│       □ Source command at .microai/commands/{name}.md (library)
 │       □ Knowledge files exist (if referenced)
 │       □ knowledge-index.yaml valid (if exists)
 │       Command: ls -la .microai/agents/{name}/
 │
-├─→ 9.3 Command Registration Test
-│       □ Command file at .claude/commands/microai/{name}.md (NOT .microai/commands/)
+├─→ 9.3 Command Registration Test (2-Step)
+│       □ Step 1: Source exists at .microai/commands/{name}.md
+│       □ Step 2: Runtime registered at .claude/commands/microai/{name}.md
 │       □ Frontmatter has name and description
 │       □ LOAD path points to correct agent.md
-│       Command: cat .claude/commands/microai/{name}.md
+│       Commands:
+│         cat .microai/commands/{name}.md           # Check source
+│         cat .claude/commands/microai/{name}.md    # Check runtime
 │
 ├─→ 9.4 Activation Test (Manual)
 │       □ Start new Claude Code session
@@ -426,10 +438,10 @@ PHASE 9: TESTING & VALIDATION
 PHASE 10: DEPLOYMENT & CONFIRMATION
 │
 ├─→ 10.1 Git Commit
-│       □ Stage all new files
+│       □ Stage all new files (both source and runtime)
 │       □ Write descriptive commit message
 │       □ Include: feat(agents): add {agent-name}
-│       Command: git add .microai/agents/{name}/ .claude/commands/microai/{name}.md
+│       Command: git add .microai/agents/{name}/ .microai/commands/{name}.md .claude/commands/microai/{name}.md
 │
 ├─→ 10.2 Push to Remote
 │       □ Push to main/develop branch
@@ -553,9 +565,10 @@ PHASE 1: SYNTAX & STRUCTURE
 □ [  ] Required fields: name, description, model, tools, language
 □ [  ] Style fields: color, icon
 □ [  ] agent.md in correct location (.microai/agents/{name}/agent.md)
-□ [  ] Command file in .claude/commands/microai/{name}.md (NOT .microai/commands/)
 
-PHASE 2: COMMAND REGISTRATION
+PHASE 2: COMMAND REGISTRATION (2-Step)
+□ [  ] Step 1 - Source: .microai/commands/{name}.md exists (library)
+□ [  ] Step 2 - Runtime: .claude/commands/microai/{name}.md exists (activated)
 □ [  ] Command file has correct frontmatter
 □ [  ] LOAD path points to agent.md
 □ [  ] Command name matches agent name
@@ -654,9 +667,12 @@ Verified by: _________________ Date: _________
 ### Command Entry Checklist
 
 ```
-□ Location (CRITICAL)
-  □ File at .claude/commands/microai/{name}.md
-  □ NOT at .microai/commands/ (Claude Code không đọc được)
+□ Location (2-Step Process)
+  □ Step 1 - BUILD: .microai/commands/{name}.md (source/library)
+  □ Step 2 - REGISTER: .claude/commands/microai/{name}.md (runtime)
+
+  Note: Source is the authoritative version in library
+        Runtime is copy/symlink for Claude Code activation
 
 □ Frontmatter
   □ name matches agent
