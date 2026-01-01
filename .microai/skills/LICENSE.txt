@@ -1,0 +1,44 @@
+Anthropic Skills License Information
+=====================================
+
+This directory contains skills from the Anthropic Skills Repository
+(https://github.com/anthropics/skills).
+
+LICENSING STRUCTURE
+-------------------
+
+Skills in this repository are released under two different license types:
+
+1. APACHE 2.0 LICENSE (Open Source)
+   Applies to: Most skills in development-skills/, design-skills/,
+   and communication-skills/ categories.
+
+   You may freely use, modify, and distribute these skills under the
+   terms of the Apache License, Version 2.0.
+
+2. PROPRIETARY LICENSE (Source-Available)
+   Applies to: Document skills (docx, pdf, pptx, xlsx)
+
+   These skills are provided for reference and personal use only.
+   Commercial use requires a separate license from Anthropic.
+   See individual LICENSE.txt files in each skill directory for details.
+
+
+THIRD PARTY NOTICES
+-------------------
+
+See THIRD_PARTY_NOTICES.md for attribution of third-party components
+used in these skills (fonts, libraries, etc.).
+
+
+ORIGINAL SOURCE
+---------------
+
+All skills originated from: https://github.com/anthropics/skills
+Modifications include:
+- Vietnamese translations (description_vi fields)
+- Directory reorganization by category
+- Registry and documentation updates
+
+For the most up-to-date versions and official support, please refer
+to the original Anthropic repository.
