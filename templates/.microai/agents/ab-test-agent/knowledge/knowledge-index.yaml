@@ -1,0 +1,265 @@
+# AB Test Agent Knowledge Index
+# Smart loading based on topic detection
+
+version: "1.0"
+agent: ab-test-agent
+
+# Core files - always load
+core_files:
+  - 01-statistical-frameworks.md
+
+# Topic detection with weighted scoring
+topic_detection:
+  thresholds:
+    clear_winner: 15
+    ambiguous: 10
+    default_mode: design
+
+  categories:
+    design:
+      indicators:
+        - pattern: "thiết kế|design|plan|setup|tạo"
+          weight: 10
+        - pattern: "sample size|power|mde"
+          weight: 10
+        - pattern: "hypothesis|giả thuyết|giả thiết"
+          weight: 8
+        - pattern: "metric|kpi|measure|đo"
+          weight: 7
+        - pattern: "new|mới|create|bắt đầu"
+          weight: 5
+        - pattern: "variant|control|treatment"
+          weight: 5
+      load_files:
+        - 01-statistical-frameworks.md
+        - 02-experiment-design.md
+      primary_framework: "Experiment Design Protocol"
+      description: "Thiết kế experiment mới"
+
+    analysis:
+      indicators:
+        - pattern: "analyze|phân tích|results|kết quả"
+          weight: 10
+        - pattern: "p-value|significance|confidence|significant"
+          weight: 10
+        - pattern: "conversion|rate|uplift|lift"
+          weight: 8
+        - pattern: "data|dữ liệu|numbers|số"
+          weight: 7
+        - pattern: "winner|loser|thắng|thua"
+          weight: 6
+        - pattern: "interpret|hiểu|đọc"
+          weight: 5
+      load_files:
+        - 01-statistical-frameworks.md
+        - 03-analysis-methods.md
+      primary_framework: "Statistical Analysis Protocol"
+      description: "Phân tích kết quả experiment"
+
+    review:
+      indicators:
+        - pattern: "review|đánh giá|audit|check"
+          weight: 10
+        - pattern: "mistake|sai|problem|issue|vấn đề"
+          weight: 8
+        - pattern: "pitfall|trap|bias|lỗi"
+          weight: 8
+        - pattern: "verify|validate|kiểm tra"
+          weight: 7
+        - pattern: "wrong|incorrect|bad"
+          weight: 6
+      load_files:
+        - 04-common-pitfalls.md
+        - 03-analysis-methods.md
+      primary_framework: "Experiment Audit Checklist"
+      description: "Audit và review experiment"
+
+    calculate:
+      indicators:
+        - pattern: "calculate|tính|compute"
+          weight: 10
+        - pattern: "sample size|cỡ mẫu"
+          weight: 10
+        - pattern: "duration|thời gian|bao lâu"
+          weight: 8
+        - pattern: "power|công suất"
+          weight: 8
+        - pattern: "how many|bao nhiêu"
+          weight: 6
+      load_files:
+        - 01-statistical-frameworks.md
+        - 02-experiment-design.md
+      primary_framework: "Sample Size Calculator"
+      description: "Tính sample size và duration"
+
+# Keyword mapping for direct file access
+keyword_mapping:
+  # Statistical methods
+  frequentist:
+    files: [01-statistical-frameworks.md]
+    priority: 1
+  bayesian:
+    files: [01-statistical-frameworks.md]
+    priority: 1
+  p-value:
+    files: [01-statistical-frameworks.md, 03-analysis-methods.md]
+    priority: 1
+  confidence:
+    files: [01-statistical-frameworks.md]
+    priority: 1
+  sequential:
+    files: [01-statistical-frameworks.md]
+    priority: 1
+
+  # Design topics
+  hypothesis:
+    files: [02-experiment-design.md]
+    priority: 1
+  metric:
+    files: [02-experiment-design.md]
+    priority: 1
+  randomization:
+    files: [02-experiment-design.md]
+    priority: 1
+  pre-registration:
+    files: [02-experiment-design.md]
+    priority: 1
+  variant:
+    files: [02-experiment-design.md]
+    priority: 1
+
+  # Analysis topics
+  srm:
+    files: [03-analysis-methods.md, 04-common-pitfalls.md]
+    priority: 1
+  segment:
+    files: [03-analysis-methods.md]
+    priority: 1
+  multiple testing:
+    files: [01-statistical-frameworks.md, 03-analysis-methods.md]
+    priority: 1
+  effect size:
+    files: [03-analysis-methods.md]
+    priority: 1
+
+  # Pitfalls
+  pitfall:
+    files: [04-common-pitfalls.md]
+    priority: 1
+  peeking:
+    files: [04-common-pitfalls.md]
+    priority: 1
+  p-hacking:
+    files: [04-common-pitfalls.md]
+    priority: 1
+  novelty:
+    files: [04-common-pitfalls.md]
+    priority: 1
+  bias:
+    files: [04-common-pitfalls.md]
+    priority: 1
+
+# File descriptions
+files:
+  01-statistical-frameworks.md:
+    title: "Statistical Frameworks"
+    description: "Core statistical methods: frequentist, Bayesian, sample size, confidence intervals"
+    lines: ~600
+    topics:
+      - Hypothesis testing
+      - Z-test, T-test, Chi-square
+      - Bayesian Beta-Binomial
+      - Sample size calculation
+      - Multiple testing correction
+      - Sequential testing
+
+  02-experiment-design.md:
+    title: "Experiment Design"
+    description: "Design patterns, templates, pre-registration, randomization"
+    lines: ~500
+    topics:
+      - Hypothesis formulation
+      - Metric selection
+      - Sample size planning
+      - Randomization design
+      - Variant design
+      - Pre-registration template
+
+  03-analysis-methods.md:
+    title: "Analysis Methods"
+    description: "Analysis workflow, interpretation, segment analysis, decision framework"
+    lines: ~500
+    topics:
+      - Pre-analysis validation
+      - Statistical analysis workflow
+      - Effect size interpretation
+      - Segment analysis
+      - Decision framework
+      - Common mistakes
+
+  04-common-pitfalls.md:
+    title: "Common Pitfalls"
+    description: "Pitfalls by phase: design, execution, analysis, interpretation"
+    lines: ~500
+    topics:
+      - Design pitfalls
+      - Execution pitfalls
+      - Analysis pitfalls
+      - Interpretation pitfalls
+      - Organizational pitfalls
+
+# Mode-specific workflows
+workflows:
+  design:
+    steps:
+      - Define hypothesis
+      - Choose metrics
+      - Calculate sample size
+      - Design variants
+      - Pre-register
+    output: "Experiment Design Document"
+
+  analysis:
+    steps:
+      - Validate data (SRM, runtime)
+      - Calculate statistics
+      - Interpret results
+      - Analyze segments
+      - Make decision
+    output: "Analysis Report"
+
+  review:
+    steps:
+      - Check design phase
+      - Check execution phase
+      - Check analysis phase
+      - Identify issues
+      - Provide recommendations
+    output: "Audit Report"
+
+  calculate:
+    steps:
+      - Get baseline rate
+      - Determine MDE
+      - Set power and significance
+      - Calculate sample size
+      - Estimate duration
+    output: "Sample Size Calculation"
+
+# Commands reference
+commands:
+  core:
+    - "*design - Bắt đầu design experiment mới"
+    - "*analyze - Phân tích results"
+    - "*review - Audit experiment"
+    - "*calculate - Sample size calculator"
+  mode:
+    - "*frequentist - Dùng frequentist approach"
+    - "*bayesian - Dùng Bayesian approach"
+    - "*auto - Tự động chọn method"
+  session:
+    - "*help - Hiển thị commands"
+    - "*frameworks - Xem statistical frameworks"
+    - "*pitfalls - Xem common pitfalls"
+    - "*summary - Tổng hợp session"
+    - "*exit - Kết thúc session"

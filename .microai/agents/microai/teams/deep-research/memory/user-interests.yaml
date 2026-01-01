@@ -1,0 +1,59 @@
+# User Research Interests
+# Populated during onboarding, can be updated anytime
+
+# Status: not_configured | configured
+status: configured
+
+# Research domains (arXiv categories)
+domains:
+  - cs.AI
+  - cs.LG
+
+# Specific topics/keywords to track
+topics:
+  - LLM
+  - large language model
+  - AI agents
+  - autonomous agents
+  - reasoning
+  - chain of thought
+
+# Keywords to exclude
+exclude:
+  - survey
+  - benchmark only
+
+# Reading preferences
+preferences:
+  # Max papers per digest
+  max_papers_per_day: 10
+
+  # Analysis depth: quick | standard | deep
+  analysis_depth: standard
+
+  # Minimum relevance score (0-1)
+  min_relevance: 0.6
+
+  # Prefer papers with code
+  prefer_code: true
+
+  # Language for output
+  output_language: vi
+
+# Authors to follow (optional)
+followed_authors: []
+
+# Tracked queries (automatically managed)
+tracked_queries:
+  - query: "cat:cs.AI OR cat:cs.LG"
+    added: "2024-12-31"
+  - query: "all:LLM agents"
+    added: "2024-12-31"
+  - query: "all:large language model reasoning"
+    added: "2024-12-31"
+
+# First configured
+configured_date: "2024-12-31"
+
+# Last updated
+last_updated: "2024-12-31"

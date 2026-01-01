@@ -1,0 +1,108 @@
+# Knowledge Index - Dev-Architect Team
+# Auto-loading rules for knowledge files
+
+version: "1.0"
+team: dev-architect
+
+# Knowledge files registry
+files:
+  - id: architecture-patterns
+    path: ./01-architecture-patterns.md
+    title: "Architecture Patterns"
+    description: "Monolith, Modular Monolith, Microservices, Communication patterns, Data patterns"
+    tokens_estimate: 2500
+
+  - id: adr-guide
+    path: ./02-adr-guide.md
+    title: "ADR Guide"
+    description: "Architecture Decision Records - templates, examples, best practices"
+    tokens_estimate: 2000
+
+  - id: system-design-checklist
+    path: ./03-system-design-checklist.md
+    title: "System Design Checklist"
+    description: "Comprehensive checklist for reviewing system designs"
+    tokens_estimate: 1800
+
+# Auto-load rules
+auto_load:
+  # Load based on session mode
+  by_mode:
+    design:
+      - architecture-patterns
+      - adr-guide
+    review:
+      - system-design-checklist
+      - adr-guide
+    adr:
+      - adr-guide
+      - architecture-patterns
+
+  # Load based on dialogue phase
+  by_phase:
+    init:
+      - architecture-patterns
+    analysis:
+      - system-design-checklist
+    synthesis:
+      - adr-guide
+
+  # Load based on keywords in topic
+  by_keyword:
+    # Architecture styles
+    microservices:
+      - architecture-patterns
+    monolith:
+      - architecture-patterns
+    modular:
+      - architecture-patterns
+
+    # Communication
+    event-driven:
+      - architecture-patterns
+    messaging:
+      - architecture-patterns
+    api:
+      - architecture-patterns
+
+    # Data patterns
+    cqrs:
+      - architecture-patterns
+    event-sourcing:
+      - architecture-patterns
+    database:
+      - architecture-patterns
+
+    # Documentation
+    adr:
+      - adr-guide
+    decision:
+      - adr-guide
+    document:
+      - adr-guide
+
+    # Review
+    review:
+      - system-design-checklist
+    checklist:
+      - system-design-checklist
+    scalability:
+      - system-design-checklist
+    security:
+      - system-design-checklist
+    performance:
+      - system-design-checklist
+
+# Priority levels for loading
+priority:
+  high:
+    - architecture-patterns  # Most commonly needed
+  medium:
+    - adr-guide
+  low:
+    - system-design-checklist  # Specific to review phase
+
+# Token budget management
+token_budget:
+  max_auto_load: 5000  # Maximum tokens to auto-load
+  prefer_summaries: true  # Load summaries first if over budget

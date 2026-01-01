@@ -1,92 +1,154 @@
-# dev-team
+# @microai.club/dev-team
 
-Hệ thống AI agents chuyên biệt cho phát triển phần mềm, được thiết kế để làm việc hiệu quả như một đội nhóm phát triển thực thụ.
+Claude Code configuration framework for development teams.
 
-## Agents Overview (8 total)
+Bộ công cụ cấu hình Claude Code cho team phát triển phần mềm - bao gồm agents, skills, commands và hooks system.
 
-### 🔴 Management Level
-- **Trường (agent-manager)** - Quản lý hệ thống agents và điều phối workflow
-- **Long (github-specialist)** - Git operations và repository management chuyên gia
+---
 
-### 🟡 Development Specialists
-- **Quy (python-agent)** - Python development specialist với modern practices
-- **Thành (go-agent)** - Go programming expert cho concurrent systems và microservices
-- **Minh (code-reviewer)** - Code quality và security reviewer chuyên nghiệp
-- **Hùng (debugger)** - Root cause analysis và troubleshooting specialist
+## Quick Start
 
-### 🟢 Domain Experts
-- **An (data-scientist)** - Data analysis expert với SQL/BigQuery specialization
-- **Dũng (math-teacher)** - Mathematics education specialist và bilingual documentation editor
-
-## Workflow Integration
-
-### Educational Content Development
-```
-math-teacher → code-reviewer → [LaTeX documentation]
-```
-
-### Software Development Pipeline
-```
-agent-manager → [python-agent|go-agent] → code-reviewer → github-specialist
-```
-
-### Data Analysis & Research
-```
-data-scientist + math-teacher → [Mathematical analysis & visualization]
-```
-
-### Bug Resolution
-```
-agent-manager → debugger → implement → code-reviewer
-```
-
-## Key Features
-
-- **Multi-Agent Coordination**: Agents work together seamlessly on complex tasks
-- **Bilingual Support**: Full Vietnamese-English documentation and education capabilities
-- **Specialized Expertise**: Each agent has deep domain knowledge
-- **Quality Assurance**: Built-in code review and debugging workflows
-- **Educational Focus**: Mathematical education and academic documentation support
-
-## Usage Examples
-
-### New Feature Development
 ```bash
-# Agent Manager assesses requirements and coordinates development
-agent-manager: "Tôi cần implement authentication system"
-→ python-agent: Implementation
-→ code-reviewer: Quality review
-→ github-specialist: Deployment
+npx @microai.club/dev-team@alpha install
 ```
 
-### Mathematical Documentation
+Xem [Hướng dẫn chi tiết](./docs/README.md) để biết thêm.
+
+---
+
+## Features
+
+- **Custom Agents** - Chuyên gia AI cho từng tác vụ cụ thể
+- **Skills Framework** - Bộ kiến thức có thể tái sử dụng
+- **Slash Commands** - Shortcuts cho các workflow thường dùng
+- **Hooks System** - Automation, logging và security
+- **Team Configuration** - Chia sẻ config qua Git
+
+---
+
+## Installation
+
+### NPX (Recommended)
+
 ```bash
-# Create bilingual mathematical content with LaTeX
-math-teacher: "Viết tài liệu giải tích song ngữ Việt-Anh"
-→ LaTeX document creation
-→ code-reviewer: Documentation review
+npx @microai.club/dev-team@alpha install
 ```
 
-### Data Analysis Project
+### Global Install
+
 ```bash
-# Complex data analysis with mathematical modeling
-data-scientist: SQL/BigQuery analysis
-math-teacher: Mathematical modeling
-→ Statistical insights and recommendations
+npm install -g @microai.club/dev-team
+dev-team install
 ```
 
-## Architecture
+### Options
 
-The system uses a hierarchical agent structure where `agent-manager` serves as the central coordinator, dispatching tasks to specialized agents based on requirements and complexity.
+| Option | Description |
+|--------|-------------|
+| `--no-interactive` | Cài đặt tất cả mà không hỏi |
+| `--force` | Ghi đè files hiện có |
+| `--path <path>` | Cài vào thư mục khác |
 
-Each agent maintains:
-- Domain-specific expertise
-- Workflow integration patterns
-- Quality assurance checkpoints
-- Collaboration protocols
+---
 
-## Getting Started
+## What Gets Installed
 
-To work with the agent system, specify your requirements and the appropriate agent(s) will be automatically selected based on task complexity and domain requirements.
+```
+your-project/
+├── .claude/
+│   ├── CLAUDE.md       # Project context
+│   ├── settings.json   # Team configuration
+│   ├── agents/         # Custom agents
+│   ├── skills/         # Custom skills
+│   └── commands/       # Slash commands
+└── .microai/
+    ├── agents/         # Advanced agents
+    └── hooks/          # Automation hooks
+```
 
-For educational content, mathematical documentation, or bilingual academic work, specify the `math-teacher` agent directly.
+---
+
+## Built-in Agents
+
+| Agent | Description |
+|-------|-------------|
+| Father Agent | Meta-agent để tạo agents khác |
+| Go Dev Agent | Chuyên gia Go development |
+| Go Refactor Agent | Refactoring với 5W2H workflow |
+| Go Review Agent | Code review style Linus Torvalds |
+| GitHub Agent | GitHub operations |
+| NPM Agent | NPM package management |
+| First Thinking | First principles analysis |
+
+Xem [danh sách đầy đủ](./docs/agents/built-in-agents.md).
+
+---
+
+## Documentation
+
+| Section | Description |
+|---------|-------------|
+| [Getting Started](./docs/getting-started/) | Cài đặt và bắt đầu |
+| [Guides](./docs/guides/) | Hướng dẫn chi tiết |
+| [Agents](./docs/agents/) | Agent documentation |
+| [Reference](./docs/reference/) | Technical specs |
+| [Contributing](./docs/contributing/) | Đóng góp code |
+| [FAQ](./docs/faq.md) | Câu hỏi thường gặp |
+
+**Documentation Hub:** [docs/README.md](./docs/README.md)
+
+---
+
+## Quick Examples
+
+### Create Agent
+
+```yaml
+# .claude/agents/reviewer.md
+---
+name: code-reviewer
+description: "Use for code review"
+tools: Read, Grep
+---
+
+# Code Reviewer
+Review code for quality and security.
+```
+
+### Create Command
+
+```yaml
+# .claude/commands/review.md
+---
+description: "Review code changes"
+---
+
+Review git diff for issues.
+Focus on: $ARGUMENTS
+```
+
+### Use Agent
+
+```
+/microai:go:go-dev
+```
+
+---
+
+## Contributing
+
+Xem [Contributing Guide](./docs/contributing/submitting-pr.md).
+
+---
+
+## Support
+
+- **Documentation:** [docs/](./docs/)
+- **Issues:** https://github.com/taipm/dev-team/issues
+- **NPM:** https://www.npmjs.com/package/@microai.club/dev-team
+
+---
+
+## License
+
+MIT

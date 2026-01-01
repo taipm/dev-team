@@ -1,0 +1,41 @@
+# Qdrant Agent Knowledge Index
+
+core_files:
+  - tools/qdrant_base.go
+  - tools/qdrant_admin.go
+  - tools/qdrant_collection.go
+  - tools/qdrant_dynamic.go
+
+keywords:
+  vector:
+    - vector
+    - embedding
+    - dimension
+    - similarity
+  search:
+    - search
+    - query
+    - semantic
+    - RAG
+    - retrieval
+  collection:
+    - collection
+    - create
+    - delete
+    - index
+  qdrant:
+    - qdrant
+    - point
+    - payload
+    - upsert
+
+critical_files:
+  - path: tools/qdrant_base.go
+    importance: HIGH
+    reason: Core search and upsert operations
+  - path: tools/qdrant_collection.go
+    importance: HIGH
+    reason: Collection lifecycle management
+  - path: tools/qdrant_admin.go
+    importance: MEDIUM
+    reason: Admin and monitoring operations

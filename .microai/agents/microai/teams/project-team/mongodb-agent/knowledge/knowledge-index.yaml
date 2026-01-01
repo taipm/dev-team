@@ -1,0 +1,88 @@
+# Knowledge Index - MongoDB Agent
+# Data Layer Specialist for database operations
+
+core_files:
+  - file: 01-schema-patterns.md
+    description: Schema design patterns cho collections
+    load_when:
+      - designing new collection
+      - modifying schema
+      - adding validation
+
+  - file: 02-index-strategies.md
+    description: Index optimization strategies
+    load_when:
+      - optimizing queries
+      - adding indexes
+      - debugging slow queries
+
+  - file: 03-validation-rules.md
+    description: Validation patterns và rules
+    load_when:
+      - adding schema validation
+      - preventing bad data
+      - debugging validation errors
+
+keywords:
+  schema:
+    - collection
+    - schema
+    - struct
+    - bson
+    - field
+    - type
+
+  indexes:
+    - index
+    - query
+    - performance
+    - slow
+    - compound
+    - ttl
+    - unique
+
+  validation:
+    - validate
+    - validation
+    - required
+    - constraint
+    - error
+
+critical_files:
+  - path: internal/database/provider.go
+    importance: HIGH
+    rule: Thread-safe database access
+
+  - path: internal/database/schema.go
+    importance: HIGH
+    rule: Collection schema definitions
+
+  - path: internal/database/indexes.go
+    importance: HIGH
+    rule: All database indexes
+
+  - path: internal/database/validation.go
+    importance: MEDIUM
+    rule: Validation interface
+
+common_tasks:
+  add_collection:
+    files:
+      - schema.go
+      - indexes.go
+    tests:
+      - schema_test.go
+      - indexes_test.go
+
+  optimize_query:
+    files:
+      - indexes.go
+    tests:
+      - indexes_test.go
+
+  add_validation:
+    files:
+      - validation.go
+      - validation_impl.go
+    tests:
+      - validation_test.go

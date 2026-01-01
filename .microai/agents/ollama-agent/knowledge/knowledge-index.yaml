@@ -1,0 +1,56 @@
+# Knowledge Index for Ollama Agent
+# Load files based on task context
+
+core_files:
+  - file: 01-translation-guidelines.md
+    description: Quy tắc dịch EN→VI cơ bản
+    load_when:
+      - translate
+      - review
+      - quality_check
+
+  - file: 02-technical-terms.md
+    description: Seed glossary thuật ngữ kỹ thuật
+    load_when:
+      - translate
+      - glossary
+      - terminology
+
+  - file: 03-markdown-handling.md
+    description: Xử lý markdown formatting
+    load_when:
+      - translate
+      - format_check
+
+keywords:
+  translate:
+    - 01-translation-guidelines.md
+    - 03-markdown-handling.md
+
+  glossary:
+    - 02-technical-terms.md
+
+  format:
+    - 03-markdown-handling.md
+
+  quality:
+    - 01-translation-guidelines.md
+    - 02-technical-terms.md
+
+default_load:
+  - 01-translation-guidelines.md
+
+loading_strategy: |
+  1. Always load glossary from memory/glossary.md
+  2. Load 01-translation-guidelines.md for any translation task
+  3. Load 03-markdown-handling.md for complex documents
+  4. Load 02-technical-terms.md when adding new terms
+
+priority:
+  high:
+    - memory/glossary.md
+    - 01-translation-guidelines.md
+  medium:
+    - 03-markdown-handling.md
+  low:
+    - 02-technical-terms.md

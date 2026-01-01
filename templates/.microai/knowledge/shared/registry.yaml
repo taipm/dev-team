@@ -1,0 +1,48 @@
+# Shared Knowledge Registry
+# Cross-team knowledge files that can be referenced by multiple teams
+# Version: 1.0 (per ADR-001)
+
+knowledge:
+  # Security knowledge - used by dev-security, dev-qa
+  owasp-top-10:
+    path: owasp-top-10.md
+    tokens_estimate: 3000
+    tags: [security, vulnerabilities, web-security]
+    applicable_teams: [dev-security, dev-qa]
+    description: OWASP Top 10 security vulnerabilities reference
+
+  # Estimation knowledge - used by pm-dev, dev-architect
+  estimation-techniques:
+    path: estimation-techniques.md
+    tokens_estimate: 2000
+    tags: [estimation, planning, agile]
+    applicable_teams: [pm-dev, dev-architect]
+    description: Software estimation techniques and best practices
+
+  # User story patterns - used by pm-dev, dev-qa
+  user-story-patterns:
+    path: user-story-patterns.md
+    tokens_estimate: 1500
+    tags: [agile, requirements, user-stories]
+    applicable_teams: [pm-dev, dev-qa]
+    description: User story writing patterns and INVEST criteria
+
+  # Architecture patterns - used by dev-architect, dev-security
+  architecture-patterns:
+    path: architecture-patterns.md
+    tokens_estimate: 2500
+    tags: [architecture, design-patterns, system-design]
+    applicable_teams: [dev-architect, dev-security]
+    description: Common software architecture patterns
+
+# Token budget configuration
+token_budget:
+  max_auto_load: 5000
+  strategy: priority_then_skip
+  warning_threshold: 4000
+
+# Registry metadata
+metadata:
+  version: "1.0"
+  last_updated: "2024-12-31"
+  created_per: "ADR-001"

@@ -1,0 +1,142 @@
+/* Custom theme for @microai.club/dev-team documentation */
+
+/* Color scheme */
+:root {
+  --microai-primary: #6366f1;
+  --microai-secondary: #8b5cf6;
+  --microai-accent: #06b6d4;
+  --microai-success: #10b981;
+  --microai-warning: #f59e0b;
+  --microai-error: #ef4444;
+}
+
+/* Links */
+a {
+  color: var(--microai-primary);
+}
+
+a:hover {
+  color: var(--microai-secondary);
+}
+
+/* Code blocks */
+pre {
+  border-radius: 8px;
+  border-left: 4px solid var(--microai-primary);
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+th {
+  background-color: var(--microai-primary);
+  color: white;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+/* Blockquotes / Callouts */
+blockquote {
+  border-left: 4px solid var(--microai-accent);
+  background-color: rgba(6, 182, 212, 0.05);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+blockquote strong {
+  color: var(--microai-primary);
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+h1 {
+  border-bottom: 2px solid var(--microai-primary);
+  padding-bottom: 0.5rem;
+}
+
+/* Navigation */
+.sidebar .sidebar-scrollbox {
+  background-color: #f9fafb;
+}
+
+.sidebar .chapter a.active {
+  color: var(--microai-primary);
+  font-weight: 600;
+}
+
+/* Footer */
+.nav-chapters {
+  font-size: 0.875rem;
+}
+
+/* Print styles */
+@media print {
+  .sidebar,
+  .nav-chapters,
+  .menu-bar {
+    display: none !important;
+  }
+
+  .content {
+    max-width: 100% !important;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Vietnamese-specific typography */
+html[lang="vi"] {
+  font-family: 'Noto Sans', 'Segoe UI', sans-serif;
+}
+
+/* Badge styles for markers */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-required {
+  background-color: var(--microai-error);
+  color: white;
+}
+
+.badge-optional {
+  background-color: #d1d5db;
+  color: #374151;
+}
+
+.badge-deprecated {
+  background-color: var(--microai-warning);
+  color: white;
+}

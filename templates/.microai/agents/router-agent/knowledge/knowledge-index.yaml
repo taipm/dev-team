@@ -1,0 +1,56 @@
+# Router Agent Knowledge Index
+
+core_files:
+  - services/agentrouter/router.go
+  - services/agentrouter/config.go
+  - services/agentrouter/signals.go
+  - services/agentrouter/prompt_provider.go
+  - services/agentrouter/types.go
+  - app/router.go
+
+keywords:
+  agent_routing:
+    - agent router
+    - routing
+    - route
+    - handoff
+    - signal
+    - orchestrator
+  session:
+    - session
+    - session state
+    - conversation
+    - context
+  http_routing:
+    - http
+    - endpoint
+    - handler
+    - chi
+    - middleware
+  signals:
+    - ROUTE_HPSM
+    - ROUTE_ORCHESTRATOR
+    - DONE
+    - signal parser
+
+critical_files:
+  - path: services/agentrouter/router.go
+    importance: CRITICAL
+    reason: Core agent routing logic
+  - path: services/agentrouter/signals.go
+    importance: HIGH
+    reason: Signal detection for handoffs
+  - path: app/router.go
+    importance: HIGH
+    reason: HTTP endpoint definitions
+
+patterns:
+  - name: AgentRouter interface
+    file: services/agentrouter/router.go
+    description: RouteMessage, ProcessSignal, Handoff, GetCurrentAgent
+  - name: Session management
+    file: services/agentrouter/router.go
+    description: getOrCreateSession with mutex
+  - name: HTTP routing
+    file: app/router.go
+    description: Chi router with middleware

@@ -1,0 +1,34 @@
+# Admin Handler Agent Knowledge Index
+
+core_files:
+  - handlers/admin_conversation.go
+  - handlers/admin_pattern_yaml.go
+  - handlers/admin_usage_handler.go
+  - handlers/admin_yaml_files.go
+  - handlers/yaml_config.go
+  - handlers/backup_admin.go
+
+keywords:
+  admin:
+    - admin
+    - management
+    - dashboard
+  config:
+    - config
+    - yaml
+    - settings
+  backup:
+    - backup
+    - restore
+    - export
+
+critical_files:
+  - path: handlers/yaml_config.go
+    importance: HIGH
+    reason: Core YAML configuration management
+  - path: handlers/admin_usage_handler.go
+    importance: HIGH
+    reason: Usage statistics and reporting
+  - path: handlers/backup_admin.go
+    importance: MEDIUM
+    reason: Backup and restore operations

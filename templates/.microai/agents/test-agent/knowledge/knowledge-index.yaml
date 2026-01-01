@@ -1,0 +1,54 @@
+# Test Agent Knowledge Index
+
+core_files:
+  - tests/e2e/suite.go
+  - tests/e2e/chat_test.go
+  - tests/integration/
+  - internal/testutil/
+
+keywords:
+  e2e:
+    - e2e
+    - end to end
+    - end-to-end
+    - suite
+    - integration
+  testing:
+    - test
+    - testing
+    - coverage
+    - assert
+    - require
+    - mock
+  patterns:
+    - table driven
+    - table-driven
+    - benchmark
+    - race
+    - flaky
+
+critical_files:
+  - path: tests/e2e/suite.go
+    importance: CRITICAL
+    reason: Core E2E test infrastructure
+  - path: internal/testutil/
+    importance: HIGH
+    reason: Shared test utilities
+
+patterns:
+  - name: E2E Suite
+    file: tests/e2e/suite.go
+    description: NewSuite, SendChatMessage, session tracking
+  - name: Table-driven tests
+    file: various *_test.go
+    description: tests := []struct{...} pattern
+  - name: Skip helpers
+    file: tests/e2e/suite.go
+    description: SkipIfNoServer, SkipIfNoLLM
+
+commands:
+  run_all: "go test ./..."
+  run_coverage: "go test -cover ./..."
+  run_e2e: "E2E_AUTH_TOKEN=xxx go test ./tests/e2e/..."
+  run_race: "go test -race ./..."
+  run_verbose: "go test -v ./..."

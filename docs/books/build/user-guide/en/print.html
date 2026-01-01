@@ -1,0 +1,1466 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>User Guide - @microai.club/dev-team</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Complete user guide for dev-team framework">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "ayu";
+            window.path_to_searchindex_js = "searchindex-0ea592f6.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-eb784f19.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">User Guide - @microai.club/dev-team</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/taipm/dev-team" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="user-guide---microaiclubdev-team"><a class="header" href="#user-guide---microaiclubdev-team">User Guide - @microai.club/dev-team</a></h1>
+<p>Welcome to the <strong>User Guide</strong> for the dev-team framework!</p>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p><strong>@microai.club/dev-team</strong> is a Claude Code configuration framework for software development teams. This framework provides:</p>
+<ul>
+<li><strong>Agents</strong> - Specialized AI assistants for specific tasks</li>
+<li><strong>Teams</strong> - Groups of agents coordinating to solve complex problems</li>
+<li><strong>Commands</strong> - Slash commands to quickly invoke agents</li>
+<li><strong>Skills</strong> - Reusable capabilities for various situations</li>
+</ul>
+<h2 id="who-is-this-book-for"><a class="header" href="#who-is-this-book-for">Who Is This Book For?</a></h2>
+<p>This book is for <strong>users</strong> who want to:</p>
+<ul>
+<li>Install and configure dev-team in their projects</li>
+<li>Use the built-in agents and teams</li>
+<li>Apply effective workflows to their daily work</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: If you want to <strong>create new</strong> agents or teams, please refer to the <a href="../../developer-guide/en/src/README.html">Developer Guide</a>.</p>
+</blockquote>
+<h2 id="how-to-read-this-book"><a class="header" href="#how-to-read-this-book">How to Read This Book</a></h2>
+<h3 id="beginners"><a class="header" href="#beginners">Beginners</a></h3>
+<ol>
+<li>Start with <a href="#installation">Part 1: Getting Started</a></li>
+<li>Follow the <a href="#5-minute-quickstart">5-Minute Quickstart</a></li>
+<li>Explore the <a href="#built-in-agents-1">Built-in Agents</a></li>
+</ol>
+<h3 id="experienced-users"><a class="header" href="#experienced-users">Experienced Users</a></h3>
+<ul>
+<li>Refer to <a href="#team-overview">Part 3: Teams</a> to learn about multi-agent coordination</li>
+<li>Check <a href="#use-cases">Real-World Workflows</a> for specific use cases</li>
+</ul>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<p>Before getting started, you need:</p>
+<ul>
+<li><strong>Claude Code</strong> (Anthropic’s CLI for Claude)</li>
+<li><strong>Node.js</strong> &gt;= 18.0.0</li>
+<li><strong>npm</strong> or <strong>pnpm</strong></li>
+</ul>
+<h2 id="quick-links"><a class="header" href="#quick-links">Quick Links</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Topic</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="#installation">Installation</a></td><td>How to install dev-team</td></tr>
+<tr><td><a href="#5-minute-quickstart">Quickstart</a></td><td>Get started in 5 minutes</td></tr>
+<tr><td><a href="#agent-overview">Agents</a></td><td>Learn about AI agents</td></tr>
+<tr><td><a href="#team-overview">Teams</a></td><td>Multi-agent coordination</td></tr>
+<tr><td><a href="#slash-commands">Commands</a></td><td>Slash commands reference</td></tr>
+<tr><td><a href="#faq">FAQ</a></td><td>Frequently asked questions</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="updates"><a class="header" href="#updates">Updates</a></h2>
+<p>This book is updated regularly. Current version: <strong>v1.0.0-alpha</strong></p>
+<hr>
+<p>Let’s get started with <a href="#installation">Installation</a>!</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>Guide to installing <strong>@microai.club/dev-team</strong> in your project.</p>
+<h2 id="system-requirements"><a class="header" href="#system-requirements">System Requirements</a></h2>
+<p>Before installation, ensure you have:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Requirement</th><th>Version</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td>Node.js</td><td>&gt;= 18.0.0</td><td><a href="https://nodejs.org/">Download</a></td></tr>
+<tr><td>npm</td><td>&gt;= 8.0.0</td><td>Comes with Node.js</td></tr>
+<tr><td>Claude Code</td><td>Latest</td><td><a href="https://claude.ai/code">Installation guide</a></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="check-current-versions"><a class="header" href="#check-current-versions">Check Current Versions</a></h3>
+<pre><code class="language-bash"># Check Node.js
+node --version  # Result: v18.x.x or higher
+
+# Check npm
+npm --version   # Result: 8.x.x or higher
+</code></pre>
+<h2 id="quick-installation"><a class="header" href="#quick-installation">Quick Installation</a></h2>
+<h3 id="using-npx-recommended"><a class="header" href="#using-npx-recommended">Using npx (Recommended)</a></h3>
+<pre><code class="language-bash"># Navigate to your project directory
+cd your-project
+
+# Run the installer
+npx @microai.club/dev-team@alpha install
+</code></pre>
+<h3 id="global-installation"><a class="header" href="#global-installation">Global Installation</a></h3>
+<pre><code class="language-bash"># Install the package
+npm install -g @microai.club/dev-team@alpha
+
+# Run the installer
+dev-team install
+</code></pre>
+<h2 id="installation-process"><a class="header" href="#installation-process">Installation Process</a></h2>
+<p>When running <code>dev-team install</code>, you’ll see:</p>
+<h3 id="1-component-selection"><a class="header" href="#1-component-selection">1. Component Selection</a></h3>
+<pre><code>? Select components to install:
+  ◉ CLAUDE.md (project context)
+  ◉ settings.json (team configuration)
+  ◉ agents/ (agent templates)
+  ◉ skills/ (skill templates)
+  ◉ commands/ (slash commands)
+  ◉ MicroAI Framework (.microai/)
+  ◉ Hooks (automation)
+</code></pre>
+<h3 id="2-handle-existing-directories"><a class="header" href="#2-handle-existing-directories">2. Handle Existing Directories</a></h3>
+<p>If your project already has <code>.claude/</code> or <code>.microai/</code>:</p>
+<pre><code>? Directory .claude/ already exists. What do you want to do?
+  ❯ Merge (keep existing, add new)
+    Overwrite (replace all)
+    Cancel
+</code></pre>
+<blockquote>
+<p><strong>Recommended</strong>: Choose <strong>Merge</strong> to preserve your existing configuration.</p>
+</blockquote>
+<h3 id="3-completion"><a class="header" href="#3-completion">3. Completion</a></h3>
+<pre><code>✔ Installation successful!
+
+Created structure:
+├── .claude/
+│   ├── CLAUDE.md
+│   ├── settings.json
+│   ├── agents/
+│   ├── skills/
+│   └── commands/
+└── .microai/
+    ├── agents/
+    ├── commands/
+    ├── hooks/
+    └── kanban/
+</code></pre>
+<h2 id="installation-options"><a class="header" href="#installation-options">Installation Options</a></h2>
+<h3 id="non-interactive-mode"><a class="header" href="#non-interactive-mode">Non-interactive Mode</a></h3>
+<pre><code class="language-bash"># Install everything without prompts
+dev-team install --no-interactive
+</code></pre>
+<h3 id="force-overwrite"><a class="header" href="#force-overwrite">Force Overwrite</a></h3>
+<pre><code class="language-bash"># Overwrite all existing files
+dev-team install --force
+</code></pre>
+<h3 id="custom-path"><a class="header" href="#custom-path">Custom Path</a></h3>
+<pre><code class="language-bash"># Install to a different directory
+dev-team install --path /path/to/project
+</code></pre>
+<h3 id="combined-options"><a class="header" href="#combined-options">Combined Options</a></h3>
+<pre><code class="language-bash"># Force install to specific path
+dev-team install --path /path/to/project --force --no-interactive
+</code></pre>
+<h2 id="post-installation"><a class="header" href="#post-installation">Post-Installation</a></h2>
+<h3 id="1-configure-settingslocaljson"><a class="header" href="#1-configure-settingslocaljson">1. Configure settings.local.json</a></h3>
+<p>Create <code>.claude/settings.local.json</code> for personal configuration:</p>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)"
+    ]
+  }
+}
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: This file should not be committed to git.</p>
+</blockquote>
+<h3 id="2-add-to-gitignore"><a class="header" href="#2-add-to-gitignore">2. Add to .gitignore</a></h3>
+<p>The installer automatically adds to <code>.gitignore</code>:</p>
+<pre><code># Claude Code local settings
+.claude/settings.local.json
+
+# MicroAI local settings
+.microai/settings.local.json
+.microai/logs/
+</code></pre>
+<h3 id="3-verify-installation"><a class="header" href="#3-verify-installation">3. Verify Installation</a></h3>
+<pre><code class="language-bash"># List installed components
+dev-team list
+</code></pre>
+<h2 id="uninstallation"><a class="header" href="#uninstallation">Uninstallation</a></h2>
+<p>To remove dev-team from your project:</p>
+<pre><code class="language-bash"># Remove directories
+rm -rf .claude/ .microai/
+</code></pre>
+<blockquote>
+<p><strong>Warning</strong>: This will delete all agents, skills, and custom configurations.</p>
+</blockquote>
+<h2 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h2>
+<h3 id="command-not-found-error"><a class="header" href="#command-not-found-error">“command not found” Error</a></h3>
+<pre><code class="language-bash"># Try with npx
+npx @microai.club/dev-team@alpha install
+
+# Or check PATH
+echo $PATH
+</code></pre>
+<h3 id="permission-denied-error"><a class="header" href="#permission-denied-error">Permission Denied Error</a></h3>
+<pre><code class="language-bash"># Add execute permission to hooks
+chmod +x .microai/hooks/**/*.sh
+</code></pre>
+<h3 id="npm-registry-error"><a class="header" href="#npm-registry-error">npm Registry Error</a></h3>
+<pre><code class="language-bash"># Check registry
+npm config get registry
+
+# Reset to default if needed
+npm config set registry https://registry.npmjs.org/
+</code></pre>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li><a href="#verifying-installation">Verify Installation</a></li>
+<li><a href="#initial-configuration">Initial Configuration</a></li>
+<li><a href="#5-minute-quickstart">5-Minute Quickstart</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="system-requirements-1"><a class="header" href="#system-requirements-1">System Requirements</a></h1>
+<p>Prerequisites for installing dev-team.</p>
+<h2 id="required-software"><a class="header" href="#required-software">Required Software</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Software</th><th>Version</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td>Node.js</td><td>&gt;= 18.0.0</td><td><a href="https://nodejs.org/">Download</a></td></tr>
+<tr><td>npm</td><td>&gt;= 8.0.0</td><td>Comes with Node.js</td></tr>
+<tr><td>Claude Code</td><td>Latest</td><td><a href="https://claude.ai/code">Installation guide</a></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="check-current-versions-1"><a class="header" href="#check-current-versions-1">Check Current Versions</a></h2>
+<pre><code class="language-bash"># Check Node.js
+node --version  # Should be v18.x.x or higher
+
+# Check npm
+npm --version   # Should be 8.x.x or higher
+</code></pre>
+<h2 id="installing-nodejs"><a class="header" href="#installing-nodejs">Installing Node.js</a></h2>
+<h3 id="macos"><a class="header" href="#macos">macOS</a></h3>
+<pre><code class="language-bash"># Using Homebrew
+brew install node@18
+
+# Or download from nodejs.org
+</code></pre>
+<h3 id="linux"><a class="header" href="#linux">Linux</a></h3>
+<pre><code class="language-bash"># Using nvm (recommended)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+nvm install 18
+nvm use 18
+</code></pre>
+<h3 id="windows"><a class="header" href="#windows">Windows</a></h3>
+<p>Download installer from <a href="https://nodejs.org/">nodejs.org</a></p>
+<h2 id="installing-claude-code"><a class="header" href="#installing-claude-code">Installing Claude Code</a></h2>
+<p>Claude Code is required to run dev-team agents and teams.</p>
+<ol>
+<li>Get subscription at <a href="https://claude.ai/code">claude.ai/code</a></li>
+<li>Install Claude Code CLI</li>
+<li>Login with your account</li>
+</ol>
+<h2 id="see-also"><a class="header" href="#see-also">See Also</a></h2>
+<ul>
+<li><a href="#installing-via-npm">Installing via npm</a></li>
+<li><a href="#verifying-installation">Verifying Installation</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installing-via-npm"><a class="header" href="#installing-via-npm">Installing via npm</a></h1>
+<p>Detailed guide for installing dev-team via npm.</p>
+<h2 id="quick-install"><a class="header" href="#quick-install">Quick Install</a></h2>
+<pre><code class="language-bash">cd your-project
+npx @microai.club/dev-team@alpha install
+</code></pre>
+<h2 id="installation-options-1"><a class="header" href="#installation-options-1">Installation Options</a></h2>
+<h3 id="interactive-mode-default"><a class="header" href="#interactive-mode-default">Interactive Mode (Default)</a></h3>
+<pre><code class="language-bash">npx @microai.club/dev-team@alpha install
+</code></pre>
+<p>The wizard will ask about:</p>
+<ul>
+<li>Components to install</li>
+<li>How to handle existing directories</li>
+</ul>
+<h3 id="non-interactive-mode-1"><a class="header" href="#non-interactive-mode-1">Non-interactive Mode</a></h3>
+<pre><code class="language-bash">npx @microai.club/dev-team@alpha install --no-interactive
+</code></pre>
+<p>Installs all default components.</p>
+<h3 id="force-overwrite-1"><a class="header" href="#force-overwrite-1">Force Overwrite</a></h3>
+<pre><code class="language-bash">npx @microai.club/dev-team@alpha install --force
+</code></pre>
+<p>Overwrites all existing files.</p>
+<h3 id="custom-path-1"><a class="header" href="#custom-path-1">Custom Path</a></h3>
+<pre><code class="language-bash">npx @microai.club/dev-team@alpha install --path /path/to/project
+</code></pre>
+<h2 id="global-installation-1"><a class="header" href="#global-installation-1">Global Installation</a></h2>
+<p>To use as a CLI tool:</p>
+<pre><code class="language-bash">npm install -g @microai.club/dev-team@alpha
+dev-team install
+</code></pre>
+<h2 id="see-also-1"><a class="header" href="#see-also-1">See Also</a></h2>
+<ul>
+<li><a href="#verifying-installation">Verifying Installation</a></li>
+<li><a href="#initial-configuration">Initial Configuration</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="verifying-installation"><a class="header" href="#verifying-installation">Verifying Installation</a></h1>
+<p>Guide to confirm dev-team is installed correctly.</p>
+<h2 id="check-directory-structure"><a class="header" href="#check-directory-structure">Check Directory Structure</a></h2>
+<pre><code class="language-bash">ls -la .claude/ .microai/
+</code></pre>
+<p>Expected result:</p>
+<pre><code>.claude/
+├── CLAUDE.md
+├── settings.json
+├── agents/
+├── skills/
+└── commands/
+
+.microai/
+├── agents/
+├── commands/
+├── hooks/
+└── kanban/
+</code></pre>
+<h2 id="check-in-claude-code"><a class="header" href="#check-in-claude-code">Check in Claude Code</a></h2>
+<pre><code class="language-bash">claude
+</code></pre>
+<p>Type:</p>
+<pre><code>/help
+</code></pre>
+<p>If you see commands with <code>/microai:*</code>, installation was successful.</p>
+<h2 id="test-first-agent"><a class="header" href="#test-first-agent">Test First Agent</a></h2>
+<pre><code>/microai:deep-question
+</code></pre>
+<p>The agent will greet you and be ready for questions.</p>
+<h2 id="troubleshooting-1"><a class="header" href="#troubleshooting-1">Troubleshooting</a></h2>
+<h3 id="commands-not-visible"><a class="header" href="#commands-not-visible">Commands not visible</a></h3>
+<p>Check if <code>.claude/commands/</code> has files:</p>
+<pre><code class="language-bash">ls -la .claude/commands/
+</code></pre>
+<h3 id="permission-denied"><a class="header" href="#permission-denied">Permission denied</a></h3>
+<pre><code class="language-bash">chmod +x .microai/hooks/**/*.sh
+</code></pre>
+<h2 id="see-also-2"><a class="header" href="#see-also-2">See Also</a></h2>
+<ul>
+<li><a href="#initial-configuration">Initial Configuration</a></li>
+<li><a href="#5-minute-quickstart">5-Minute Quickstart</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="initial-configuration"><a class="header" href="#initial-configuration">Initial Configuration</a></h1>
+<p>Post-installation configuration guide.</p>
+<h2 id="configuration-files"><a class="header" href="#configuration-files">Configuration Files</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>File</th><th>Purpose</th><th>Commit to Git?</th></tr>
+</thead>
+<tbody>
+<tr><td><code>.claude/settings.json</code></td><td>Team settings</td><td>Yes</td></tr>
+<tr><td><code>.claude/settings.local.json</code></td><td>Personal settings</td><td>No</td></tr>
+<tr><td><code>.microai/settings.json</code></td><td>Framework settings</td><td>Yes</td></tr>
+<tr><td><code>.microai/settings.local.json</code></td><td>Personal settings</td><td>No</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="settingsjson"><a class="header" href="#settingsjson">settings.json</a></h2>
+<p>Team-shared configuration:</p>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)"
+    ],
+    "deny": [
+      "Read(.env)"
+    ]
+  }
+}
+</code></pre>
+<h2 id="settingslocaljson"><a class="header" href="#settingslocaljson">settings.local.json</a></h2>
+<p>Personal configuration (not committed):</p>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(docker:*)"
+    ]
+  }
+}
+</code></pre>
+<h2 id="create-settingslocaljson"><a class="header" href="#create-settingslocaljson">Create settings.local.json</a></h2>
+<pre><code class="language-bash">echo '{
+  "permissions": {
+    "allow": []
+  }
+}' &gt; .claude/settings.local.json
+</code></pre>
+<h2 id="update-gitignore"><a class="header" href="#update-gitignore">Update .gitignore</a></h2>
+<p>Ensure local files are ignored:</p>
+<pre><code># Claude Code local settings
+.claude/settings.local.json
+
+# MicroAI local settings
+.microai/settings.local.json
+.microai/logs/
+</code></pre>
+<h2 id="see-also-3"><a class="header" href="#see-also-3">See Also</a></h2>
+<ul>
+<li><a href="#directory-structure">Directory Structure</a></li>
+<li><a href="#settingsjson-1">settings.json Reference</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="directory-structure"><a class="header" href="#directory-structure">Directory Structure</a></h1>
+<p>Overview of directory structure after installation.</p>
+<h2 id="two-main-directories"><a class="header" href="#two-main-directories">Two Main Directories</a></h2>
+<pre><code>your-project/
+├── .claude/          # Claude Code configuration
+└── .microai/         # MicroAI framework
+</code></pre>
+<h2 id="claude---claude-code-configuration"><a class="header" href="#claude---claude-code-configuration">.claude/ - Claude Code Configuration</a></h2>
+<pre><code>.claude/
+├── CLAUDE.md           # Project context for Claude Code
+├── settings.json       # Team settings (shared)
+├── settings.local.json # Personal settings (git ignored)
+├── agents/             # Claude Code agents
+├── skills/             # Claude Code skills
+└── commands/           # Slash commands
+    └── microai/        # MicroAI commands
+</code></pre>
+<h2 id="microai---microai-framework"><a class="header" href="#microai---microai-framework">.microai/ - MicroAI Framework</a></h2>
+<pre><code>.microai/
+├── settings.json        # Framework settings
+├── agents/              # Agent definitions
+│   ├── father-agent/
+│   ├── npm-agent/
+│   └── microai/
+│       └── teams/       # Team definitions
+├── commands/            # Additional commands
+├── hooks/               # Automation hooks
+├── kanban/              # Task boards
+└── knowledge/           # Shared knowledge
+</code></pre>
+<h2 id="important-files"><a class="header" href="#important-files">Important Files</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>File</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>.claude/CLAUDE.md</code></td><td>Project context</td></tr>
+<tr><td><code>.claude/settings.json</code></td><td>Shared permissions</td></tr>
+<tr><td><code>.microai/agents/*/agent.md</code></td><td>Agent definitions</td></tr>
+<tr><td><code>.microai/agents/microai/teams/*/workflow.md</code></td><td>Team workflows</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="see-also-4"><a class="header" href="#see-also-4">See Also</a></h2>
+<ul>
+<li><a href="#settingsjson-1">settings.json</a></li>
+<li><a href="#settingslocaljson-1">settings.local.json</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="settingsjson-1"><a class="header" href="#settingsjson-1">settings.json</a></h1>
+<p>Team-shared configuration for dev-team.</p>
+<h2 id="location"><a class="header" href="#location">Location</a></h2>
+<pre><code>.claude/settings.json
+</code></pre>
+<h2 id="structure"><a class="header" href="#structure">Structure</a></h2>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "WebFetch(domain:github.com)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Bash(rm -rf:*)"
+    ]
+  }
+}
+</code></pre>
+<h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
+<h3 id="allow"><a class="header" href="#allow">allow</a></h3>
+<p>Patterns allowed without confirmation:</p>
+<pre><code class="language-json">"allow": [
+  "Bash(git:*)",        // All git commands
+  "Bash(npm:*)",        // All npm commands
+  "Read(**/*.go)",      // Read Go files
+  "WebFetch(domain:X)"  // Fetch from domain X
+]
+</code></pre>
+<h3 id="deny"><a class="header" href="#deny">deny</a></h3>
+<p>Blocked patterns:</p>
+<pre><code class="language-json">"deny": [
+  "Read(.env)",         // Don't read .env
+  "Bash(rm -rf:*)"      // No recursive delete
+]
+</code></pre>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="go-project"><a class="header" href="#go-project">Go Project</a></h3>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(go:*)",
+      "Bash(git:*)",
+      "Read(**/*.go)"
+    ]
+  }
+}
+</code></pre>
+<h3 id="nodejs-project"><a class="header" href="#nodejs-project">Node.js Project</a></h3>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(node:*)",
+      "Bash(git:*)"
+    ]
+  }
+}
+</code></pre>
+<h2 id="notes"><a class="header" href="#notes">Notes</a></h2>
+<ul>
+<li>This file is committed to git</li>
+<li>Team members share these settings</li>
+<li>Use <code>settings.local.json</code> for personal settings</li>
+</ul>
+<h2 id="see-also-5"><a class="header" href="#see-also-5">See Also</a></h2>
+<ul>
+<li><a href="#settingslocaljson-1">settings.local.json</a></li>
+<li><a href="#directory-structure">Directory Structure</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="settingslocaljson-1"><a class="header" href="#settingslocaljson-1">settings.local.json</a></h1>
+<p>Personal configuration for dev-team.</p>
+<h2 id="location-1"><a class="header" href="#location-1">Location</a></h2>
+<pre><code>.claude/settings.local.json
+.microai/settings.local.json
+</code></pre>
+<h2 id="purpose"><a class="header" href="#purpose">Purpose</a></h2>
+<ul>
+<li>Personal settings for each developer</li>
+<li>Not committed to git</li>
+<li>Overrides settings from <code>settings.json</code></li>
+</ul>
+<h2 id="structure-1"><a class="header" href="#structure-1">Structure</a></h2>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(docker:*)"
+    ]
+  }
+}
+</code></pre>
+<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
+<h3 id="allow-additional-commands"><a class="header" href="#allow-additional-commands">Allow additional commands</a></h3>
+<pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Bash(docker:*)",
+      "Bash(kubectl:*)",
+      "Bash(make:*)"
+    ]
+  }
+}
+</code></pre>
+<h3 id="debug-mode"><a class="header" href="#debug-mode">Debug mode</a></h3>
+<pre><code class="language-json">{
+  "debug": true,
+  "logLevel": "verbose"
+}
+</code></pre>
+<h2 id="create-file"><a class="header" href="#create-file">Create File</a></h2>
+<pre><code class="language-bash">echo '{
+  "permissions": {
+    "allow": []
+  }
+}' &gt; .claude/settings.local.json
+</code></pre>
+<h2 id="gitignore"><a class="header" href="#gitignore">Gitignore</a></h2>
+<p>Ensure file is ignored:</p>
+<pre><code class="language-bash"># In .gitignore
+.claude/settings.local.json
+.microai/settings.local.json
+</code></pre>
+<h2 id="see-also-6"><a class="header" href="#see-also-6">See Also</a></h2>
+<ul>
+<li><a href="#settingsjson-1">settings.json</a></li>
+<li><a href="#initial-configuration">Initial Configuration</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="5-minute-quickstart"><a class="header" href="#5-minute-quickstart">5-Minute Quickstart</a></h1>
+<p>Quick guide to get started with the dev-team framework.</p>
+<h2 id="step-1-install-1-minute"><a class="header" href="#step-1-install-1-minute">Step 1: Install (1 minute)</a></h2>
+<pre><code class="language-bash">cd your-project
+npx @microai.club/dev-team@alpha install
+</code></pre>
+<p>Select all components and wait for installation to complete.</p>
+<h2 id="step-2-open-claude-code-30-seconds"><a class="header" href="#step-2-open-claude-code-30-seconds">Step 2: Open Claude Code (30 seconds)</a></h2>
+<pre><code class="language-bash">claude
+</code></pre>
+<p>Claude Code will automatically read the configuration from <code>.claude/</code> and <code>.microai/</code>.</p>
+<h2 id="step-3-try-your-first-agent-1-minute"><a class="header" href="#step-3-try-your-first-agent-1-minute">Step 3: Try Your First Agent (1 minute)</a></h2>
+<p>Type in Claude Code:</p>
+<pre><code>/microai:deep-question
+</code></pre>
+<p>The Deep Question Agent will be activated and help you ask deep questions about problems.</p>
+<h3 id="example-conversation"><a class="header" href="#example-conversation">Example Conversation</a></h3>
+<pre><code>You: /microai:deep-question
+
+Agent: Welcome to the Deep Question Agent!
+I'll help you ask deep questions using 7 thinking methods.
+
+What problem would you like to explore today?
+
+You: Why are microservices so complex?
+
+Agent: Great question! Let me apply some methods:
+
+🔍 **5 Why Analysis**:
+1. Why are microservices complex?
+   → Many services need coordination
+2. Why do they need coordination?
+   → Each service has its own logic
+   ...
+
+🎯 **First Principles**:
+- What's the core of distributed systems?
+- Can network latency be avoided?
+...
+</code></pre>
+<h2 id="step-4-try-your-first-team-2-minutes"><a class="header" href="#step-4-try-your-first-team-2-minutes">Step 4: Try Your First Team (2 minutes)</a></h2>
+<p>Type in Claude Code:</p>
+<pre><code>/microai:deep-thinking
+</code></pre>
+<p>The Deep Thinking Team with 7 Titans will be activated:</p>
+<pre><code>You: /microai:deep-thinking
+
+Maestro: 🎭 Deep Thinking Team is ready!
+
+Team of 7 Titans:
+- 🔮 Socrates - The Questioner
+- 🧬 Aristotle - The Logician
+- ⚡ Musk - The Disruptor
+- 🔬 Feynman - The Explainer
+- 🎭 Munger - The Sage
+- 📐 Polya - The Solver
+- 🎨 Da Vinci - The Connector
+
+What problem would you like the team to analyze?
+
+You: Design an authentication system for a mobile app
+
+Maestro: Starting 5-phase analysis!
+
+📍 PHASE 1: UNDERSTAND
+Socrates is asking clarifying questions...
+</code></pre>
+<h2 id="step-5-explore-more-30-seconds"><a class="header" href="#step-5-explore-more-30-seconds">Step 5: Explore More (30 seconds)</a></h2>
+<h3 id="available-commands"><a class="header" href="#available-commands">Available Commands</a></h3>
+<pre><code class="language-bash"># List all commands
+dev-team list
+
+# Or in Claude Code
+/help
+</code></pre>
+<h3 id="popular-session-teams"><a class="header" href="#popular-session-teams">Popular Session Teams</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Command</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>/microai:dev-user-session</code></td><td>Developer + End User create User Story</td></tr>
+<tr><td><code>/microai:dev-architect-session</code></td><td>Developer + Architect design system</td></tr>
+<tr><td><code>/microai:dev-qa-session</code></td><td>Developer + QA review and test</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>In 5 minutes, you have:</p>
+<ol>
+<li>✅ Installed the dev-team framework</li>
+<li>✅ Activated the Deep Question Agent</li>
+<li>✅ Used the Deep Thinking Team</li>
+<li>✅ Discovered available commands</li>
+</ol>
+<h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next Steps</a></h2>
+<ul>
+<li><strong>Learn about Agents</strong>: <a href="#agent-overview">Agent Overview</a></li>
+<li><strong>Explore Teams</strong>: <a href="#team-overview">Team Overview</a></li>
+<li><strong>Real Workflows</strong>: <a href="#use-cases">Use Cases</a></li>
+</ul>
+<h2 id="usage-tips"><a class="header" href="#usage-tips">Usage Tips</a></h2>
+<h3 id="when-to-use-an-agent"><a class="header" href="#when-to-use-an-agent">When to Use an Agent?</a></h3>
+<ul>
+<li>Simple, clear tasks</li>
+<li>Need an expert in one area</li>
+<li>Don’t need multiple perspectives</li>
+</ul>
+<h3 id="when-to-use-a-team"><a class="header" href="#when-to-use-a-team">When to Use a Team?</a></h3>
+<ul>
+<li>Complex, multi-faceted problems</li>
+<li>Need deep analysis from multiple angles</li>
+<li>Want coordination between different roles</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>Tip</strong>: Try <code>/microai:father</code> to create a custom agent for your domain!</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-overview"><a class="header" href="#agent-overview">Agent Overview</a></h1>
+<p>Introduction to the Agent system in the dev-team framework.</p>
+<h2 id="what-is-an-agent"><a class="header" href="#what-is-an-agent">What is an Agent?</a></h2>
+<p>An <strong>Agent</strong> is a specialized AI assistant configured to perform specific tasks. Each agent has:</p>
+<ul>
+<li><strong>Persona</strong>: Role and communication style</li>
+<li><strong>Knowledge</strong>: Domain expertise</li>
+<li><strong>Tools</strong>: Allowed tools to use</li>
+<li><strong>Memory</strong>: Ability to remember across sessions</li>
+</ul>
+<h2 id="why-use-agents"><a class="header" href="#why-use-agents">Why Use Agents?</a></h2>
+<h3 id="comparison-with-plain-claude"><a class="header" href="#comparison-with-plain-claude">Comparison with Plain Claude</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Aspect</th><th>Plain Claude</th><th>Agent</th></tr>
+</thead>
+<tbody>
+<tr><td>Knowledge</td><td>General</td><td>Deep domain expertise</td></tr>
+<tr><td>Context</td><td>Starts fresh</td><td>Has built-in context</td></tr>
+<tr><td>Workflow</td><td>General</td><td>Specific process</td></tr>
+<tr><td>Memory</td><td>None</td><td>Memory system</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="benefits-of-agents"><a class="header" href="#benefits-of-agents">Benefits of Agents</a></h3>
+<ol>
+<li><strong>Specialization</strong>: Agent deeply understands specific domain</li>
+<li><strong>Consistency</strong>: Same agent always works the same way</li>
+<li><strong>Time Saving</strong>: No need to explain context each time</li>
+<li><strong>Extensibility</strong>: Create new agents for new needs</li>
+</ol>
+<h2 id="agent-types"><a class="header" href="#agent-types">Agent Types</a></h2>
+<h3 id="1-specialist-agents"><a class="header" href="#1-specialist-agents">1. Specialist Agents</a></h3>
+<p>Domain experts:</p>
+<ul>
+<li><strong>npm-agent</strong>: NPM package management</li>
+<li><strong>go-dev-portable</strong>: Go development</li>
+<li><strong>go-refactor-portable</strong>: Go refactoring</li>
+</ul>
+<h3 id="2-meta-agents"><a class="header" href="#2-meta-agents">2. Meta Agents</a></h3>
+<p>Agents that can create other agents:</p>
+<ul>
+<li><strong>father-agent</strong>: Creates agents, commands, knowledge</li>
+</ul>
+<h3 id="3-thinking-agents"><a class="header" href="#3-thinking-agents">3. Thinking Agents</a></h3>
+<p>Agents that assist with thinking:</p>
+<ul>
+<li><strong>deep-question-agent</strong>: Deep questioning</li>
+</ul>
+<h2 id="agent-structure"><a class="header" href="#agent-structure">Agent Structure</a></h2>
+<p>Each agent is defined by a markdown file with YAML frontmatter:</p>
+<pre><code>agent-name/
+├── agent.md           # Agent definition
+├── knowledge/         # Domain knowledge
+│   ├── 01-topic.md
+│   └── knowledge-index.yaml
+└── memory/            # Memory
+    ├── context.md
+    ├── decisions.md
+    └── learnings.md
+</code></pre>
+<h3 id="agentmd-file"><a class="header" href="#agentmd-file">agent.md File</a></h3>
+<pre><code class="language-yaml">---
+name: my-agent
+description: |
+  Agent description. Use when:
+  - Use case 1
+  - Use case 2
+
+model: opus
+tools: [Read, Write, Edit, Bash, Glob, Grep]
+language: en
+---
+
+# Agent Content
+
+Instructions for the agent...
+</code></pre>
+<h2 id="how-to-invoke-agents"><a class="header" href="#how-to-invoke-agents">How to Invoke Agents</a></h2>
+<h3 id="via-slash-command"><a class="header" href="#via-slash-command">Via Slash Command</a></h3>
+<pre><code>/microai:npm
+</code></pre>
+<h3 id="via-task-tool-in-claude-code"><a class="header" href="#via-task-tool-in-claude-code">Via Task Tool (in Claude Code)</a></h3>
+<p>Agents can be automatically invoked via the Task tool when appropriate.</p>
+<h3 id="manual-activation"><a class="header" href="#manual-activation">Manual Activation</a></h3>
+<p>In some cases, you can ask Claude to read and execute an agent:</p>
+<pre><code>Read and follow the agent at @.microai/agents/npm-agent/agent.md
+</code></pre>
+<h2 id="built-in-agents"><a class="header" href="#built-in-agents">Built-in Agents</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Agent</th><th>Description</th><th>Command</th></tr>
+</thead>
+<tbody>
+<tr><td>father-agent</td><td>Create new agents</td><td><code>/microai:father</code></td></tr>
+<tr><td>npm-agent</td><td>NPM management</td><td><code>/microai:npm</code></td></tr>
+<tr><td>go-dev-portable</td><td>Go development</td><td>Automatic</td></tr>
+<tr><td>go-refactor-portable</td><td>Go refactoring</td><td><code>/microai:go:go-refactor</code></td></tr>
+<tr><td>deep-question-agent</td><td>Deep questioning</td><td><code>/microai:deep-question</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="1-choose-the-right-agent"><a class="header" href="#1-choose-the-right-agent">1. Choose the Right Agent</a></h3>
+<ul>
+<li>Check description and use cases</li>
+<li>Test with a small problem first</li>
+</ul>
+<h3 id="2-provide-clear-context"><a class="header" href="#2-provide-clear-context">2. Provide Clear Context</a></h3>
+<pre><code>I'm working on a Go microservices project.
+Need to refactor the processOrder function to handle concurrent requests.
+</code></pre>
+<h3 id="3-state-your-goals"><a class="header" href="#3-state-your-goals">3. State Your Goals</a></h3>
+<pre><code>Goal: Reduce response time to under 100ms
+Constraint: Don't change the API signature
+</code></pre>
+<h3 id="4-use-memory"><a class="header" href="#4-use-memory">4. Use Memory</a></h3>
+<p>Agents remember decisions and learnings. If you need to reset:</p>
+<pre><code>Please ignore previous context and start fresh.
+</code></pre>
+<h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next Steps</a></h2>
+<ul>
+<li><a href="#what-is-an-agent-1">What is an Agent? (detailed)</a></li>
+<li><a href="#invoking-agents">Invoking Agents</a></li>
+<li><a href="#built-in-agents-1">Built-in Agents</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="what-is-an-agent-1"><a class="header" href="#what-is-an-agent-1">What is an Agent?</a></h1>
+<p>Detailed explanation of the Agent concept in dev-team.</p>
+<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
+<p>An <strong>Agent</strong> is a specialized AI assistant configured to perform specific tasks. Each agent has:</p>
+<ul>
+<li><strong>Persona</strong>: Role and communication style</li>
+<li><strong>Knowledge</strong>: Domain expertise</li>
+<li><strong>Tools</strong>: Allowed tools to use</li>
+<li><strong>Memory</strong>: Ability to remember across sessions</li>
+</ul>
+<h2 id="agent-structure-1"><a class="header" href="#agent-structure-1">Agent Structure</a></h2>
+<pre><code>agent-name/
+├── agent.md           # Agent definition
+├── knowledge/         # Domain knowledge
+│   ├── 01-topic.md
+│   └── knowledge-index.yaml
+└── memory/            # Memory
+    ├── context.md
+    ├── decisions.md
+    └── learnings.md
+</code></pre>
+<h2 id="agentmd-file-1"><a class="header" href="#agentmd-file-1">agent.md File</a></h2>
+<pre><code class="language-yaml">---
+name: my-agent
+description: |
+  Agent description. Use when:
+  - Use case 1
+  - Use case 2
+
+model: opus
+tools: [Read, Write, Edit, Bash, Glob, Grep]
+language: en
+---
+
+# Agent Content
+
+Instructions for the agent...
+</code></pre>
+<h2 id="agent-vs-plain-claude"><a class="header" href="#agent-vs-plain-claude">Agent vs Plain Claude</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Aspect</th><th>Plain Claude</th><th>Agent</th></tr>
+</thead>
+<tbody>
+<tr><td>Knowledge</td><td>General</td><td>Deep domain expertise</td></tr>
+<tr><td>Context</td><td>Starts fresh</td><td>Has built-in context</td></tr>
+<tr><td>Workflow</td><td>General</td><td>Specific process</td></tr>
+<tr><td>Memory</td><td>None</td><td>Memory system</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="when-to-use-an-agent-1"><a class="header" href="#when-to-use-an-agent-1">When to Use an Agent?</a></h2>
+<h3 id="use-an-agent-when"><a class="header" href="#use-an-agent-when">Use an Agent when:</a></h3>
+<ul>
+<li>Need an expert in a specific domain</li>
+<li>Want consistent process</li>
+<li>Have complex context to maintain</li>
+<li>Work is recurring</li>
+</ul>
+<h3 id="use-plain-claude-when"><a class="header" href="#use-plain-claude-when">Use Plain Claude when:</a></h3>
+<ul>
+<li>Simple, quick questions</li>
+<li>No special expertise needed</li>
+<li>One-time, non-recurring</li>
+</ul>
+<h2 id="see-also-7"><a class="header" href="#see-also-7">See Also</a></h2>
+<ul>
+<li><a href="#invoking-agents">Invoking Agents</a></li>
+<li><a href="#built-in-agents-1">Built-in Agents</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="invoking-agents"><a class="header" href="#invoking-agents">Invoking Agents</a></h1>
+<p>Guide to activating agents.</p>
+<h2 id="method-1-slash-command-recommended"><a class="header" href="#method-1-slash-command-recommended">Method 1: Slash Command (Recommended)</a></h2>
+<pre><code>/microai:agent-name
+</code></pre>
+<p>Examples:</p>
+<pre><code>/microai:npm
+/microai:deep-question
+/microai:go:go-dev
+</code></pre>
+<h2 id="method-2-automatic-via-task-tool"><a class="header" href="#method-2-automatic-via-task-tool">Method 2: Automatic via Task Tool</a></h2>
+<p>When you request a task, Claude Code may automatically select the appropriate agent via the Task tool.</p>
+<p>Example:</p>
+<pre><code>Refactor handler.go following best practices
+</code></pre>
+<p>Claude Code may automatically activate <code>go-refactor-portable</code> agent.</p>
+<h2 id="method-3-manual-activation"><a class="header" href="#method-3-manual-activation">Method 3: Manual Activation</a></h2>
+<p>Ask Claude to read and execute an agent:</p>
+<pre><code>Read and execute the agent at @.microai/agents/npm-agent/agent.md
+</code></pre>
+<h2 id="naming-conventions"><a class="header" href="#naming-conventions">Naming Conventions</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Pattern</th><th>Example</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>/microai:name</code></td><td><code>/microai:npm</code></td><td>Single agent</td></tr>
+<tr><td><code>/microai:group:name</code></td><td><code>/microai:go:go-dev</code></td><td>Agent in group</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="confirming-activation"><a class="header" href="#confirming-activation">Confirming Activation</a></h2>
+<p>When an agent activates successfully:</p>
+<ol>
+<li>You’ll see a greeting from the agent</li>
+<li>Agent introduces its role</li>
+<li>Agent asks about your needs</li>
+</ol>
+<p>Example output:</p>
+<pre><code>🎯 Deep Question Agent is ready!
+
+I use 7 thinking methods to ask deep questions.
+What problem would you like to explore today?
+</code></pre>
+<h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
+<h3 id="choose-the-right-agent"><a class="header" href="#choose-the-right-agent">Choose the Right Agent</a></h3>
+<ul>
+<li>Read description in command list</li>
+<li>Test with a small problem first</li>
+<li>If unsure, use <code>/help</code></li>
+</ul>
+<h3 id="provide-context"><a class="header" href="#provide-context">Provide Context</a></h3>
+<pre><code>I'm working on a microservices project in Go.
+Need to refactor processOrder function for concurrent handling.
+</code></pre>
+<h2 id="see-also-8"><a class="header" href="#see-also-8">See Also</a></h2>
+<ul>
+<li><a href="#built-in-agents-1">Built-in Agents</a></li>
+<li><a href="#agent-gallery">Agent Gallery</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="claude-agents-vs-microai-agents"><a class="header" href="#claude-agents-vs-microai-agents">Claude Agents vs MicroAI Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="built-in-agents-1"><a class="header" href="#built-in-agents-1">Built-in Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="father-agent---create-new-agents"><a class="header" href="#father-agent---create-new-agents">father-agent - Create New Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="npm-agent---npm-package-management"><a class="header" href="#npm-agent---npm-package-management">npm-agent - NPM Package Management</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="go-dev-portable---go-development"><a class="header" href="#go-dev-portable---go-development">go-dev-portable - Go Development</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="go-refactor-portable---go-refactoring"><a class="header" href="#go-refactor-portable---go-refactoring">go-refactor-portable - Go Refactoring</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="deep-question-agent---deep-questioning"><a class="header" href="#deep-question-agent---deep-questioning">deep-question-agent - Deep Questioning</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-gallery"><a class="header" href="#agent-gallery">Agent Gallery</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="team-overview"><a class="header" href="#team-overview">Team Overview</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="what-is-a-team"><a class="header" href="#what-is-a-team">What is a Team?</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="teams-vs-single-agents"><a class="header" href="#teams-vs-single-agents">Teams vs Single Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="invoking-teams"><a class="header" href="#invoking-teams">Invoking Teams</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="deep-thinking-team"><a class="header" href="#deep-thinking-team">Deep Thinking Team</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="the-7-titans"><a class="header" href="#the-7-titans">The 7 Titans</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="5-phase-protocol"><a class="header" href="#5-phase-protocol">5-Phase Protocol</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="observer-commands"><a class="header" href="#observer-commands">Observer Commands</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="session-teams"><a class="header" href="#session-teams">Session Teams</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dev-user-session"><a class="header" href="#dev-user-session">dev-user-session</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dev-architect-session"><a class="header" href="#dev-architect-session">dev-architect-session</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dev-qa-session"><a class="header" href="#dev-qa-session">dev-qa-session</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dev-security-session"><a class="header" href="#dev-security-session">dev-security-session</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="pm-dev-session"><a class="header" href="#pm-dev-session">pm-dev-session</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dev-algo-session"><a class="header" href="#dev-algo-session">dev-algo-session</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="specialized-teams"><a class="header" href="#specialized-teams">Specialized Teams</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="go-team"><a class="header" href="#go-team">go-team</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="mining-team"><a class="header" href="#mining-team">mining-team</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="deep-research"><a class="header" href="#deep-research">deep-research</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="project-team"><a class="header" href="#project-team">project-team</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="slash-commands"><a class="header" href="#slash-commands">Slash Commands</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="command-list"><a class="header" href="#command-list">Command List</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="usage-guide"><a class="header" href="#usage-guide">Usage Guide</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="skills"><a class="header" href="#skills">Skills</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="what-is-a-skill"><a class="header" href="#what-is-a-skill">What is a Skill?</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="built-in-skills"><a class="header" href="#built-in-skills">Built-in Skills</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="creating-user-stories"><a class="header" href="#creating-user-stories">Creating User Stories</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="code-review"><a class="header" href="#code-review">Code Review</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="complex-problem-solving"><a class="header" href="#complex-problem-solving">Complex Problem Solving</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="best-practices-1"><a class="header" href="#best-practices-1">Best Practices</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="troubleshooting-2"><a class="header" href="#troubleshooting-2">Troubleshooting</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="faq"><a class="header" href="#faq">FAQ</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="glossary"><a class="header" href="#glossary">Glossary</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="quick-reference-card"><a class="header" href="#quick-reference-card">Quick Reference Card</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Content coming soon.</p>
+</blockquote>
+<p>This chapter is under development.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schema/hooks.json",
+  "_comment": "MicroAI Hooks Configuration - Auto-installed by dev-team installer",
+  "_version": "1.0.0",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/hooks/pre-tool-use/log-bash-commands.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/hooks/pre-tool-use/block-dangerous.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/hooks/pre-tool-use/protect-sensitive.sh"
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/hooks/post-tool-use/log-file-changes.sh"
+          }
+        ]
+      }
+    ],
+
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/hooks/user-prompt-submit/log-prompts.sh"
+          }
+        ]
+      }
+    ],
+
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/hooks/session-start/init-env.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

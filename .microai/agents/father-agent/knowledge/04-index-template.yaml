@@ -1,0 +1,106 @@
+# Knowledge Index Template
+# Copy và customize cho agent mới
+
+# ============================================================
+# TEMPLATE - Replace placeholders với actual values
+# ============================================================
+
+version: "1.0"
+agent: "{agent-name}"
+
+# Core files - LUÔN load cho mọi task
+# Thường là anti-patterns và critical rules
+core_files:
+  - "{number}-{critical-topic}.md"
+  - "{number}-{anti-patterns}.md"
+
+# Keyword to file mapping
+# Mỗi keyword map đến list files cần load
+keyword_mapping:
+
+  # ─────────────────────────────────────────
+  # Topic 1: {Topic Name}
+  # ─────────────────────────────────────────
+  "{keyword1}":
+    files: ["{number}-{topic}.md"]
+    priority: 1  # 1=highest, 3=lowest
+
+  "{keyword2}":
+    files: ["{number}-{topic}.md"]
+    priority: 2
+
+  # ─────────────────────────────────────────
+  # Topic 2: {Topic Name}
+  # ─────────────────────────────────────────
+  "{keyword3}":
+    files: ["{number}-{topic}.md"]
+    priority: 1
+
+  "{keyword4}":
+    files: ["{number}-{topic}.md", "{number}-{related}.md"]
+    priority: 2
+
+# File descriptions - documentation cho mỗi file
+files:
+  "{number}-{topic}.md":
+    title: "{Human-readable title}"
+    description: "{What this file covers}"
+    lines: ~{estimated_lines}
+
+  "{number}-{topic2}.md":
+    title: "{Human-readable title}"
+    description: "{What this file covers}"
+    lines: ~{estimated_lines}
+
+# ============================================================
+# EXAMPLE - Gateway Agent
+# ============================================================
+#
+# version: "1.0"
+# agent: gateway-agent
+#
+# core_files:
+#   - 01-middleware-patterns.md
+#   - 04-security-headers.md
+#
+# keyword_mapping:
+#   middleware:
+#     files: [01-middleware-patterns.md]
+#     priority: 1
+#   auth:
+#     files: [02-auth-patterns.md]
+#     priority: 1
+#   jwt:
+#     files: [02-auth-patterns.md]
+#     priority: 1
+#   rate:
+#     files: [03-rate-limiting.md]
+#     priority: 1
+#   limit:
+#     files: [03-rate-limiting.md]
+#     priority: 1
+#   security:
+#     files: [04-security-headers.md]
+#     priority: 1
+#   cors:
+#     files: [04-security-headers.md]
+#     priority: 1
+#   proxy:
+#     files: [05-proxy-patterns.md]
+#     priority: 1
+#   circuit:
+#     files: [06-resilience.md]
+#     priority: 1
+#   retry:
+#     files: [06-resilience.md]
+#     priority: 1
+#
+# files:
+#   01-middleware-patterns.md:
+#     title: "Middleware Patterns"
+#     description: "Middleware chain, order, wrappers"
+#     lines: ~200
+#   02-auth-patterns.md:
+#     title: "Authentication"
+#     description: "JWT, RBAC, API keys"
+#     lines: ~250

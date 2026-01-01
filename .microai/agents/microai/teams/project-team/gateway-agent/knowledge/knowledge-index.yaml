@@ -1,0 +1,170 @@
+# Gateway Agent Knowledge Index
+# Used for relevance-based loading
+
+version: "1.0"
+agent: gateway-agent
+
+# Core files - always load for any gateway task
+core_files:
+  - 01-middleware-patterns.md
+  - 04-security-headers.md
+
+# Keyword to file mapping
+keyword_mapping:
+  # Middleware patterns
+  middleware:
+    files: [01-middleware-patterns.md]
+    priority: 1
+  chain:
+    files: [01-middleware-patterns.md]
+    priority: 2
+  handler:
+    files: [01-middleware-patterns.md]
+    priority: 2
+
+  # Authentication
+  auth:
+    files: [02-auth-patterns.md]
+    priority: 1
+  jwt:
+    files: [02-auth-patterns.md]
+    priority: 1
+  token:
+    files: [02-auth-patterns.md]
+    priority: 1
+  login:
+    files: [02-auth-patterns.md]
+    priority: 2
+  permission:
+    files: [02-auth-patterns.md]
+    priority: 2
+  rbac:
+    files: [02-auth-patterns.md]
+    priority: 1
+  authorization:
+    files: [02-auth-patterns.md]
+    priority: 1
+
+  # Rate limiting
+  rate:
+    files: [03-rate-limiting.md]
+    priority: 1
+  limit:
+    files: [03-rate-limiting.md]
+    priority: 1
+  throttle:
+    files: [03-rate-limiting.md]
+    priority: 1
+  quota:
+    files: [03-rate-limiting.md]
+    priority: 2
+  429:
+    files: [03-rate-limiting.md]
+    priority: 1
+
+  # Security
+  security:
+    files: [04-security-headers.md]
+    priority: 1
+  cors:
+    files: [04-security-headers.md]
+    priority: 1
+  headers:
+    files: [04-security-headers.md]
+    priority: 1
+  xss:
+    files: [04-security-headers.md]
+    priority: 1
+  csrf:
+    files: [04-security-headers.md]
+    priority: 2
+  hsts:
+    files: [04-security-headers.md]
+    priority: 2
+  csp:
+    files: [04-security-headers.md]
+    priority: 2
+
+  # Proxy
+  proxy:
+    files: [05-proxy-patterns.md]
+    priority: 1
+  reverse:
+    files: [05-proxy-patterns.md]
+    priority: 1
+  upstream:
+    files: [05-proxy-patterns.md]
+    priority: 1
+  backend:
+    files: [05-proxy-patterns.md]
+    priority: 2
+  forward:
+    files: [05-proxy-patterns.md]
+    priority: 2
+  route:
+    files: [05-proxy-patterns.md]
+    priority: 1
+  load:
+    files: [05-proxy-patterns.md]
+    priority: 2
+  balance:
+    files: [05-proxy-patterns.md]
+    priority: 2
+  health:
+    files: [05-proxy-patterns.md]
+    priority: 2
+
+  # Resilience
+  circuit:
+    files: [06-resilience.md]
+    priority: 1
+  breaker:
+    files: [06-resilience.md]
+    priority: 1
+  retry:
+    files: [06-resilience.md]
+    priority: 1
+  timeout:
+    files: [06-resilience.md]
+    priority: 1
+  fallback:
+    files: [06-resilience.md]
+    priority: 1
+  bulkhead:
+    files: [06-resilience.md]
+    priority: 1
+  resilience:
+    files: [06-resilience.md]
+    priority: 1
+
+# File descriptions
+files:
+  01-middleware-patterns.md:
+    title: "Middleware Patterns"
+    description: "Middleware chain, order, response wrapper, context values"
+    lines: ~200
+
+  02-auth-patterns.md:
+    title: "Authentication & Authorization"
+    description: "JWT validation, RBAC, API key auth, token extraction"
+    lines: ~250
+
+  03-rate-limiting.md:
+    title: "Rate Limiting"
+    description: "Token bucket, sliding window, tiered limits, Redis-backed"
+    lines: ~200
+
+  04-security-headers.md:
+    title: "Security Headers & Hardening"
+    description: "Security headers, CORS, panic recovery, input sanitization"
+    lines: ~250
+
+  05-proxy-patterns.md:
+    title: "Reverse Proxy Patterns"
+    description: "Reverse proxy, load balancing, health checking, streaming"
+    lines: ~300
+
+  06-resilience.md:
+    title: "Resilience Patterns"
+    description: "Circuit breaker, retry, timeout, bulkhead, fallback"
+    lines: ~300

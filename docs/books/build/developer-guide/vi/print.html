@@ -1,0 +1,1576 @@
+<!DOCTYPE HTML>
+<html lang="vi" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hướng Dẫn Phát Triển @microai.club/dev-team</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Hướng dẫn tạo mới và mở rộng agents, teams, skills cho dev-team framework">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../theme/custom.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "ayu";
+            window.path_to_searchindex_js = "searchindex-5beeb4f1.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-adaef6ab.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Hướng Dẫn Phát Triển @microai.club/dev-team</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/taipm/dev-team" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="hướng-dẫn-phát-triển-microaiclubdev-team"><a class="header" href="#hướng-dẫn-phát-triển-microaiclubdev-team">Hướng Dẫn Phát Triển @microai.club/dev-team</a></h1>
+<p>Chào mừng bạn đến với <strong>Hướng Dẫn Phát Triển</strong> của dev-team framework!</p>
+<h2 id="giới-thiệu"><a class="header" href="#giới-thiệu">Giới Thiệu</a></h2>
+<p>Cuốn sách này dành cho những developer muốn <strong>tạo mới</strong> và <strong>mở rộng</strong> các thành phần của dev-team framework:</p>
+<ul>
+<li>Tạo <strong>Agents</strong> tùy chỉnh cho domain cụ thể</li>
+<li>Xây dựng <strong>Teams</strong> với nhiều agents phối hợp</li>
+<li>Phát triển <strong>Skills</strong> tái sử dụng</li>
+<li>Thiết lập <strong>Commands</strong> để kích hoạt nhanh</li>
+<li>Cấu hình <strong>Hooks</strong> cho automation</li>
+</ul>
+<h2 id="yêu-cầu-kiến-thức"><a class="header" href="#yêu-cầu-kiến-thức">Yêu Cầu Kiến Thức</a></h2>
+<p>Trước khi đọc cuốn sách này, bạn nên:</p>
+<ol>
+<li>Đã quen với việc sử dụng dev-team (xem <a href="../../user-guide/vi/src/README.html">User Guide</a>)</li>
+<li>Hiểu cơ bản về YAML và Markdown</li>
+<li>Có kinh nghiệm với Claude Code</li>
+</ol>
+<h2 id="cấu-trúc-cuốn-sách"><a class="header" href="#cấu-trúc-cuốn-sách">Cấu Trúc Cuốn Sách</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Phần</th><th>Nội dung</th><th>Dành cho</th></tr>
+</thead>
+<tbody>
+<tr><td>Phần 1-2</td><td>Kiến trúc &amp; Tạo Agent</td><td>Tất cả developers</td></tr>
+<tr><td>Phần 3</td><td>Tạo Team</td><td>Multi-agent systems</td></tr>
+<tr><td>Phần 4-5</td><td>Skills &amp; Commands</td><td>Automation</td></tr>
+<tr><td>Phần 6</td><td>Hooks System</td><td>Customization</td></tr>
+<tr><td>Phần 7-8</td><td>Knowledge &amp; Memory</td><td>Advanced</td></tr>
+<tr><td>Phần 9-10</td><td>Best Practices &amp; Case Studies</td><td>Production</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="bắt-đầu-từ-đâu"><a class="header" href="#bắt-đầu-từ-đâu">Bắt Đầu Từ Đâu?</a></h2>
+<h3 id="muốn-tạo-agent-đầu-tiên"><a class="header" href="#muốn-tạo-agent-đầu-tiên">Muốn tạo Agent đầu tiên?</a></h3>
+<p>Đọc <a href="#agent-cơ-bản">Phần 2: Tạo Agent</a></p>
+<h3 id="muốn-hiểu-kiến-trúc"><a class="header" href="#muốn-hiểu-kiến-trúc">Muốn hiểu kiến trúc?</a></h3>
+<p>Đọc <a href="#kiến-trúc-microai">Phần 1: Kiến Trúc Tổng Quan</a></p>
+<h3 id="muốn-tạo-team"><a class="header" href="#muốn-tạo-team">Muốn tạo Team?</a></h3>
+<p>Đọc <a href="#team-cơ-bản">Phần 3: Tạo Team</a></p>
+<h2 id="quy-ước-trong-cuốn-sách"><a class="header" href="#quy-ước-trong-cuốn-sách">Quy Ước Trong Cuốn Sách</a></h2>
+<h3 id="code-examples"><a class="header" href="#code-examples">Code Examples</a></h3>
+<pre><code class="language-yaml"># ✅ Good - Đây là cách nên làm
+name: my-agent
+description: Agent mô tả rõ ràng
+
+# ❌ Bad - Tránh làm như này
+name: a
+description: ...
+</code></pre>
+<h3 id="callouts"><a class="header" href="#callouts">Callouts</a></h3>
+<blockquote>
+<p><strong>Lưu ý</strong>: Thông tin quan trọng cần ghi nhớ</p>
+</blockquote>
+<blockquote>
+<p><strong>Cảnh báo</strong>: Điều cần tránh hoặc chú ý đặc biệt</p>
+</blockquote>
+<blockquote>
+<p><strong>Mẹo</strong>: Gợi ý hữu ích để làm việc hiệu quả hơn</p>
+</blockquote>
+<h2 id="tài-nguyên-bổ-sung"><a class="header" href="#tài-nguyên-bổ-sung">Tài Nguyên Bổ Sung</a></h2>
+<ul>
+<li><strong>Templates</strong>: Xem <a href="#templates-repository">Phụ lục: Templates</a></li>
+<li><strong>Reference Manual</strong>: Tra cứu chi tiết tại <a href="../../reference/vi/src/README.html">Reference Manual</a></li>
+<li><strong>GitHub</strong>: <a href="https://github.com/taipm/dev-team">github.com/taipm/dev-team</a></li>
+</ul>
+<hr>
+<p>Hãy bắt đầu với <a href="#kiến-trúc-microai">Kiến Trúc MicroAI</a>!</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="kiến-trúc-microai"><a class="header" href="#kiến-trúc-microai">Kiến Trúc MicroAI</a></h1>
+<p>Tổng quan về kiến trúc của MicroAI framework.</p>
+<h2 id="triết-lý-thiết-kế"><a class="header" href="#triết-lý-thiết-kế">Triết Lý Thiết Kế</a></h2>
+<p>MicroAI được xây dựng với triết lý <strong>“Write Once, Run Anywhere”</strong> cho AI agents:</p>
+<ul>
+<li><strong>Portable</strong>: Agents định nghĩa một lần, chạy trên nhiều platforms</li>
+<li><strong>Modular</strong>: Mỗi component độc lập và có thể thay thế</li>
+<li><strong>Extensible</strong>: Dễ dàng mở rộng với agents, teams, skills mới</li>
+<li><strong>Persistent</strong>: Memory và knowledge được lưu trữ qua sessions</li>
+</ul>
+<h2 id="mô-hình-3-lớp"><a class="header" href="#mô-hình-3-lớp">Mô Hình 3 Lớp</a></h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    LAYER 3: RUNTIME STATE                   │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │ Agent Memory │ Team Memory │ Session Logs │ Checkpoints ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+                              ▲
+                              │ reads/writes
+                              │
+┌─────────────────────────────────────────────────────────────┐
+│                 LAYER 2: PLATFORM ADAPTERS                  │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────────────┐ │
+│  │    .claude/  │ │   .vscode/   │ │      .opencode/      │ │
+│  │  (Hiện tại)  │ │   (Tương lai)│ │     (Tương lai)      │ │
+│  │              │ │              │ │                      │ │
+│  │ settings.json│ │ settings.json│ │    settings.json     │ │
+│  │ commands/    │ │ commands/    │ │    commands/         │ │
+│  │ skills/      │ │ extensions/  │ │    plugins/          │ │
+│  └──────────────┘ └──────────────┘ └──────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              │ references (one-way)
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  LAYER 1: CORE FRAMEWORK                    │
+│                        .microai/                            │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │                        agents/                          ││
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐   ││
+│  │  │ agent.md    │ │ knowledge/  │ │ memory/         │   ││
+│  │  │ (YAML+MD)   │ │ (selective) │ │ (persistent)    │   ││
+│  │  └─────────────┘ └─────────────┘ └─────────────────┘   ││
+│  ├─────────────────────────────────────────────────────────┤│
+│  │                        teams/                           ││
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐   ││
+│  │  │ workflow.md │ │ agents/     │ │ team-memory/    │   ││
+│  │  └─────────────┘ └─────────────┘ └─────────────────┘   ││
+│  ├─────────────────────────────────────────────────────────┤│
+│  │ commands/ │ hooks/ │ knowledge/ │ kanban/              ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="chi-tiết-từng-lớp"><a class="header" href="#chi-tiết-từng-lớp">Chi Tiết Từng Lớp</a></h2>
+<h3 id="layer-1-core-framework-microai"><a class="header" href="#layer-1-core-framework-microai">Layer 1: Core Framework (.microai/)</a></h3>
+<p><strong>Đặc điểm</strong>:</p>
+<ul>
+<li>Platform-independent</li>
+<li>Chứa định nghĩa agents, teams, knowledge</li>
+<li>Portable giữa các dự án</li>
+</ul>
+<p><strong>Cấu trúc</strong>:</p>
+<pre><code>.microai/
+├── agents/                    # Agent definitions
+│   ├── npm-agent/
+│   │   ├── agent.md          # Agent definition
+│   │   ├── knowledge/        # Domain knowledge
+│   │   │   ├── 01-topic.md
+│   │   │   └── knowledge-index.yaml
+│   │   └── memory/           # Agent memory
+│   │       ├── context.md
+│   │       ├── decisions.md
+│   │       └── learnings.md
+│   │
+│   └── microai/teams/        # Team definitions
+│       └── deep-thinking/
+│           ├── workflow.md
+│           ├── agents/
+│           └── team-memory/
+│
+├── commands/                  # Platform-agnostic commands
+├── hooks/                     # Automation scripts
+├── knowledge/                 # Shared knowledge
+│   └── shared/
+└── kanban/                    # Task tracking
+</code></pre>
+<h3 id="layer-2-platform-adapters"><a class="header" href="#layer-2-platform-adapters">Layer 2: Platform Adapters</a></h3>
+<p><strong>Đặc điểm</strong>:</p>
+<ul>
+<li>Platform-specific settings và activation</li>
+<li>References đến Layer 1 (one-way dependency)</li>
+<li>Không chứa agent definitions</li>
+</ul>
+<p><strong>Claude Code Adapter (.claude/)</strong>:</p>
+<pre><code>.claude/
+├── CLAUDE.md                  # Project context
+├── settings.json              # Team configuration
+├── settings.local.json        # Personal overrides (gitignored)
+│
+├── agents/                    # Agent shortcuts (optional)
+│   └── README.md
+│
+├── commands/                  # Activation commands
+│   └── microai/
+│       ├── deep-thinking.md
+│       └── npm.md
+│
+└── skills/                    # Skill definitions
+    └── README.md
+</code></pre>
+<h3 id="layer-3-runtime-state"><a class="header" href="#layer-3-runtime-state">Layer 3: Runtime State</a></h3>
+<p><strong>Đặc điểm</strong>:</p>
+<ul>
+<li>Auto-generated</li>
+<li>Session-specific</li>
+<li>Thường gitignored</li>
+</ul>
+<p><strong>Nội dung</strong>:</p>
+<ul>
+<li>Agent memory files (context.md, decisions.md, learnings.md)</li>
+<li>Team memory (handoffs.md, blockers.md)</li>
+<li>Session logs (.microai/logs/)</li>
+</ul>
+<h2 id="dependency-rules"><a class="header" href="#dependency-rules">Dependency Rules</a></h2>
+<h3 id="rule-1-one-way-dependencies"><a class="header" href="#rule-1-one-way-dependencies">Rule 1: One-Way Dependencies</a></h3>
+<pre><code>.claude/  ──references──▶  .microai/
+           (adapter)        (core)
+
+.microai/ ──KHÔNG──▶  .claude/
+          reference
+</code></pre>
+<h3 id="rule-2-core-is-portable"><a class="header" href="#rule-2-core-is-portable">Rule 2: Core Is Portable</a></h3>
+<pre><code># Copy entire .microai/ to new project
+cp -r project-a/.microai/ project-b/
+
+# Works immediately with any adapter
+</code></pre>
+<h3 id="rule-3-adapters-are-platform-specific"><a class="header" href="#rule-3-adapters-are-platform-specific">Rule 3: Adapters Are Platform-Specific</a></h3>
+<pre><code># Claude Code adapter
+.claude/ → settings.json với Claude Code format
+
+# VS Code adapter (future)
+.vscode/ → settings.json với VS Code format
+
+# OpenCode adapter (future)
+.opencode/ → settings.json với OpenCode format
+</code></pre>
+<h2 id="component-flow"><a class="header" href="#component-flow">Component Flow</a></h2>
+<h3 id="agent-activation"><a class="header" href="#agent-activation">Agent Activation</a></h3>
+<pre><code>1. User: /microai:npm
+
+2. Claude Code reads:
+   .claude/commands/microai/npm.md
+
+3. Command references:
+   @.microai/agents/npm-agent/agent.md
+
+4. Claude loads:
+   - agent.md (persona, rules)
+   - knowledge/ (selective)
+   - memory/ (context, decisions)
+
+5. Agent is active with full context
+</code></pre>
+<h3 id="team-activation"><a class="header" href="#team-activation">Team Activation</a></h3>
+<pre><code>1. User: /microai:deep-thinking
+
+2. Claude Code reads:
+   .claude/commands/microai/deep-thinking.md
+
+3. Command references:
+   @.microai/agents/microai/teams/deep-thinking/workflow.md
+
+4. Claude loads:
+   - workflow.md (phases, protocol)
+   - agents/ (all team members)
+   - team-memory/ (shared state)
+
+5. Team is active, workflow begins
+</code></pre>
+<h2 id="nguyên-tắc-thiết-kế"><a class="header" href="#nguyên-tắc-thiết-kế">Nguyên Tắc Thiết Kế</a></h2>
+<h3 id="1-separation-of-concerns"><a class="header" href="#1-separation-of-concerns">1. Separation of Concerns</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Layer</th><th>Responsibility</th></tr>
+</thead>
+<tbody>
+<tr><td>Core</td><td>Agent definitions, knowledge, memory</td></tr>
+<tr><td>Adapter</td><td>Platform settings, activation</td></tr>
+<tr><td>Runtime</td><td>Session state, logs</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-minimal-coupling"><a class="header" href="#2-minimal-coupling">2. Minimal Coupling</a></h3>
+<ul>
+<li>Core không biết về adapter</li>
+<li>Adapter chỉ reference core</li>
+<li>Runtime được tạo tự động</li>
+</ul>
+<h3 id="3-progressive-enhancement"><a class="header" href="#3-progressive-enhancement">3. Progressive Enhancement</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Level</th><th>Features</th></tr>
+</thead>
+<tbody>
+<tr><td>Minimal</td><td>Basic agent loading, core tools</td></tr>
+<tr><td>Standard</td><td>Knowledge, memory, permissions</td></tr>
+<tr><td>Full</td><td>Teams, hooks, full tool suite</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="bước-tiếp-theo"><a class="header" href="#bước-tiếp-theo">Bước Tiếp Theo</a></h2>
+<ul>
+<li><a href="#mô-hình-3-lớp-1">Mô hình 3 lớp (chi tiết)</a></li>
+<li><a href="#core-vs-adapter">Core vs Adapter</a></li>
+<li><a href="#portable-agents">Portable Agents</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="mô-hình-3-lớp-1"><a class="header" href="#mô-hình-3-lớp-1">Mô Hình 3 Lớp</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="core-vs-adapter"><a class="header" href="#core-vs-adapter">Core vs Adapter</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="portable-agents"><a class="header" href="#portable-agents">Portable Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="thư-mục-microai"><a class="header" href="#thư-mục-microai">Thư Mục .microai/</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="thư-mục-claude"><a class="header" href="#thư-mục-claude">Thư Mục .claude/</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-cơ-bản"><a class="header" href="#agent-cơ-bản">Agent Cơ Bản</a></h1>
+<p>Hướng dẫn tạo agent đầu tiên của bạn.</p>
+<h2 id="tổng-quan"><a class="header" href="#tổng-quan">Tổng Quan</a></h2>
+<p>Một agent cơ bản chỉ cần một file <code>agent.md</code> với:</p>
+<ul>
+<li>YAML frontmatter (metadata)</li>
+<li>Markdown body (prompt)</li>
+</ul>
+<h2 id="bước-1-tạo-thư-mục"><a class="header" href="#bước-1-tạo-thư-mục">Bước 1: Tạo Thư Mục</a></h2>
+<pre><code class="language-bash">mkdir -p .microai/agents/my-agent
+</code></pre>
+<h2 id="bước-2-tạo-agentmd"><a class="header" href="#bước-2-tạo-agentmd">Bước 2: Tạo agent.md</a></h2>
+<pre><code class="language-bash">touch .microai/agents/my-agent/agent.md
+</code></pre>
+<h2 id="bước-3-viết-nội-dung"><a class="header" href="#bước-3-viết-nội-dung">Bước 3: Viết Nội Dung</a></h2>
+<h3 id="template-cơ-bản"><a class="header" href="#template-cơ-bản">Template Cơ Bản</a></h3>
+<pre><code class="language-yaml">---
+name: my-agent
+description: |
+  Mô tả ngắn gọn về agent. Sử dụng khi:
+  - Use case 1
+  - Use case 2
+
+model: sonnet
+tools:
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Glob
+  - Grep
+language: vi
+---
+
+# My Agent
+
+## Persona
+
+Bạn là [tên/vai trò] chuyên về [lĩnh vực].
+
+## Nhiệm Vụ
+
+Bạn giúp người dùng:
+1. Nhiệm vụ 1
+2. Nhiệm vụ 2
+
+## Quy Tắc
+
+- LUÔN làm X
+- KHÔNG BAO GIỜ làm Y
+- ƯU TIÊN Z
+
+## Quy Trình
+
+1. Bước 1: Hiểu yêu cầu
+2. Bước 2: Phân tích
+3. Bước 3: Thực hiện
+4. Bước 4: Xác nhận
+
+## Ví Dụ
+
+**Input**: Người dùng yêu cầu X
+**Output**: Agent thực hiện Y
+</code></pre>
+<h2 id="yaml-frontmatter"><a class="header" href="#yaml-frontmatter">YAML Frontmatter</a></h2>
+<h3 id="required-fields"><a class="header" href="#required-fields">Required Fields</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Mô tả</th></tr>
+</thead>
+<tbody>
+<tr><td><code>name</code></td><td>string</td><td>Tên unique, lowercase, hyphenated</td></tr>
+<tr><td><code>description</code></td><td>string</td><td>Mô tả với use cases</td></tr>
+<tr><td><code>tools</code></td><td>array</td><td>Danh sách tools được phép</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="optional-fields"><a class="header" href="#optional-fields">Optional Fields</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Default</th><th>Mô tả</th></tr>
+</thead>
+<tbody>
+<tr><td><code>model</code></td><td>string</td><td>sonnet</td><td>opus/sonnet/haiku</td></tr>
+<tr><td><code>language</code></td><td>string</td><td>en</td><td>vi/en</td></tr>
+<tr><td><code>color</code></td><td>string</td><td>blue</td><td>Màu hiển thị</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="tools-available"><a class="header" href="#tools-available">Tools Available</a></h3>
+<pre><code class="language-yaml">tools:
+  # File operations
+  - Read          # Đọc file
+  - Write         # Ghi file
+  - Edit          # Sửa file
+
+  # Search
+  - Glob          # Tìm file theo pattern
+  - Grep          # Tìm nội dung trong file
+
+  # Execution
+  - Bash          # Chạy shell commands
+
+  # Code intelligence
+  - LSP           # Language Server Protocol
+
+  # Web
+  - WebFetch      # Fetch URL
+  - WebSearch     # Search web
+
+  # User interaction
+  - AskUserQuestion  # Hỏi người dùng
+  - TodoWrite        # Task management
+
+  # Advanced
+  - Task          # Spawn sub-agents
+</code></pre>
+<h2 id="body-structure"><a class="header" href="#body-structure">Body Structure</a></h2>
+<h3 id="sections-khuyến-nghị"><a class="header" href="#sections-khuyến-nghị">Sections Khuyến Nghị</a></h3>
+<pre><code class="language-markdown"># Agent Name
+
+## Persona
+Định nghĩa vai trò và cách giao tiếp
+
+## Nhiệm Vụ
+Liệt kê các nhiệm vụ chính
+
+## Quy Tắc
+LUÔN/KHÔNG BAO GIỜ rules
+
+## Quy Trình
+Step-by-step workflow
+
+## Ví Dụ (Optional)
+Input/Output examples
+</code></pre>
+<h3 id="activation-protocol-nâng-cao"><a class="header" href="#activation-protocol-nâng-cao">Activation Protocol (Nâng Cao)</a></h3>
+<pre><code class="language-markdown">&lt;activation critical="MANDATORY"&gt;
+  &lt;step n="1"&gt;Load persona from this file&lt;/step&gt;
+  &lt;step n="2"&gt;Load memory/context.md&lt;/step&gt;
+  &lt;step n="3"&gt;Greet user&lt;/step&gt;
+  &lt;step n="4"&gt;Await request&lt;/step&gt;
+&lt;/activation&gt;
+</code></pre>
+<h2 id="ví-dụ-thực-tế"><a class="header" href="#ví-dụ-thực-tế">Ví Dụ Thực Tế</a></h2>
+<h3 id="code-review-agent"><a class="header" href="#code-review-agent">Code Review Agent</a></h3>
+<pre><code class="language-yaml">---
+name: code-review-agent
+description: |
+  Review code theo best practices. Sử dụng khi:
+  - Review pull request
+  - Check code quality
+  - Tìm security issues
+
+model: sonnet
+tools: [Read, Glob, Grep]
+language: vi
+---
+
+# Code Review Agent
+
+## Persona
+
+Bạn là senior developer với 10 năm kinh nghiệm.
+Bạn review code một cách kỹ lưỡng nhưng constructive.
+
+## Checklist Review
+
+1. **Correctness**: Logic có đúng không?
+2. **Readability**: Code có dễ đọc không?
+3. **Maintainability**: Code có dễ bảo trì không?
+4. **Security**: Có lỗ hổng bảo mật không?
+5. **Performance**: Có vấn đề hiệu năng không?
+
+## Quy Tắc
+
+- LUÔN giải thích tại sao một điều là vấn đề
+- LUÔN đề xuất cách sửa cụ thể
+- KHÔNG BAO GIỜ chỉ nói "code xấu" mà không giải thích
+- ƯU TIÊN vấn đề nghiêm trọng trước
+
+## Output Format
+
+### Issue Found
+**File**: `path/to/file.go`
+**Line**: 42
+**Severity**: High/Medium/Low
+**Issue**: Mô tả vấn đề
+**Suggestion**: Cách sửa
+```go
+// Good
+fixed code here
+</code></pre>
+<pre><code>
+### Database Query Agent
+
+```yaml
+---
+name: db-query-agent
+description: |
+  Viết và tối ưu SQL queries. Sử dụng khi:
+  - Cần viết query phức tạp
+  - Tối ưu query chậm
+  - Debug query issues
+
+model: sonnet
+tools: [Read, Glob, Grep, Bash]
+language: vi
+---
+
+# Database Query Agent
+
+## Persona
+
+Bạn là DBA chuyên gia với expertise về:
+- PostgreSQL
+- MySQL
+- Query optimization
+
+## Quy Trình
+
+1. Hiểu schema (đọc migration files)
+2. Hiểu requirements
+3. Viết query
+4. Giải thích EXPLAIN plan
+5. Đề xuất indexes nếu cần
+
+## Quy Tắc
+
+- LUÔN sử dụng parameterized queries
+- KHÔNG BAO GIỜ SELECT *
+- LUÔN giải thích query plan
+</code></pre>
+<h2 id="bước-4-tạo-command-optional"><a class="header" href="#bước-4-tạo-command-optional">Bước 4: Tạo Command (Optional)</a></h2>
+<p>Để gọi agent qua slash command:</p>
+<pre><code class="language-bash">mkdir -p .claude/commands/myteam
+touch .claude/commands/myteam/my-agent.md
+</code></pre>
+<pre><code class="language-yaml">---
+name: 'my-agent'
+description: 'My Agent - mô tả ngắn'
+---
+
+Bạn phải hoàn toàn hóa thân vào agent này.
+
+&lt;agent-activation CRITICAL="TRUE"&gt;
+1. LOAD đầy đủ agent từ @.microai/agents/my-agent/agent.md
+2. ĐỌC toàn bộ nội dung
+3. THỰC HIỆN theo activation protocol
+4. ĐỢI yêu cầu từ người dùng
+&lt;/agent-activation&gt;
+</code></pre>
+<h2 id="bước-5-test-agent"><a class="header" href="#bước-5-test-agent">Bước 5: Test Agent</a></h2>
+<pre><code class="language-bash"># Mở Claude Code
+claude
+
+# Gọi agent
+/myteam:my-agent
+
+# Hoặc
+Hãy đọc và thực hiện theo @.microai/agents/my-agent/agent.md
+</code></pre>
+<h2 id="checklist"><a class="header" href="#checklist">Checklist</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"> <code>name</code> là unique và lowercase</li>
+<li><input disabled="" type="checkbox"> <code>description</code> có use cases rõ ràng</li>
+<li><input disabled="" type="checkbox"> <code>tools</code> chỉ liệt kê tools cần thiết</li>
+<li><input disabled="" type="checkbox"> Body có persona rõ ràng</li>
+<li><input disabled="" type="checkbox"> Có quy tắc LUÔN/KHÔNG BAO GIỜ</li>
+<li><input disabled="" type="checkbox"> Có quy trình step-by-step</li>
+</ul>
+<h2 id="bước-tiếp-theo-1"><a class="header" href="#bước-tiếp-theo-1">Bước Tiếp Theo</a></h2>
+<ul>
+<li><a href="#cấu-trúc-file-agentmd">Cấu trúc file agent.md</a></li>
+<li><a href="#yaml-frontmatter-1">YAML Frontmatter chi tiết</a></li>
+<li><a href="#agent-nâng-cao">Agent nâng cao</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cấu-trúc-file-agentmd"><a class="header" href="#cấu-trúc-file-agentmd">Cấu Trúc File agent.md</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="yaml-frontmatter-1"><a class="header" href="#yaml-frontmatter-1">YAML Frontmatter</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="body-content"><a class="header" href="#body-content">Body Content</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-nâng-cao"><a class="header" href="#agent-nâng-cao">Agent Nâng Cao</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="knowledge-base"><a class="header" href="#knowledge-base">Knowledge Base</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="memory-system"><a class="header" href="#memory-system">Memory System</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="activation-protocol"><a class="header" href="#activation-protocol">Activation Protocol</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="menu-commands"><a class="header" href="#menu-commands">Menu Commands</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-patterns"><a class="header" href="#agent-patterns">Agent Patterns</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="specialist-pattern"><a class="header" href="#specialist-pattern">Specialist Pattern</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="review-pattern"><a class="header" href="#review-pattern">Review Pattern</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="meta-pattern"><a class="header" href="#meta-pattern">Meta Pattern</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="testing-agents"><a class="header" href="#testing-agents">Testing Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="team-cơ-bản"><a class="header" href="#team-cơ-bản">Team Cơ Bản</a></h1>
+<p>Hướng dẫn tạo team đầu tiên của bạn.</p>
+<h2 id="tổng-quan-1"><a class="header" href="#tổng-quan-1">Tổng Quan</a></h2>
+<p>Một team cơ bản bao gồm:</p>
+<ul>
+<li>Thư mục team với cấu trúc chuẩn</li>
+<li>workflow.md định nghĩa quy trình</li>
+<li>Các agent thành viên</li>
+<li>Team memory (optional)</li>
+</ul>
+<h2 id="bước-1-tạo-thư-mục-team"><a class="header" href="#bước-1-tạo-thư-mục-team">Bước 1: Tạo Thư Mục Team</a></h2>
+<pre><code class="language-bash">mkdir -p .microai/agents/microai/teams/my-team/{agents,team-memory}
+</code></pre>
+<p>Cấu trúc:</p>
+<pre><code>my-team/
+├── workflow.md           # Team workflow definition
+├── agents/               # Team member agents
+│   ├── lead.md          # Team lead
+│   ├── specialist-1.md  # Specialist 1
+│   └── specialist-2.md  # Specialist 2
+└── team-memory/          # Shared team memory
+    ├── context.md
+    ├── decisions.md
+    └── handoffs.md
+</code></pre>
+<h2 id="bước-2-định-nghĩa-workflow"><a class="header" href="#bước-2-định-nghĩa-workflow">Bước 2: Định Nghĩa Workflow</a></h2>
+<p>Tạo <code>workflow.md</code>:</p>
+<pre><code class="language-yaml">---
+name: my-team
+description: |
+  Mô tả team. Sử dụng khi:
+  - Use case 1
+  - Use case 2
+
+type: sequential           # sequential | parallel | consultation
+lead: lead.md             # Team lead agent
+
+agents:
+  - lead.md
+  - specialist-1.md
+  - specialist-2.md
+
+phases:
+  - name: understand
+    agent: lead
+    description: Hiểu vấn đề
+
+  - name: analyze
+    agents: [specialist-1, specialist-2]
+    description: Phân tích từ nhiều góc độ
+
+  - name: synthesize
+    agent: lead
+    description: Tổng hợp kết quả
+---
+
+# My Team Workflow
+
+## Tổng Quan
+
+Team này giúp [mục đích chính].
+
+## Quy Trình
+
+### Phase 1: Understand
+Lead agent thu thập thông tin và làm rõ yêu cầu.
+
+### Phase 2: Analyze
+Các specialists phân tích từ góc độ chuyên môn của mình.
+
+### Phase 3: Synthesize
+Lead tổng hợp và đưa ra kết luận.
+
+## Handoff Protocol
+
+Khi chuyển giao giữa các agents:
+1. Summarize findings
+2. List open questions
+3. Specify next steps
+
+## Observer Commands
+
+| Command | Mô tả |
+|---------|-------|
+| `*status` | Xem phase hiện tại |
+| `*focus {agent}` | Yêu cầu agent cụ thể |
+| `*summarize` | Tóm tắt |
+</code></pre>
+<h2 id="bước-3-tạo-agent-lead"><a class="header" href="#bước-3-tạo-agent-lead">Bước 3: Tạo Agent Lead</a></h2>
+<p>Tạo <code>agents/lead.md</code>:</p>
+<pre><code class="language-yaml">---
+name: my-team-lead
+description: Lead của my-team
+model: sonnet
+tools: [Read, Write, Edit, Glob, Grep, AskUserQuestion, TodoWrite]
+---
+
+# Team Lead
+
+## Persona
+
+Bạn là team lead, điều phối hoạt động của team.
+
+## Trách Nhiệm
+
+1. Tiếp nhận yêu cầu từ user
+2. Phân công cho specialists
+3. Tổng hợp kết quả
+4. Đưa ra kết luận
+
+## Quy Trình Điều Phối
+
+### Khi bắt đầu session
+1. Chào mừng và giới thiệu team
+2. Thu thập context từ user
+3. Xác định phase phù hợp
+
+### Khi kết thúc session
+1. Tóm tắt findings
+2. Update team-memory/context.md
+3. Log decisions quan trọng
+
+## Handoff Template
+
+Khi chuyển giao cho specialist:
+
+</code></pre>
+<h2 id="handoff-to-specialist-name"><a class="header" href="#handoff-to-specialist-name">Handoff to [Specialist Name]</a></h2>
+<p><strong>Context</strong>: [Tóm tắt tình huống]
+<strong>Request</strong>: [Yêu cầu cụ thể]
+<strong>Constraints</strong>: [Ràng buộc]
+<strong>Expected Output</strong>: [Output mong đợi]</p>
+<pre><code></code></pre>
+<h2 id="bước-4-tạo-specialist-agents"><a class="header" href="#bước-4-tạo-specialist-agents">Bước 4: Tạo Specialist Agents</a></h2>
+<p>Tạo <code>agents/specialist-1.md</code>:</p>
+<pre><code class="language-yaml">---
+name: my-team-specialist-1
+description: Specialist 1 của my-team
+model: sonnet
+tools: [Read, Glob, Grep]
+---
+
+# Specialist 1
+
+## Persona
+
+Bạn là chuyên gia về [lĩnh vực].
+
+## Chuyên Môn
+
+- Expertise 1
+- Expertise 2
+- Expertise 3
+
+## Quy Trình Phân Tích
+
+1. Nhận handoff từ lead
+2. Phân tích theo chuyên môn
+3. Document findings
+4. Handoff trả lại lead
+
+## Output Format
+
+### Analysis Report
+
+**Topic**: [Chủ đề phân tích]
+**Findings**:
+1. Finding 1
+2. Finding 2
+
+**Recommendations**:
+1. Recommendation 1
+2. Recommendation 2
+
+**Open Questions**:
+- Question 1
+- Question 2
+</code></pre>
+<h2 id="bước-5-tạo-team-memory"><a class="header" href="#bước-5-tạo-team-memory">Bước 5: Tạo Team Memory</a></h2>
+<p>Tạo <code>team-memory/context.md</code>:</p>
+<pre><code class="language-markdown"># Team Context
+
+&gt; Last updated: YYYY-MM-DD
+
+## Current Project
+
+**Project**: [Tên dự án]
+**Status**: [Active/Paused/Completed]
+
+## Active Tasks
+
+| Task | Assigned | Status |
+|------|----------|--------|
+| Task 1 | specialist-1 | In Progress |
+
+## Recent Decisions
+
+- [Date]: [Decision summary]
+
+## Blockers
+
+- [ ] Blocker 1
+</code></pre>
+<p>Tạo <code>team-memory/handoffs.md</code>:</p>
+<pre><code class="language-markdown"># Handoff Log
+
+## YYYY-MM-DD HH:MM
+
+**From**: lead
+**To**: specialist-1
+**Context**: [Context]
+**Request**: [Request]
+**Status**: [Pending/Completed]
+</code></pre>
+<h2 id="bước-6-tạo-command"><a class="header" href="#bước-6-tạo-command">Bước 6: Tạo Command</a></h2>
+<p>Tạo <code>.claude/commands/myteam/my-team.md</code>:</p>
+<pre><code class="language-yaml">---
+name: 'my-team'
+description: 'My Team - mô tả ngắn'
+---
+
+Bạn phải kích hoạt team này.
+
+&lt;team-activation CRITICAL="TRUE"&gt;
+1. LOAD workflow từ @.microai/agents/microai/teams/my-team/workflow.md
+2. LOAD tất cả agents trong teams/my-team/agents/
+3. LOAD team-memory/context.md
+4. Bắt đầu với lead agent
+5. Follow workflow phases
+&lt;/team-activation&gt;
+</code></pre>
+<h2 id="bước-7-test-team"><a class="header" href="#bước-7-test-team">Bước 7: Test Team</a></h2>
+<pre><code class="language-bash">claude
+
+/myteam:my-team
+</code></pre>
+<h2 id="ví-dụ-thực-tế-code-review-team"><a class="header" href="#ví-dụ-thực-tế-code-review-team">Ví Dụ Thực Tế: Code Review Team</a></h2>
+<h3 id="cấu-trúc"><a class="header" href="#cấu-trúc">Cấu Trúc</a></h3>
+<pre><code>code-review-team/
+├── workflow.md
+├── agents/
+│   ├── reviewer-lead.md
+│   ├── security-reviewer.md
+│   └── performance-reviewer.md
+└── team-memory/
+    ├── context.md
+    └── review-history.md
+</code></pre>
+<h3 id="workflowmd"><a class="header" href="#workflowmd">workflow.md</a></h3>
+<pre><code class="language-yaml">---
+name: code-review-team
+description: |
+  Team review code toàn diện. Sử dụng khi:
+  - Review PR quan trọng
+  - Security audit
+  - Performance review
+
+type: parallel
+lead: reviewer-lead.md
+
+agents:
+  - reviewer-lead.md
+  - security-reviewer.md
+  - performance-reviewer.md
+
+phases:
+  - name: setup
+    agent: lead
+    description: Thu thập context về code cần review
+
+  - name: review
+    agents: [security-reviewer, performance-reviewer]
+    parallel: true
+    description: Review song song từ góc độ khác nhau
+
+  - name: consolidate
+    agent: lead
+    description: Tổng hợp findings và tạo report
+---
+
+# Code Review Team
+
+## Overview
+
+Team gồm 3 reviewers:
+- 👨‍💼 Lead: Điều phối, overall quality
+- 🔒 Security: OWASP, vulnerabilities
+- ⚡ Performance: Bottlenecks, optimization
+
+## Workflow
+
+1. Lead nhận PR/code cần review
+2. Security và Performance review song song
+3. Lead tổng hợp thành unified report
+
+## Output
+
+### Review Report
+
+**Files Reviewed**: X files
+**Lines Changed**: Y lines
+
+**Security Issues**:
+- [Critical/High/Medium/Low]: Description
+
+**Performance Issues**:
+- [Critical/High/Medium/Low]: Description
+
+**Recommendations**:
+1. ...
+2. ...
+
+**Verdict**: Approve / Request Changes / Block
+</code></pre>
+<h2 id="checklist-1"><a class="header" href="#checklist-1">Checklist</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"> Thư mục team có cấu trúc đúng</li>
+<li><input disabled="" type="checkbox"> workflow.md có đầy đủ metadata</li>
+<li><input disabled="" type="checkbox"> Có agent lead</li>
+<li><input disabled="" type="checkbox"> Các specialist agents có role rõ ràng</li>
+<li><input disabled="" type="checkbox"> Team memory được setup</li>
+<li><input disabled="" type="checkbox"> Command để kích hoạt team</li>
+<li><input disabled="" type="checkbox"> Test team hoạt động</li>
+</ul>
+<h2 id="bước-tiếp-theo-2"><a class="header" href="#bước-tiếp-theo-2">Bước Tiếp Theo</a></h2>
+<ul>
+<li><a href="#cấu-trúc-thư-mục-team">Cấu trúc thư mục Team</a></li>
+<li><a href="#workflowmd-1">workflow.md chi tiết</a></li>
+<li><a href="#coordination-patterns">Coordination Patterns</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cấu-trúc-thư-mục-team"><a class="header" href="#cấu-trúc-thư-mục-team">Cấu Trúc Thư Mục Team</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="workflowmd-1"><a class="header" href="#workflowmd-1">workflow.md</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="team-memory"><a class="header" href="#team-memory">team-memory/</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="coordination-patterns"><a class="header" href="#coordination-patterns">Coordination Patterns</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="sequential-pipeline"><a class="header" href="#sequential-pipeline">Sequential Pipeline</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="parallel-fan-out"><a class="header" href="#parallel-fan-out">Parallel Fan-out</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="expert-consultation"><a class="header" href="#expert-consultation">Expert Consultation</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="handoff-protocol"><a class="header" href="#handoff-protocol">Handoff Protocol</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="observer-integration"><a class="header" href="#observer-integration">Observer Integration</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="session-teams"><a class="header" href="#session-teams">Session Teams</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="turn-based-dialogue"><a class="header" href="#turn-based-dialogue">Turn-based Dialogue</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-roles"><a class="header" href="#agent-roles">Agent Roles</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="templates"><a class="header" href="#templates">Templates</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="skill-cơ-bản"><a class="header" href="#skill-cơ-bản">Skill Cơ Bản</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cấu-trúc-thư-mục-skill"><a class="header" href="#cấu-trúc-thư-mục-skill">Cấu Trúc Thư Mục Skill</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="skillmd"><a class="header" href="#skillmd">SKILL.md</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="reference-files"><a class="header" href="#reference-files">Reference Files</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="skill-nâng-cao"><a class="header" href="#skill-nâng-cao">Skill Nâng Cao</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="templates-1"><a class="header" href="#templates-1">Templates</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="slash-commands"><a class="header" href="#slash-commands">Slash Commands</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cấu-trúc-file-command"><a class="header" href="#cấu-trúc-file-command">Cấu Trúc File Command</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="linking-to-agents"><a class="header" href="#linking-to-agents">Linking to Agents</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="naming-conventions"><a class="header" href="#naming-conventions">Naming Conventions</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="hooks-overview"><a class="header" href="#hooks-overview">Hooks Overview</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="hook-types"><a class="header" href="#hook-types">Hook Types</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="pretooluse"><a class="header" href="#pretooluse">PreToolUse</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="posttooluse"><a class="header" href="#posttooluse">PostToolUse</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="userpromptsubmit"><a class="header" href="#userpromptsubmit">UserPromptSubmit</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="sessionstart"><a class="header" href="#sessionstart">SessionStart</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="hook-scripts"><a class="header" href="#hook-scripts">Hook Scripts</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="inputoutput"><a class="header" href="#inputoutput">Input/Output</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="blocking-hooks"><a class="header" href="#blocking-hooks">Blocking Hooks</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="logging-hooks"><a class="header" href="#logging-hooks">Logging Hooks</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="security-hooks"><a class="header" href="#security-hooks">Security Hooks</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="knowledge-base-design"><a class="header" href="#knowledge-base-design">Knowledge Base Design</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="knowledge-indexyaml"><a class="header" href="#knowledge-indexyaml">knowledge-index.yaml</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="auto-loading-patterns"><a class="header" href="#auto-loading-patterns">Auto-loading Patterns</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="learning-system"><a class="header" href="#learning-system">Learning System</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="memory-architecture"><a class="header" href="#memory-architecture">Memory Architecture</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="contextmd"><a class="header" href="#contextmd">context.md</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="decisionsmd"><a class="header" href="#decisionsmd">decisions.md</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="learningsmd"><a class="header" href="#learningsmd">learnings.md</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="session-persistence"><a class="header" href="#session-persistence">Session Persistence</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="checkpointing"><a class="header" href="#checkpointing">Checkpointing</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="agent-design-principles"><a class="header" href="#agent-design-principles">Agent Design Principles</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="team-orchestration"><a class="header" href="#team-orchestration">Team Orchestration</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="error-handling"><a class="header" href="#error-handling">Error Handling</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="testing-strategies"><a class="header" href="#testing-strategies">Testing Strategies</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="documentation"><a class="header" href="#documentation">Documentation</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="xây-dựng-agent-từ-đầu"><a class="header" href="#xây-dựng-agent-từ-đầu">Xây Dựng Agent Từ Đầu</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="xây-dựng-team-từ-đầu"><a class="header" href="#xây-dựng-team-từ-đầu">Xây Dựng Team Từ Đầu</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="migrate-agent-sang-microai-format"><a class="header" href="#migrate-agent-sang-microai-format">Migrate Agent Sang MicroAI Format</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="templates-repository"><a class="header" href="#templates-repository">Templates Repository</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="anti-patterns"><a class="header" href="#anti-patterns">Anti-Patterns</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="checklist-for-release"><a class="header" href="#checklist-for-release">Checklist for Release</a></h1>
+<blockquote>
+<p><strong>TODO</strong>: Nội dung đang được cập nhật.</p>
+</blockquote>
+<p>Chương này đang trong quá trình phát triển.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

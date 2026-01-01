@@ -1,0 +1,110 @@
+# Knowledge Index - Dev-Security Team
+# Auto-loading rules for knowledge files
+
+version: "1.0"
+team: dev-security
+
+# Knowledge files registry
+files:
+  - id: owasp-top-10
+    path: ./01-owasp-top-10.md
+    title: "OWASP Top 10"
+    description: "OWASP Top 10 vulnerabilities reference guide"
+    tokens_estimate: 3000
+
+  - id: threat-modeling
+    path: ./02-threat-modeling.md
+    title: "Threat Modeling Guide"
+    description: "STRIDE framework, DFD, attack trees, risk assessment"
+    tokens_estimate: 2500
+
+  - id: secure-code-review
+    path: ./03-secure-code-review.md
+    title: "Secure Code Review Checklist"
+    description: "Security-focused code review checklist"
+    tokens_estimate: 2200
+
+# Auto-load rules
+auto_load:
+  # Load based on session mode
+  by_mode:
+    review:
+      - secure-code-review
+      - owasp-top-10
+    threat-model:
+      - threat-modeling
+    vulnerability:
+      - owasp-top-10
+      - secure-code-review
+
+  # Load based on dialogue phase
+  by_phase:
+    init:
+      - owasp-top-10
+    analysis:
+      - secure-code-review
+    threat-analysis:
+      - threat-modeling
+    synthesis:
+      - secure-code-review
+
+  # Load based on keywords in topic
+  by_keyword:
+    # OWASP vulnerabilities
+    injection:
+      - owasp-top-10
+    xss:
+      - owasp-top-10
+    csrf:
+      - owasp-top-10
+    authentication:
+      - owasp-top-10
+    authorization:
+      - owasp-top-10
+    access-control:
+      - owasp-top-10
+
+    # Threat modeling
+    threat:
+      - threat-modeling
+    stride:
+      - threat-modeling
+    attack:
+      - threat-modeling
+    risk:
+      - threat-modeling
+
+    # Code review
+    review:
+      - secure-code-review
+    code:
+      - secure-code-review
+    vulnerability:
+      - secure-code-review
+      - owasp-top-10
+
+    # Specific concerns
+    password:
+      - owasp-top-10
+      - secure-code-review
+    session:
+      - owasp-top-10
+      - secure-code-review
+    encryption:
+      - owasp-top-10
+    api:
+      - secure-code-review
+
+# Priority levels for loading
+priority:
+  high:
+    - owasp-top-10  # Most commonly referenced
+  medium:
+    - secure-code-review
+  low:
+    - threat-modeling  # Specific to threat model sessions
+
+# Token budget management
+token_budget:
+  max_auto_load: 6000  # Maximum tokens to auto-load
+  prefer_summaries: true  # Load summaries first if over budget

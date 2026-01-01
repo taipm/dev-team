@@ -1,0 +1,42 @@
+# Chat Agent Knowledge Index
+
+core_files:
+  - handlers/chat.go
+  - handlers/chat_streaming.go
+  - handlers/chat_crew.go
+  - handlers/chat_signals.go
+  - handlers/chat_types.go
+  - handlers/chat_persistence.go
+
+keywords:
+  chat:
+    - chat
+    - message
+    - conversation
+    - response
+  streaming:
+    - streaming
+    - SSE
+    - real-time
+    - flush
+    - event
+  signals:
+    - signal
+    - SIGNAL_
+    - tool_start
+    - tool_end
+  crew:
+    - crew
+    - multi-agent
+    - orchestrator
+
+critical_files:
+  - path: handlers/chat_streaming.go
+    importance: HIGH
+    reason: Core streaming logic, SSE implementation
+  - path: handlers/chat.go
+    importance: HIGH
+    reason: Main entry point for chat requests
+  - path: handlers/chat_signals.go
+    importance: MEDIUM
+    reason: Signal definitions and handling

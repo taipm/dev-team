@@ -1,0 +1,55 @@
+# Config Agent Knowledge Index
+
+core_files:
+  - internal/config/config.go
+  - internal/config/secrets.go
+  - internal/config/viper.go
+  - internal/config/watcher.go
+  - internal/config/yaml.go
+  - internal/config/constants.go
+  - .env.example
+
+keywords:
+  config:
+    - config
+    - configuration
+    - environment
+    - env
+    - setting
+    - option
+  secrets:
+    - secret
+    - jwt
+    - api key
+    - openai
+    - ldap
+    - password
+    - credential
+    - validation
+  environment:
+    - getenv
+    - dotenv
+    - .env
+    - environment variable
+  hot_reload:
+    - watcher
+    - hot reload
+    - fsnotify
+    - reload
+    - live config
+
+critical_files:
+  - path: internal/config/secrets.go
+    importance: CRITICAL
+    reason: Security validation for all secrets
+  - path: internal/config/config.go
+    importance: HIGH
+    reason: Main config struct, startup validation
+
+patterns:
+  - name: SecretConfig validation
+    file: internal/config/secrets.go
+    description: Use SecretConfig struct for all secret validation
+  - name: Environment helpers
+    file: internal/config/config.go
+    description: getEnv, getBoolEnv, getIntEnv, getFloatEnv

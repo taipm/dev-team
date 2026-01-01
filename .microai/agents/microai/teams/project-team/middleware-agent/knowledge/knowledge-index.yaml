@@ -1,0 +1,64 @@
+# Knowledge Index - Middleware Agent
+# Security Specialist for authentication and authorization
+
+core_files: []  # Will be populated as knowledge grows
+
+keywords:
+  authentication:
+    - auth
+    - jwt
+    - token
+    - login
+    - session
+
+  authorization:
+    - rbac
+    - permission
+    - role
+    - access
+    - forbidden
+
+  rate_limiting:
+    - rate
+    - limit
+    - throttle
+    - burst
+    - abuse
+
+  security:
+    - security
+    - cors
+    - header
+    - validation
+
+critical_files:
+  - path: internal/middleware/auth.go
+    importance: CRITICAL
+    rule: JWT authentication
+
+  - path: internal/middleware/pattern_rbac.go
+    importance: HIGH
+    rule: Pattern-based RBAC
+
+  - path: internal/middleware/rate_limiter.go
+    importance: HIGH
+    rule: Rate limiting
+
+common_tasks:
+  fix_auth:
+    files:
+      - internal/middleware/auth.go
+    tests:
+      - auth_test.go
+
+  add_permission:
+    files:
+      - internal/middleware/pattern_rbac.go
+    tests:
+      - pattern_rbac_test.go
+
+  configure_rate_limit:
+    files:
+      - internal/middleware/rate_limiter.go
+    tests:
+      - rate_limiter_test.go

@@ -1,0 +1,118 @@
+# Knowledge Index - Agentic Agent
+# Core Engine Specialist for multi-agent orchestration
+
+core_files:
+  - file: 01-budget-system.md
+    description: Budget v1, v2, token counting, cost tracking
+    load_when:
+      - working with budget tracking
+      - fixing token counting issues
+      - implementing cost limits
+      - debugging budget exceeded errors
+
+  - file: 02-crew-execution.md
+    description: Multi-agent orchestration, routing, parallel execution
+    load_when:
+      - working with crew configuration
+      - implementing agent routing
+      - debugging crew execution flow
+      - adding parallel agent execution
+
+  - file: 03-pricing-reference.md
+    description: SINGLE SOURCE OF TRUTH for pricing constants
+    load_when:
+      - calculating costs
+      - adding new model pricing
+      - debugging cost discrepancies
+      - integrating with cost_tracker
+
+keywords:
+  budget_system:
+    - budget
+    - token
+    - limit
+    - exceeded
+    - tracking
+    - v1
+    - v2
+    - category
+    - system tokens
+    - history tokens
+    - input tokens
+    - output tokens
+
+  crew_execution:
+    - crew
+    - agent
+    - routing
+    - signal
+    - handoff
+    - terminal
+    - parallel
+    - sequential
+    - orchestration
+    - entry agent
+
+  pricing:
+    - cost
+    - price
+    - pricing
+    - calculate
+    - gpt-4o
+    - gpt-4o-mini
+    - input price
+    - output price
+    - per million
+    - SSOT
+
+critical_files:
+  - path: internal/agentic/pricing.go
+    importance: CRITICAL
+    rule: SINGLE SOURCE OF TRUTH - Never duplicate pricing
+
+  - path: internal/agentic/budget.go
+    importance: HIGH
+    rule: Budget v1 - Simple token tracking
+
+  - path: internal/agentic/budget_v2.go
+    importance: HIGH
+    rule: Budget v2 - Category-based tracking
+
+  - path: internal/agentic/crew.go
+    importance: HIGH
+    rule: Main crew execution logic
+
+  - path: internal/agentic/token_counter.go
+    importance: HIGH
+    rule: Use tiktoken for accurate counting
+
+common_tasks:
+  fix_budget_bug:
+    files:
+      - budget.go
+      - budget_v2.go
+      - token_counter.go
+    tests:
+      - budget_test.go
+      - budget_v2_test.go
+
+  add_new_model:
+    files:
+      - pricing.go
+    tests:
+      - pricing_test.go
+
+  optimize_crew:
+    files:
+      - crew.go
+      - crew_parallel.go
+      - crew_routing.go
+    tests:
+      - crew_test.go
+
+  fix_cost_tracking:
+    files:
+      - pricing.go
+      - services/cost_tracker.go
+    tests:
+      - pricing_test.go

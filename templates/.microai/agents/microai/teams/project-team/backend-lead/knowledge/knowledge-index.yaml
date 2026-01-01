@@ -1,0 +1,74 @@
+# Knowledge Index - Backend Lead
+# Orchestrator agent cho backend development team
+
+core_files:
+  - file: 01-domain-mapping.md
+    description: Chi tiết domain ownership và file mappings cho specialists
+    load_when:
+      - routing tasks to specialists
+      - analyzing which domain a request belongs to
+      - resolving cross-domain dependencies
+
+  - file: 02-dispatch-patterns.md
+    description: Patterns để dispatch tasks hiệu quả
+    load_when:
+      - planning task execution
+      - deciding parallel vs sequential
+      - handling dependencies between tasks
+
+  - file: 03-synthesis-templates.md
+    description: Templates cho reports và communication
+    load_when:
+      - presenting execution plan to user
+      - reporting progress
+      - compiling final results
+
+keywords:
+  domain_mapping:
+    - routing
+    - specialist
+    - domain
+    - ownership
+    - file path
+    - cross-domain
+
+  dispatch_patterns:
+    - parallel
+    - sequential
+    - dependency
+    - handoff
+    - consultation
+    - phased
+
+  synthesis:
+    - report
+    - summary
+    - progress
+    - status
+    - blocker
+    - conflict
+
+team_members:
+  agentic-agent:
+    keywords: [budget, token, cost, crew, agent, pricing, timeout, streaming]
+    domain: internal/agentic/, services/crew/
+
+  hpsm-agent:
+    keywords: [ticket, HPSM, interaction, routing rule, OAuth, priority, impact]
+    domain: internal/hpsm/, tools/hpsm/
+
+  mongodb-agent:
+    keywords: [collection, index, schema, query, MongoDB, database, provider]
+    domain: internal/database/
+
+  gateway-agent:
+    keywords: [gateway, proxy, orchestrator, routing, validation]
+    domain: gateway-server/
+
+  pattern-agent:
+    keywords: [pattern, capability, catalog, publish, hot reload]
+    domain: services/pattern/, internal/catalog/
+
+  middleware-agent:
+    keywords: [auth, JWT, RBAC, rate limit, middleware, security, cors]
+    domain: internal/middleware/

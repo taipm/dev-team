@@ -1,0 +1,155 @@
+# Knowledge Index for Dev-QA Team
+# Defines when knowledge files should be auto-loaded
+
+version: "1.0"
+team: dev-qa
+
+# Core knowledge files
+files:
+  - id: testing-strategies
+    path: 01-testing-strategies.md
+    description: "Test pyramid, risk-based testing, edge case discovery"
+    keywords:
+      - test
+      - testing
+      - strategy
+      - pyramid
+      - risk
+      - edge case
+      - boundary
+      - security
+      - performance
+    priority: high
+
+  - id: bug-reporting
+    path: 02-bug-reporting-guide.md
+    description: "Bug report structure, severity/priority matrix, lifecycle"
+    keywords:
+      - bug
+      - defect
+      - issue
+      - severity
+      - priority
+      - reproduce
+      - report
+      - fix
+    priority: high
+
+  - id: testability-review
+    path: 03-testability-review.md
+    description: "Code testability checklist, dependency injection, mocking"
+    keywords:
+      - testability
+      - review
+      - code
+      - dependency
+      - injection
+      - mock
+      - interface
+      - coverage
+    priority: medium
+
+# Auto-load rules based on session mode
+mode_triggers:
+  testplan:
+    always_load:
+      - testing-strategies
+    on_keywords:
+      - testability-review: ["code", "review", "architecture"]
+
+  bug:
+    always_load:
+      - bug-reporting
+    on_keywords:
+      - testing-strategies: ["reproduce", "edge case", "scenario"]
+
+  review:
+    always_load:
+      - testability-review
+    on_keywords:
+      - testing-strategies: ["test coverage", "unit test", "integration"]
+
+# Phase-based loading
+phase_triggers:
+  requirements:
+    load: testing-strategies
+    reason: "Understand testing scope early"
+
+  dialogue:
+    load_on_keywords:
+      - bug-reporting: ["bug", "issue", "defect", "fail"]
+      - testability-review: ["mock", "inject", "interface", "coverage"]
+
+  synthesis:
+    load: bug-reporting
+    reason: "Structure output correctly"
+
+# Agent-specific knowledge
+agent_knowledge:
+  qa-engineer:
+    primary:
+      - testing-strategies
+      - bug-reporting
+    secondary:
+      - testability-review
+
+  developer:
+    primary:
+      - testability-review
+    secondary:
+      - bug-reporting
+      - testing-strategies
+
+# Keyword-based auto-load during dialogue
+keyword_triggers:
+  # Testing keywords
+  "edge case|boundary|limit":
+    load: testing-strategies
+    section: "Edge Case Discovery Techniques"
+
+  "security|injection|xss|csrf":
+    load: testing-strategies
+    section: "Security Testing Checklist"
+
+  "performance|load|stress":
+    load: testing-strategies
+    section: "Performance Testing Patterns"
+
+  # Bug keywords
+  "severity|priority|critical|high|medium|low":
+    load: bug-reporting
+    section: "Severity vs Priority Matrix"
+
+  "reproduce|steps|expected|actual":
+    load: bug-reporting
+    section: "Bug Report Structure"
+
+  "root cause|5 why|analysis":
+    load: bug-reporting
+    section: "Root Cause Analysis Template"
+
+  # Testability keywords
+  "mock|stub|fake|test double":
+    load: testability-review
+    section: "Dependency Injection Patterns"
+
+  "coverage|unit test|integration":
+    load: testability-review
+    section: "Test Coverage Guidelines"
+
+  "complexity|refactor":
+    load: testability-review
+    section: "Code Complexity Analysis"
+
+# Conflict detection keywords
+conflict_keywords:
+  - "không đồng ý"
+  - "nhưng tôi nghĩ"
+  - "có vấn đề"
+  - "không chấp nhận"
+  - "cần thảo luận thêm"
+
+conflict_action:
+  load: testing-strategies
+  section: "Risk-Based Testing Prioritization"
+  message: "Detected disagreement - loading prioritization framework"

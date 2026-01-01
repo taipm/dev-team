@@ -1,0 +1,92 @@
+# Knowledge Index for Dev-User Team
+# Maps keywords and phases to relevant knowledge files
+
+version: "1.0"
+last_updated: "2025-12-30"
+
+knowledge_files:
+  - id: "01-requirements-patterns"
+    file: "01-requirements-patterns.md"
+    title: "Requirements Elicitation Patterns"
+    description: "Best practices for extracting clear requirements from vague user requests"
+    load_when:
+      - phase: "requirements"
+      - phase: "clarification"
+      - keyword: "vague"
+      - keyword: "unclear"
+      - keyword: "scope"
+    primary_user: "solo-dev"
+    topics:
+      - "5W1H framework"
+      - "Scope negotiation"
+      - "MVP definition"
+      - "Red flags"
+      - "Domain checklists"
+
+  - id: "02-acceptance-criteria-guide"
+    file: "02-acceptance-criteria-guide.md"
+    title: "Acceptance Criteria Writing Guide"
+    description: "Standards for writing clear, testable, unambiguous acceptance criteria"
+    load_when:
+      - phase: "synthesis"
+      - phase: "negotiation"
+      - keyword: "acceptance criteria"
+      - keyword: "AC"
+      - keyword: "given when then"
+    primary_user: "solo-dev"
+    topics:
+      - "Given-When-Then format"
+      - "Quality checklist"
+      - "Common patterns"
+      - "Edge cases"
+      - "Templates"
+
+  - id: "03-conflict-resolution"
+    file: "03-conflict-resolution.md"
+    title: "Conflict Resolution Protocol"
+    description: "How to handle disagreements and deadlocks between Solo Dev and EndUser"
+    load_when:
+      - keyword: "disagree"
+      - keyword: "conflict"
+      - keyword: "stuck"
+      - keyword: "deadlock"
+      - trigger: "same_topic_3_turns"
+      - trigger: "explicit_disagreement"
+    primary_user: "facilitator"
+    topics:
+      - "Scope conflicts"
+      - "Technical vs business"
+      - "Priority conflicts"
+      - "Deadlock breaker"
+      - "Escalation triggers"
+
+# Quick lookup by phase
+phase_mapping:
+  requirements:
+    - "01-requirements-patterns"
+  clarification:
+    - "01-requirements-patterns"
+  negotiation:
+    - "02-acceptance-criteria-guide"
+    - "03-conflict-resolution"
+  synthesis:
+    - "02-acceptance-criteria-guide"
+
+# Quick lookup by agent
+agent_mapping:
+  solo-dev:
+    - "01-requirements-patterns"
+    - "02-acceptance-criteria-guide"
+  enduser:
+    - "01-requirements-patterns"  # For understanding dev questions
+  facilitator:
+    - "03-conflict-resolution"
+
+# Auto-load rules
+auto_load:
+  session_start:
+    - "01-requirements-patterns"  # Always relevant at start
+  phase_change_to_synthesis:
+    - "02-acceptance-criteria-guide"
+  conflict_detected:
+    - "03-conflict-resolution"

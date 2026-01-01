@@ -1,0 +1,208 @@
+# Knowledge Index for White Hacker Agent
+
+name: white-hacker-knowledge
+version: "1.0"
+language: en  # Knowledge files in English, agent persona in Vietnamese
+last_updated: "2025-01-01"
+
+description: |
+  Comprehensive offensive security knowledge base covering
+  web exploitation, API attacks, infrastructure compromise,
+  reconnaissance, and post-exploitation techniques.
+
+# Core knowledge files - always loaded
+core_files:
+  - 01-attack-methodology.md  # PTES framework, must-have for all modes
+
+# Conditional loading based on mode/context
+conditional_files:
+  recon_mode:
+    - 05-reconnaissance.md
+  exploit_mode:
+    - 02-web-exploitation.md
+    - 03-api-exploitation.md
+    - 04-infrastructure.md
+  chain_mode:
+    - 01-attack-methodology.md
+    - 02-web-exploitation.md
+    - 03-api-exploitation.md
+    - 04-infrastructure.md
+    - 06-post-exploitation.md
+  report_mode:
+    - 01-attack-methodology.md  # For CVSS, severity ratings
+
+# Keyword-based loading
+keyword_triggers:
+  # Web vulnerabilities
+  sqli: 02-web-exploitation.md
+  sql_injection: 02-web-exploitation.md
+  xss: 02-web-exploitation.md
+  cross_site_scripting: 02-web-exploitation.md
+  csrf: 02-web-exploitation.md
+  ssrf: 02-web-exploitation.md
+  xxe: 02-web-exploitation.md
+  file_upload: 02-web-exploitation.md
+  authentication: 02-web-exploitation.md
+  jwt: 02-web-exploitation.md
+
+  # API vulnerabilities
+  idor: 03-api-exploitation.md
+  api: 03-api-exploitation.md
+  graphql: 03-api-exploitation.md
+  rest: 03-api-exploitation.md
+  mass_assignment: 03-api-exploitation.md
+  rate_limit: 03-api-exploitation.md
+  nosql: 03-api-exploitation.md
+
+  # Infrastructure
+  docker: 04-infrastructure.md
+  container: 04-infrastructure.md
+  kubernetes: 04-infrastructure.md
+  k8s: 04-infrastructure.md
+  aws: 04-infrastructure.md
+  cloud: 04-infrastructure.md
+  azure: 04-infrastructure.md
+  gcp: 04-infrastructure.md
+  smb: 04-infrastructure.md
+  network: 04-infrastructure.md
+  privilege_escalation: 04-infrastructure.md
+  privesc: 04-infrastructure.md
+
+  # Reconnaissance
+  recon: 05-reconnaissance.md
+  osint: 05-reconnaissance.md
+  subdomain: 05-reconnaissance.md
+  fingerprint: 05-reconnaissance.md
+  enumeration: 05-reconnaissance.md
+  google_dork: 05-reconnaissance.md
+  shodan: 05-reconnaissance.md
+  port_scan: 05-reconnaissance.md
+
+  # Post-exploitation
+  persistence: 06-post-exploitation.md
+  lateral_movement: 06-post-exploitation.md
+  pivot: 06-post-exploitation.md
+  credential: 06-post-exploitation.md
+  mimikatz: 06-post-exploitation.md
+  exfiltration: 06-post-exploitation.md
+  backdoor: 06-post-exploitation.md
+
+# File descriptions
+files:
+  01-attack-methodology.md:
+    title: "Attack Methodology - PTES Framework"
+    description: "Comprehensive penetration testing methodology including scoping, reconnaissance, exploitation phases, and reporting"
+    topics:
+      - Pre-engagement
+      - Intelligence gathering
+      - Threat modeling
+      - Vulnerability analysis
+      - Exploitation workflow
+      - Post-exploitation objectives
+      - Report structure
+
+  02-web-exploitation.md:
+    title: "Web Application Exploitation"
+    description: "Technical deep-dive into web vulnerabilities with actual payloads"
+    topics:
+      - SQL Injection (union, blind, out-of-band)
+      - XSS (reflected, stored, DOM)
+      - CSRF attacks and bypass
+      - Authentication bypass (JWT, session)
+      - SSRF exploitation
+      - File upload attacks
+      - XXE injection
+
+  03-api-exploitation.md:
+    title: "API Exploitation"
+    description: "API security testing with exploitation techniques"
+    topics:
+      - IDOR attacks
+      - Mass assignment
+      - JWT vulnerabilities
+      - GraphQL attacks
+      - Rate limiting bypass
+      - NoSQL injection
+      - API authentication flaws
+
+  04-infrastructure.md:
+    title: "Infrastructure Exploitation"
+    description: "Container, cloud, and network attack techniques"
+    topics:
+      - Docker enumeration and escape
+      - Kubernetes attacks
+      - AWS/GCP/Azure exploitation
+      - Network pivoting
+      - SMB attacks
+      - Privilege escalation (Linux/Windows)
+
+  05-reconnaissance.md:
+    title: "Reconnaissance Techniques"
+    description: "Intelligence gathering and attack surface mapping"
+    topics:
+      - OSINT
+      - Google dorking
+      - Subdomain enumeration
+      - Technology fingerprinting
+      - Secret discovery
+      - Port scanning
+      - Service enumeration
+
+  06-post-exploitation.md:
+    title: "Post-Exploitation Techniques"
+    description: "Persistence, lateral movement, and impact demonstration"
+    topics:
+      - Linux/Windows persistence
+      - Credential harvesting
+      - Lateral movement
+      - Data exfiltration
+      - Covering tracks
+
+# Cheatsheets for quick reference
+cheatsheets:
+  sqli_payloads:
+    file: 02-web-exploitation.md
+    section: "SQL Injection"
+
+  xss_payloads:
+    file: 02-web-exploitation.md
+    section: "Cross-Site Scripting (XSS)"
+
+  jwt_attacks:
+    file: 03-api-exploitation.md
+    section: "JWT Attacks"
+
+  container_escape:
+    file: 04-infrastructure.md
+    section: "Container Escape"
+
+  cloud_metadata:
+    file: 04-infrastructure.md
+    section: "Cloud Exploitation"
+
+  google_dorks:
+    file: 05-reconnaissance.md
+    section: "Google Dorking"
+
+  persistence_linux:
+    file: 06-post-exploitation.md
+    section: "Linux Persistence"
+
+  persistence_windows:
+    file: 06-post-exploitation.md
+    section: "Windows Persistence"
+
+# Usage guidelines
+usage:
+  loading_strategy: |
+    1. Always load 01-attack-methodology.md for context
+    2. Load mode-specific files based on *recon, *exploit, *chain, *report
+    3. Load additional files based on keywords in user query
+    4. Use cheatsheets for quick payload lookup
+
+  max_concurrent_files: 3  # Limit to manage context window
+
+  priority_order:
+    - Mode-triggered files
+    - Keyword-triggered files
+    - Cheatsheet references

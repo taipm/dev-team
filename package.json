@@ -1,0 +1,47 @@
+{
+  "name": "@microai.club/dev-team",
+  "version": "1.0.0-alpha.2",
+  "description": "Claude Code configuration framework for development teams - Vietnamese-first design with bilingual support",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "dev-team": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "node bin/cli.js --version",
+    "prepublishOnly": "npm test"
+  },
+  "keywords": [
+    "claude-code",
+    "cli",
+    "agents",
+    "ai-development",
+    "development-team",
+    "vietnamese"
+  ],
+  "author": "taipm",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.3.7",
+    "ora": "^8.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taipm/dev-team.git"
+  },
+  "homepage": "https://github.com/taipm/dev-team#readme",
+  "bugs": {
+    "url": "https://github.com/taipm/dev-team/issues"
+  }
+}

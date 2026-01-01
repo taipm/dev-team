@@ -1,0 +1,78 @@
+# Knowledge Index for bugs-agent
+
+core_files:
+  - path: knowledge/01-kanban-tool.md
+    type: tool
+    description: Kanban board setup and rules
+    load_when: always
+
+  - path: knowledge/02-thinking-methods.md
+    type: methods
+    description: 5Why and 5W2H thinking methods
+    load_when: analyzing
+
+memory_files:
+  - path: memory/bug-backlog.md
+    type: data
+    description: Kanban board with all bug cards
+    load_when: always
+
+  - path: memory/context.md
+    type: state
+    description: Current analysis state and patterns
+    load_when: always
+
+keywords:
+  routing:
+    - bug
+    - issue
+    - error
+    - fix
+    - regression
+    - root cause
+    - 5why
+    - 5w2h
+    - backlog
+    - kanban
+
+  auto_capture:
+    - "error:"
+    - "Error:"
+    - "ERROR:"
+    - "panic:"
+    - "fatal:"
+    - "FIXME:"
+    - "TODO: fix"
+    - "race condition"
+    - "data race"
+
+tools:
+  - name: Kanban
+    type: tool
+    purpose: Visual bug tracking board
+    file: knowledge/01-kanban-tool.md
+
+methods:
+  - name: 5Why
+    type: thinking_method
+    purpose: Root cause analysis
+    file: knowledge/02-thinking-methods.md
+
+  - name: 5W2H
+    type: thinking_method
+    purpose: Comprehensive bug documentation
+    file: knowledge/02-thinking-methods.md
+
+operating_modes:
+  silent:
+    description: Default mode - observe, capture, don't interrupt
+    trigger: default
+
+  active:
+    description: Full analysis mode when invoked
+    trigger: direct invocation by Backend Lead or User
+
+critical_files:
+  - path: memory/bug-backlog.md
+    importance: HIGH
+    reason: Contains all tracked bugs and Kanban state

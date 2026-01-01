@@ -1,0 +1,64 @@
+# Knowledge Index - Pattern Agent
+# Pattern Specialist for catalog management
+
+core_files: []  # Will be populated as knowledge grows
+
+keywords:
+  pattern:
+    - pattern
+    - crud
+    - create
+    - update
+    - delete
+
+  catalog:
+    - catalog
+    - loader
+    - watcher
+    - hot reload
+
+  publishing:
+    - publish
+    - approval
+    - workflow
+    - deploy
+
+  permissions:
+    - permission
+    - rbac
+    - owner
+    - editor
+    - viewer
+
+critical_files:
+  - path: services/pattern/service.go
+    importance: HIGH
+    rule: Pattern service facade
+
+  - path: internal/catalog/watcher.go
+    importance: MEDIUM
+    rule: Hot reload file watcher
+
+  - path: internal/catalog/validator.go
+    importance: HIGH
+    rule: Pattern validation
+
+common_tasks:
+  add_pattern_type:
+    files:
+      - internal/catalog/validator.go
+      - internal/catalog/loader.go
+    tests:
+      - catalog_test.go
+
+  fix_hot_reload:
+    files:
+      - internal/catalog/watcher.go
+    tests:
+      - watcher_test.go
+
+  review_publishing:
+    files:
+      - services/pattern/service_publish.go
+    tests:
+      - service_publish_test.go

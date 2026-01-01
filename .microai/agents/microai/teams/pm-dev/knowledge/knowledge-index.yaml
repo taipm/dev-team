@@ -1,0 +1,104 @@
+# Knowledge Index - PM-Dev Team
+# Auto-loading rules for knowledge files
+
+version: "1.0"
+team: pm-dev
+
+# Knowledge files registry
+files:
+  - id: user-story-guide
+    path: ./01-user-story-guide.md
+    title: "User Story Guide"
+    description: "Writing effective user stories, INVEST criteria, acceptance criteria"
+    tokens_estimate: 2500
+
+  - id: technical-spec-guide
+    path: ./02-technical-spec-guide.md
+    title: "Technical Spec Guide"
+    description: "Writing technical specifications, structure, PM-Dev collaboration"
+    tokens_estimate: 2200
+
+  - id: estimation-techniques
+    path: ./03-estimation-techniques.md
+    title: "Estimation Techniques"
+    description: "T-shirt sizing, story points, three-point estimation, WBS"
+    tokens_estimate: 2000
+
+# Auto-load rules
+auto_load:
+  # Load based on session mode
+  by_mode:
+    requirements:
+      - user-story-guide
+    tech-spec:
+      - technical-spec-guide
+      - estimation-techniques
+    estimation:
+      - estimation-techniques
+
+  # Load based on dialogue phase
+  by_phase:
+    init:
+      - user-story-guide
+    analysis:
+      - technical-spec-guide
+    estimation:
+      - estimation-techniques
+    synthesis:
+      - user-story-guide
+
+  # Load based on keywords in topic
+  by_keyword:
+    # User stories
+    story:
+      - user-story-guide
+    requirement:
+      - user-story-guide
+    acceptance:
+      - user-story-guide
+    feature:
+      - user-story-guide
+
+    # Technical specs
+    spec:
+      - technical-spec-guide
+    technical:
+      - technical-spec-guide
+    design:
+      - technical-spec-guide
+    architecture:
+      - technical-spec-guide
+
+    # Estimation
+    estimate:
+      - estimation-techniques
+    timeline:
+      - estimation-techniques
+    effort:
+      - estimation-techniques
+    planning:
+      - estimation-techniques
+    sprint:
+      - estimation-techniques
+
+    # Priority
+    priority:
+      - user-story-guide
+    rice:
+      - user-story-guide
+    moscow:
+      - user-story-guide
+
+# Priority levels for loading
+priority:
+  high:
+    - user-story-guide  # Most commonly needed
+  medium:
+    - estimation-techniques
+  low:
+    - technical-spec-guide  # Specific to tech-spec mode
+
+# Token budget management
+token_budget:
+  max_auto_load: 5000  # Maximum tokens to auto-load
+  prefer_summaries: true  # Load summaries first if over budget

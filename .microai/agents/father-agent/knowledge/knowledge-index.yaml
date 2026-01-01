@@ -1,0 +1,183 @@
+# Father Agent Knowledge Index
+# Meta-agent cho việc tạo agents
+
+version: "1.1"
+agent: father-agent
+
+# Core files - luôn load
+core_files:
+  - 01-agent-template.md
+  - 05-review-checklist.md
+  - 06-memory-template.md
+
+# Keyword mapping
+keyword_mapping:
+  # Create workflow
+  create:
+    files: [01-agent-template.md, 02-command-template.md, 03-knowledge-template.md, 04-index-template.yaml, 06-memory-template.md]
+    priority: 1
+  new:
+    files: [01-agent-template.md, 02-command-template.md, 06-memory-template.md]
+    priority: 1
+  tạo:
+    files: [01-agent-template.md, 02-command-template.md, 03-knowledge-template.md, 06-memory-template.md]
+    priority: 1
+
+  # Clone workflow
+  clone:
+    files: [01-agent-template.md, 02-command-template.md]
+    priority: 1
+  copy:
+    files: [01-agent-template.md]
+    priority: 2
+
+  # Review workflow
+  review:
+    files: [05-review-checklist.md]
+    priority: 1
+  check:
+    files: [05-review-checklist.md]
+    priority: 1
+  audit:
+    files: [05-review-checklist.md]
+    priority: 1
+
+  # Template access
+  template:
+    files: [01-agent-template.md, 02-command-template.md, 03-knowledge-template.md, 04-index-template.yaml, 06-memory-template.md, 07-team-memory-template.md]
+    priority: 1
+
+  # Agent components
+  agent:
+    files: [01-agent-template.md, 06-memory-template.md]
+    priority: 1
+  command:
+    files: [02-command-template.md]
+    priority: 1
+  knowledge:
+    files: [03-knowledge-template.md, 04-index-template.yaml]
+    priority: 1
+  index:
+    files: [04-index-template.yaml]
+    priority: 1
+
+  # Memory system
+  memory:
+    files: [06-memory-template.md]
+    priority: 1
+  persistence:
+    files: [06-memory-template.md]
+    priority: 1
+  context:
+    files: [06-memory-template.md]
+    priority: 2
+  decisions:
+    files: [06-memory-template.md]
+    priority: 2
+  learnings:
+    files: [06-memory-template.md]
+    priority: 2
+
+  # Team memory
+  team:
+    files: [07-team-memory-template.md]
+    priority: 1
+  handoff:
+    files: [07-team-memory-template.md]
+    priority: 1
+  coordination:
+    files: [07-team-memory-template.md]
+    priority: 1
+  shared:
+    files: [07-team-memory-template.md]
+    priority: 2
+
+  # Examples & Reference
+  example:
+    files: [08-deep-question-example.md]
+    priority: 2
+  reference:
+    files: [08-deep-question-example.md]
+    priority: 2
+  deep-question:
+    files: [08-deep-question-example.md]
+    priority: 1
+  weighted:
+    files: [08-deep-question-example.md]
+    priority: 2
+  disambiguation:
+    files: [08-deep-question-example.md]
+    priority: 2
+  framework:
+    files: [08-deep-question-example.md]
+    priority: 2
+
+  # Document organization
+  document:
+    files: [09-document-organization.md]
+    priority: 1
+  output:
+    files: [09-document-organization.md]
+    priority: 1
+  organization:
+    files: [09-document-organization.md]
+    priority: 1
+  docs:
+    files: [09-document-organization.md]
+    priority: 1
+  separation:
+    files: [09-document-organization.md]
+    priority: 2
+  gitignore:
+    files: [09-document-organization.md]
+    priority: 2
+  migration:
+    files: [09-document-organization.md]
+    priority: 2
+
+# File descriptions
+files:
+  01-agent-template.md:
+    title: "Agent Definition Template"
+    description: "Complete template for agent.md với frontmatter, activation, content sections"
+    lines: ~200
+
+  02-command-template.md:
+    title: "Command Entry Template"
+    description: "Template for .claude/commands/{name}.md"
+    lines: ~120
+
+  03-knowledge-template.md:
+    title: "Knowledge File Template"
+    description: "Template for individual knowledge files"
+    lines: ~180
+
+  04-index-template.yaml:
+    title: "Knowledge Index Template"
+    description: "Template for knowledge-index.yaml với keyword mapping"
+    lines: ~100
+
+  05-review-checklist.md:
+    title: "Review Checklist"
+    description: "Comprehensive checklist for reviewing agents including memory system"
+    lines: ~250
+
+  06-memory-template.md:
+    title: "Memory System Template"
+    description: "Templates for agent memory: context, decisions, learnings, session summaries"
+    lines: ~300
+
+  07-team-memory-template.md:
+    title: "Team Memory Template"
+    description: "Templates for team shared memory: handoffs, blockers, dispatch-log, team coordination"
+    lines: ~350
+
+  08-deep-question-example.md:
+    title: "Deep Question Agent Example"
+    description: "Reference implementation demonstrating weighted scoring, disambiguation, framework transitions"
+    lines: ~200
+
+  09-document-organization.md:
+    title: "Document Organization Best Practices"
+    description: "Convention for separating agent internals from user-facing outputs. Includes team-specific guidelines, migration checklist, and gitignore recommendations."
+    lines: ~300

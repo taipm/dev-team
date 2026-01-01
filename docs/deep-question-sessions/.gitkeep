@@ -1,0 +1,30 @@
+# Deep Question Sessions
+
+This directory stores session logs from the Deep Question Agent (Socrates).
+
+## File Naming Convention
+
+`{YYYY-MM-DD}-{topic-slug}.md`
+
+Example: `2025-12-30-architecture-review.md`
+
+## Contents
+
+Each session log includes:
+- Session metadata (date, duration, frameworks used)
+- Key insights discovered (critical, important, interesting)
+- Assumptions analysis (validated, unvalidated, invalidated)
+- Open questions for further exploration
+- Recommended next steps
+
+## Usage
+
+Sessions are automatically saved here when:
+- User completes a deep question session
+- User uses `*skip` or `*exit` commands
+- Maximum turns (10) reached
+
+## Privacy
+
+These logs may contain sensitive project information.
+Add to .gitignore if needed.

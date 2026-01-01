@@ -1,0 +1,122 @@
+# Knowledge Index for Deep Research Team
+# Maps keywords to knowledge files for auto-loading
+
+version: "1.0"
+team: "deep-research"
+
+# Core files - ALWAYS load for any session
+core_files:
+  - "02-thinking-frameworks.md"
+
+# Keyword mapping - dynamically load by task keywords
+keyword_mapping:
+  # arXiv integration
+  "fetch":
+    files: ["01-arxiv-integration.md"]
+    priority: 1
+
+  "arxiv":
+    files: ["01-arxiv-integration.md"]
+    priority: 1
+
+  "api":
+    files: ["01-arxiv-integration.md"]
+    priority: 2
+
+  # Thinking frameworks
+  "analyze":
+    files: ["02-thinking-frameworks.md", "03-killer-questions.md"]
+    priority: 1
+
+  "first principles":
+    files: ["02-thinking-frameworks.md"]
+    priority: 1
+
+  "socratic":
+    files: ["02-thinking-frameworks.md"]
+    priority: 1
+
+  "5 whys":
+    files: ["02-thinking-frameworks.md"]
+    priority: 1
+
+  "feynman":
+    files: ["02-thinking-frameworks.md"]
+    priority: 1
+
+  # Killer questions
+  "questions":
+    files: ["03-killer-questions.md"]
+    priority: 1
+
+  "killer":
+    files: ["03-killer-questions.md"]
+    priority: 1
+
+  "assessment":
+    files: ["03-killer-questions.md", "04-quality-assessment.md"]
+    priority: 1
+
+  # Quality assessment
+  "critique":
+    files: ["04-quality-assessment.md"]
+    priority: 1
+
+  "quality":
+    files: ["04-quality-assessment.md"]
+    priority: 1
+
+  "weakness":
+    files: ["04-quality-assessment.md"]
+    priority: 1
+
+  "red flag":
+    files: ["04-quality-assessment.md"]
+    priority: 1
+
+  "reproducibility":
+    files: ["04-quality-assessment.md"]
+    priority: 1
+
+# File metadata
+files:
+  "01-arxiv-integration.md":
+    title: "arXiv Integration Guide"
+    description: "API patterns, query syntax, rate limits, RSS feeds"
+    lines: ~500
+    agents: ["paper-scout"]
+
+  "02-thinking-frameworks.md":
+    title: "7 Thinking Frameworks"
+    description: "First Principles, Socratic, 5 Whys, 6W2H, Pre-mortem, Devil's Advocate, Feynman"
+    lines: ~700
+    agents: ["deep-analyst"]
+
+  "03-killer-questions.md":
+    title: "Killer Questions Database"
+    description: "Questions to assess novelty, validity, impact, hidden gems"
+    lines: ~400
+    agents: ["deep-analyst"]
+
+  "04-quality-assessment.md":
+    title: "Paper Quality Assessment"
+    description: "Scoring framework, red flags, reproducibility checks"
+    lines: ~500
+    agents: ["devil-advocate"]
+
+# Agent-specific loading rules
+agent_defaults:
+  "paper-scout":
+    always_load: ["01-arxiv-integration.md"]
+
+  "deep-analyst":
+    always_load: ["02-thinking-frameworks.md", "03-killer-questions.md"]
+
+  "devil-advocate":
+    always_load: ["04-quality-assessment.md"]
+
+  "insight-weaver":
+    always_load: []  # Synthesizes from other agents' outputs
+
+  "research-coordinator":
+    always_load: []  # Orchestrates, doesn't need domain knowledge

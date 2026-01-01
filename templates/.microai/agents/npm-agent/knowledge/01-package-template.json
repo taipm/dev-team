@@ -1,0 +1,43 @@
+{
+  "name": "@scope/package-name",
+  "version": "1.0.0-alpha.1",
+  "description": "Description of your package",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "cli-command": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "node bin/cli.js --version",
+    "prepublishOnly": "npm test"
+  },
+  "keywords": [
+    "cli",
+    "installer"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.3.7",
+    "ora": "^8.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/repo.git"
+  },
+  "homepage": "https://github.com/username/repo#readme",
+  "bugs": {
+    "url": "https://github.com/username/repo/issues"
+  }
+}

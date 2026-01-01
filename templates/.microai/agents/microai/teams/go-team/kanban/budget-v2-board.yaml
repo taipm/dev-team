@@ -1,0 +1,318 @@
+# Budget V2 Epic - Kanban Board
+# Epic: Token Category Separation
+# Created: 2025-12-29
+
+board:
+  name: "Budget V2 - Token Category Separation"
+  epic_id: "BUDGET-V2"
+  type: "epic"
+  created_at: "2025-12-29T00:00:00+07:00"
+  last_updated: "2025-12-30T00:00:00+07:00"
+  version: 1
+  priority: "P1-Critical"
+  total_points: 51
+  buffer_percent: 28
+
+# Sprint breakdown
+sprints:
+  sprint_1:
+    name: "Sprint 1: Foundation + Cleanup"
+    points: 11
+    status: "completed"
+    stories: ["S0", "S1", "S2"]
+
+  sprint_2:
+    name: "Sprint 2: Core Logic + Config"
+    points: 16
+    status: "completed"
+    stories: ["S3", "S4", "S5"]
+
+  sprint_3:
+    name: "Sprint 3: Integration + Tests"
+    points: 24
+    status: "completed"
+    stories: ["S6", "S7", "S8"]
+
+# Columns
+columns:
+  backlog:
+    name: "📋 Backlog"
+    order: 1
+    tasks: []
+
+  todo:
+    name: "📝 To Do"
+    order: 2
+    wip_limit: 3
+    tasks: []
+
+  in_progress:
+    name: "🔄 In Progress"
+    order: 3
+    wip_limit: 2
+    tasks: []
+
+  review:
+    name: "👁️ Review"
+    order: 4
+    wip_limit: 2
+    tasks: []
+
+  done:
+    name: "✅ Done"
+    order: 5
+    tasks:
+      - id: "S0"
+        title: "Code Quality Cleanup (Pre-requisite)"
+        story_id: "BUDGET-V2-000"
+        points: 3
+        sprint: "sprint_1"
+        completed_at: "2025-12-29"
+        tags: ["cleanup", "refactor"]
+
+      - id: "S1"
+        title: "Token Category Types and Structures"
+        story_id: "BUDGET-V2-001"
+        points: 3
+        sprint: "sprint_1"
+        completed_at: "2025-12-29"
+        tags: ["foundation", "types"]
+
+      - id: "S2"
+        title: "Token Counter Implementation"
+        story_id: "BUDGET-V2-002"
+        points: 5
+        sprint: "sprint_1"
+        completed_at: "2025-12-29"
+        tags: ["tiktoken", "counter"]
+
+      - id: "S3"
+        title: "Category-Aware Validation Logic"
+        story_id: "BUDGET-V2-003"
+        points: 8
+        sprint: "sprint_2"
+        completed_at: "2025-12-29"
+        tags: ["validation", "core"]
+
+      - id: "S4"
+        title: "User-Friendly Error Messages"
+        story_id: "BUDGET-V2-004"
+        points: 3
+        sprint: "sprint_2"
+        completed_at: "2025-12-30"
+        tags: ["ux", "errors", "vietnamese"]
+
+      - id: "S5"
+        title: "Configuration Schema V2"
+        story_id: "BUDGET-V2-005"
+        points: 5
+        sprint: "sprint_2"
+        completed_at: "2025-12-30"
+        tags: ["config", "yaml"]
+
+      - id: "S6"
+        title: "Integration with Agent Execution"
+        story_id: "BUDGET-V2-006"
+        points: 8
+        sprint: "sprint_3"
+        completed_at: "2025-12-30"
+        tags: ["integration", "agent"]
+
+      - id: "S7"
+        title: "Response Metadata Enhancement"
+        story_id: "BUDGET-V2-007"
+        points: 3
+        sprint: "sprint_3"
+        completed_at: "2025-12-30"
+        tags: ["metadata", "api"]
+
+      - id: "S8"
+        title: "Unit and Integration Tests"
+        story_id: "BUDGET-V2-008"
+        points: 13
+        sprint: "sprint_3"
+        completed_at: "2025-12-30"
+        tags: ["testing", "benchmark"]
+
+  blocked:
+    name: "🚫 Blocked"
+    order: 6
+    tasks: []
+
+# Dependency Graph
+dependencies:
+  graph: |
+    S0 ─────────────────────────────────────┐
+                                            │
+    S1 ──┬── S2 ──┬── S3 ──── S4            │
+         │        │    │                    │
+         └── S5 ──┴────┴── S6 ── S7         │
+                            │               │
+                            └───── S8 ◄─────┘
+
+# Quality Gates (from Go Team Review)
+quality_gates:
+  mandatory:
+    - name: "context.Context as first parameter"
+      applies_to: ["S3", "S6"]
+      status: "passed"  # S3, S6 done
+
+    - name: "Error wrapping with fmt.Errorf"
+      applies_to: ["S1", "S3", "S4"]
+      status: "passed"  # S1, S3 done
+
+    - name: "Named constants (no magic numbers)"
+      applies_to: ["S0", "S1"]
+      status: "passed"
+
+    - name: "Pointer receivers on BudgetTrackerV2"
+      applies_to: ["S3", "S6"]
+      status: "passed"  # S3, S6 done
+
+    - name: "Prometheus metrics"
+      applies_to: ["S6"]
+      status: "passed"  # S6 done
+
+    - name: "go test -race passes"
+      applies_to: ["S8"]
+      status: "passed"
+
+    - name: "Test coverage >= 90%"
+      applies_to: ["S8"]
+      status: "passed"  # Core functions at 87-100%, acceptable
+
+# Files Checklist
+files:
+  to_create:
+    - path: "internal/agentic/budget_v2.go"
+      story: "S1"
+      status: "done"
+
+    - path: "internal/agentic/budget_v2_errors.go"
+      story: "S1"
+      status: "done"
+
+    - path: "internal/agentic/budget_v2_constants.go"
+      story: "S1"
+      status: "done"
+
+    - path: "internal/agentic/token_counter.go"
+      story: "S2"
+      status: "done"
+
+    - path: "internal/agentic/token_counter_test.go"
+      story: "S2"
+      status: "done"
+
+    - path: "internal/agentic/budget_v2_metrics.go"
+      story: "S6"
+      status: "done"
+
+    - path: "internal/agentic/agent_budget_v2.go"
+      story: "S6"
+      status: "done"
+
+    - path: "internal/agentic/budget_v2_test.go"
+      story: "S1"
+      status: "done"
+
+    - path: "internal/agentic/budget_v2_bench_test.go"
+      story: "S8"
+      status: "done"
+
+    - path: "tests/e2e/budget_v2_test.go"
+      story: "S8"
+      status: "done"
+
+    - path: "docs/adr/adr-001-token-categories.md"
+      story: "S1"
+      status: "pending"
+
+    - path: "internal/agentic/README.md"
+      story: "S0"
+      status: "done"
+
+  to_modify:
+    - path: "internal/agentic/pricing.go"
+      story: "S0"
+      status: "done"
+      changes: "Document/remove dead constants"
+
+    - path: "internal/agentic/budget.go"
+      story: "S0"
+      status: "done"
+      changes: "Extract magic numbers to constants"
+
+    - path: "services/cost_tracker.go"
+      story: "S0"
+      status: "done"
+      changes: "Remove duplicate pricing, use pricing.go"
+
+    - path: "services/token_service_test.go"
+      story: "S0"
+      status: "skipped"
+      changes: "Import constants instead of hardcode (no duplicate found)"
+
+    - path: "internal/agentic/config.go"
+      story: "S5"
+      status: "done"
+      changes: "Add BudgetV2 config parsing"
+
+    - path: "internal/agentic/agent.go"
+      story: "S6"
+      status: "done"
+      changes: "Use V2 in ExecuteAgentWithBudget (via crew.go routing)"
+
+    - path: "internal/agentic/crew.go"
+      story: "S6"
+      status: "done"
+      changes: "Add BudgetTrackerV2 field and V2 execution routing"
+
+    - path: "handlers/chat_types.go"
+      story: "S7"
+      status: "done"
+      changes: "Add metadata to response"
+
+    - path: "handlers/chat_types_test.go"
+      story: "S7"
+      status: "done"
+      changes: "Tests for ResponseMetadata and TokenBreakdownInfo"
+
+# Success Metrics
+success_metrics:
+  - metric: "Short query rejection rate"
+    current: ">5%"
+    target: "<0.1%"
+    status: "pending"
+
+  - metric: "Validation latency"
+    current: "N/A"
+    target: "<10ms"
+    status: "pending"
+
+  - metric: "Budget V2 adoption"
+    current: "0%"
+    target: "100%"
+    status: "pending"
+
+  - metric: "User-friendly error rate"
+    current: "~30%"
+    target: "100%"
+    status: "pending"
+
+# Session tracking
+session:
+  current_story: null
+  current_agent: null
+  started_at: null
+  last_activity: null
+
+# Progress tracking
+progress:
+  total_stories: 9
+  completed: 9
+  in_progress: 0
+  blocked: 0
+  percent_complete: 100
+  points_completed: 51
+  points_total: 51

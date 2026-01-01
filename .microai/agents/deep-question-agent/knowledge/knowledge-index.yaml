@@ -1,0 +1,314 @@
+# Knowledge Index for Deep Question Agent
+# Auto-load knowledge files based on topic keywords
+
+files:
+  - filename: "01-thinking-frameworks.md"
+    title: "7 Phương pháp Tư duy Cốt lõi"
+    description: "Chi tiết về Socratic, First Principles, 5 Whys, 6W2H, Pre-mortem, Devil's Advocate, Feynman"
+    keywords:
+      - framework
+      - phương pháp
+      - tư duy
+      - socratic
+      - first principles
+      - 5 whys
+      - 6w2h
+      - pre-mortem
+      - devil's advocate
+      - feynman
+    when_to_load: "Always on agent activation"
+    load_priority: 1
+
+  - filename: "02-code-analysis-questions.md"
+    title: "Code Analysis Question Library"
+    description: "Câu hỏi cho phân tích code, architecture, technical decisions"
+    keywords:
+      - code
+      - architecture
+      - function
+      - class
+      - module
+      - api
+      - database
+      - performance
+      - security
+      - testing
+      - deployment
+      - technical
+      - software
+      - system
+      - backend
+      - frontend
+      - microservice
+      - monolith
+    when_to_load: "When topic type is code/architecture/technical"
+    load_priority: 2
+
+  - filename: "03-topic-analysis-questions.md"
+    title: "Topic Analysis Question Library"
+    description: "Câu hỏi cho problem solving, decision making, strategy, planning"
+    keywords:
+      - problem
+      - decision
+      - strategy
+      - planning
+      - goal
+      - stakeholder
+      - risk
+      - alternative
+      - assumption
+      - business
+      - project
+      - team
+      - process
+      - improvement
+      - learning
+    when_to_load: "When topic type is general/problem/decision/strategy"
+    load_priority: 2
+
+  - filename: "04-dialogue-patterns.md"
+    title: "Dialogue Patterns"
+    description: "Patterns và protocols cho turn-based dialogue"
+    keywords:
+      - dialogue
+      - turn
+      - session
+      - conversation
+      - flow
+      - pattern
+    when_to_load: "Always on agent activation"
+    load_priority: 1
+
+# ==============================================================================
+# TOPIC TYPE DETECTION WITH PRIORITY SCORING (P0 Improvement)
+# ==============================================================================
+# Thay vì simple keyword matching, sử dụng weighted scoring
+# để handle multi-category inputs chính xác hơn.
+
+topic_detection_v2:
+  # Scoring thresholds
+  thresholds:
+    clear_winner: 15      # Score > 15 → dùng category đó
+    ambiguous: 10         # Multiple scores > 10 → hỏi user
+    unclear: 10           # All scores < 10 → default 6W2H
+
+  # Category scoring với weighted indicators
+  categories:
+    code:
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "```"                    # Code block
+          weight: 10
+        - pattern: "function|class|method|def |func "
+          weight: 10
+        - pattern: "\\.go|\\.py|\\.js|\\.ts|\\.java"  # File extensions
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "api|endpoint|database|query"
+          weight: 8
+        - pattern: "architecture|microservice|monolith"
+          weight: 7
+        - pattern: "performance|latency|throughput"
+          weight: 6
+        # Weak signals (3-5 points)
+        - pattern: "code|implement|deploy"
+          weight: 5
+        - pattern: "technical|system|module"
+          weight: 4
+      load_files:
+        - "01-thinking-frameworks.md"
+        - "02-code-analysis-questions.md"
+        - "04-dialogue-patterns.md"
+      primary_framework: "6W2H"
+      secondary_framework: "First Principles"
+
+    problem:
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "bug|error|exception|crash"
+          weight: 10
+        - pattern: "không hoạt động|fail|broken|hỏng"
+          weight: 10
+        - pattern: "tại sao.*không|why.*not"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "issue|problem|vấn đề"
+          weight: 7
+        - pattern: "fix|sửa|resolve|giải quyết"
+          weight: 6
+        # Weak signals (3-5 points)
+        - pattern: "wrong|sai|incorrect"
+          weight: 5
+      load_files:
+        - "01-thinking-frameworks.md"
+        - "03-topic-analysis-questions.md"
+        - "04-dialogue-patterns.md"
+      primary_framework: "5 Whys"
+      secondary_framework: "Socratic"
+
+    decision:
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "quyết định|decide|decision"
+          weight: 10
+        - pattern: "nên chọn|should.*choose|which.*better"
+          weight: 10
+        - pattern: "option.*or|lựa chọn.*hay"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "trade-off|pros.*cons|ưu.*nhược"
+          weight: 8
+        - pattern: "compare|so sánh|versus|vs"
+          weight: 7
+        # Weak signals (3-5 points)
+        - pattern: "alternative|thay thế"
+          weight: 5
+      load_files:
+        - "01-thinking-frameworks.md"
+        - "03-topic-analysis-questions.md"
+        - "04-dialogue-patterns.md"
+      primary_framework: "Pre-mortem"
+      secondary_framework: "Devil's Advocate"
+
+    strategy:
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "strategy|chiến lược|roadmap"
+          weight: 10
+        - pattern: "long-term|dài hạn|vision"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "direction|hướng đi|goal|mục tiêu"
+          weight: 7
+        - pattern: "competitive|cạnh tranh|market"
+          weight: 6
+        # Weak signals (3-5 points)
+        - pattern: "plan|kế hoạch|future"
+          weight: 5
+      load_files:
+        - "01-thinking-frameworks.md"
+        - "03-topic-analysis-questions.md"
+        - "04-dialogue-patterns.md"
+      primary_framework: "First Principles"
+      secondary_framework: "Pre-mortem"
+
+    understanding:
+      indicators:
+        # Strong signals (10 points)
+        - pattern: "giải thích|explain|what is|là gì"
+          weight: 10
+        - pattern: "hiểu|understand|learn|học"
+          weight: 10
+        # Medium signals (6-8 points)
+        - pattern: "how does|như thế nào|hoạt động"
+          weight: 7
+        - pattern: "why|tại sao|nguyên nhân"
+          weight: 6
+        # Weak signals (3-5 points)
+        - pattern: "concept|khái niệm|định nghĩa"
+          weight: 5
+      load_files:
+        - "01-thinking-frameworks.md"
+        - "03-topic-analysis-questions.md"
+        - "04-dialogue-patterns.md"
+      primary_framework: "Feynman"
+      secondary_framework: "Socratic"
+
+  # Default khi unclear
+  default:
+    category: "comprehensive"
+    framework: "6W2H"
+    message: "Tôi sẽ bắt đầu với phân tích toàn diện (6W2H)"
+
+  # Disambiguation prompt khi ambiguous
+  disambiguation_prompt: |
+    Tôi thấy vấn đề của bạn có thể approach từ nhiều góc:
+
+    {options}
+
+    Bạn muốn focus vào góc nào trước?
+    (Hoặc gõ số 1-{n} để chọn nhanh)
+
+# ==============================================================================
+# LEGACY: Topic detection rules (kept for backward compatibility)
+# ==============================================================================
+topic_detection:
+  code:
+    indicators:
+      - contains code snippet
+      - mentions file paths
+      - technical terms (function, class, API, database)
+      - asks about implementation
+    load_files:
+      - "01-thinking-frameworks.md"
+      - "02-code-analysis-questions.md"
+      - "04-dialogue-patterns.md"
+    primary_framework: "6W2H"
+    secondary_framework: "First Principles"
+
+  problem:
+    indicators:
+      - bug, error, issue mentioned
+      - "không hoạt động", "fail"
+      - asking why something happened
+    load_files:
+      - "01-thinking-frameworks.md"
+      - "03-topic-analysis-questions.md"
+      - "04-dialogue-patterns.md"
+    primary_framework: "5 Whys"
+    secondary_framework: "Socratic"
+
+  decision:
+    indicators:
+      - "nên chọn", "quyết định"
+      - comparing options
+      - trade-off discussion
+    load_files:
+      - "01-thinking-frameworks.md"
+      - "03-topic-analysis-questions.md"
+      - "04-dialogue-patterns.md"
+    primary_framework: "Pre-mortem"
+    secondary_framework: "Devil's Advocate"
+
+  strategy:
+    indicators:
+      - "strategy", "roadmap", "direction"
+      - long-term planning
+      - competitive analysis
+    load_files:
+      - "01-thinking-frameworks.md"
+      - "03-topic-analysis-questions.md"
+      - "04-dialogue-patterns.md"
+    primary_framework: "First Principles"
+    secondary_framework: "Pre-mortem"
+
+  understanding:
+    indicators:
+      - "giải thích", "hiểu"
+      - asking how/why
+      - learning intent
+    load_files:
+      - "01-thinking-frameworks.md"
+      - "03-topic-analysis-questions.md"
+      - "04-dialogue-patterns.md"
+    primary_framework: "Feynman"
+    secondary_framework: "Socratic"
+
+# Framework selection guide
+framework_selection:
+  by_goal:
+    find_root_cause: "5 Whys"
+    challenge_assumptions: "First Principles"
+    comprehensive_coverage: "6W2H"
+    anticipate_failure: "Pre-mortem"
+    stress_test_idea: "Devil's Advocate"
+    test_understanding: "Feynman"
+    deep_exploration: "Socratic"
+
+  by_situation:
+    new_project: ["6W2H", "Pre-mortem"]
+    debugging: ["5 Whys", "Socratic"]
+    architecture_review: ["6W2H", "First Principles"]
+    decision_making: ["Pre-mortem", "Devil's Advocate"]
+    learning_new_topic: ["Feynman", "Socratic"]
+    challenging_status_quo: ["First Principles", "Devil's Advocate"]

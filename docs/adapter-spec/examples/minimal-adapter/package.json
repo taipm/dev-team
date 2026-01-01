@@ -1,0 +1,35 @@
+{
+  "name": "@microai/minimal-adapter",
+  "version": "1.0.0",
+  "description": "Minimal MicroAI adapter skeleton for Level 1 compliance",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "microai",
+    "adapter",
+    "ai-agent",
+    "claude-code"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "glob": "^10.3.0",
+    "js-yaml": "^4.1.0",
+    "minimatch": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

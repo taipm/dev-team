@@ -1,0 +1,25 @@
+# Prompt Agent Knowledge Index
+
+core_files:
+  - services/prompt_manager.go
+  - services/prompt_metrics.go
+
+keywords:
+  prompt:
+    - prompt
+    - template
+    - render
+    - variable
+  metrics:
+    - metrics
+    - token
+    - count
+    - usage
+
+critical_files:
+  - path: services/prompt_manager.go
+    importance: HIGH
+    reason: Core prompt template management
+  - path: services/prompt_metrics.go
+    importance: MEDIUM
+    reason: Prompt usage tracking

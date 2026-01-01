@@ -1,0 +1,92 @@
+# UserHub Agent Knowledge Index
+# Defines domain knowledge and file mappings
+
+core_files:
+  - path: auth-ldap-server/services/userhub.go
+    importance: HIGH
+    description: Core UserHub service - API forwarding
+  - path: auth-ldap-server/services/userhub_auth.go
+    importance: HIGH
+    description: Authentication methods - login, token refresh
+  - path: auth-ldap-server/services/jwt.go
+    importance: HIGH
+    description: JWT token handling
+  - path: gateway-server/handlers/entitlement_handler.go
+    importance: HIGH
+    description: Entitlements API handlers (check, check-bulk)
+  - path: gateway-server/services/entitlement_service.go
+    importance: HIGH
+    description: Entitlements business logic
+  - path: auth-ldap-server/services/password_service.go
+    importance: MEDIUM
+    description: Password validation and change
+  - path: auth-ldap-server/services/user_activity_logger.go
+    importance: MEDIUM
+    description: User activity tracking
+  - path: gateway-server/userhub_proxy.go
+    importance: MEDIUM
+    description: Gateway proxy to UserHub
+  - path: auth-ldap-server/mocks/userhub_mock.go
+    importance: LOW
+    description: Test mocks
+
+keywords:
+  authentication:
+    - login
+    - logout
+    - authenticate
+    - credentials
+    - password
+    - LDAP
+  jwt:
+    - token
+    - JWT
+    - claims
+    - bearer
+    - refresh
+    - expiry
+  userhub:
+    - UserHub
+    - user hub
+    - API forward
+    - proxy
+  activity:
+    - activity log
+    - user activity
+    - audit
+    - tracking
+  entitlements:
+    - entitlement
+    - check-bulk
+    - software
+    - allowed
+    - catalog
+    - permission
+    - entitled-software
+
+related_agents:
+  - middleware-agent  # Auth middleware
+  - gateway-agent     # Gateway proxy
+  - config-agent      # Configuration
+
+common_issues:
+  - description: Login timeout
+    files: [userhub_auth.go]
+    solution: Check HTTP client timeout config
+  - description: JWT validation failed
+    files: [jwt.go]
+    solution: Check token expiry, signature key
+  - description: UserHub API unreachable
+    files: [userhub.go]
+    solution: Check network, URL config, firewall
+  - description: Entitlement check returns empty
+    files: [entitlement_handler.go, entitlement_service.go]
+    solution: Check username, software_names not empty
+  - description: Software not in catalog
+    files: [entitlement_service.go]
+    solution: Verify software name matches catalog exactly
+
+knowledge_files:
+  - file: 01-entitlements-api.md
+    description: Entitlements API reference (check-bulk, check, entitled-software)
+    when_to_load: When working with entitlements endpoints

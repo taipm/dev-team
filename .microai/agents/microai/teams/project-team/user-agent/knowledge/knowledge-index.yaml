@@ -1,0 +1,44 @@
+# User Agent Knowledge Index
+
+core_files:
+  - services/user_service.go
+  - services/user_budget.go
+  - services/conversation_storage.go
+  - services/conversation_storage_admin.go
+  - services/conversation_storage_usage.go
+  - services/conversation_storage_user.go
+  - services/user_activity_log.go
+  - services/cost_tracker.go
+
+keywords:
+  user:
+    - user
+    - profile
+    - preferences
+    - account
+  budget:
+    - budget
+    - token
+    - limit
+    - quota
+  conversation:
+    - conversation
+    - chat
+    - history
+    - message
+  activity:
+    - activity
+    - log
+    - tracking
+    - usage
+
+critical_files:
+  - path: services/user_service.go
+    importance: HIGH
+    reason: Core user management operations
+  - path: services/user_budget.go
+    importance: HIGH
+    reason: User budget and token tracking
+  - path: services/conversation_storage.go
+    importance: HIGH
+    reason: Conversation persistence
