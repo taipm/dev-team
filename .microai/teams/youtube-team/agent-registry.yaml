@@ -1,0 +1,288 @@
+# YouTube Team Agent Registry
+# Signal-based orchestration for mathematical video production
+# Inspired by math-team architecture + animated-math skill
+
+version: "1.0.0"
+team_name: youtube-team
+last_updated: "2026-01-02"
+description: "Multi-agent team for producing high-quality animated math solution videos"
+
+# Agent Categories
+categories:
+  core:
+    description: "Core orchestration and logging agents"
+    agents: [maestro, scribe]
+
+  analyzers:
+    description: "Problem analysis and script planning agents"
+    agents: [content-analyzer, script-planner]
+
+  creators:
+    description: "Content creation agents (parallel execution)"
+    agents: [solution-writer, animation-designer, voiceover-writer]
+
+  renderers:
+    description: "Video rendering and post-production agents"
+    agents: [manim-renderer, video-compositor, thumbnail-creator]
+
+# Agent Definitions
+agents:
+  # ═══════════════════════════════════════════════════════════════
+  # CORE AGENTS
+  # ═══════════════════════════════════════════════════════════════
+
+  maestro:
+    id: youtube-maestro
+    name: "YouTube Maestro"
+    description: "Orchestrates video production workflow via signals"
+    category: core
+    model: opus
+    path: ./agents/core/youtube-maestro.md
+    tools: [Read, Write, Bash, Glob, TodoWrite, Task]
+    signals:
+      emits:
+        - problem_received
+        - script_approved
+        - creators_dispatched
+        - assets_ready
+        - render_started
+        - session_complete
+      listens:
+        - analysis_complete
+        - script_complete
+        - solution_complete
+        - animation_complete
+        - voiceover_complete
+        - video_complete
+        - thumbnail_complete
+
+  scribe:
+    id: youtube-scribe
+    name: "YouTube Scribe"
+    description: "Silent documentation and production tracking"
+    category: core
+    model: haiku
+    path: ./agents/core/youtube-scribe.md
+    tools: [Read, Write, Edit]
+    mode: silent
+    signals:
+      listens: [all]  # Logs all signals for production tracking
+
+  # ═══════════════════════════════════════════════════════════════
+  # ANALYZER AGENTS
+  # ═══════════════════════════════════════════════════════════════
+
+  content-analyzer:
+    id: content-analyzer
+    name: "Content Analyzer"
+    description: "Analyzes math problem for video potential, identifies key moments"
+    category: analyzers
+    model: sonnet
+    path: ./agents/analyzers/content-analyzer.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/video-storytelling.md
+        - ./knowledge/math-visualization-patterns.md
+    signals:
+      listens: [problem_received]
+      emits: [analysis_complete]
+    output:
+      problem_type: "algebra|geometry|calculus|combinatorics|number_theory"
+      video_format: "standard|shorts|both"
+      key_moments: []
+      visual_opportunities: []
+      estimated_duration: "seconds"
+      difficulty_for_audience: "beginner|intermediate|advanced"
+
+  script-planner:
+    id: script-planner
+    name: "Script Planner"
+    description: "Creates detailed video script with timing and visual cues"
+    category: analyzers
+    model: sonnet
+    path: ./agents/analyzers/script-planner.md
+    tools: [Read, Write]
+    knowledge:
+      auto_load:
+        - ./knowledge/3b1b-style-guide.md
+    signals:
+      listens: [analysis_complete]
+      emits: [script_complete]
+    output:
+      script:
+        intro: {}
+        problem_statement: {}
+        solution_steps: []
+        conclusion: {}
+      timing_marks: []
+      visual_cues: []
+      narration_text: ""
+
+  # ═══════════════════════════════════════════════════════════════
+  # CREATOR AGENTS (Parallel Execution)
+  # ═══════════════════════════════════════════════════════════════
+
+  solution-writer:
+    id: solution-writer
+    name: "Solution Writer"
+    description: "Creates elegant mathematical solution with clear explanations"
+    category: creators
+    model: sonnet
+    path: ./agents/creators/solution-writer.md
+    tools: [Read, Write]
+    knowledge:
+      auto_load:
+        - ./knowledge/polya-method.md
+        - ./knowledge/feynman-technique.md
+    signals:
+      listens: [script_approved]
+      emits: [solution_complete]
+    parallel: true
+    output:
+      solution_steps: []
+      key_insights: []
+      alternative_approaches: []
+
+  animation-designer:
+    id: animation-designer
+    name: "Animation Designer"
+    description: "Designs Manim animations for each solution step"
+    category: creators
+    model: sonnet
+    path: ./agents/creators/animation-designer.md
+    tools: [Read, Write]
+    knowledge:
+      auto_load:
+        - ./knowledge/manim-patterns.md
+        - ./knowledge/visual-math-principles.md
+    integration: ~/.microai/skills/document-skills/animated-math/SKILL.md
+    signals:
+      listens: [script_approved]
+      emits: [animation_complete]
+    parallel: true
+    output:
+      scenes: []
+      manim_code: ""
+      transitions: []
+
+  voiceover-writer:
+    id: voiceover-writer
+    name: "Voiceover Writer"
+    description: "Writes engaging narration script synced with visuals"
+    category: creators
+    model: sonnet
+    path: ./agents/creators/voiceover-writer.md
+    tools: [Read, Write]
+    knowledge:
+      auto_load:
+        - ./knowledge/narration-techniques.md
+    signals:
+      listens: [script_approved]
+      emits: [voiceover_complete]
+    parallel: true
+    output:
+      narration_script: ""
+      timing_marks: []
+      emphasis_points: []
+      pause_markers: []
+
+  # ═══════════════════════════════════════════════════════════════
+  # RENDERER AGENTS
+  # ═══════════════════════════════════════════════════════════════
+
+  manim-renderer:
+    id: manim-renderer
+    name: "Manim Renderer"
+    description: "Renders Manim animations to video files"
+    category: renderers
+    model: sonnet
+    path: ./agents/renderers/manim-renderer.md
+    tools: [Read, Write, Bash]
+    integration: ~/.microai/skills/document-skills/animated-math/SKILL.md
+    signals:
+      listens: [assets_ready]
+      emits: [render_complete]
+    quality_presets:
+      preview: "-ql"      # 480p15 for quick check
+      standard: "-qh"     # 1080p60 YouTube standard
+      premium: "-qk"      # 4K60 YouTube premium
+      shorts: "-qh -r 1080,1920"  # Vertical 9:16
+    output:
+      video_files: []
+      render_log: ""
+
+  video-compositor:
+    id: video-compositor
+    name: "Video Compositor"
+    description: "Combines animations, adds titles, transitions, music"
+    category: renderers
+    model: sonnet
+    path: ./agents/renderers/video-compositor.md
+    tools: [Read, Write, Bash]
+    signals:
+      listens: [render_complete]
+      emits: [video_complete]
+    output:
+      final_video: ""
+      chapters: []
+      duration: ""
+
+  thumbnail-creator:
+    id: thumbnail-creator
+    name: "Thumbnail Creator"
+    description: "Creates eye-catching YouTube thumbnails"
+    category: renderers
+    model: sonnet
+    path: ./agents/renderers/thumbnail-creator.md
+    tools: [Read, Write, Bash]
+    signals:
+      listens: [video_complete]
+      emits: [thumbnail_complete]
+    output:
+      thumbnail_path: ""
+      alt_thumbnails: []
+
+# Parallel Execution Configuration
+parallel:
+  max_workers: 3
+  timeout_per_creator: 300000  # 5 minutes per creator
+  sync_strategy: wait_all
+  on_timeout: proceed_with_completed
+  min_assets: 2  # Need at least solution + animation
+
+# Video Production Presets
+presets:
+  shorts:
+    name: "YouTube Shorts"
+    resolution: "1080x1920"
+    aspect_ratio: "9:16"
+    max_duration: 60
+    fps: 60
+    manim_flags: "-qh -r 1080,1920"
+    style: "fast-paced, hook-first"
+
+  standard:
+    name: "YouTube Standard"
+    resolution: "1920x1080"
+    aspect_ratio: "16:9"
+    recommended_duration: "300-600"  # 5-10 minutes
+    fps: 60
+    manim_flags: "-qh"
+    style: "educational, detailed"
+
+  premium:
+    name: "YouTube 4K"
+    resolution: "3840x2160"
+    aspect_ratio: "16:9"
+    fps: 60
+    manim_flags: "-qk"
+    style: "cinematic, high-detail"
+
+# Statistics
+stats:
+  total_agents: 10
+  core: 2
+  analyzers: 2
+  creators: 3
+  renderers: 3

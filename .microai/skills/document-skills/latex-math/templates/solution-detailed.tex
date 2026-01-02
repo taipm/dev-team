@@ -1,0 +1,142 @@
+% Math Team - Detailed Solution Template (Textbook Style)
+% Vietnamese support via XeLaTeX
+
+\documentclass[12pt,a4paper]{article}
+
+% XeLaTeX Vietnamese support
+\usepackage{fontspec}
+\usepackage[vietnamese]{babel}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Courier New}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+
+% Graphics
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Layout
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+% Theorem environments (Vietnamese)
+\theoremstyle{definition}
+\newtheorem{theorem}{Định lý}[section]
+\newtheorem{lemma}[theorem]{Bổ đề}
+\newtheorem{proposition}[theorem]{Mệnh đề}
+\newtheorem{corollary}[theorem]{Hệ quả}
+\newtheorem{definition}{Định nghĩa}[section]
+\newtheorem{example}{Ví dụ}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Nhận xét}
+\newtheorem{note}{Lưu ý}
+
+% Custom commands
+\newcommand{\solution}{\noindent\textbf{Lời giải.}\quad}
+\newcommand{\answer}{\noindent\textbf{Đáp số:}\quad}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Math Team}
+\lhead{Lời giải chi tiết}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries LỜI GIẢI CHI TIẾT}\\[0.5em]
+    {\large Math Team - Signal-Based Problem Solving}\\[1em]
+    {\small Ngày tạo: \today}
+\end{center}
+
+\hrule
+\vspace{1em}
+
+%% PROBLEM SECTION
+\section{Đề bài}
+
+{{PROBLEM_TEXT}}
+
+\subsection*{Phân tích đề bài}
+\begin{itemize}
+    \item \textbf{Cho:} {{GIVEN}}
+    \item \textbf{Tìm/Chứng minh:} {{FIND}}
+    \item \textbf{Điều kiện:} {{CONSTRAINTS}}
+\end{itemize}
+
+%% SOLUTION SECTION
+\section{Lời giải}
+
+{{FOR_EACH_STEP}}
+\subsection{Bước {{STEP_NUMBER}}: {{STEP_TITLE}}}
+
+{{STEP_CONTENT}}
+
+{{IF_HAS_NOTE}}
+\begin{remark}
+{{STEP_NOTE}}
+\end{remark}
+{{END_IF}}
+
+{{END_FOR_EACH}}
+
+%% CONCLUSION SECTION
+\section{Kết luận}
+
+\begin{theorem}[Đáp số]
+\[
+\boxed{{{FINAL_ANSWER}}}
+\]
+\end{theorem}
+
+%% VERIFICATION SECTION
+\section{Kiểm tra}
+
+{{VERIFICATION}}
+
+%% COMPARISON SECTION (if multiple approaches)
+{{IF_MULTIPLE_APPROACHES}}
+\section{So sánh các cách giải}
+
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Tiêu chí} & \textbf{Cách 1} & \textbf{Cách 2} & \textbf{Cách 3} \\
+\hline
+Độ chính xác & {{SCORE_1_CORRECTNESS}} & {{SCORE_2_CORRECTNESS}} & {{SCORE_3_CORRECTNESS}} \\
+Độ đẹp & {{SCORE_1_ELEGANCE}} & {{SCORE_2_ELEGANCE}} & {{SCORE_3_ELEGANCE}} \\
+Độ rõ ràng & {{SCORE_1_CLARITY}} & {{SCORE_2_CLARITY}} & {{SCORE_3_CLARITY}} \\
+\hline
+\textbf{Tổng} & {{SCORE_1_TOTAL}} & {{SCORE_2_TOTAL}} & {{SCORE_3_TOTAL}} \\
+\hline
+\end{tabular}
+
+\begin{remark}
+{{COMPARISON_NOTES}}
+\end{remark}
+{{END_IF}}
+
+%% INSIGHTS SECTION
+\section*{Ghi nhớ}
+
+\begin{itemize}
+{{FOR_EACH_INSIGHT}}
+    \item {{INSIGHT}}
+{{END_FOR_EACH}}
+\end{itemize}
+
+\vfill
+\hrule
+\begin{center}
+    {\small Được tạo bởi Math Team - Signal-Based Problem Solving}
+\end{center}
+
+\end{document}

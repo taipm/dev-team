@@ -1,0 +1,501 @@
+\chapter{Tổng quan về bất đẳng thức và điểm rơi}
+
+\begin{flushright}
+\textit{``Trong toán học, nghệ thuật đặt câu hỏi có giá trị hơn nghệ thuật giải chúng.''} \\
+--- Georg Cantor
+\end{flushright}
+
+\section{Giới thiệu}
+
+Bất đẳng thức là một trong những chủ đề quan trọng và thú vị nhất của toán học. Qua các kỳ thi học sinh giỏi quốc gia và quốc tế, bất đẳng thức luôn xuất hiện như một phần không thể thiếu, thử thách khả năng tư duy logic và sáng tạo của học sinh.
+
+Trong chương này, chúng ta sẽ:
+\begin{itemize}
+    \item Hệ thống hóa các bất đẳng thức cơ bản và điều kiện dấu bằng
+    \item Hiểu khái niệm ``điểm rơi'' --- một công cụ chiến lược trong chứng minh bất đẳng thức
+    \item Phân loại các dạng điểm rơi thường gặp
+    \item Nhận biết vai trò của điểm rơi trong việc chọn phương pháp giải
+\end{itemize}
+
+\section{Các bất đẳng thức cơ bản}
+
+Trước khi đi vào phương pháp điểm rơi, chúng ta cần nắm vững các bất đẳng thức nền tảng. Điều quan trọng nhất ở đây là \textbf{điều kiện xảy ra dấu bằng} --- đây chính là ``điểm rơi'' của bất đẳng thức.
+
+\subsection{Bất đẳng thức AM-GM (Cauchy)}
+
+\begin{theorem}[Bất đẳng thức AM-GM]
+Cho các số thực không âm $a_1, a_2, \ldots, a_n$. Ta có:
+\begin{equation}
+\frac{a_1 + a_2 + \cdots + a_n}{n} \geq \sqrt[n]{a_1 a_2 \cdots a_n}
+\end{equation}
+Dấu bằng xảy ra khi và chỉ khi $a_1 = a_2 = \cdots = a_n$.
+\end{theorem}
+
+\begin{note}
+Điều kiện dấu bằng ``$a_1 = a_2 = \cdots = a_n$'' cho ta biết \textbf{điểm rơi đối xứng} của bất đẳng thức AM-GM.
+\end{note}
+
+\begin{example}[Ví dụ cơ bản]
+Cho $a, b, c > 0$ với $abc = 1$. Chứng minh rằng:
+\[
+a + b + c \geq 3
+\]
+
+\textbf{Lời giải.} Áp dụng bất đẳng thức AM-GM:
+\[
+\frac{a + b + c}{3} \geq \sqrt[3]{abc} = \sqrt[3]{1} = 1
+\]
+Suy ra $a + b + c \geq 3$.
+
+Dấu bằng xảy ra khi $a = b = c$. Kết hợp với $abc = 1$, ta có $a = b = c = 1$.
+
+\textbf{Điểm rơi:} $(a, b, c) = (1, 1, 1)$.
+\end{example}
+
+\subsection{Bất đẳng thức Cauchy-Schwarz}
+
+\begin{theorem}[Bất đẳng thức Cauchy-Schwarz]
+Cho các số thực $a_1, a_2, \ldots, a_n$ và $b_1, b_2, \ldots, b_n$ với $b_i > 0$. Ta có:
+\begin{equation}
+\frac{a_1^2}{b_1} + \frac{a_2^2}{b_2} + \cdots + \frac{a_n^2}{b_n} \geq \frac{(a_1 + a_2 + \cdots + a_n)^2}{b_1 + b_2 + \cdots + b_n}
+\end{equation}
+Dấu bằng xảy ra khi và chỉ khi $\displaystyle\frac{a_1}{b_1} = \frac{a_2}{b_2} = \cdots = \frac{a_n}{b_n}$.
+\end{theorem}
+
+\begin{note}
+Điều kiện dấu bằng ở đây phức tạp hơn AM-GM: không nhất thiết $a_i = a_j$, mà là các \textbf{tỷ số} $\frac{a_i}{b_i}$ phải bằng nhau.
+\end{note}
+
+\begin{example}[Dạng Engel]
+Cho $a, b, c > 0$. Chứng minh rằng:
+\[
+\frac{a^2}{b+c} + \frac{b^2}{c+a} + \frac{c^2}{a+b} \geq \frac{a+b+c}{2}
+\]
+
+\textbf{Lời giải.} Áp dụng dạng Engel của Cauchy-Schwarz:
+\[
+\frac{a^2}{b+c} + \frac{b^2}{c+a} + \frac{c^2}{a+b} \geq \frac{(a+b+c)^2}{2(a+b+c)} = \frac{a+b+c}{2}
+\]
+
+Dấu bằng xảy ra khi $\frac{a}{b+c} = \frac{b}{c+a} = \frac{c}{a+b}$, tức là $a = b = c$.
+
+\textbf{Điểm rơi:} $a = b = c$ (giá trị cụ thể tùy thuộc vào ràng buộc).
+\end{example}
+
+\subsection{Bất đẳng thức Schur}
+
+\begin{theorem}[Bất đẳng thức Schur]
+Cho các số thực không âm $a, b, c$ và $t > 0$. Ta có:
+\begin{equation}
+a^t(a-b)(a-c) + b^t(b-c)(b-a) + c^t(c-a)(c-b) \geq 0
+\end{equation}
+Dấu bằng xảy ra khi và chỉ khi:
+\begin{itemize}
+    \item $a = b = c$, hoặc
+    \item Hai trong ba số bằng nhau và số còn lại bằng $0$.
+\end{itemize}
+\end{theorem}
+
+\begin{note}
+Bất đẳng thức Schur có \textbf{hai loại điểm rơi}:
+\begin{enumerate}
+    \item \textbf{Điểm rơi đối xứng:} $a = b = c$
+    \item \textbf{Điểm rơi biên:} $(a, a, 0)$ hoặc hoán vị
+\end{enumerate}
+Đây là một đặc điểm quan trọng mà chúng ta sẽ gặp lại nhiều lần.
+\end{note}
+
+\begin{example}[Schur với $t = 1$]
+Cho $a, b, c \geq 0$. Chứng minh rằng:
+\[
+a^3 + b^3 + c^3 + 3abc \geq a^2(b+c) + b^2(c+a) + c^2(a+b)
+\]
+
+\textbf{Lời giải.} Đây chính là dạng khai triển của Schur với $t = 1$:
+\[
+a(a-b)(a-c) + b(b-c)(b-a) + c(c-a)(c-b) \geq 0
+\]
+
+Khai triển và rút gọn, ta được bất đẳng thức cần chứng minh.
+
+\textbf{Điểm rơi:}
+\begin{itemize}
+    \item $(1, 1, 1)$ (đối xứng), hoặc
+    \item $(1, 1, 0)$ và các hoán vị (biên)
+\end{itemize}
+\end{example}
+
+\section{Khái niệm điểm rơi}
+
+\subsection{Định nghĩa}
+
+\begin{definition}[Điểm rơi]
+\textbf{Điểm rơi} (equality case) của một bất đẳng thức là tập hợp các giá trị của biến mà tại đó dấu bằng xảy ra.
+\end{definition}
+
+Trong bất đẳng thức $f(a, b, c) \geq g(a, b, c)$, điểm rơi là bộ $(a_0, b_0, c_0)$ sao cho:
+\[
+f(a_0, b_0, c_0) = g(a_0, b_0, c_0)
+\]
+
+\subsection{Tại sao điểm rơi quan trọng?}
+
+Điểm rơi đóng vai trò chiến lược trong việc chứng minh bất đẳng thức vì:
+
+\begin{enumerate}
+    \item \textbf{Xác nhận tính đúng đắn:} Nếu bất đẳng thức đúng, điểm rơi phải tồn tại và thỏa mãn các ràng buộc.
+
+    \item \textbf{Gợi ý phương pháp:} Biết điểm rơi giúp ta chọn kỹ thuật phù hợp:
+    \begin{itemize}
+        \item Điểm rơi $a = b = c$ $\Rightarrow$ Thử AM-GM hoặc Schur
+        \item Điểm rơi trên biên $\Rightarrow$ Thử kỹ thuật smoothing
+        \item Điểm rơi hỗn hợp $\Rightarrow$ Thử phương pháp pqr
+    \end{itemize}
+
+    \item \textbf{Kiểm tra lời giải:} Lời giải đúng phải ``bảo toàn'' điểm rơi --- tức là tại điểm rơi, tất cả các đánh giá đều trở thành đẳng thức.
+\end{enumerate}
+
+\begin{warning}
+Một lỗi phổ biến là đưa ra lời giải không thể đạt dấu bằng tại điểm rơi. Nếu điều này xảy ra, lời giải \textbf{sai hoàn toàn} --- dù các bước biến đổi có vẻ đúng!
+\end{warning}
+
+\subsection{Ý nghĩa hình học}
+
+Từ góc độ tối ưu hóa, điểm rơi chính là \textbf{điểm cực trị} của hàm $h(a,b,c) = f(a,b,c) - g(a,b,c)$ trên miền xác định.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    % Axes
+    \draw[->] (-0.5,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,3) node[above] {$f(x)$};
+
+    % Curve
+    \draw[thick, blue, domain=0.3:3.5, smooth] plot (\x, {0.5*(\x-2)^2 + 0.5});
+
+    % Minimum point
+    \fill[red] (2, 0.5) circle (2pt);
+    \node[below] at (2, 0.3) {Điểm rơi};
+
+    % Horizontal line at minimum
+    \draw[dashed, gray] (0, 0.5) -- (2, 0.5);
+
+    % Labels
+    \node[right, blue] at (3.2, 1.5) {$f(x) \geq c$};
+    \node[left] at (0, 0.5) {$c$};
+\end{tikzpicture}
+\caption{Điểm rơi là điểm cực tiểu của hàm}
+\end{figure}
+
+Theo điều kiện tối ưu bậc nhất (KKT), tại điểm cực trị nội:
+\[
+\nabla h = 0
+\]
+
+Điều này giải thích tại sao điểm rơi đối xứng $a = b = c$ rất phổ biến: với hàm đối xứng, điểm cực trị thường nằm trên đường chéo chính.
+
+\section{Phân loại điểm rơi}
+
+\subsection{Điểm rơi đối xứng}
+
+\begin{definition}
+\textbf{Điểm rơi đối xứng} là điểm mà tất cả các biến bằng nhau: $a = b = c$.
+\end{definition}
+
+\textbf{Đặc điểm nhận dạng:}
+\begin{itemize}
+    \item Bất đẳng thức đối xứng hoàn toàn (symmetric)
+    \item Ràng buộc đối xứng (ví dụ: $a + b + c = 3$ hoặc $abc = 1$)
+    \item Hàm lồi/lõm với gradient triệt tiêu tại $a = b = c$
+\end{itemize}
+
+\begin{example}[Nhận dạng điểm rơi đối xứng]
+Cho $a, b, c > 0$ với $a + b + c = 3$. Chứng minh rằng:
+\[
+\frac{1}{a} + \frac{1}{b} + \frac{1}{c} \geq 3
+\]
+
+\textbf{Dự đoán điểm rơi:} Bất đẳng thức và ràng buộc đều đối xứng, nên điểm rơi có thể là $a = b = c = 1$.
+
+\textbf{Kiểm tra:} Khi $a = b = c = 1$:
+\begin{itemize}
+    \item Ràng buộc: $1 + 1 + 1 = 3$ ✓
+    \item VT = VP: $\frac{1}{1} + \frac{1}{1} + \frac{1}{1} = 3$ ✓
+\end{itemize}
+
+\textbf{Lời giải.} Áp dụng AM-GM:
+\[
+\frac{1}{a} + \frac{1}{b} + \frac{1}{c} \geq 3\sqrt[3]{\frac{1}{abc}}
+\]
+
+Mặt khác, với $a + b + c = 3$:
+\[
+abc \leq \left(\frac{a+b+c}{3}\right)^3 = 1
+\]
+
+Suy ra $\frac{1}{a} + \frac{1}{b} + \frac{1}{c} \geq 3$.
+
+\textbf{Điểm rơi:} $(a, b, c) = (1, 1, 1)$ ✓
+\end{example}
+
+\subsection{Điểm rơi biên}
+
+\begin{definition}
+\textbf{Điểm rơi biên} là điểm nằm trên biên của miền xác định, thường có dạng:
+\begin{itemize}
+    \item $a = 0$ (một biến triệt tiêu)
+    \item $a = b, c = 0$ (hai biến bằng nhau, một biến triệt tiêu)
+\end{itemize}
+\end{definition}
+
+\textbf{Đặc điểm nhận dạng:}
+\begin{itemize}
+    \item Bất đẳng thức cyclic (không hoàn toàn đối xứng)
+    \item Khi thử $a = b = c$, đánh giá không ``tight''
+    \item Hàm mục tiêu có xu hướng ``đẩy'' một biến về biên
+\end{itemize}
+
+\begin{example}[Nhận dạng điểm rơi biên]
+Cho $a, b, c \geq 0$ với $a + b + c = 1$. Chứng minh rằng:
+\[
+a^2 + b^2 + c^2 \geq \frac{1}{3}
+\]
+
+\textbf{Phân tích:}
+\begin{itemize}
+    \item Thử $a = b = c = \frac{1}{3}$: VT $= 3 \cdot \frac{1}{9} = \frac{1}{3}$ = VP ✓
+    \item Thử $a = 1, b = c = 0$: VT $= 1 > \frac{1}{3}$
+\end{itemize}
+
+Điểm rơi là $(a, b, c) = \left(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}\right)$.
+
+Nhưng xét bất đẳng thức:
+\[
+a^2 + b^2 + c^2 \leq 1
+\]
+
+\textbf{Thử:}
+\begin{itemize}
+    \item $a = b = c = \frac{1}{3}$: VT $= \frac{1}{3} < 1$
+    \item $a = 1, b = c = 0$: VT $= 1$ = VP ✓
+\end{itemize}
+
+Ở đây, điểm rơi là \textbf{biên}: $(1, 0, 0)$.
+\end{example}
+
+\subsection{Điểm rơi hỗn hợp}
+
+\begin{definition}
+\textbf{Điểm rơi hỗn hợp} là điểm mà một số biến bằng nhau, một số khác:
+\[
+a = b \neq c
+\]
+\end{definition}
+
+\textbf{Đặc điểm nhận dạng:}
+\begin{itemize}
+    \item Khi thử $a = b = c$: không đạt dấu bằng
+    \item Khi thử biên thuần túy $(a, 0, 0)$: cũng không đạt
+    \item Cần tìm điểm ``trung gian''
+\end{itemize}
+
+\begin{example}[Điểm rơi hỗn hợp]
+Cho $a, b, c \geq 0$ với $a + b + c = 1$. Tìm giá trị lớn nhất của:
+\[
+S = ab + bc + ca - 3abc
+\]
+
+\textbf{Phân tích:}
+\begin{itemize}
+    \item Thử $a = b = c = \frac{1}{3}$: $S = 3 \cdot \frac{1}{9} - 3 \cdot \frac{1}{27} = \frac{1}{3} - \frac{1}{9} = \frac{2}{9}$
+    \item Thử $a = b = \frac{1}{2}, c = 0$: $S = \frac{1}{4} + 0 + 0 - 0 = \frac{1}{4} > \frac{2}{9}$
+\end{itemize}
+
+Điểm rơi là hỗn hợp: $a = b = \frac{1}{2}, c = 0$ (và các hoán vị).
+
+$S_{\max} = \frac{1}{4}$.
+\end{example}
+
+\section{Bài tập}
+
+\subsection{Bài tập cơ bản}
+
+\begin{exercise}[Nhận dạng điểm rơi]
+Xác định điểm rơi của các bất đẳng thức sau:
+
+\begin{enumerate}
+    \item $a^2 + b^2 \geq 2ab$ với $a, b \in \mathbb{R}$
+    \item $\frac{a}{b} + \frac{b}{a} \geq 2$ với $a, b > 0$
+    \item $(a + b)(b + c)(c + a) \geq 8abc$ với $a, b, c > 0$
+\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}
+    \item $a^2 + b^2 - 2ab = (a-b)^2 \geq 0$. Dấu bằng khi $a = b$.
+
+    \textbf{Điểm rơi:} $a = b$ (mọi giá trị bằng nhau).
+
+    \item Áp dụng AM-GM: $\frac{a}{b} + \frac{b}{a} \geq 2\sqrt{\frac{a}{b} \cdot \frac{b}{a}} = 2$.
+
+    Dấu bằng khi $\frac{a}{b} = \frac{b}{a}$, tức $a = b$.
+
+    \textbf{Điểm rơi:} $a = b$ (mọi giá trị dương bằng nhau).
+
+    \item Áp dụng AM-GM cho từng cặp:
+    \begin{align*}
+        a + b &\geq 2\sqrt{ab} \\
+        b + c &\geq 2\sqrt{bc} \\
+        c + a &\geq 2\sqrt{ca}
+    \end{align*}
+
+    Nhân vế với vế: $(a+b)(b+c)(c+a) \geq 8\sqrt{a^2b^2c^2} = 8abc$.
+
+    Dấu bằng khi $a = b$, $b = c$, $c = a$, tức $a = b = c$.
+
+    \textbf{Điểm rơi:} $a = b = c$ (đối xứng).
+\end{enumerate}
+\end{solution}
+
+\begin{exercise}[Kiểm tra điểm rơi]
+Cho bất đẳng thức: với $a, b, c > 0$ và $abc = 1$:
+\[
+a + b + c \geq ab + bc + ca
+\]
+
+\begin{enumerate}
+    \item Kiểm tra xem điểm $(1, 1, 1)$ có phải là điểm rơi không.
+    \item Nếu không, tìm điểm rơi thực sự.
+    \item Bất đẳng thức có đúng không?
+\end{enumerate}
+\end{exercise}
+
+\begin{solution}
+\begin{enumerate}
+    \item Tại $(1, 1, 1)$:
+    \begin{itemize}
+        \item Kiểm tra ràng buộc: $abc = 1 \cdot 1 \cdot 1 = 1$ ✓
+        \item VT $= 1 + 1 + 1 = 3$
+        \item VP $= 1 + 1 + 1 = 3$
+        \item VT $= $ VP ✓
+    \end{itemize}
+
+    Vậy $(1, 1, 1)$ là điểm rơi.
+
+    \item (Không cần vì đã tìm được điểm rơi)
+
+    \item Thử điểm khác để kiểm tra: $(2, 2, \frac{1}{4})$:
+    \begin{itemize}
+        \item Ràng buộc: $2 \cdot 2 \cdot \frac{1}{4} = 1$ ✓
+        \item VT $= 2 + 2 + \frac{1}{4} = \frac{17}{4}$
+        \item VP $= 4 + \frac{1}{2} + \frac{1}{2} = 5$
+        \item VT $< $ VP ✗
+    \end{itemize}
+
+    \textbf{Bất đẳng thức SAI!}
+
+    Thực tế, bất đẳng thức đúng là $ab + bc + ca \geq a + b + c$ (ngược lại).
+\end{enumerate}
+\end{solution}
+
+\subsection{Bài tập nâng cao}
+
+\begin{exercise}[Điểm rơi biên]
+Cho $a, b, c \geq 0$ với $a + b + c = 3$. Chứng minh rằng:
+\[
+a^3 + b^3 + c^3 \geq 3
+\]
+Xác định khi nào dấu bằng xảy ra.
+\end{exercise}
+
+\begin{solution}
+\textbf{Dự đoán điểm rơi:}
+\begin{itemize}
+    \item Thử $a = b = c = 1$: VT $= 3$ = VP ✓
+    \item Thử $a = 3, b = c = 0$: VT $= 27 > 3$
+\end{itemize}
+
+Điểm rơi có thể là $(1, 1, 1)$.
+
+\textbf{Chứng minh:} Sử dụng bất đẳng thức Chebyshev hoặc AM-GM:
+\[
+a^3 + b^3 + c^3 \geq 3abc \quad \text{(AM-GM)}
+\]
+
+Nhưng $abc \leq 1$ theo AM-GM, nên chưa đủ.
+
+Áp dụng Power Mean:
+\[
+\sqrt[3]{\frac{a^3 + b^3 + c^3}{3}} \geq \frac{a + b + c}{3} = 1
+\]
+
+Suy ra $a^3 + b^3 + c^3 \geq 3$.
+
+Dấu bằng khi $a = b = c = 1$.
+\end{solution}
+
+\begin{exercise}[Điểm rơi hỗn hợp - Thách thức]
+Cho $a, b, c \geq 0$ với $a + b + c = 2$. Tìm giá trị lớn nhất của:
+\[
+P = a^2b + b^2c + c^2a
+\]
+\end{exercise}
+
+\begin{solution}
+Đây là bất đẳng thức cyclic (không đối xứng), nên điểm rơi có thể không đối xứng.
+
+\textbf{Thử các điểm đặc biệt:}
+\begin{itemize}
+    \item $a = b = c = \frac{2}{3}$: $P = 3 \cdot \frac{4}{9} \cdot \frac{2}{3} = \frac{8}{9} \approx 0.889$
+    \item $a = 1, b = 1, c = 0$: $P = 1 \cdot 1 + 1 \cdot 0 + 0 \cdot 1 = 1$
+    \item $a = 2, b = 0, c = 0$: $P = 0$
+    \item $a = \frac{4}{3}, b = \frac{2}{3}, c = 0$: $P = \frac{16}{9} \cdot \frac{2}{3} = \frac{32}{27} \approx 1.185$
+\end{itemize}
+
+Thử tối ưu với $c = 0$, $a + b = 2$:
+\[
+P = a^2 b = a^2(2-a)
+\]
+
+Đặt $f(a) = a^2(2-a) = 2a^2 - a^3$, $f'(a) = 4a - 3a^2 = a(4 - 3a)$.
+
+$f'(a) = 0 \Leftrightarrow a = \frac{4}{3}$.
+
+Tại $a = \frac{4}{3}$: $P = \frac{16}{9} \cdot \frac{2}{3} = \frac{32}{27}$.
+
+\textbf{Kết luận:} $P_{\max} = \frac{32}{27}$, đạt tại $\left(\frac{4}{3}, \frac{2}{3}, 0\right)$ và các hoán vị cyclic.
+
+\textbf{Điểm rơi:} Hỗn hợp, nằm trên biên với một biến bằng 0.
+\end{solution}
+
+\section{Tóm tắt}
+
+Trong chương này, chúng ta đã:
+
+\begin{itemize}
+    \item \textbf{Ôn tập} các bất đẳng thức cơ bản: AM-GM, Cauchy-Schwarz, Schur
+    \item \textbf{Hiểu} khái niệm điểm rơi và tầm quan trọng của nó
+    \item \textbf{Phân loại} ba dạng điểm rơi: đối xứng, biên, hỗn hợp
+    \item \textbf{Thực hành} nhận dạng và sử dụng điểm rơi
+\end{itemize}
+
+\begin{keypoints}
+\begin{enumerate}
+    \item Điểm rơi là giá trị biến khi dấu bằng xảy ra
+    \item Biết điểm rơi giúp chọn phương pháp phù hợp
+    \item Lời giải đúng phải ``bảo toàn'' điểm rơi
+    \item Điểm rơi đối xứng: $a = b = c$
+    \item Điểm rơi biên: một biến bằng 0 hoặc $(a, a, 0)$
+    \item Điểm rơi hỗn hợp: $a = b \neq c$
+\end{enumerate}
+\end{keypoints}
+
+\section{Tiếp theo}
+
+Trong Chương 2, chúng ta sẽ đi sâu vào \textbf{lý thuyết tổng quát của phương pháp điểm rơi}, bao gồm:
+\begin{itemize}
+    \item Phương pháp xác định điểm rơi một cách hệ thống
+    \item Kỹ thuật Lagrange multipliers
+    \item Phương pháp SOS (Sum of Squares)
+    \item Phương pháp pqr cho hệ 3 biến
+\end{itemize}

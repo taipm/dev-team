@@ -1,0 +1,182 @@
+{
+  "video": {
+    "title": "Vẻ đẹp của dãy Fibonacci - Mã số bí ẩn của tự nhiên",
+    "title_en": "The Beauty of Fibonacci - Nature's Secret Code",
+    "description": "Khám phá dãy số Fibonacci - từ bài toán thỏ của nhà toán học Ý đến bí mật ẩn giấu trong ADN, hoa hướng dương, và thiên hà. Tỷ lệ vàng và xoắn ốc Fibonacci sẽ thay đổi cách bạn nhìn thế giới!\n\n📌 NỘI DUNG VIDEO:\n\n00:00 - Mở đầu: ADN và Fibonacci\n00:30 - Nguồn gốc: Leonardo Fibonacci\n02:30 - Quy luật: F(n) = F(n-1) + F(n-2)\n04:00 - Tỷ lệ vàng: 1.618...\n05:30 - Xoắn ốc Fibonacci\n07:00 - Fibonacci trong tự nhiên\n09:00 - Công thức Binet\n10:30 - Suy ngẫm triết học\n11:30 - Kết thúc\n\n🌻 FIBONACCI TRONG TỰ NHIÊN:\n• Hoa hướng dương: 55, 89 vòng xoắn\n• Quả thông: 8, 13 vòng xoắn\n• Cây gia phả ong mật: 1, 1, 2, 3, 5, 8...\n• ADN: 34 và 21 Angstrom\n\n📚 TÀI LIỆU THAM KHẢO:\n• Liber Abaci - Leonardo Fibonacci (1202)\n• \"The Golden Ratio\" - Mario Livio\n• 3Blue1Brown - Mathematical animations\n\n🔔 SUBSCRIBE để không bỏ lỡ video tiếp theo!\n\n#Fibonacci #TỷLệVàng #ToánHọc #KhoaHọc #GiáoDục #Animation #3Blue1Brown #Manim",
+    "description_short": "Khám phá vẻ đẹp của dãy Fibonacci - từ bài toán thỏ đến bí mật trong ADN, hoa hướng dương, và thiên hà!"
+  },
+  "metadata": {
+    "duration_seconds": 720,
+    "resolution": "1920x1080",
+    "fps": 60,
+    "format": "mp4",
+    "aspect_ratio": "16:9",
+    "language": "vi",
+    "subtitles_available": ["vi", "en"],
+    "production_date": "2026-01-02",
+    "version": "1.0"
+  },
+  "youtube": {
+    "category": "Education",
+    "visibility": "public",
+    "tags": [
+      "Fibonacci",
+      "dãy Fibonacci",
+      "tỷ lệ vàng",
+      "golden ratio",
+      "toán học",
+      "mathematics",
+      "khoa học",
+      "science",
+      "giáo dục",
+      "education",
+      "3blue1brown",
+      "manim",
+      "animation",
+      "nature",
+      "tự nhiên",
+      "ADN",
+      "DNA",
+      "spiral",
+      "xoắn ốc",
+      "sunflower",
+      "hoa hướng dương",
+      "phi",
+      "số phi",
+      "công thức Binet",
+      "Binet formula"
+    ],
+    "default_language": "vi",
+    "made_for_kids": false,
+    "age_restricted": false,
+    "license": "standard",
+    "allow_embedding": true,
+    "notify_subscribers": true
+  },
+  "chapters": [
+    {
+      "title": "Mở đầu - ADN và Fibonacci",
+      "start_time": "00:00",
+      "end_time": "00:30"
+    },
+    {
+      "title": "Nguồn gốc - Leonardo Fibonacci",
+      "start_time": "00:30",
+      "end_time": "02:30"
+    },
+    {
+      "title": "Quy luật - Công thức đệ quy",
+      "start_time": "02:30",
+      "end_time": "04:00"
+    },
+    {
+      "title": "Tỷ lệ Vàng - Số Phi",
+      "start_time": "04:00",
+      "end_time": "05:30"
+    },
+    {
+      "title": "Xoắn ốc Fibonacci",
+      "start_time": "05:30",
+      "end_time": "07:00"
+    },
+    {
+      "title": "Fibonacci trong tự nhiên",
+      "start_time": "07:00",
+      "end_time": "09:00"
+    },
+    {
+      "title": "Công thức Binet",
+      "start_time": "09:00",
+      "end_time": "10:30"
+    },
+    {
+      "title": "Suy ngẫm triết học",
+      "start_time": "10:30",
+      "end_time": "11:30"
+    },
+    {
+      "title": "Kết thúc",
+      "start_time": "11:30",
+      "end_time": "12:00"
+    }
+  ],
+  "thumbnail": {
+    "main": "thumbnail/thumbnail.png",
+    "variants": [
+      "thumbnail/variants/variant_a.png",
+      "thumbnail/variants/variant_b.png",
+      "thumbnail/variants/variant_c.png"
+    ],
+    "resolution": "1280x720",
+    "format": "png",
+    "max_size_mb": 2,
+    "design_elements": {
+      "title_text": "Bí mật của FIBONACCI",
+      "subtitle_text": "Mã số của tự nhiên",
+      "background": "fibonacci_spiral",
+      "accent_color": "#FFD700",
+      "style": "3b1b_inspired"
+    }
+  },
+  "assets": {
+    "manim_scenes": [
+      "manim/scenes/scene_01_hook.py",
+      "manim/scenes/scene_02_origin.py",
+      "manim/scenes/scene_03_pattern.py",
+      "manim/scenes/scene_04_golden_ratio.py",
+      "manim/scenes/scene_05_spirals.py",
+      "manim/scenes/scene_06_nature.py",
+      "manim/scenes/scene_07_binet.py",
+      "manim/scenes/scene_08_philosophy.py",
+      "manim/scenes/scene_09_outro.py"
+    ],
+    "voiceover": {
+      "script": "voiceover/script.md",
+      "timing_marks": "voiceover/timing_marks.yaml",
+      "language": "vi",
+      "estimated_words": 665
+    },
+    "images": {
+      "needed": [
+        "sunflower.png",
+        "pinecone.png",
+        "honeybee.png",
+        "nautilus.png"
+      ],
+      "source": "royalty-free"
+    }
+  },
+  "production": {
+    "style": "entertaining",
+    "focus": "nature",
+    "color_palette": {
+      "primary": "#1C758A",
+      "golden": "#FFD700",
+      "nature": "#83C167",
+      "spiral": "#9A72AC",
+      "background": "#1C1C1C"
+    },
+    "typography": {
+      "math_font": "Computer Modern",
+      "text_font": "Be Vietnam Pro"
+    },
+    "manim_quality": "-qh",
+    "render_command": "manim -qh scene.py ClassName"
+  },
+  "analytics_targets": {
+    "watch_time_retention": "60%",
+    "engagement_rate": "5%",
+    "subscriber_conversion": "2%",
+    "target_audience": {
+      "age_range": "16-45",
+      "interests": ["mathematics", "science", "education", "nature"],
+      "education_level": "high_school_and_above"
+    }
+  },
+  "credits": {
+    "animation_tool": "Manim Community Edition",
+    "inspiration": "3Blue1Brown",
+    "produced_by": "YouTube Team - MicroAI",
+    "generated_with": "Claude Code"
+  }
+}

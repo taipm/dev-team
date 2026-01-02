@@ -1,0 +1,45 @@
+# Knowledge Index for Book Writer Team
+
+version: "1.0"
+team: book-writer-team
+
+shared:
+  - id: technical-writing-fundamentals
+    path: ./shared/technical-writing-fundamentals.md
+    description: Core principles of technical writing
+    loaded_by: [all]
+
+role_specific:
+  planner:
+    - id: book-structure-patterns
+      path: ./planner/book-structure-patterns.md
+      description: Patterns for structuring technical books
+
+  researcher:
+    - id: research-methodology
+      path: ./researcher/research-methodology.md
+      description: Research methods and source verification
+
+  writer:
+    - id: writing-patterns
+      path: ./writer/writing-patterns.md
+      description: Technical writing patterns and best practices
+
+  editor:
+    - id: editing-guide
+      path: ./editor/editing-guide.md
+      description: Grammar, style, and editing guidelines
+
+  reviewer:
+    - id: review-checklist
+      path: ./reviewer/review-checklist.md
+      description: Technical review checklist and quality gates
+
+  publisher:
+    - id: format-specifications
+      path: ./publisher/format-specifications.md
+      description: Output format specifications (Markdown, LaTeX, PDF, HTML, EPUB)
+
+loading_rules:
+  - on_session_start: [shared/technical-writing-fundamentals]
+  - on_agent_activate: role_specific[agent_role]

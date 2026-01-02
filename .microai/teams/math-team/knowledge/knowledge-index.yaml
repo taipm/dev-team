@@ -1,0 +1,153 @@
+# Math Team Knowledge Index
+# Defines auto-loading and on-demand knowledge
+
+version: "2.0.0"  # IMO upgrade
+
+# Universal knowledge (always loaded)
+universal:
+  - techniques/polya-method.md
+
+# Auto-load by problem type
+auto_load_by_type:
+  algebra:
+    - domains/algebra/equations.md
+    - domains/algebra/inequalities.md
+
+  geometry:
+    - domains/geometry/euclidean.md
+
+  calculus:
+    - domains/calculus/limits-derivatives.md
+
+  combinatorics:
+    - domains/combinatorics/counting.md
+
+  number_theory:
+    - domains/number-theory/divisibility.md
+    - domains/number-theory/modular-arithmetic.md
+
+# On-demand loading triggers
+on_demand:
+  polynomial_high_degree:
+    trigger: "bậc >= 3"
+    load: domains/algebra/polynomials.md
+
+  coordinate_geometry:
+    trigger: "tọa độ|coordinate"
+    load: domains/geometry/analytic.md
+
+  trigonometric:
+    trigger: "sin|cos|tan|lượng giác"
+    load: domains/geometry/trigonometry.md
+
+  integration:
+    trigger: "tích phân|integral"
+    load: domains/calculus/integrals.md
+
+  probability:
+    trigger: "xác suất|probability"
+    load: domains/combinatorics/probability.md
+
+# ═══════════════════════════════════════════════════════════════
+# IMO MODE - Olympic International Level
+# ═══════════════════════════════════════════════════════════════
+
+imo_mode:
+  # Auto-load for ALL IMO problems
+  universal:
+    - techniques/imo/imo-problem-solving.md
+    - techniques/imo/proof-techniques.md
+
+  # By domain
+  by_type:
+    number_theory:
+      - techniques/imo/number-theory-imo.md
+    geometry:
+      - techniques/imo/geometry-imo.md
+    combinatorics:
+      - techniques/imo/combinatorics-imo.md
+    algebra:
+      - techniques/imo/inequality-techniques.md
+
+  # Problem difficulty triggers
+  difficulty_boost:
+    olympiad:
+      extra_time: 180000  # 3 min per solver
+      model_upgrade: opus  # Use opus for all solvers
+      load_all_imo: true
+
+# Competition mode (legacy, merged with imo_mode)
+competition_mode:
+  auto_load:
+    - techniques/imo/imo-problem-solving.md
+    - techniques/imo/proof-techniques.md
+
+# ═══════════════════════════════════════════════════════════════
+# DIFFICULTY PRESETS
+# ═══════════════════════════════════════════════════════════════
+
+difficulty_presets:
+  thpt:
+    description: "Bài tập SGK, kỹ thuật cơ bản"
+    knowledge_load: minimal
+    solver_model: sonnet
+    max_approaches: 2
+
+  university:
+    description: "Đề thi đại học, reasoning sâu"
+    knowledge_load: standard
+    solver_model: sonnet
+    max_approaches: 3
+
+  competition:
+    description: "Đề thi HSG, VMO cấp tỉnh"
+    knowledge_load: competition_mode
+    solver_model: sonnet
+    max_approaches: 3
+
+  olympiad:
+    description: "IMO, VMO quốc gia, Putnam"
+    knowledge_load: imo_mode
+    solver_model: opus
+    max_approaches: 2
+    extra_time: true
+
+# Token budgets per agent
+budgets:
+  analyzer: 2000
+  solver: 3000
+  solver_olympiad: 5000  # More tokens for hard problems
+  synthesizer: 5000
+  latex_editor: 2000
+  total_session: 30000  # Increased for IMO
+
+# ═══════════════════════════════════════════════════════════════
+# IMO KNOWLEDGE FILES
+# ═══════════════════════════════════════════════════════════════
+
+imo_knowledge:
+  core:
+    - path: techniques/imo/imo-problem-solving.md
+      description: "7-step framework, 12 golden principles"
+      size: ~3000 tokens
+
+    - path: techniques/imo/proof-techniques.md
+      description: "Contradiction, induction, descent, extremal"
+      size: ~2500 tokens
+
+  domain_specific:
+    - path: techniques/imo/number-theory-imo.md
+      description: "LTE, Zsygmondy, Vieta jumping, p-adic"
+      size: ~3000 tokens
+
+    - path: techniques/imo/geometry-imo.md
+      description: "Inversion, projective, spiral similarity"
+      size: ~3000 tokens
+
+    - path: techniques/imo/combinatorics-imo.md
+      description: "Ramsey, extremal, Sprague-Grundy"
+      size: ~3000 tokens
+
+    - path: techniques/imo/inequality-techniques.md
+      description: "SOS, Schur, Muirhead, Karamata"
+      size: ~2500 tokens

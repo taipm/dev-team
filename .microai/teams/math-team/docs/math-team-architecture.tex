@@ -1,0 +1,800 @@
+% ============================================================================
+% MATH-TEAM ARCHITECTURE - Professional Documentation
+% ============================================================================
+% Compile: xelatex math-team-architecture.tex (run twice for TOC)
+% ============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ============================================================================
+% PACKAGES
+% ============================================================================
+\usepackage{fontspec}
+\setmainfont{Helvetica Neue}[
+    UprightFont = *,
+    BoldFont = * Bold,
+    ItalicFont = * Italic,
+    BoldItalicFont = * Bold Italic
+]
+\setsansfont{Helvetica Neue}
+\setmonofont{Menlo}[Scale=0.9]
+
+\usepackage[vietnamese,english]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+% TikZ libraries
+\usetikzlibrary{
+    shapes.geometric,
+    shapes.symbols,
+    arrows.meta,
+    positioning,
+    fit,
+    backgrounds,
+    calc,
+    decorations.pathreplacing,
+    shadows.blur,
+    fadings
+}
+
+% ============================================================================
+% COLOR SCHEME - Modern & Professional
+% ============================================================================
+\definecolor{primary}{HTML}{2563EB}      % Blue
+\definecolor{secondary}{HTML}{7C3AED}    % Purple
+\definecolor{success}{HTML}{059669}      % Green
+\definecolor{warning}{HTML}{D97706}      % Orange
+\definecolor{danger}{HTML}{DC2626}       % Red
+\definecolor{info}{HTML}{0891B2}         % Cyan
+
+\definecolor{dark}{HTML}{1F2937}
+\definecolor{gray600}{HTML}{4B5563}
+\definecolor{gray400}{HTML}{9CA3AF}
+\definecolor{gray200}{HTML}{E5E7EB}
+\definecolor{gray100}{HTML}{F3F4F6}
+\definecolor{white}{HTML}{FFFFFF}
+
+% Agent colors
+\definecolor{maestro}{HTML}{4F46E5}      % Indigo
+\definecolor{analyzer}{HTML}{0EA5E9}     % Sky
+\definecolor{solver}{HTML}{10B981}       % Emerald
+\definecolor{synthesizer}{HTML}{F59E0B}  % Amber
+\definecolor{latex}{HTML}{EF4444}        % Red
+\definecolor{geometry}{HTML}{8B5CF6}     % Violet
+\definecolor{scribe}{HTML}{6B7280}       % Gray
+
+% ============================================================================
+% HEADER/FOOTER
+% ============================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray600}Math-Team Architecture}
+\fancyhead[R]{\small\color{gray600}MicroAI Framework}
+\fancyfoot[C]{\small\color{gray400}\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================================
+% SECTION STYLING
+% ============================================================================
+\titleformat{\section}
+    {\Large\bfseries\color{dark}}
+    {\thesection.}{0.5em}{}
+    [\vspace{-0.5em}\textcolor{primary}{\rule{\textwidth}{2pt}}]
+
+\titleformat{\subsection}
+    {\large\bfseries\color{gray600}}
+    {\thesubsection}{0.5em}{}
+
+% ============================================================================
+% CUSTOM COMMANDS
+% ============================================================================
+\newcommand{\highlight}[1]{\colorbox{gray100}{\texttt{#1}}}
+\newcommand{\agent}[1]{\textcolor{primary}{\textbf{#1}}}
+\newcommand{\signal}[1]{\textcolor{secondary}{\texttt{#1}}}
+
+% ============================================================================
+% HYPERREF SETUP
+% ============================================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    urlcolor=info,
+    pdftitle={Math-Team Architecture},
+    pdfauthor={MicroAI Framework}
+}
+
+% ============================================================================
+% DOCUMENT START
+% ============================================================================
+\begin{document}
+
+% ============================================================================
+% TITLE PAGE
+% ============================================================================
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+    % Background gradient
+    \fill[primary!10] (current page.south west) rectangle (current page.north east);
+
+    % Decorative elements
+    \fill[primary!20] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \fill[primary] ([yshift=-8cm]current page.north west) rectangle ([yshift=-8.3cm]current page.north east);
+
+    % Bottom decoration
+    \fill[secondary!10] (current page.south west) rectangle ([yshift=3cm]current page.south east);
+    \fill[secondary] ([yshift=3cm]current page.south west) rectangle ([yshift=3.1cm]current page.south east);
+\end{tikzpicture}
+
+\vspace*{2cm}
+
+\begin{center}
+    {\fontsize{42}{50}\selectfont\bfseries\color{dark} Math-Team}\\[0.8cm]
+    {\fontsize{18}{22}\selectfont\color{gray600} Signal-Based Multi-Agent System}\\[0.3cm]
+    {\large\color{gray400} Architecture Documentation}
+
+    \vspace{3cm}
+
+    % Icon representation
+    \begin{tikzpicture}[scale=0.8]
+        % Central orchestrator
+        \node[circle, fill=maestro, minimum size=1.5cm, text=white, font=\small\bfseries] (m) at (0,0) {M};
+
+        % Surrounding agents
+        \foreach \i/\c/\l in {0/analyzer/A, 60/solver/S, 120/solver/S, 180/synthesizer/Y, 240/latex/L, 300/geometry/G} {
+            \node[circle, fill=\c, minimum size=1cm, text=white, font=\footnotesize\bfseries] at (\i:2.5cm) {\l};
+            \draw[gray400, thick] (m) -- (\i:2cm);
+        }
+
+        % Outer ring
+        \draw[gray200, thick, dashed] (0,0) circle (3.2cm);
+    \end{tikzpicture}
+
+    \vspace{3cm}
+
+    \begin{tabular}{rl}
+        \color{gray600}\textbf{Version:} & \color{dark}2.0\\[0.3cm]
+        \color{gray600}\textbf{Framework:} & \color{dark}MicroAI\\[0.3cm]
+        \color{gray600}\textbf{Agents:} & \color{dark}11 specialized agents\\[0.3cm]
+        \color{gray600}\textbf{Architecture:} & \color{dark}Signal-based orchestration
+    \end{tabular}
+\end{center}
+
+\vfill
+
+\begin{center}
+    \color{gray400}\small
+    \today
+\end{center}
+
+\end{titlepage}
+
+% ============================================================================
+% TABLE OF CONTENTS
+% ============================================================================
+\tableofcontents
+\newpage
+
+% ============================================================================
+% SECTION 1: OVERVIEW
+% ============================================================================
+\section{System Overview}
+
+Math-Team là hệ thống multi-agent chuyên giải toán, được thiết kế theo kiến trúc \textbf{signal-based orchestration}. Các agent giao tiếp qua signals thay vì gọi trực tiếp, đảm bảo tính decoupled và khả năng mở rộng.
+
+\subsection{Key Features}
+
+\begin{center}
+\begin{tikzpicture}[
+    feature/.style={
+        rectangle, rounded corners=10pt,
+        minimum width=4cm, minimum height=1.8cm,
+        draw=none, fill=#1!15,
+        font=\small, align=center
+    }
+]
+    \node[feature=primary] (f1) at (0,0) {\textbf{\color{primary}11 Agents}\\\color{gray600}5 categories};
+    \node[feature=secondary] (f2) at (4.5,0) {\textbf{\color{secondary}15+ Signals}\\\color{gray600}Decoupled};
+    \node[feature=success] (f3) at (9,0) {\textbf{\color{success}Parallel}\\\color{gray600}Max 3 solvers};
+    \node[feature=warning] (f4) at (13.5,0) {\textbf{\color{warning}Verified}\\\color{gray600}Geometry};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Workflow Summary}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=0.3cm,
+    stage/.style={
+        rectangle, rounded corners=6pt,
+        minimum width=2.2cm, minimum height=0.9cm,
+        fill=#1, text=white, font=\small\bfseries
+    },
+    arr/.style={-{Stealth[length=3mm]}, thick, gray400}
+]
+    \node[stage=gray600] (u) {User};
+    \node[stage=maestro, right=of u] (m) {Maestro};
+    \node[stage=analyzer, right=of m] (a) {Analyzer};
+    \node[stage=solver, right=of a] (s) {Solvers};
+    \node[stage=synthesizer, right=of s] (y) {Synth};
+    \node[stage=latex, right=of y] (l) {LaTeX};
+    \node[stage=danger, right=of l] (p) {PDF};
+
+    \draw[arr] (u) -- (m);
+    \draw[arr] (m) -- (a);
+    \draw[arr] (a) -- (s);
+    \draw[arr] (s) -- (y);
+    \draw[arr] (y) -- (l);
+    \draw[arr] (l) -- (p);
+\end{tikzpicture}
+\end{center}
+
+% ============================================================================
+% SECTION 2: COMPLETE WORKFLOW
+% ============================================================================
+\newpage
+\section{Complete Workflow}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    scale=0.85,
+    transform shape,
+    phase/.style={
+        rectangle, rounded corners=4pt,
+        minimum width=2cm, minimum height=0.7cm,
+        fill=#1, text=white, font=\footnotesize\bfseries
+    },
+    agent/.style={
+        rectangle, rounded corners=8pt,
+        minimum width=3cm, minimum height=1.1cm,
+        draw=#1, line width=1.5pt, fill=#1!10,
+        font=\small, align=center
+    },
+    signal/.style={
+        -{Stealth[length=2.5mm]}, thick, color=gray600
+    },
+    siglabel/.style={
+        font=\tiny\ttfamily, fill=white, inner sep=2pt
+    },
+    note/.style={
+        rectangle, rounded corners=4pt,
+        fill=gray100, font=\scriptsize, align=left, inner sep=6pt
+    }
+]
+
+% ==================== PHASE 1: Analysis ====================
+\node[phase=primary] at (-5.5, 1) {PHASE 1};
+
+\node[agent=maestro] (m1) at (0, 1) {\textbf{MAESTRO}\\\scriptsize\color{gray600}Opus};
+\node[agent=analyzer] (an) at (5.5, 1) {\textbf{ANALYZER}\\\scriptsize\color{gray600}Sonnet};
+
+\draw[signal] (m1.east) -- (an.west);
+\node[siglabel] at (2.75, 1.4) {problem\_received};
+
+\draw[signal] (an.south) -- ++(0, -0.5) -| (m1.south);
+\node[siglabel] at (2.75, -0.1) {analysis\_complete};
+
+\node[note] at (10, 1) {
+    \textbullet\ Classify type\\
+    \textbullet\ Identify difficulty\\
+    \textbullet\ 2-3 approaches
+};
+
+% ==================== PHASE 2: Parallel Solving ====================
+\node[phase=success] at (-5.5, -2.5) {PHASE 2};
+
+\node[agent=maestro] (m2) at (0, -2.5) {\textbf{MAESTRO}};
+
+% Solvers - vertical stack
+\node[agent=solver] (s1) at (5.5, -1.5) {\textbf{ALGEBRAIC}\\\scriptsize Sonnet};
+\node[agent=solver] (s2) at (5.5, -2.8) {\textbf{GEOMETRIC}\\\scriptsize Sonnet};
+\node[agent=solver] (s3) at (5.5, -4.1) {\textbf{CALCULUS}\\\scriptsize Sonnet};
+
+% Additional solvers
+\node[rectangle, rounded corners=4pt, draw=solver!60, dashed, fill=solver!5,
+      minimum width=2cm, minimum height=0.6cm, font=\tiny]
+      (s4) at (9.5, -2.2) {COMBINATORICS};
+\node[rectangle, rounded corners=4pt, draw=maestro!60, dashed, fill=maestro!5,
+      minimum width=2cm, minimum height=0.6cm, font=\tiny]
+      (s5) at (9.5, -3.4) {NUMBER-THEORY};
+
+% Dispatch arrows
+\draw[signal] (m2.east) -- (s1.west);
+\draw[signal] (m2.east) -- (s2.west);
+\draw[signal] (m2.east) -- (s3.west);
+\node[siglabel] at (2.75, -1.7) {solvers\_dispatched};
+
+% Sync point
+\node[ellipse, draw=warning, line width=1.5pt, fill=warning!15,
+      minimum width=2.5cm, minimum height=0.8cm, font=\scriptsize\bfseries]
+      (sync) at (5.5, -5.5) {SYNC POINT};
+
+\draw[signal] (s1.south) -- (sync);
+\draw[signal] (s2.south) -- (sync);
+\draw[signal] (s3.south) -- (sync);
+\node[siglabel] at (7.2, -4.8) {solution\_complete};
+
+% Parallel brace
+\draw[decorate, decoration={brace, amplitude=6pt}, thick, solver]
+    (7.2, -1.2) -- (7.2, -4.4) node[midway, right=8pt, font=\scriptsize\color{solver}] {Parallel};
+
+% ==================== PHASE 3: Synthesis ====================
+\node[phase=warning] at (-5.5, -7) {PHASE 3};
+
+\node[agent=synthesizer] (sy) at (0, -7) {\textbf{SYNTHESIZER}\\\scriptsize\color{gray600}Opus};
+
+\draw[signal] (sync.west) -- ++(-1, 0) |- (sy.east);
+\node[siglabel] at (2.75, -6.2) {all\_solutions\_ready};
+
+\node[note] at (5.5, -7) {
+    \textbf{Scoring:}\\
+    Correctness 35\%\\
+    Completeness 25\%\\
+    Elegance 20\%\\
+    Clarity 15\%
+};
+
+% ==================== PHASE 4: Output ====================
+\node[phase=danger] at (-5.5, -9.5) {PHASE 4};
+
+\node[agent=latex] (le) at (0, -9.5) {\textbf{LATEX EDITOR}\\\scriptsize\color{gray600}Sonnet};
+\node[agent=geometry] (gi) at (5.5, -9.5) {\textbf{GEOMETRY}\\\scriptsize\color{gray600}Verified TikZ};
+
+\draw[signal] (sy.south) -- (le.north);
+\node[siglabel] at (-1.2, -8.2) {synthesis\_complete};
+
+\draw[signal, <->] (le.east) -- (gi.west);
+\node[siglabel] at (2.75, -9.2) {illustration};
+
+% PDF Output
+\node[rectangle, rounded corners=8pt, fill=danger, text=white,
+      minimum width=2.2cm, minimum height=0.9cm, font=\small\bfseries]
+      (pdf) at (0, -11.5) {PDF OUTPUT};
+
+\draw[signal] (le.south) -- (pdf.north);
+\node[siglabel] at (-1.2, -10.5) {document\_ready};
+
+% Scribe
+\node[rectangle, rounded corners=5pt, draw=scribe, dashed, fill=scribe!10,
+      minimum width=1.8cm, minimum height=0.7cm, font=\tiny, align=center]
+      (sc) at (-4, -4.5) {SCRIBE\\(Logger)};
+
+\draw[dashed, gray400, ->] (m1.west) -| (sc.north);
+\draw[dashed, gray400, ->] (sy.west) -- (sc.south);
+
+\end{tikzpicture}
+\end{center}
+
+% ============================================================================
+% SECTION 3: AGENT REGISTRY
+% ============================================================================
+\newpage
+\section{Agent Registry}
+
+Math-Team gồm \textbf{11 agents} được tổ chức theo 5 categories:
+
+\begin{center}
+\begin{tikzpicture}[
+    scale=0.9, transform shape,
+    category/.style={
+        rectangle, rounded corners=5pt,
+        minimum width=3cm, minimum height=0.7cm,
+        fill=#1, text=white, font=\small\bfseries
+    },
+    agent/.style={
+        rectangle, rounded corners=8pt,
+        minimum width=2.6cm, minimum height=1.4cm,
+        draw=#1, line width=1.2pt, fill=#1!8,
+        font=\scriptsize, align=center
+    }
+]
+
+% ===== CORE =====
+\node[category=maestro] (c1) at (0, 0) {CORE (2)};
+\node[agent=maestro] at (0, -1.5) {\textbf{math-maestro}\\Opus\\Orchestrator};
+\node[agent=scribe] at (0, -3.3) {\textbf{math-scribe}\\Haiku\\Silent Logger};
+
+% ===== ANALYZERS =====
+\node[category=analyzer] (c2) at (4, 0) {ANALYZERS (1)};
+\node[agent=analyzer] at (4, -1.5) {\textbf{problem-analyzer}\\Sonnet\\Classifier};
+
+% ===== SOLVERS =====
+\node[category=solver] (c3) at (9.5, 0) {SOLVERS (5)};
+\node[agent=solver] at (7.5, -1.5) {\textbf{algebraic}\\Sonnet};
+\node[agent=solver] at (10, -1.5) {\textbf{geometric}\\Sonnet};
+\node[agent=solver] at (12.5, -1.5) {\textbf{calculus}\\Sonnet};
+\node[agent=solver] at (8.2, -3.3) {\textbf{combinatorics}\\Sonnet};
+\node[agent=maestro] at (11, -3.3) {\textbf{number-theory}\\Opus\\Olympic focus};
+
+% ===== OUTPUT =====
+\node[category=synthesizer] (c4) at (0, -5.3) {OUTPUT (2)};
+\node[agent=synthesizer] at (-1, -6.8) {\textbf{math-synthesizer}\\Opus\\Evaluator};
+\node[agent=latex] at (1.5, -6.8) {\textbf{latex-editor}\\Sonnet\\Formatter};
+
+% ===== ILLUSTRATORS =====
+\node[category=geometry] (c5) at (4, -5.3) {ILLUSTRATORS (1)};
+\node[agent=geometry] at (4, -6.8) {\textbf{geometry-illustrator}\\Sonnet\\Verified TikZ};
+
+% Parallel indicator for solvers
+\draw[decorate, decoration={brace, amplitude=10pt, mirror}, thick, solver]
+    (6.8, -4) -- (13.2, -4) node[midway, below=12pt, font=\scriptsize\color{solver}]
+    {Run in Parallel (max 3 concurrent)};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Model Distribution}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{>{\raggedright}p{3.5cm} >{\centering}p{2cm} >{\centering\arraybackslash}p{6cm}}
+\toprule
+\rowcolor{gray100}
+\textbf{Model} & \textbf{Count} & \textbf{Agents} \\
+\midrule
+\textcolor{maestro}{\textbf{Opus}} & 3 & math-maestro, math-synthesizer, number-theory-solver \\
+\textcolor{analyzer}{\textbf{Sonnet}} & 7 & problem-analyzer, 4 solvers, latex-editor, geometry-illustrator \\
+\textcolor{scribe}{\textbf{Haiku}} & 1 & math-scribe (silent logger) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ============================================================================
+% SECTION 4: SIGNAL TYPES
+% ============================================================================
+\newpage
+\section{Signal Types}
+
+Agents giao tiếp qua \textbf{15+ signal types}, được chia thành 4 categories:
+
+\begin{center}
+\begin{tikzpicture}[
+    scale=0.95, transform shape,
+    header/.style={
+        rectangle, rounded corners=5pt,
+        minimum width=4.5cm, minimum height=0.7cm,
+        fill=#1, text=white, font=\small\bfseries
+    },
+    sig/.style={
+        rectangle, rounded corners=4pt,
+        minimum width=4.2cm, minimum height=0.55cm,
+        fill=#1!10, draw=#1!50, font=\scriptsize\ttfamily
+    }
+]
+
+% ===== LIFECYCLE SIGNALS =====
+\node[header=primary] (h1) at (0, 0) {LIFECYCLE (8)};
+\node[sig=primary] at (0, -0.7) {problem\_received};
+\node[sig=primary] at (0, -1.35) {analysis\_complete};
+\node[sig=primary] at (0, -2.0) {solvers\_dispatched};
+\node[sig=primary] at (0, -2.65) {solution\_complete};
+\node[sig=primary] at (0, -3.3) {all\_solutions\_ready};
+\node[sig=primary] at (0, -3.95) {synthesis\_complete};
+\node[sig=primary] at (0, -4.6) {document\_ready};
+\node[sig=primary] at (0, -5.25) {session\_complete};
+
+% ===== ILLUSTRATION SIGNALS =====
+\node[header=secondary] (h2) at (5.5, 0) {ILLUSTRATION (2)};
+\node[sig=secondary] at (5.5, -0.7) {illustration\_requested};
+\node[sig=secondary] at (5.5, -1.35) {illustration\_complete};
+
+% ===== ERROR SIGNALS =====
+\node[header=danger] (h3) at (5.5, -2.5) {ERROR (4)};
+\node[sig=danger] at (5.5, -3.2) {analysis\_failed};
+\node[sig=danger] at (5.5, -3.85) {solver\_failed};
+\node[sig=danger] at (5.5, -4.5) {compilation\_failed};
+\node[sig=danger] at (5.5, -5.15) {geometry\_verification\_failed};
+
+% ===== CONTROL SIGNAL =====
+\node[header=warning] (h4) at (11, 0) {CONTROL (1)};
+\node[sig=warning] at (11, -0.7) {user\_interrupt};
+
+% Signal structure box
+\node[rectangle, rounded corners=8pt, draw=gray400, fill=gray100,
+      minimum width=4.5cm, text width=4.2cm, font=\scriptsize, align=left,
+      inner sep=8pt] at (11, -3.2) {
+    \textbf{\color{dark}Signal Structure:}\\[5pt]
+    \texttt{id}: sig-\{uuid\}\\
+    \texttt{type}: signal\_type\\
+    \texttt{timestamp}: ISO-8601\\
+    \texttt{session\_id}: uuid\\
+    \texttt{emitter}: agent\_id\\
+    \texttt{payload}: \{...\}
+};
+
+\end{tikzpicture}
+\end{center}
+
+% ============================================================================
+% SECTION 5: DIFFICULTY PRESETS
+% ============================================================================
+\newpage
+\section{Difficulty Presets}
+
+Math-Team hỗ trợ 4 mức độ khó, từ bài tập THPT đến Olympic quốc tế:
+
+\vspace{1cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    preset/.style={
+        rectangle, rounded corners=12pt,
+        minimum width=3.5cm, minimum height=5cm,
+        draw=#1, line width=2pt, fill=#1!8,
+        font=\normalsize, align=center
+    },
+    arr/.style={-{Stealth[length=4mm]}, very thick, gray400}
+]
+
+% THPT
+\node[preset=success] (p1) at (0, 0) {
+    \textbf{\LARGE\color{success}THPT}\\[5pt]
+    \color{gray600}\small High School\\[12pt]
+    \begin{tabular}{rl}
+    \scriptsize\color{gray600}Approaches: & \scriptsize\color{dark}2\\[3pt]
+    \scriptsize\color{gray600}Timeout: & \scriptsize\color{dark}60s\\[3pt]
+    \scriptsize\color{gray600}Model: & \scriptsize\color{dark}Sonnet\\
+    \end{tabular}\\[12pt]
+    \scriptsize\color{gray600}algebraic\\
+    \scriptsize\color{gray600}geometric
+};
+
+% University
+\node[preset=info] (p2) at (4.2, 0) {
+    \textbf{\LARGE\color{info}UNIV}\\[5pt]
+    \color{gray600}\small Entrance Exams\\[12pt]
+    \begin{tabular}{rl}
+    \scriptsize\color{gray600}Approaches: & \scriptsize\color{dark}3\\[3pt]
+    \scriptsize\color{gray600}Timeout: & \scriptsize\color{dark}120s\\[3pt]
+    \scriptsize\color{gray600}Model: & \scriptsize\color{dark}Sonnet\\
+    \end{tabular}\\[12pt]
+    \scriptsize\color{gray600}calculus\\
+    \scriptsize\color{gray600}algebraic
+};
+
+% Competition
+\node[preset=warning] (p3) at (8.4, 0) {
+    \textbf{\LARGE\color{warning}HSG}\\[5pt]
+    \color{gray600}\small Competition\\[12pt]
+    \begin{tabular}{rl}
+    \scriptsize\color{gray600}Approaches: & \scriptsize\color{dark}3\\[3pt]
+    \scriptsize\color{gray600}Timeout: & \scriptsize\color{dark}180s\\[3pt]
+    \scriptsize\color{gray600}Model: & \scriptsize\color{dark}Sonnet\\[3pt]
+    \scriptsize\color{gray600}Extra: & \scriptsize\color{dark}knowledge+\\
+    \end{tabular}\\[8pt]
+    \scriptsize\color{gray600}combinatorics
+};
+
+% Olympiad
+\node[preset=danger] (p4) at (12.6, 0) {
+    \textbf{\LARGE\color{danger}IMO}\\[5pt]
+    \color{gray600}\small Olympiad\\[12pt]
+    \begin{tabular}{rl}
+    \scriptsize\color{gray600}Approaches: & \scriptsize\color{dark}2\\[3pt]
+    \scriptsize\color{gray600}Timeout: & \scriptsize\color{dark}300s\\[3pt]
+    \scriptsize\color{gray600}Model: & \scriptsize\color{dark}\textbf{Opus}\\[3pt]
+    \scriptsize\color{gray600}Extra: & \scriptsize\color{dark}deep\_think\\
+    \end{tabular}\\[8pt]
+    \scriptsize\color{gray600}number-theory
+};
+
+% Arrows
+\draw[arr] (p1) -- (p2);
+\draw[arr] (p2) -- (p3);
+\draw[arr] (p3) -- (p4);
+
+% Difficulty label
+\node[font=\small\color{gray400}] at (6.3, -3.5) {Increasing Difficulty $\longrightarrow$};
+
+\end{tikzpicture}
+\end{center}
+
+% ============================================================================
+% SECTION 6: VERIFIED GEOMETRY SYSTEM
+% ============================================================================
+\newpage
+\section{Verified Geometry System}
+
+Geometry Illustrator sử dụng hệ thống verification đảm bảo mọi hình vẽ đều chính xác toán học:
+
+\vspace{0.8cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    step/.style={
+        rectangle, rounded corners=10pt,
+        minimum width=4.5cm, minimum height=4.8cm,
+        draw=#1, line width=2pt, fill=#1!8,
+        font=\small, align=center
+    },
+    arr/.style={-{Stealth[length=5mm]}, very thick, #1}
+]
+
+% Step 1
+\node[step=primary] (s1) at (0, 0) {
+    \textbf{\large\color{primary}1. CONSTRUCT}\\[8pt]
+    \color{gray600}\small
+    \texttt{circumcircle()}\\[2pt]
+    \texttt{orthocenter()}\\[2pt]
+    \texttt{altitude\_feet()}\\[2pt]
+    \texttt{nine\_point\_circle()}
+};
+
+% Step 2
+\node[step=success] (s2) at (5.5, 0) {
+    \textbf{\large\color{success}2. VERIFY}\\[4pt]
+    \color{gray600}\small tol = $10^{-10}$\\[6pt]
+    \color{dark}\small
+    $\checkmark$ Points on circles\\[2pt]
+    $\checkmark$ Perpendicularity\\[2pt]
+    $\checkmark$ Collinearity\\[2pt]
+    $\checkmark$ Intersections
+};
+
+% Step 3
+\node[step=secondary] (s3) at (11, 0) {
+    \textbf{\large\color{secondary}3. GENERATE}\\[8pt]
+    \color{gray600}\small
+    \texttt{tikzpicture}\\[2pt]
+    \texttt{VERIFIED coords}\\[2pt]
+    \texttt{draw circles}\\[2pt]
+    \texttt{label points}
+};
+
+% Arrows
+\draw[arr=gray400] (s1) -- (s2);
+\draw[arr=gray400] (s2) -- (s3);
+
+% Verification badge
+\node[circle, draw=success, line width=2pt, fill=success!20,
+      minimum size=1.6cm, font=\small\bfseries\color{success}]
+      (badge) at (5.5, -3.5) {PASS};
+
+% Output
+\node[rectangle, rounded corners=8pt, fill=secondary, text=white,
+      minimum width=3cm, minimum height=0.9cm, font=\small\bfseries]
+      (out) at (11, -3.5) {VERIFIED TikZ};
+
+\draw[arr=success, dashed] (badge) -- (out);
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.8cm}
+
+\subsection{Verification Principle}
+
+\begin{center}
+\fcolorbox{danger}{danger!10}{
+\begin{minipage}{0.9\textwidth}
+\centering
+\textbf{\Large\color{danger}CONSTRAINT SATISFACTION > COORDINATE ASSIGNMENT}\\[12pt]
+\color{dark}\normalsize
+Mỗi điểm phải thỏa mãn \textbf{tất cả} ràng buộc hình học, không chỉ được gán tọa độ ngẫu nhiên.\\[8pt]
+\color{gray600}\small
+Example: Orthocenter H must lie on ALL three altitudes simultaneously.
+\end{minipage}
+}
+\end{center}
+
+% ============================================================================
+% SECTION 7: ERROR HANDLING
+% ============================================================================
+\newpage
+\section{Error Handling}
+
+Math-Team áp dụng nguyên tắc \textbf{Graceful Degradation} - hệ thống tiếp tục hoạt động ngay cả khi một số thành phần gặp lỗi:
+
+\vspace{0.8cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{>{\raggedright}p{4.5cm} >{\raggedright\arraybackslash}p{8.5cm}}
+\toprule
+\rowcolor{gray100}
+\textbf{Error Type} & \textbf{Recovery Action} \\
+\midrule
+\textcolor{danger}{\textbf{Analysis timeout}} (60s) & Notify user, offer manual problem classification \\
+\textcolor{danger}{\textbf{Single solver timeout}} & Continue with other solvers (minimum 1 solution required) \\
+\textcolor{danger}{\textbf{All solvers fail}} & Escalate to user, suggest alternative approaches \\
+\textcolor{danger}{\textbf{Conflicting answers}} & Synthesizer verifies mathematically, selects correct one \\
+\textcolor{danger}{\textbf{LaTeX compile failure}} & Retry with LuaLaTeX fallback engine \\
+\textcolor{danger}{\textbf{Geometry verification fail}} & Skip figure, continue with text-only solution \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+\fcolorbox{warning}{warning!10}{
+\begin{minipage}{0.9\textwidth}
+\centering
+\textbf{\Large\color{warning}Key Resilience Principles}\\[12pt]
+\color{dark}\normalsize
+\textbf{1.} Partial completion acceptable (minimum 1 solution)\\[6pt]
+\textbf{2.} All error signals logged by math-scribe for debugging\\[6pt]
+\textbf{3.} User can interrupt and modify at any checkpoint
+\end{minipage}
+}
+\end{center}
+
+% ============================================================================
+% BACK COVER - SUMMARY
+% ============================================================================
+\newpage
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[gray100] (current page.south west) rectangle (current page.north east);
+    \fill[primary] (current page.north west) rectangle ([yshift=-4cm]current page.north east);
+\end{tikzpicture}
+
+\vspace*{1cm}
+
+\begin{center}
+{\fontsize{32}{40}\selectfont\bfseries\color{white} Summary}
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={
+        rectangle, rounded corners=12pt,
+        minimum width=6cm, minimum height=2cm,
+        draw=none, fill=white,
+        drop shadow={shadow xshift=2pt, shadow yshift=-2pt, opacity=0.3},
+        font=\normalsize, align=center
+    }
+]
+
+\node[box] (b1) at (0, 0) {\textbf{\color{maestro}11 Agents}\\[5pt]\color{gray600}5 categories, specialized roles};
+\node[box] (b2) at (7, 0) {\textbf{\color{secondary}15+ Signals}\\[5pt]\color{gray600}Decoupled communication};
+\node[box] (b3) at (0, -3) {\textbf{\color{solver}Parallel Solving}\\[5pt]\color{gray600}Max 3 concurrent solvers};
+\node[box] (b4) at (7, -3) {\textbf{\color{geometry}Verified Geometry}\\[5pt]\color{gray600}Tolerance = $10^{-10}$};
+\node[box] (b5) at (0, -6) {\textbf{\color{warning}4 Difficulty Levels}\\[5pt]\color{gray600}THPT $\rightarrow$ Olympiad};
+\node[box] (b6) at (7, -6) {\textbf{\color{latex}3 Output Styles}\\[5pt]\color{gray600}Detailed, Concise, Olympiad};
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle, rounded corners=15pt, fill=white,
+      minimum width=14cm, minimum height=2cm,
+      drop shadow={shadow xshift=2pt, shadow yshift=-2pt, opacity=0.3}] {
+    \color{gray600}\large
+    USER $\rightarrow$ \textcolor{maestro}{\textbf{MAESTRO}} $\rightarrow$
+    \textcolor{analyzer}{\textbf{ANALYZER}} $\rightarrow$
+    \textcolor{solver}{\textbf{SOLVERS}} $\rightarrow$
+    \textcolor{synthesizer}{\textbf{SYNTH}} $\rightarrow$
+    \textcolor{latex}{\textbf{LATEX}} $\rightarrow$
+    \textcolor{danger}{\textbf{PDF}}
+};
+\end{tikzpicture}
+\end{center}
+
+\vfill
+
+\begin{center}
+\color{gray400}
+\textbf{Math-Team} | MicroAI Framework | Signal-Based Multi-Agent System\\[5pt]
+\small Version 2.0 | \today
+\end{center}
+
+\end{document}

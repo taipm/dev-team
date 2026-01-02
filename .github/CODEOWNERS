@@ -1,0 +1,30 @@
+# CODEOWNERS - Define code ownership for review requirements
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# =============================================================================
+# Default Owner
+# =============================================================================
+# @taipm will be requested for review on all PRs
+
+*                       @taipm
+
+# =============================================================================
+# Critical Files (Always require review)
+# =============================================================================
+
+# GitHub configuration
+/.github/               @taipm
+
+# Security-related files
+/SECURITY.md            @taipm
+/.pre-commit-config.yaml @taipm
+
+# MicroAI Agent System
+/.microai/              @taipm
+
+# =============================================================================
+# Documentation
+# =============================================================================
+
+/docs/                  @taipm
+*.md                    @taipm

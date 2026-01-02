@@ -1,0 +1,128 @@
+% Math Team - Olympiad Solution Template (Competition Style)
+% Vietnamese support via XeLaTeX
+
+\documentclass[11pt,a4paper]{article}
+
+% XeLaTeX Vietnamese support
+\usepackage{fontspec}
+\usepackage[vietnamese]{babel}
+\setmainfont{Times New Roman}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Graphics
+\usepackage{tikz}
+
+% Layout
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+% Colors
+\definecolor{trickcolor}{RGB}{0, 100, 180}
+\definecolor{notecolor}{RGB}{180, 100, 0}
+
+% Custom boxes
+\newtcolorbox{trickbox}{
+    colback=trickcolor!10,
+    colframe=trickcolor,
+    title={\textbf{Trick quan trọng}},
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{notebox}{
+    colback=notecolor!10,
+    colframe=notecolor,
+    title={\textbf{Lưu ý}},
+    fonttitle=\bfseries
+}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{{\small Độ khó: {{DIFFICULTY}}}}
+\lhead{{\small {{PROBLEM_TYPE}}}}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    {\Large\bfseries {{PROBLEM_TITLE}}}\\[0.3em]
+    {\small Nguồn: {{SOURCE}} | Thời gian ước lượng: {{ESTIMATED_TIME}}}
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+%% PROBLEM
+\noindent\textbf{Đề bài.}
+{{PROBLEM_TEXT}}
+
+\vspace{1em}
+
+%% APPROACH
+\begin{trickbox}
+\textbf{Hướng tiếp cận:} {{MAIN_TECHNIQUE}}
+
+\textbf{Key insight:} {{KEY_INSIGHT}}
+\end{trickbox}
+
+\vspace{1em}
+
+%% SOLUTION
+\noindent\textbf{Lời giải.}
+
+{{FOR_EACH_STEP}}
+\textbf{{{STEP_NUMBER}}.} {{STEP_CONTENT}}
+
+{{IF_IS_KEY_STEP}}
+{\color{trickcolor}\textit{[Bước quan trọng: {{KEY_STEP_NOTE}}]}}
+{{END_IF}}
+
+{{END_FOR_EACH}}
+
+\vspace{1em}
+
+%% ANSWER
+\noindent\textbf{Đáp số.}
+\[
+\boxed{{{FINAL_ANSWER}}}
+\]
+
+\vspace{1em}
+
+%% COMMENTARY
+\section*{Bình luận}
+
+\begin{notebox}
+\begin{itemize}
+    \item \textbf{Kỹ thuật sử dụng:} {{TECHNIQUES_USED}}
+    \item \textbf{Độ khó thực tế:} {{ACTUAL_DIFFICULTY}}
+    \item \textbf{Dạng tương tự:} {{SIMILAR_PROBLEMS}}
+\end{itemize}
+\end{notebox}
+
+{{IF_ALTERNATIVE_APPROACHES}}
+\subsection*{Cách giải khác}
+{{FOR_EACH_ALTERNATIVE}}
+\textbf{Cách {{ALT_NUMBER}}:} {{ALT_APPROACH}}
+
+{{ALT_BRIEF_SOLUTION}}
+
+{{END_FOR_EACH}}
+{{END_IF}}
+
+\subsection*{Mở rộng}
+{{GENERALIZATION}}
+
+\vfill
+\begin{center}
+    {\small Math Team --- Competition Problem Solving}
+\end{center}
+
+\end{document}

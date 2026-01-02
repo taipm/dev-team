@@ -1,0 +1,313 @@
+# Create Team Workflow v2.0
+# Father Agent - Team Creation Process with Schema Validation
+
+workflow:
+  name: create-team
+  version: "2.0"
+  description: Tạo team mới với multi-agent collaboration theo schema chuẩn
+
+schemas:
+  team: "../../schemas/team-v1.0.schema.yaml"
+  agent: "../../schemas/team-agent.schema.yaml"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 1: UNDERSTAND
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: understand
+    name: "Understand Team Purpose"
+    actions:
+      - ask: |
+          Để tạo team mới, tôi cần hiểu:
+
+          1. **Team Name**: Tên team (kebab-case, e.g., `python-team`, `go-team`)
+          2. **Domain**: Lĩnh vực (e.g., Python, Go, Security, Research)
+          3. **Team Type**: Loại team
+          4. **Complexity**: Mức độ đầy đủ
+
+          ### Loại team có sẵn:
+
+          | Type | Description | Example |
+          |------|-------------|---------|
+          | **pipeline** | Multi-step development workflow | go-team, python-team |
+          | **dialogue** | 2 agents đối thoại | dev-qa, pm-dev |
+          | **thinking** | Collaborative analysis | deep-thinking-team |
+
+          ### Complexity levels:
+
+          | Level | Features |
+          |-------|----------|
+          | **full** | Checkpoint, Communication, Kanban, Autonomous, Parallel |
+          | **standard** | Checkpoint, Communication, Kanban |
+          | **minimal** | Basic workflow only |
+
+      - collect:
+          - team_name: "Tên team (kebab-case)"
+          - team_domain: "Domain/lĩnh vực"
+          - team_type: "pipeline | dialogue | thinking"
+          - team_complexity: "full | standard | minimal"
+          - num_agents: "Số lượng agents (2-12)"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 2: DESIGN
+# ════════════════════════════════════════════════════════════════════
+  - id: design
+    name: "Design Team Structure"
+    actions:
+      - check_overlap: |
+          1. Scan .microai/teams/ cho existing teams
+          2. Nếu trùng tên → Error
+          3. Nếu overlap purpose → Đề xuất extend thay vì create mới
+
+      - design_agents: |
+          Với mỗi agent cần:
+          1. **Role**: Vai trò cụ thể trong team
+          2. **Icon**: Emoji đại diện
+          3. **Color**: Màu sắc (từ palette chuẩn)
+          4. **Tools**: Danh sách tools cần thiết
+          5. **Knowledge**: Shared + specific knowledge
+          6. **Communication**: Topics subscribe/publish
+          7. **Outputs**: Deliverables của agent
+
+          Agent phải tuân theo schema: team-agent.schema.yaml
+
+      - design_workflow: |
+          Thiết kế workflow.md với:
+          1. Frontmatter đầy đủ theo team-v1.0.schema.yaml
+          2. Team members table với icon, focus
+          3. Workflow architecture diagram
+          4. Observer controls
+          5. Error handling
+          6. Exit conditions
+
+      - confirm: |
+          Hiển thị team design:
+
+          ```
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  TEAM DESIGN: {team_name}                                      ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Type: {team_type}                                             ║
+          ║  Domain: {domain}                                              ║
+          ║  Complexity: {complexity}                                      ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Agents ({num}):                                               ║
+          ║  {icon} {role} - {focus}                                       ║
+          ║  ...                                                           ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Features:                                                     ║
+          ║  [✓] Checkpoint    [✓] Communication    [✓] Kanban            ║
+          ║  [?] Autonomous    [?] Parallel                               ║
+          ╚═══════════════════════════════════════════════════════════════╝
+          ```
+
+          Confirm trước khi tạo?
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 3: CREATE STRUCTURE
+# ════════════════════════════════════════════════════════════════════
+  - id: create_structure
+    name: "Create Team Directory"
+    actions:
+      - create_directories: |
+          Tạo cấu trúc theo schema:
+
+          .microai/teams/{team_name}/
+          ├── workflow.md              # Main workflow (REQUIRED)
+          ├── agents/                  # Agent definitions (REQUIRED)
+          ├── steps/                   # Workflow steps (REQUIRED)
+          ├── knowledge/               # Team knowledge (REQUIRED)
+          │   ├── knowledge-index.yaml
+          │   ├── shared/
+          │   └── {role}/
+          ├── memory/                  # Team memory (RECOMMENDED)
+          ├── templates/               # Output templates (RECOMMENDED)
+          ├── checkpoints/             # If checkpoint enabled
+          ├── communication/           # If communication enabled
+          ├── kanban/                  # If kanban enabled
+          └── logs/                    # Session logs (REQUIRED)
+
+      - create_workflow_md: |
+          Tạo workflow.md theo template:
+          - Load knowledge/12-team-workflow-template.md
+          - Select template based on team_type (pipeline/dialogue)
+          - Fill in team-specific values
+          - Add full frontmatter nếu complexity = full
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: CREATE AGENTS
+# ════════════════════════════════════════════════════════════════════
+  - id: create_agents
+    name: "Create Team Agents"
+    actions:
+      - foreach_agent: |
+          Với mỗi agent:
+          1. Load knowledge/13-team-agent-template.md
+          2. Fill in frontmatter theo schema:
+             - name: {role}-agent
+             - description: ≥20 chars
+             - model: opus
+             - color: {color}
+             - icon: "{emoji}"
+             - tools: [...]
+             - knowledge: { shared: [...], specific: [...] }
+             - communication: { subscribes: [...], publishes: [...] }
+             - outputs: [...]
+          3. Write content sections:
+             - Persona
+             - Core Responsibilities
+             - System Prompt
+             - In Dialogue
+             - Output Templates
+          4. Save to agents/{role}-agent.md
+
+      - create_knowledge_files: |
+          Tạo knowledge cho team:
+          - knowledge/shared/{domain}-fundamentals.md
+          - knowledge/{role}/{role}-patterns.md (cho mỗi role)
+          - knowledge/knowledge-index.yaml
+
+      - validate_agents: |
+          Với mỗi agent file:
+          - Check frontmatter có required fields
+          - Check name matches filename
+          - Check description ≥ 20 chars
+          - Check có Persona và Core Responsibilities sections
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 5: CREATE STEPS
+# ════════════════════════════════════════════════════════════════════
+  - id: create_steps
+    name: "Create Workflow Steps"
+    actions:
+      - create_standard_steps: |
+          Load knowledge/14-team-step-template.md
+
+          Tạo steps theo team_type:
+
+          **Pipeline (8 steps):**
+          - step-01-init.md
+          - step-02-{phase1}.md
+          - step-03-{phase2}.md
+          - step-04-{phase3}.md
+          - step-05-{phase4}.md
+          - step-06-review-loop.md
+          - step-07-{final-phase}.md
+          - step-08-synthesis.md
+
+          **Dialogue (5 steps):**
+          - step-01-session-init.md
+          - step-02-presentation.md
+          - step-03-dialogue-loop.md
+          - step-04-synthesis.md
+          - step-05-close.md
+
+      - create_templates: |
+          Tạo output templates tại templates/:
+          - {primary-output}-template.md
+          - session-summary-template.md
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 6: VALIDATE & REGISTER
+# ════════════════════════════════════════════════════════════════════
+  - id: validate
+    name: "Validate & Register"
+    actions:
+      - validate_structure: |
+          Run validation:
+
+          1. **Workflow validation:**
+             - Frontmatter has required fields
+             - Color is hex format
+             - Team members table exists
+             - Workflow diagram exists
+
+          2. **Agent validation:**
+             - All agents have valid frontmatter
+             - name matches filename
+             - Required sections present
+
+          3. **Step validation:**
+             - step-01 exists
+             - Final step exists
+             - Step numbering sequential
+
+          4. **Knowledge validation:**
+             - knowledge-index.yaml exists
+             - Referenced files exist
+
+      - create_command: |
+          Load knowledge/15-team-command-template.md
+
+          Tạo command tại:
+          1. .microai/commands/{team_name}-session.md
+          2. Copy to .claude/commands/microai/{team_name}-session.md
+
+      - summary: |
+          Hiển thị summary:
+
+          ```
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  ✅ TEAM CREATED: {team_name}                                  ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Structure:                                                    ║
+          ║  ├── workflow.md                                              ║
+          ║  ├── agents/ ({num} agents)                                   ║
+          ║  ├── steps/ ({num} steps)                                     ║
+          ║  ├── knowledge/                                               ║
+          ║  └── ...                                                      ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Validation: PASSED                                            ║
+          ║  Command: /microai:{team_name}-session                        ║
+          ╚═══════════════════════════════════════════════════════════════╝
+          ```
+
+# ════════════════════════════════════════════════════════════════════
+# TEMPLATES REFERENCE
+# ════════════════════════════════════════════════════════════════════
+templates:
+  team_workflow: "./knowledge/12-team-workflow-template.md"
+  team_agent: "./knowledge/13-team-agent-template.md"
+  team_step: "./knowledge/14-team-step-template.md"
+  session_command: "./knowledge/15-team-command-template.md"
+
+# ════════════════════════════════════════════════════════════════════
+# VALIDATION CHECKLIST
+# ════════════════════════════════════════════════════════════════════
+validation_checklist:
+  workflow:
+    - "Frontmatter có: name, description, model, tools"
+    - "color là hex format (#XXXXXX)"
+    - "checkpoint config đầy đủ nếu enabled"
+    - "communication topics phù hợp"
+    - "Team members table có icon và focus"
+    - "Workflow diagram với breakpoints"
+    - "Observer controls section"
+
+  agents:
+    - "Frontmatter có: name, description, model, tools"
+    - "name matches filename"
+    - "description ≥ 20 characters"
+    - "Có Persona section"
+    - "Có Core Responsibilities section"
+    - "Có System Prompt section"
+    - "knowledge paths relative và tồn tại"
+
+  steps:
+    - "step-01-init.md exists"
+    - "Final step (synthesis/close) exists"
+    - "Step numbering sequential"
+    - "Each step has trigger và actions"
+
+# ════════════════════════════════════════════════════════════════════
+# SIGNALS
+# ════════════════════════════════════════════════════════════════════
+signals:
+  on_complete:
+    - team_created
+    - agents_created
+    - workflow_ready
+    - command_registered
+  on_error:
+    - team_creation_failed
+    - validation_failed

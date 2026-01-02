@@ -1,0 +1,79 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of go coverage
+*.out
+
+# Go workspace
+go.work
+go.work.sum
+
+# Dependency directories
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# Environment variables - CRITICAL
+.env
+.env.local
+.env.*.local
+.envrc
+
+# Secrets - CRITICAL
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+private/
+.secrets/
+
+# API keys and tokens
+*.token
+api_keys.json
+service-account*.json
+
+# Configuration with secrets
+config.local.*
+*.local.yaml
+*.local.json
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build output
+bin/
+dist/
+build/
+out/
+
+# Debug
+debug/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp

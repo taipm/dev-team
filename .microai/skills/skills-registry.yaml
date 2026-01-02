@@ -23,6 +23,10 @@ categories:
     description: "Enterprise writing and communications"
     description_vi: "Viết và giao tiếp doanh nghiệp"
 
+  system-skills:
+    description: "System maintenance and optimization"
+    description_vi: "Bảo trì và tối ưu hệ thống"
+
 skills:
   # Document Skills
   - name: docx
@@ -90,6 +94,35 @@ skills:
     tags: [development, react, frontend, artifacts]
     license: apache-2.0
 
+  - name: math-compute
+    category: development-skills
+    path: development-skills/math-compute
+    version: "1.0.0"
+    description: "Mathematical calculations with SymPy, NumPy, and LaTeX output. Solve equations, derivatives, integrals, matrix operations"
+    description_vi: "Tính toán toán học với SymPy, NumPy và LaTeX. Giải phương trình, đạo hàm, tích phân, ma trận"
+    tags: [math, calculate, sympy, numpy, latex, equation, derivative, integral, matrix, algebra, calculus, statistics]
+    license: apache-2.0
+    created: "2026-01-02"
+
+  - name: github-setup
+    category: development-skills
+    path: development-skills/github-setup
+    version: "1.0.0"
+    description: "GitHub repository setup and security audit. Initialize repos with security best practices, generate .gitignore, CI/CD workflows, CODEOWNERS, dependabot, SECURITY.md, pre-commit hooks, branch protection"
+    tags: [github, security, setup, audit, ci, cd, gitignore, codeowners, dependabot, pre-commit, branch-protection]
+    license: apache-2.0
+    created: "2026-01-02"
+
+  - name: git-push
+    category: development-skills
+    path: development-skills/git-push
+    version: "1.0.0"
+    description: "Safe git workflow with integrated security checks. Runs pre-commit hooks and secret scanning before git add, commit, push. Blocks push when security issues detected"
+    description_vi: "Git workflow an toan voi kiem tra bao mat tich hop. Chay pre-commit hooks va quet secrets truoc khi add, commit, push. Chan push khi phat hien van de bao mat"
+    tags: [git, push, commit, add, security, pre-commit, secret-detection, gitleaks, workflow, git-check]
+    license: apache-2.0
+    created: "2026-01-02"
+
   # Design Skills
   - name: algorithmic-art
     category: design-skills
@@ -147,3 +180,34 @@ skills:
     description_vi: "Tạo GIFs động tối ưu cho Slack"
     tags: [communication, slack, gif, animation]
     license: apache-2.0
+
+  - name: latex-math
+    category: document-skills
+    path: document-skills/latex-math
+    version: "1.1.0"
+    description: "LaTeX math solution generator with XeLaTeX compilation and TikZ diagrams"
+    description_vi: "Tạo lời giải toán LaTeX với compile PDF tự động và TikZ diagrams"
+    tags: [document, latex, math, pdf, xelatex, tikz, vietnamese, olympiad]
+    license: apache-2.0
+    created: "2026-01-02"
+
+  - name: animated-math
+    category: document-skills
+    path: document-skills/animated-math
+    version: "1.0.0"
+    description: "Create animated math graphs with Manim, export YouTube-ready videos (1080p, 4K) and Shorts (9:16)"
+    description_vi: "Tạo đồ thị toán học động với Manim, xuất video chuẩn YouTube (1080p, 4K) và Shorts (9:16)"
+    tags: [manim, animation, math, video, youtube, shorts, graph, visualization, 3b1b]
+    license: apache-2.0
+    created: "2026-01-02"
+
+  # System Skills
+  - name: macos-cleanup
+    category: system-skills
+    path: system-skills/macos-cleanup
+    version: "1.0.0"
+    description: "Free up disk space on macOS, clean caches, node_modules, Docker, Xcode"
+    description_vi: "Giải phóng dung lượng ổ đĩa macOS, dọn cache, node_modules, Docker, Xcode"
+    tags: [system, cleanup, macos, disk, cache, storage, node_modules, docker, xcode, brew]
+    license: apache-2.0
+    created: "2026-01-02"

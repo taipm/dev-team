@@ -1,0 +1,253 @@
+# YouTube Team Knowledge Index
+# Version: 2.0
+# Last Updated: 2026-01-02
+
+overview:
+  description: "Knowledge base cho YouTube Team - Manim animation cho video toán học"
+  total_files: 8
+  categories:
+    - style_guides     # Hướng dẫn phong cách
+    - manim_core       # Kỹ thuật Manim cốt lõi
+    - geometry         # Tính toán hình học
+    - animation        # Animation và timing
+    - templates        # Templates sẵn có
+
+files:
+  # === STYLE GUIDES ===
+  - id: 3b1b-style
+    file: 3b1b-style-guide.md
+    category: style_guides
+    priority: 1
+    description: "Hướng dẫn phong cách 3Blue1Brown cho video toán học"
+    topics:
+      - color_palette
+      - typography
+      - visual_hierarchy
+      - narrative_structure
+      - camera_work
+    when_to_use:
+      - "Khi tạo script cho video"
+      - "Khi thiết kế visual style"
+      - "Khi review chất lượng video"
+
+  - id: video-storytelling
+    file: video-storytelling.md
+    category: style_guides
+    priority: 2
+    description: "Kỹ thuật kể chuyện trong video toán học"
+    topics:
+      - narrative_arc
+      - hook_techniques
+      - revelation_moments
+      - pacing
+    when_to_use:
+      - "Khi viết script"
+      - "Khi plan video structure"
+
+  # === MANIM CORE ===
+  - id: manim-patterns
+    file: manim-patterns.md
+    category: manim_core
+    priority: 1
+    description: "Các patterns cơ bản trong Manim"
+    topics:
+      - scene_structure
+      - mobject_basics
+      - animation_types
+      - text_and_math
+    when_to_use:
+      - "Khi bắt đầu viết scene"
+      - "Khi cần reference nhanh"
+
+  - id: coordinate-systems
+    file: coordinate-systems.md
+    category: manim_core
+    priority: 2
+    description: "Hệ tọa độ và positioning trong Manim"
+    topics:
+      - frame_coordinates
+      - positioning_methods
+      - relative_placement
+      - camera_movement
+      - vgroup_arrangement
+    when_to_use:
+      - "Khi cần đặt vị trí chính xác"
+      - "Khi làm việc với labels"
+      - "Khi cần responsive layout"
+
+  - id: object-relationships
+    file: object-relationships.md
+    category: manim_core
+    priority: 2
+    description: "Quan hệ động giữa các đối tượng"
+    topics:
+      - updaters
+      - always_redraw
+      - value_tracker
+      - dynamic_geometry
+      - constraint_relationships
+    when_to_use:
+      - "Khi cần đối tượng tự động cập nhật"
+      - "Khi làm animation động"
+      - "Khi vẽ hình học tương tác"
+
+  - id: advanced-manim
+    file: advanced-manim-techniques.md
+    category: manim_core
+    priority: 3
+    description: "Kỹ thuật Manim nâng cao"
+    topics:
+      - custom_mobjects
+      - shader_effects
+      - 3d_scenes
+      - performance_optimization
+    when_to_use:
+      - "Khi cần hiệu ứng đặc biệt"
+      - "Khi tối ưu hóa render"
+
+  # === GEOMETRY ===
+  - id: geometry-calculations
+    file: geometry-calculations.md
+    category: geometry
+    priority: 1
+    description: "Công thức tính toán hình học"
+    topics:
+      - triangle_centers    # centroid, circumcenter, incenter, orthocenter
+      - altitude_foot
+      - nine_point_circle
+      - line_intersections
+      - circle_intersections
+      - angle_calculations
+      - transformations
+    when_to_use:
+      - "Khi vẽ tam giác với các điểm đặc biệt"
+      - "Khi tính toán giao điểm"
+      - "Khi cần verify hình học"
+    formulas:
+      circumcenter: "Giao 3 đường trung trực"
+      incenter: "(aA + bB + cC) / (a + b + c)"
+      orthocenter: "A + B + C - 2O"
+      nine_point_center: "(O + H) / 2"
+
+  # === ANIMATION ===
+  - id: animation-timing
+    file: animation-timing.md
+    category: animation
+    priority: 1
+    description: "Timing và pacing cho animation"
+    topics:
+      - rate_functions
+      - run_time_guidelines
+      - wait_patterns
+      - lag_ratio
+      - succession
+      - choreography
+    when_to_use:
+      - "Khi điều chỉnh tốc độ animation"
+      - "Khi cần dramatic effect"
+      - "Khi sync với narration"
+    guidelines:
+      fast_action: "0.3-0.5s"
+      normal: "1.0s"
+      emphasis: "1.5-2s"
+      revelation: "2-3s"
+
+  # === TEMPLATES ===
+  - id: advanced-templates
+    file: advanced-templates.md
+    category: templates
+    priority: 1
+    description: "Templates sẵn có cho các loại video"
+    templates:
+      - TriangleTheorem     # Định lý tam giác
+      - CircleTheorem       # Định lý đường tròn
+      - FunctionTemplate    # Đồ thị hàm số
+      - ProofTemplate       # Chứng minh từng bước
+      - VideoIntro          # Intro video
+      - VideoOutro          # Outro video
+    when_to_use:
+      - "Khi bắt đầu scene mới"
+      - "Khi cần reusable code"
+      - "Khi làm series video"
+
+# === QUICK REFERENCE ===
+quick_reference:
+  positioning:
+    - "move_to(point): Di chuyển tâm đến point"
+    - "next_to(obj, direction, buff): Đặt cạnh đối tượng"
+    - "to_edge(direction, buff): Đến cạnh màn hình"
+    - "to_corner(corner, buff): Đến góc màn hình"
+
+  geometry_helpers:
+    - "centroid(A, B, C): Trọng tâm"
+    - "circumcenter(A, B, C): Tâm ngoại tiếp"
+    - "incenter(A, B, C): Tâm nội tiếp"
+    - "orthocenter(A, B, C): Trực tâm"
+    - "perpendicular_foot(P, A, B): Chân đường vuông góc"
+
+  updater_patterns:
+    - "obj.add_updater(lambda m: m.next_to(...)): Label theo đối tượng"
+    - "always_redraw(lambda: Line(...)): Đường nối 2 điểm động"
+    - "ValueTracker + add_updater: Animate giá trị"
+
+  rate_functions:
+    - "smooth: Chậm đầu cuối (default)"
+    - "linear: Tốc độ đều"
+    - "rush_into: Chậm đầu, nhanh cuối"
+    - "rush_from: Nhanh đầu, chậm cuối"
+    - "there_and_back: Đi rồi về"
+
+  common_colors:
+    - "ANGLE_RED: #FF6B6B"
+    - "ANGLE_BLUE: #4ECDC4"
+    - "ANGLE_YELLOW: #FFE66D"
+    - "MATH_BLUE: #1C758A"
+    - "HIGHLIGHT: #FFFF00"
+
+# === DEPENDENCY GRAPH ===
+dependencies:
+  manim-patterns:
+    requires: []
+    enhances: [coordinate-systems, object-relationships]
+
+  coordinate-systems:
+    requires: [manim-patterns]
+    enhances: [geometry-calculations, advanced-templates]
+
+  object-relationships:
+    requires: [manim-patterns]
+    enhances: [geometry-calculations, animation-timing]
+
+  geometry-calculations:
+    requires: [coordinate-systems]
+    enhances: [advanced-templates]
+
+  animation-timing:
+    requires: [manim-patterns]
+    enhances: [advanced-templates, video-storytelling]
+
+  advanced-templates:
+    requires: [geometry-calculations, animation-timing, coordinate-systems]
+    enhances: []
+
+# === AGENT MAPPINGS ===
+agent_knowledge:
+  animation-designer:
+    primary: [manim-patterns, coordinate-systems, object-relationships]
+    secondary: [animation-timing, advanced-templates]
+
+  solution-writer:
+    primary: [geometry-calculations]
+    secondary: [3b1b-style]
+
+  script-planner:
+    primary: [video-storytelling, 3b1b-style]
+    secondary: [animation-timing]
+
+  voiceover-writer:
+    primary: [video-storytelling]
+    secondary: [animation-timing]
+
+  manim-renderer:
+    primary: [manim-patterns, coordinate-systems]
+    secondary: [advanced-manim]

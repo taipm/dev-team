@@ -1,4 +1,4 @@
-# Agent Metadata Specification v1.0
+# Agent Metadata Specification v2.0
 
 > Quy chuẩn thống nhất cho metadata (frontmatter) của tất cả agents trong ecosystem.
 
@@ -6,148 +6,233 @@
 
 ## 1. Tổng Quan
 
-### 1.1 Mục đích
-- **Consistency**: Tất cả agents có cấu trúc metadata giống nhau
-- **Discovery**: Dễ dàng tìm kiếm và filter agents
-- **Validation**: Có thể tự động validate agents
-- **UI/UX**: Hiển thị thống nhất trên các interfaces
+### 1.1 Thay đổi từ v1.x sang v2.0
 
-### 1.2 Format
+| Aspect | v1.x | v2.0 |
+|--------|------|------|
+| **Structure** | Flat keys | Nested under `agent:` root |
+| **ID** | Không có | `metadata.id` (unique identifier) |
+| **Name** | kebab-case ID | Human-readable name |
+| **Title** | Không có | Role/subtitle |
+| **Capabilities** | Flat `tools:`, `skills:` | Grouped under `capabilities:` |
+| **Knowledge** | `knowledge.shared/specific` | `capabilities.knowledge.auto_load/on_demand` |
+| **Menu** | Hardcoded trong body | Declarative `menu:` với fuzzy triggers |
+| **Workflows** | Inline trong agent.md | External YAML files |
+| **Activation** | XML trong body | Structured `activation:` block |
+
+### 1.2 v2.0 Format Overview
+
 ```yaml
 ---
-# REQUIRED FIELDS (5)
-name: agent-name
-description: |
-  ...
-model: opus
-tools:
-  - Tool1
-language: vi
+agent:
+  metadata:
+    id: agent-id            # kebab-case unique identifier
+    name: Agent Name        # Human-readable name
+    title: Agent Role       # Subtitle/role description
+    icon: "emoji"
+    color: color-name
+    version: "2.0"
+    model: opus|sonnet|haiku
+    language: vi|en
+    tags: [tag1, tag2]
 
-# STYLE FIELDS (2)
-color: purple
-icon: "🤖"
+  capabilities:
+    tools: [Tool1, Tool2]
+    skills: [skill1]
+    knowledge:
+      auto_load: [./path/to/file.md]
+      on_demand: [./path/to/file.md]
 
-# OPTIONAL FIELDS
-knowledge:
-  shared: []
-  specific: []
-team: team-name
-alias: Friendly Name
-version: "1.0"
-tags: []
+  persona:
+    role: Role description
+    identity: |
+      Identity description
+    communication_style: [style1, style2]
+    principles: [principle1, principle2]
+
+  thinking:
+    context_name:
+      - step 1
+      - step 2
+
+  menu:
+    - cmd: "*command"
+      trigger: "keyword1|keyword2"
+      workflow: "./workflows/workflow.yaml"
+      description: "Description"
+
+  activation:
+    critical: true
+    steps:
+      - Step 1
+      - Step 2
+    critical_actions:
+      - Action 1
+
+  memory:
+    enabled: true|false
+    files: [context.md, decisions.md]
+    session_end:
+      - Action on end
 ---
 ```
 
 ---
 
-## 2. Required Fields (Bắt buộc)
+## 2. Required Fields
 
-### 2.1 `name`
-**Type**: String
-**Format**: kebab-case (lowercase, hyphens)
-**Constraint**: Unique trong toàn ecosystem
+### 2.1 `agent.metadata.id`
+**Type**: String (kebab-case)
+**Purpose**: Unique identifier for the agent
 
 ```yaml
 # ✅ CORRECT
-name: father-agent
-name: go-dev-agent
-name: deep-question-agent
+id: father-agent
+id: go-dev-agent
+id: deep-question-agent
 
 # ❌ WRONG
-name: Father Agent      # spaces not allowed
-name: FatherAgent       # camelCase not allowed
-name: father_agent      # underscores not allowed
-```
-
-**Naming Convention**:
-```
-{domain}-agent          # Cho standalone agents
-{domain}-{role}-agent   # Cho specific roles
-{team}-{role}           # Cho team members (không có suffix)
+id: Father Agent           # spaces not allowed
+id: .microai/agents/x.md   # path not allowed (v1.x style)
 ```
 
 ---
 
-### 2.2 `description`
-**Type**: String (multi-line)
-**Format**: YAML pipe `|`
-**Structure**: 3 phần bắt buộc
+### 2.2 `agent.metadata.name`
+**Type**: String
+**Purpose**: Human-readable display name
 
 ```yaml
-description: |
-  [One-liner mô tả purpose chính]
+# ✅ CORRECT
+name: Father Agent
+name: Go Development Agent
+name: Deep Question Agent
 
-  Key capabilities:
-  - Capability 1
-  - Capability 2
-  - Capability 3
-
-  Examples:
-  - "Example use case 1"
-  - "Example use case 2"
+# ❌ WRONG
+name: father-agent    # This is ID, not name
 ```
-
-**Template**:
-```yaml
-description: |
-  {Role/Purpose} cho {domain/project}. Sử dụng khi cần:
-  - {Capability 1}
-  - {Capability 2}
-  - {Capability 3}
-
-  Examples:
-  - "{Action verb} + {object} + {context}"
-  - "{Action verb} + {object} + {context}"
-```
-
-**Length Guide**:
-| Agent Type | Lines | Detail Level |
-|------------|-------|--------------|
-| Simple | 3-5 | Brief |
-| Standard | 5-8 | Moderate |
-| Complex | 8-12 | Detailed |
 
 ---
 
-### 2.3 `model`
+### 2.3 `agent.metadata.title`
+**Type**: String
+**Purpose**: Role or subtitle
+
+```yaml
+title: The Agent Creator
+title: Go Specialist
+title: Socratic Questioner
+```
+
+---
+
+### 2.4 `agent.metadata.model`
 **Type**: Enum
-**Valid Values**: `opus`, `sonnet`, `haiku`
+**Values**: `opus`, `sonnet`, `haiku`
 
-```yaml
-# Selection Guide
-model: opus    # Complex reasoning, multi-step, architecture
-model: sonnet  # Balanced analysis, documentation, review
-model: haiku   # Simple tasks, fast response, lightweight
-```
-
-**Decision Matrix**:
-| Task Type | Recommended Model | Reason |
-|-----------|-------------------|--------|
-| Code generation | opus | Complex reasoning |
-| Architecture | opus | Multi-step planning |
-| Documentation | sonnet | Balanced quality/speed |
-| Code review | sonnet | Analysis focused |
-| Translation | haiku | Simple transformation |
-| Formatting | haiku | Fast, deterministic |
-| Complex Q&A | opus | Deep understanding |
+| Model | Use Case | Complexity |
+|-------|----------|------------|
+| `opus` | Complex reasoning, architecture, multi-step | High |
+| `sonnet` | Balanced analysis, documentation | Medium |
+| `haiku` | Simple tasks, fast response | Low |
 
 ---
 
-### 2.4 `tools`
-**Type**: Array of Strings
-**Format**: Capitalized tool names
+### 2.5 `agent.metadata.language`
+**Type**: Enum
+**Values**: `vi`, `en`
 
 ```yaml
-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - TodoWrite
-  - AskUserQuestion
+language: vi   # Output tiếng Việt
+language: en   # Output in English
+```
+
+---
+
+### 2.6 `agent.persona.role`
+**Type**: String
+**Purpose**: Agent's primary function
+
+```yaml
+persona:
+  role: Meta-Agent - Architect của agent ecosystem
+```
+
+---
+
+### 2.7 `agent.persona.identity`
+**Type**: String (multi-line)
+**Purpose**: Personality and approach
+
+```yaml
+persona:
+  identity: |
+    Experienced architect với deep understanding về agent patterns.
+    Teacher-like approach, hướng dẫn từng bước cẩn thận.
+```
+
+---
+
+### 2.8 `agent.activation.steps`
+**Type**: Array (min 2 items)
+**Purpose**: Startup sequence
+
+```yaml
+activation:
+  steps:
+    - Load persona từ file này
+    - Hiển thị menu chính
+    - Chờ user chọn action
+```
+
+---
+
+## 3. Optional Fields
+
+### 3.1 `agent.metadata` (Style)
+
+| Field | Type | Example |
+|-------|------|---------|
+| `icon` | String (emoji) | `"👨‍👦"` |
+| `color` | String | `purple`, `red`, `blue`, `green` |
+| `version` | String | `"2.0"` |
+| `tags` | Array | `[meta-agent, orchestration]` |
+
+**Color Palette**:
+| Color | Use Case |
+|-------|----------|
+| `purple` | Meta-agents, orchestration |
+| `red` | Development, coding |
+| `green` | Testing, validation |
+| `blue` | Analysis, exploration |
+| `orange` | Configuration, setup |
+| `cyan` | Routing, communication |
+
+---
+
+### 3.2 `agent.capabilities`
+
+```yaml
+capabilities:
+  tools:
+    - Bash
+    - Read
+    - Write
+    - Edit
+    - Glob
+    - Grep
+    - TodoWrite
+    - AskUserQuestion
+
+  skills:
+    - skill-creator
+    - pdf
+
+  knowledge:
+    auto_load:
+      - ../../../knowledge/universal/patterns/architecture-patterns.md
+    on_demand:
+      - ../../../knowledge/universal/thinking/thinking-frameworks.md
 ```
 
 **Available Tools**:
@@ -166,710 +251,391 @@ tools:
 | `TodoWrite` | Planning | Manage task lists |
 | `AskUserQuestion` | Interaction | Ask user questions |
 
-**Tool Selection by Role**:
-```yaml
-# Minimal (read-only analysis)
-tools: [Read, Glob, Grep]
-
-# Standard (code modification)
-tools: [Bash, Read, Write, Edit, Glob, Grep, TodoWrite]
-
-# Full (interactive development)
-tools: [Bash, Read, Write, Edit, Glob, Grep, LSP, Task, WebFetch, WebSearch, TodoWrite, AskUserQuestion]
-```
+**Knowledge Paths**:
+- Paths are **relative from agent.md**
+- Use `../../../knowledge/` to reach Knowledge Forge
+- Use `./knowledge/` for agent-specific files
 
 ---
 
-### 2.5 `language`
-**Type**: String
-**Format**: ISO 639-1 code (lowercase)
-**Valid Values**: `vi`, `en`
-
-```yaml
-language: vi   # Vietnamese - output tiếng Việt
-language: en   # English - output in English
-```
-
-**Rules**:
-- PHẢI explicit khai báo, KHÔNG có default
-- Ảnh hưởng đến output language của agent
-- Comments trong agent.md có thể bất kỳ ngôn ngữ
-
----
-
-## 3. Style Fields (Khuyến nghị)
-
-### 3.1 `color`
-**Type**: String (color name)
-**Format**: lowercase
-
-**Standard Palette**:
-| Color | Hex | Use Case |
-|-------|-----|----------|
-| `purple` | #9B59B6 | Meta-agents, orchestration |
-| `red` | #E74C3C | Development, coding |
-| `green` | #27AE60 | Testing, validation |
-| `orange` | #F39C12 | Configuration, setup |
-| `blue` | #3498DB | Analysis, exploration |
-| `cyan` | #1ABC9C | Routing, communication |
-| `yellow` | #F1C40F | Documentation |
-| `pink` | #E91E63 | Creative, design |
-
-**Selection by Category**:
-```yaml
-# By agent role
-color: purple  # Meta/orchestration (father, ab-test)
-color: red     # Development (go-dev, npm)
-color: green   # Testing (test-agent)
-color: orange  # Config/ops (config, ollama)
-color: blue    # Analysis (explorer, kanban)
-color: cyan    # Communication (router, gateway)
-```
-
----
-
-### 3.2 `icon`
-**Type**: String (emoji)
-**Format**: Quoted emoji
-
-```yaml
-icon: "🤖"   # Generic agent
-icon: "👨‍👦"   # Father/meta agent
-icon: "🦙"   # LLM-related (Ollama)
-icon: "🔮"   # Deep thinking
-icon: "🎭"   # Security/hacking
-icon: "🧪"   # Testing/experiment
-icon: "🚀"   # Production/deployment
-icon: "🔍"   # Search/exploration
-icon: "📦"   # Package management
-icon: "⚙️"   # Configuration
-icon: "🔧"   # Tools/utilities
-icon: "📝"   # Documentation
-icon: "🏗️"   # Architecture
-icon: "🔒"   # Security
-```
-
-**Rules**:
-- Phải quoted: `icon: "🤖"` (không phải `icon: 🤖`)
-- Một emoji duy nhất (không combine)
-- Position: sau `color`, trước `tools`
-
----
-
-## 4. Optional Fields
-
-### 4.1 `knowledge`
-**Type**: Dictionary
-**Purpose**: Reference to knowledge base files
-
-```yaml
-knowledge:
-  shared:
-    - ../knowledge/shared/01-fundamentals.md
-    - ../knowledge/shared/02-best-practices.md
-  specific:
-    - ./knowledge/01-agent-specific.md
-    - ./knowledge/02-patterns.md
-```
-
-**Structure**:
-- `shared`: Files dùng chung trong team/project
-- `specific`: Files chỉ agent này dùng
-
-**Path Convention**:
-```
-# Shared knowledge (team level)
-../knowledge/shared/{number}-{topic}.md
-
-# Specific knowledge (agent level)
-./knowledge/{number}-{topic}.md
-```
-
----
-
-### 4.2 `team`
-**Type**: String
-**Format**: kebab-case
-
-```yaml
-team: go-team
-team: project-team
-team: mining-team
-team: dev-qa
-```
-
-**Usage**: Chỉ định team ownership cho agent
-
----
-
-### 4.3 `alias`
-**Type**: String
-**Purpose**: Human-friendly name
-
-```yaml
-name: father-agent
-alias: Father Agent
-
-name: deep-question-agent
-alias: Socrates
-```
-
----
-
-### 4.4 `version`
-**Type**: String (semver)
-**Format**: "MAJOR.MINOR" hoặc "MAJOR.MINOR.PATCH"
-
-```yaml
-version: "1.0"
-version: "2.1"
-version: "1.0.3"
-```
-
-**Versioning Guide**:
-- MAJOR: Breaking changes to activation/behavior
-- MINOR: New capabilities added
-- PATCH: Bug fixes, minor improvements
-
----
-
-### 4.5 `tags`
-**Type**: Array of Strings
-**Purpose**: Categorization for filtering
-
-```yaml
-tags:
-  - golang
-  - testing
-  - ci-cd
-  - backend
-```
-
-**Standard Tags**:
-| Category | Tags |
-|----------|------|
-| Language | golang, python, typescript, rust |
-| Domain | backend, frontend, devops, security |
-| Task | testing, documentation, refactoring |
-| Level | simple, standard, complex |
-
----
-
-### 4.6 `skills`
-**Type**: Array of Strings
-**Purpose**: Reference to skills từ `.microai/skills/` mà agent có thể sử dụng
-
-```yaml
-skills:
-  - pdf
-  - docx
-  - webapp-testing
-  - mcp-builder
-```
-
-**Location**: Skills nằm trong `.microai/skills/{category}/{skill-name}/`
-
-**Available Skills by Category**:
-
-| Category | Skills | Purpose |
-|----------|--------|---------|
-| **document-skills** | `docx`, `pdf`, `pptx`, `xlsx` | Office/PDF processing |
-| **development-skills** | `mcp-builder`, `skill-creator`, `webapp-testing`, `web-artifacts-builder` | Dev tools |
-| **design-skills** | `algorithmic-art`, `canvas-design`, `frontend-design`, `theme-factory` | Visual design |
-| **communication-skills** | `doc-coauthoring`, `internal-comms`, `slack-gif-creator` | Enterprise comms |
-
-**Skill Mapping by Agent Role**:
-
-```yaml
-# Document/Report agents
-skills: [pdf, docx, pptx, xlsx]
-
-# Development agents
-skills: [mcp-builder, webapp-testing]
-
-# Frontend/Design agents
-skills: [frontend-design, theme-factory, canvas-design]
-
-# Documentation agents
-skills: [doc-coauthoring, internal-comms]
-
-# Meta agents (father-agent)
-skills: [skill-creator]
-```
-
-**Rules**:
-- Chỉ list skills LIÊN QUAN đến domain của agent
-- Skills là optional - agent vẫn hoạt động không cần skills
-- Skills cung cấp additional capabilities, không thay thế agent knowledge
-
----
-
-### 4.7 `persona`
-**Type**: Dictionary
-**Purpose**: Định nghĩa identity và communication style của agent
+### 3.3 `agent.persona` (Extended)
 
 ```yaml
 persona:
-  role: |
-    Expert software architect specializing in Go and distributed systems.
-    Responsible for code quality, architecture decisions, and team mentoring.
+  role: Senior Go code reviewer
   identity: |
-    Senior engineer with 15+ years experience.
-    Pragmatic, focused on maintainability over cleverness.
+    Pragmatic engineer who values simplicity.
   communication_style:
-    - Uses clear, direct language
-    - Provides examples with explanations
-    - References best practices and patterns
+    - Direct but respectful feedback
+    - Always explains the "why"
+    - Provides concrete examples
   principles:
     - "Simple is better than complex"
-    - "Make it work, then make it right, then make it fast"
-    - "Code is read more often than written"
-```
-
-**Sub-fields**:
-| Field | Type | Description |
-|-------|------|-------------|
-| `role` | String | Vai trò chính và responsibilities |
-| `identity` | String | Background, experience, personality |
-| `communication_style` | Array | Cách giao tiếp với user |
-| `principles` | Array | Nguyên tắc làm việc cốt lõi |
-
-**When to Use**:
-- Agents cần personality rõ ràng (mentors, reviewers)
-- Team agents với roles cụ thể
-- Agents tương tác nhiều với user
-
-**Minimal Example**:
-```yaml
-persona:
-  role: Go code reviewer
-  principles:
-    - "Readability first"
+    - "Security is not optional"
     - "Test everything"
 ```
 
 ---
 
-### 4.8 `thinking`
-**Type**: String (multi-line)
-**Purpose**: Hướng dẫn reasoning và thinking process cho agent
+### 3.4 `agent.thinking`
+
+Named reasoning patterns for different contexts:
 
 ```yaml
-thinking: |
-  Before responding, always:
-  1. Understand the full context and constraints
-  2. Consider multiple approaches before choosing
-  3. Evaluate trade-offs explicitly
-  4. Validate assumptions with user if unclear
+thinking:
+  create_agent:
+    - Hiểu rõ domain và purpose
+    - Check existing agents
+    - Start simple
+    - Validate với user
 
-  When solving problems:
-  - Break down into smaller sub-problems
-  - Start with the simplest solution that works
-  - Iterate based on feedback
+  review_agent:
+    - Check metadata compliance
+    - Verify activation protocol
+    - Assess knowledge quality
 
-  When reviewing code:
-  - Check correctness first, then style
-  - Consider maintainability over cleverness
-  - Look for security implications
-```
-
-**Guidelines**:
-- Use structured format (numbered lists, bullets)
-- Focus on HOW to think, not WHAT to do
-- Keep concise (5-15 lines recommended)
-- Specific to agent's domain
-
-**Examples by Role**:
-```yaml
-# For code reviewer
-thinking: |
-  Review order: Security → Correctness → Performance → Style
-  Ask: "Would I understand this code in 6 months?"
-
-# For architect
-thinking: |
-  Consider: Scalability, Maintainability, Cost, Team capability
-  Default to boring technology unless innovation is required.
-
-# For debugger
-thinking: |
-  1. Reproduce the issue first
-  2. Form hypothesis before adding logs
-  3. Binary search to isolate the problem
+  priorities:
+    - Purpose clarity > Feature richness
+    - Simplicity > Flexibility
 ```
 
 ---
 
-### 4.9 `critical_actions`
-**Type**: Array of Strings
-**Purpose**: Actions agent PHẢI thực hiện khi khởi động
+### 3.5 `agent.menu`
+
+Declarative menu với fuzzy triggers:
 
 ```yaml
-critical_actions:
-  - "Load project configuration from .microai/config.yaml"
-  - "Check current git branch and status"
-  - "Read existing code style from .editorconfig"
-  - "Identify active TODO items in codebase"
+menu:
+  - cmd: "*create"
+    trigger: "create|tạo|new|mới|build"
+    workflow: "./workflows/create-agent.yaml"
+    description: "Tạo agent mới từ đầu"
+
+  - cmd: "*review"
+    trigger: "review|check|validate|kiểm tra"
+    workflow: "./workflows/review-agent.yaml"
+    description: "Review và cải thiện agent"
+
+  - cmd: "*help"
+    trigger: "help|hướng dẫn|guide"
+    workflow: inline
+    description: "Hiển thị hướng dẫn"
 ```
 
-**Use Cases**:
-| Scenario | Critical Actions |
-|----------|------------------|
-| Code agent | Load project structure, check dependencies |
-| Review agent | Read style guide, check PR context |
-| Docs agent | Load existing docs structure, check templates |
-| Test agent | Check test framework, load fixtures |
+**Trigger Patterns**:
+- Pipe-separated alternatives: `create|tạo|new`
+- Supports Vietnamese: `kiểm tra|đánh giá`
+- Case-insensitive matching
 
-**Format Rules**:
-- Imperative verbs: "Load", "Check", "Read", "Identify"
-- Specific file paths when applicable
-- Order by priority (most critical first)
-- Max 5-7 actions recommended
-
-**Example for Go Dev Agent**:
-```yaml
-critical_actions:
-  - "Run 'go mod tidy' to check dependencies"
-  - "Read go.mod for module path and Go version"
-  - "Check Makefile for available commands"
-  - "Identify main.go or cmd/ entry points"
-```
+**Workflow Values**:
+- Path to YAML file: `./workflows/name.yaml`
+- Inline for simple commands: `inline`
 
 ---
 
-## 5. Field Order Convention
+### 3.6 `agent.activation` (Extended)
 
 ```yaml
----
-# IDENTIFICATION (required)
-name: agent-name
-description: |
-  ...
-
-# MODEL SELECTION (required)
-model: opus
-
-# STYLE (recommended)
-color: purple
-icon: "🤖"
-
-# CAPABILITIES (required)
-tools:
-  - Tool1
-  - Tool2
-
-# LOCALIZATION (required)
-language: vi
-
-# SKILLS (optional) - NEW in v1.1
-skills:
-  - skill-name-1
-  - skill-name-2
-
-# PERSONA (optional) - NEW in v1.2
-persona:
-  role: Agent role description
-  identity: Agent identity/background
-  communication_style:
-    - Style guideline 1
-  principles:
-    - "Core principle 1"
-
-# THINKING (optional) - NEW in v1.2
-thinking: |
-  Reasoning guidelines for the agent...
-
-# CRITICAL ACTIONS (optional) - NEW in v1.2
-critical_actions:
-  - "Action 1 on startup"
-  - "Action 2 on startup"
-
-# KNOWLEDGE (optional)
-knowledge:
-  shared: []
-  specific: []
-
-# ORGANIZATION (optional)
-team: team-name
-alias: Friendly Name
-version: "1.0"
-tags: []
----
+activation:
+  critical: true
+  steps:
+    - Load persona từ file này
+    - Hiển thị menu chính
+    - Chờ user chọn action
+    - Thực thi theo workflow
+  critical_actions:
+    - "Load knowledge-index.yaml"
+    - "Check .microai/agents/"
+    - "Hiển thị menu"
 ```
 
 ---
 
-## 6. Validation Checklist
+### 3.7 `agent.memory`
 
-### 6.1 Required Fields
-```
-□ name: lowercase kebab-case, unique
-□ description: multi-line với 3 sections
-□ model: opus | sonnet | haiku
-□ tools: array of valid tool names
-□ language: vi | en (explicit)
-```
-
-### 6.2 Style Fields
-```
-□ color: from standard palette
-□ icon: quoted emoji
-□ Position: color → icon → tools
+```yaml
+memory:
+  enabled: true
+  files:
+    - context.md
+    - decisions.md
+    - learnings.md
+  session_end:
+    - Update context với session summary
+    - Log key decisions
+    - Archive learnings if significant
 ```
 
-### 6.3 Format Validation
+---
+
+## 4. Field Order Convention
+
+```yaml
+---
+agent:
+  # 1. METADATA (required + style)
+  metadata:
+    id: agent-id
+    name: Agent Name
+    title: Agent Title
+    icon: "emoji"
+    color: color
+    version: "2.0"
+    model: opus
+    language: vi
+    tags: []
+
+  # 2. CAPABILITIES
+  capabilities:
+    tools: []
+    skills: []
+    knowledge:
+      auto_load: []
+      on_demand: []
+
+  # 3. PERSONA
+  persona:
+    role: ...
+    identity: ...
+    communication_style: []
+    principles: []
+
+  # 4. THINKING
+  thinking:
+    context_name: []
+
+  # 5. MENU
+  menu:
+    - cmd: "*command"
+      trigger: "pattern"
+      workflow: "./path.yaml"
+      description: "..."
+
+  # 6. ACTIVATION
+  activation:
+    critical: true
+    steps: []
+    critical_actions: []
+
+  # 7. MEMORY
+  memory:
+    enabled: false
+    files: []
+    session_end: []
+---
+```
+
+---
+
+## 5. Validation Checklist
+
+### 5.1 Required Fields
+```
+□ agent: root namespace present
+□ agent.metadata.id: kebab-case, unique
+□ agent.metadata.name: human-readable
+□ agent.metadata.title: role/subtitle
+□ agent.metadata.model: opus|sonnet|haiku
+□ agent.metadata.language: vi|en
+□ agent.persona.role: defined
+□ agent.persona.identity: defined
+□ agent.activation.steps: array (min 2)
+```
+
+### 5.2 Optional but Recommended
+```
+□ agent.metadata.icon: quoted emoji
+□ agent.metadata.color: from palette
+□ agent.metadata.version: "2.0"
+□ agent.capabilities.tools: array
+□ agent.menu: at least 1 item with trigger
+```
+
+### 5.3 Format Validation
 ```
 □ YAML syntax valid
 □ No tabs (spaces only)
 □ Proper indentation (2 spaces)
 □ Multi-line strings use |
-□ Arrays use - prefix
-```
-
-### 6.4 Content Validation
-```
-□ name matches filename
-□ description có examples
-□ tools phù hợp với role
-□ model phù hợp với complexity
+□ Workflow paths are relative from agent.md
+□ Knowledge paths use ../../../knowledge/
 ```
 
 ---
 
-## 7. Examples
+## 6. Examples
 
-### 7.1 Minimal Agent (Read-only)
+### 6.1 Minimal Agent
+
 ```yaml
 ---
-name: code-explorer
-description: |
-  Explore và analyze codebase. Sử dụng khi cần:
-  - Tìm hiểu cấu trúc project
-  - Search patterns trong code
+agent:
+  metadata:
+    id: simple-agent
+    name: Simple Agent
+    title: Basic Example
+    model: sonnet
+    language: en
 
-  Examples:
-  - "Explore authentication flow"
-  - "Find all API endpoints"
+  persona:
+    role: Simple demonstration agent
+    identity: Minimal example for documentation
 
-model: sonnet
-color: blue
-icon: "🔍"
-tools:
-  - Read
-  - Glob
-  - Grep
-language: vi
+  activation:
+    steps:
+      - Load persona
+      - Greet user
 ---
+
+# Simple Agent
+
+Basic agent content...
 ```
 
-### 7.2 Standard Agent
+### 6.2 Full-Featured Agent
+
 ```yaml
 ---
-name: go-dev-agent
-description: |
-  Go development specialist. Sử dụng khi cần:
-  - Implement Go code
-  - Debug và fix issues
-  - Refactor existing code
+agent:
+  metadata:
+    id: senior-go-reviewer
+    name: Senior Go Reviewer
+    title: Code Quality Guardian
+    icon: "🔍"
+    color: green
+    version: "2.0"
+    model: opus
+    language: vi
+    tags: [golang, code-review, security]
 
-  Examples:
-  - "Implement HTTP handler for /users"
-  - "Fix nil pointer in ProcessOrder"
+  capabilities:
+    tools:
+      - Read
+      - Glob
+      - Grep
+      - LSP
+      - TodoWrite
+    skills:
+      - webapp-testing
+    knowledge:
+      auto_load:
+        - ../../../knowledge/domains/go/idioms.md
+      on_demand:
+        - ../../../knowledge/domains/security/secure-coding.md
 
-model: opus
-color: red
-icon: "🔧"
-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - LSP
-  - TodoWrite
-language: vi
-version: "1.0"
-tags:
-  - golang
-  - backend
+  persona:
+    role: Senior Go engineer với 10+ years experience
+    identity: |
+      Pragmatic engineer who values simplicity over cleverness.
+      Believes good code is self-documenting.
+    communication_style:
+      - Direct but respectful feedback
+      - Always explains the "why"
+      - Provides concrete examples
+    principles:
+      - "Simple is better than complex"
+      - "Security is not optional"
+      - "Test everything"
+
+  thinking:
+    review_priority:
+      - Security vulnerabilities first
+      - Correctness and logic errors
+      - Performance implications
+      - Code style and readability
+
+  menu:
+    - cmd: "*review"
+      trigger: "review|check|xem|kiểm tra"
+      workflow: "./workflows/review.yaml"
+      description: "Review code thoroughly"
+
+    - cmd: "*security"
+      trigger: "security|bảo mật|vuln"
+      workflow: "./workflows/security-scan.yaml"
+      description: "Security-focused review"
+
+  activation:
+    critical: true
+    steps:
+      - Load persona và knowledge
+      - Check project context
+      - Display menu
+    critical_actions:
+      - "Read CONTRIBUTING.md if exists"
+      - "Check .golangci.yml for linting rules"
+
+  memory:
+    enabled: true
+    files:
+      - context.md
+      - decisions.md
+    session_end:
+      - Log review findings
+      - Update context
 ---
-```
 
-### 7.3 Team Agent with Knowledge
-```yaml
----
-name: architect-agent
-description: |
-  Solution Architect cho Go projects. Sử dụng khi cần:
-  - Design system architecture
-  - Review architectural decisions
-  - Create ADRs
+# Senior Go Reviewer
 
-  Examples:
-  - "Design microservices architecture"
-  - "Review current API design"
-
-model: opus
-color: purple
-icon: "🏗️"
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Write
-  - TodoWrite
-  - AskUserQuestion
-language: vi
-
-knowledge:
-  shared:
-    - ../knowledge/shared/01-go-fundamentals.md
-    - ../knowledge/shared/02-best-practices.md
-  specific:
-    - ./knowledge/01-architecture-patterns.md
-    - ./knowledge/02-adr-template.md
-
-team: go-team
-version: "1.0"
-tags:
-  - architecture
-  - golang
-  - design
----
-```
-
-### 7.4 Full-Featured Agent (with persona, thinking, critical_actions)
-```yaml
----
-name: senior-go-reviewer
-description: |
-  Senior Go code reviewer với deep expertise. Sử dụng khi cần:
-  - Thorough code review với security focus
-  - Architecture và design pattern guidance
-  - Performance optimization recommendations
-
-  Examples:
-  - "Review this PR for production readiness"
-  - "Check security implications of this change"
-
-model: opus
-color: green
-icon: "🔍"
-tools:
-  - Read
-  - Glob
-  - Grep
-  - LSP
-  - TodoWrite
-language: vi
-
-skills:
-  - webapp-testing
-
-persona:
-  role: |
-    Senior Go engineer với 10+ years experience.
-    Code reviewer focusing on quality, security, and maintainability.
-  identity: |
-    Pragmatic engineer who values simplicity over cleverness.
-    Believes good code is self-documenting.
-  communication_style:
-    - Direct but respectful feedback
-    - Always explains the "why" behind suggestions
-    - Provides concrete examples when possible
-  principles:
-    - "Simple is better than complex"
-    - "Explicit is better than implicit"
-    - "Security is not optional"
-
-thinking: |
-  Review priority order:
-  1. Security vulnerabilities first
-  2. Correctness and logic errors
-  3. Performance implications
-  4. Code style and readability
-
-  For each issue, ask:
-  - Is this a blocker or a suggestion?
-  - Can I provide a concrete fix?
-  - Does this match team conventions?
-
-critical_actions:
-  - "Read project's CONTRIBUTING.md if exists"
-  - "Check .golangci.yml for linting rules"
-  - "Identify the scope of changes in the PR"
-  - "Look for related test files"
-
-version: "1.0"
-tags:
-  - golang
-  - code-review
-  - security
----
+## Review Guidelines
+...
 ```
 
 ---
 
-## 8. Migration Guide
+## 7. Migration from v1.x
 
-### 8.1 Từ agents thiếu fields
-```yaml
-# BEFORE (missing fields)
----
-name: my-agent
-description: Does stuff
-model: opus
-tools: [Read]
----
+### 7.1 Key Changes
 
-# AFTER (complete)
----
-name: my-agent
-description: |
-  My agent purpose. Sử dụng khi cần:
-  - Capability 1
+| v1.x Field | v2.0 Field |
+|------------|------------|
+| `name: father-agent` | `metadata.id: father-agent` |
+| (none) | `metadata.name: Father Agent` |
+| (none) | `metadata.title: The Agent Creator` |
+| `tools:` | `capabilities.tools:` |
+| `skills:` | `capabilities.skills:` |
+| `knowledge.shared:` | `capabilities.knowledge.auto_load:` |
+| `knowledge.specific:` | `capabilities.knowledge.on_demand:` |
+| (inline in body) | `menu:` with `trigger:` |
+| (XML in body) | `activation:` block |
 
-  Examples:
-  - "Example use case"
+### 7.2 Migration Script
 
-model: opus
-color: blue
-icon: "🤖"
-tools:
-  - Read
-language: vi
----
-```
-
-### 8.2 Validation Script
 ```bash
-# Check required fields
-grep -l "^name:" .microai/agents/*/agent.md
-grep -l "^language:" .microai/agents/*/agent.md
-grep -l "^color:" .microai/agents/*/agent.md
+# Run migration
+./.microai/scripts/migrate-to-v2.sh agent-name --dry-run
+./.microai/scripts/migrate-to-v2.sh agent-name
+```
+
+### 7.3 Validation
+
+```bash
+# Validate v2.0 compliance
+./.microai/scripts/validate-agent-v2.sh agent-name
 ```
 
 ---
 
-## 9. Anti-patterns
+## 8. Anti-patterns
 
 | Anti-pattern | Problem | Solution |
 |--------------|---------|----------|
-| Missing language | Ambiguous output language | Always explicit |
-| CamelCase name | Inconsistent with ecosystem | Use kebab-case |
-| Inline description | Hard to parse | Use multi-line `|` |
-| Too many tools | Unfocused agent | Limit to role needs |
-| Missing examples | Hard to understand usage | Add 2-3 examples |
-| Unquoted icon | YAML parse error | Always quote: `"🤖"` |
-| Wrong field order | Hard to read | Follow convention |
+| Flat frontmatter | v1.x format | Use `agent:` namespace |
+| Path as ID | Confusing | Use kebab-case identifier |
+| Missing name/title | UI confusion | Separate id/name/title |
+| Inline workflows | Hard to reuse | Extract to YAML files |
+| No fuzzy triggers | User friction | Add trigger patterns |
+| Absolute paths | Not portable | Use relative paths |
+| Missing knowledge base path | Files not found | Use `../../../knowledge/` |
 
 ---
 
-## 10. Changelog
+## 9. Changelog
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.2 | 2026-01 | Added `persona`, `thinking`, `critical_actions` fields |
-| 1.1 | 2026-01 | Added `skills` field for skill integration |
+| 2.0 | 2026-01 | Complete restructure: nested `agent:` namespace, `menu:` with triggers, external workflows |
+| 1.2 | 2026-01 | Added `persona`, `thinking`, `critical_actions` |
+| 1.1 | 2026-01 | Added `skills` field |
 | 1.0 | 2025-01 | Initial specification |

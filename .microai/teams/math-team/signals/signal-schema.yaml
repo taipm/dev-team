@@ -1,0 +1,377 @@
+# Math Team Signal Schema
+# Defines all signals used in signal-based orchestration
+
+version: "1.0.0"
+description: "Signal definitions for Math Team workflow"
+
+# Base Signal Structure
+signal_base:
+  id: "sig-{uuid}"
+  type: "signal_type"
+  timestamp: "ISO-8601"
+  session_id: "uuid"
+  emitter: "agent_id"
+  payload: {}
+
+# ═══════════════════════════════════════════════════════════════
+# LIFECYCLE SIGNALS
+# ═══════════════════════════════════════════════════════════════
+
+signals:
+
+  # Session Start
+  session_started:
+    description: "New math session initialized"
+    emitter: maestro
+    listeners: [scribe]
+    payload:
+      session_id: string
+      problem_text: string
+      preferences:
+        output_style: "detailed|concise|olympiad"
+        language: "vi|en"
+        show_all_approaches: boolean
+
+  # Problem Received - Triggers Analyzer
+  problem_received:
+    description: "Problem received and ready for analysis"
+    emitter: maestro
+    listeners: [analyzer]
+    payload:
+      session_id: string
+      problem_text: string
+      problem_latex: string  # optional
+      images: []  # optional
+    triggers:
+      - agent: problem-analyzer
+        action: start_analysis
+
+  # Analysis Complete - Triggers Solver Dispatch
+  analysis_complete:
+    description: "Problem analysis finished, approaches identified"
+    emitter: analyzer
+    listeners: [maestro, scribe]
+    payload:
+      session_id: string
+      problem_type: "algebra|geometry|calculus|combinatorics|number_theory|mixed"
+      difficulty: "thpt|university|competition|olympiad"
+      approaches:
+        - id: string
+          name: string
+          solver: string  # solver agent id
+          complexity: "low|medium|high"
+          confidence: 0.0-1.0
+      constraints: []
+      known_techniques: []
+    triggers:
+      - action: dispatch_solvers
+        condition: "approaches.length > 0"
+
+  # Solvers Dispatched - Triggers Parallel Solvers
+  solvers_dispatched:
+    description: "Solvers activated for parallel execution"
+    emitter: maestro
+    listeners: [algebraic, geometric, calculus, combinatorics, number-theory]
+    payload:
+      session_id: string
+      problem_text: string
+      assignments:
+        - solver_id: string
+          approach_id: string
+          approach_name: string
+          priority: "high|medium|low"
+    triggers:
+      - agent: "{assignment.solver_id}"
+        for_each: assignments
+        condition: "solver_id matches listener"
+
+  # Solution Complete - From Each Solver
+  solution_complete:
+    description: "One solver finished its solution"
+    emitter: "any_solver"
+    listeners: [maestro, synthesizer, scribe]
+    payload:
+      session_id: string
+      solver_id: string
+      approach_id: string
+      approach_name: string
+      solution:
+        steps: []  # array of solution steps with LaTeX
+        final_answer: string  # LaTeX formatted
+        proof_complete: boolean
+        techniques_used: []
+      metadata:
+        tokens_used: number
+        duration_ms: number
+        confidence: 0.0-1.0
+        elegance_score: 0.0-1.0
+    triggers:
+      - action: check_all_complete
+        then_emit: all_solutions_ready
+
+  # All Solutions Ready - Sync Point
+  all_solutions_ready:
+    description: "All dispatched solvers have completed"
+    emitter: maestro
+    listeners: [synthesizer]
+    payload:
+      session_id: string
+      solutions: []  # all solution objects
+      total_dispatched: number
+      successful: number
+    triggers:
+      - agent: math-synthesizer
+        action: start_synthesis
+
+  # Synthesis Complete - Triggers LaTeX
+  synthesis_complete:
+    description: "Solutions synthesized, best approach selected"
+    emitter: synthesizer
+    listeners: [maestro, latex-editor, scribe]
+    payload:
+      session_id: string
+      best_solution:
+        approach_id: string
+        approach_name: string
+        solver_id: string
+        solution: {}  # full solution object
+        elegance_score: 0.0-1.0
+        correctness_verified: boolean
+      all_solutions_ranked:
+        - rank: number
+          approach_id: string
+          score: 0.0-1.0
+      final_answer: string  # LaTeX
+      comparison_notes: string
+    triggers:
+      - agent: latex-editor
+        action: generate_document
+
+  # Document Ready - Final Output
+  document_ready:
+    description: "LaTeX document generated, PDF ready"
+    emitter: latex-editor
+    listeners: [maestro, scribe]
+    payload:
+      session_id: string
+      output_style: "detailed|concise|olympiad"
+      files:
+        tex_path: string
+        pdf_path: string
+      compilation:
+        success: boolean
+        engine: "xelatex|lualatex"
+        warnings: number
+        errors: number
+    triggers:
+      - emit: session_complete
+        condition: "compilation.success"
+
+  # Session Complete
+  session_complete:
+    description: "Math problem-solving session finished"
+    emitter: maestro
+    listeners: [scribe]
+    payload:
+      session_id: string
+      problem_summary: string
+      final_answer: string
+      output_files:
+        pdf_path: string
+        tex_path: string
+      metrics:
+        total_duration_ms: number
+        total_tokens: number
+        solvers_used: number
+        approaches_explored: number
+
+# ═══════════════════════════════════════════════════════════════
+# ILLUSTRATION SIGNALS
+# ═══════════════════════════════════════════════════════════════
+
+  # Request Illustration - Explicitly request figure
+  illustration_requested:
+    description: "Request VERIFIED diagram generation for geometry problem"
+    emitter: "maestro|synthesizer|geometric-solver"
+    listeners: [geometry-illustrator]
+    payload:
+      session_id: string
+      problem_type: "orthocenter|circumcircle|nine_point|cyclic_quadrilateral|triangle_full"
+      problem_text: string
+
+      # NEW: Structured geometry data for Geometry System
+      geometry_data:
+        vertices:           # Triangle/polygon vertices - REQUIRED
+          A: [float, float]
+          B: [float, float]
+          C: [float, float]
+        options:
+          include_nine_point: boolean
+          include_point_K: boolean
+          include_orthic: boolean
+          include_altitudes: boolean
+
+      # Legacy support (will be parsed by adapter)
+      solution_data:
+        points: []  # List of points to draw
+        circles: [] # Circles (center, radius or 3 points)
+        lines: []   # Lines or segments
+        angles: []  # Angles to mark
+        special_elements:
+          orthocenter: boolean
+          circumcircle: boolean
+          nine_point_circle: boolean
+          altitudes: boolean
+
+      style: "detailed|concise|olympiad"
+    triggers:
+      - agent: geometry-illustrator
+        action: generate_verified_figure
+
+  # Illustration Complete - VERIFIED Figure ready
+  illustration_complete:
+    description: "VERIFIED TikZ figure generated by Geometry System"
+    emitter: geometry-illustrator
+    listeners: [latex-editor, maestro, scribe]
+    payload:
+      session_id: string
+
+      # Verification status (NEW - CRITICAL)
+      success: boolean
+      verification:
+        all_passed: boolean
+        tolerance: float  # 1e-10
+        checks: []        # List of verification checks with errors
+        report: string    # Full verification report
+
+      # Figure data
+      figure_type: "triangle|orthocenter|nine_point|quadrilateral|complex"
+      tikz_code: string  # VERIFIED TikZ code block
+      figure_count: number
+
+      # Computed points with exact coordinates (NEW)
+      points:
+        A: [float, float]
+        B: [float, float]
+        C: [float, float]
+        O: [float, float]  # Circumcenter
+        H: [float, float]  # Orthocenter
+        D: [float, float]  # Altitude foot from A
+        E: [float, float]  # Altitude foot from B
+        F: [float, float]  # Altitude foot from C
+        I: [float, float]  # Midpoint of BC
+        K: [float, float]  # Second intersection AD with circumcircle
+        N: [float, float]  # Nine-point center
+
+      # Circle data (NEW)
+      circles:
+        circumcircle:
+          center: [float, float]
+          radius: float
+        nine_point:
+          center: [float, float]
+          radius: float  # = R/2
+
+      elements:
+        circles: number
+        lines: number
+        angles_marked: number
+
+      # Coordinates table for LaTeX
+      latex_table: string  # Pre-formatted LaTeX table of coordinates
+
+    triggers:
+      - action: include_verified_figure_in_document
+        target: latex-editor
+        condition: "success == true"
+
+# ═══════════════════════════════════════════════════════════════
+# ERROR SIGNALS
+# ═══════════════════════════════════════════════════════════════
+
+  analysis_failed:
+    description: "Problem analysis failed"
+    emitter: analyzer
+    listeners: [maestro]
+    payload:
+      session_id: string
+      error: string
+      reason: "unrecognized_type|insufficient_info|parsing_error"
+
+  solver_failed:
+    description: "A solver failed to produce solution"
+    emitter: "any_solver"
+    listeners: [maestro, synthesizer]
+    payload:
+      session_id: string
+      solver_id: string
+      approach_id: string
+      error: string
+      reason: "timeout|complexity|no_solution|internal_error"
+
+  compilation_failed:
+    description: "LaTeX compilation failed"
+    emitter: latex-editor
+    listeners: [maestro]
+    payload:
+      session_id: string
+      error: string
+      log_path: string
+
+  # NEW: Geometry verification failed
+  geometry_verification_failed:
+    description: "Geometry System verification failed - figure not generated"
+    emitter: geometry-illustrator
+    listeners: [maestro, scribe]
+    payload:
+      session_id: string
+      problem_type: string
+      errors: []  # List of failed checks
+      verification_report: string
+      reason: "constraint_violation|invalid_coordinates|degenerate_triangle|numerical_error"
+
+# ═══════════════════════════════════════════════════════════════
+# USER CONTROL SIGNALS
+# ═══════════════════════════════════════════════════════════════
+
+  user_interrupt:
+    description: "User requested intervention"
+    emitter: user
+    listeners: [maestro]
+    payload:
+      action: "pause|skip|retry|cancel"
+      target: "current|all"
+
+  style_change:
+    description: "User changed output style"
+    emitter: user
+    listeners: [maestro, latex-editor]
+    payload:
+      new_style: "detailed|concise|olympiad"
+
+# ═══════════════════════════════════════════════════════════════
+# SYNC CONFIGURATION
+# ═══════════════════════════════════════════════════════════════
+
+sync_points:
+
+  after_analysis:
+    waits_for: [analysis_complete]
+    then: dispatch_solvers
+    timeout_ms: 60000
+
+  after_all_solvers:
+    waits_for:
+      signal: solution_complete
+      count: dynamic  # based on dispatched
+    strategy: wait_all
+    timeout_ms: 300000
+    on_partial:
+      min_solutions: 1
+      action: proceed_with_available
+    then: start_synthesis
+
+  after_synthesis:
+    waits_for: [synthesis_complete]
+    then: generate_output
+    timeout_ms: 120000

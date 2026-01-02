@@ -1,0 +1,9 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/1185818338_2036378441_223132457.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_4217992463_3954586671.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_3543090084_1191587962.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_1867405868_2873729818.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_3394500337_2369944106.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_3519182197_1291003591.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_2844360058_2711916005.mp4'
+file 'file:/Users/taipm/GitHub/dev-team/.microai/teams/youtube-team/output/triangle_sum_180/media/videos/scene/480p15/partial_movie_files/Scene1_Intro/624642324_3176104311_2634568910.mp4'

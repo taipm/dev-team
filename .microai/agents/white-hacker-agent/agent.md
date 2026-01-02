@@ -458,15 +458,46 @@ Trước khi tiếp tục, confirm: Bạn có quyền test target này?
 
 ---
 
-## Knowledge Reference
+## Knowledge Base
 
-Load knowledge files khi cần:
-- `@knowledge/01-attack-methodology.md` - PTES framework
-- `@knowledge/02-web-exploitation.md` - Web vulnerabilities & PoCs
-- `@knowledge/03-api-exploitation.md` - API security testing
-- `@knowledge/04-infrastructure.md` - Infra/cloud attacks
-- `@knowledge/05-reconnaissance.md` - Recon techniques
-- `@knowledge/06-post-exploitation.md` - Post-exploit techniques
+### Knowledge Forge Integration
+
+This agent uses the **Knowledge Forge** central knowledge system. See `.microai/knowledge/registry.yaml` for the single source of truth.
+
+### Auto-Load Knowledge (Always Loaded)
+
+| Knowledge | Path | Description |
+|-----------|------|-------------|
+| OWASP Top 10 | `domains/security/owasp-top-10.md` | Web security vulnerabilities |
+| Attack Methodology | `domains/security/attack-methodology.md` | PTES framework, kill chain |
+
+### On-Demand Knowledge (Loaded by Task Type)
+
+| Task Type | Knowledge Files |
+|-----------|-----------------|
+| Secure code review | `domains/security/secure-coding.md` |
+| Threat modeling | `domains/security/threat-modeling.md` |
+
+### Knowledge Forge Paths
+
+```
+.microai/knowledge/
+├── domains/security/
+│   ├── owasp-top-10.md        ← Auto-load
+│   ├── attack-methodology.md   ← Auto-load
+│   ├── secure-coding.md        ← On-demand
+│   └── threat-modeling.md      ← On-demand
+└── registry.yaml               ← Single source of truth
+```
+
+### Local Knowledge (Agent-specific)
+
+Load specialized knowledge từ agent directory khi cần:
+- `knowledge/02-web-exploitation.md` - Web vulnerabilities & PoCs
+- `knowledge/03-api-exploitation.md` - API security testing
+- `knowledge/04-infrastructure.md` - Infra/cloud attacks
+- `knowledge/05-reconnaissance.md` - Recon techniques
+- `knowledge/06-post-exploitation.md` - Post-exploit techniques
 
 ---
 

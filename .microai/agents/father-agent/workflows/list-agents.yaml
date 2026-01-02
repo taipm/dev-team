@@ -1,0 +1,144 @@
+# List Agents Workflow
+# Extracted from father-agent for v2.0
+
+workflow:
+  name: list-agents
+  description: Liệt kê tất cả agents hiện có
+  version: "1.0"
+
+# ════════════════════════════════════════════════════════════════════
+# MAIN WORKFLOW
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: scan
+    name: Scan agents
+    steps:
+      - id: 1.1
+        action: glob
+        path: ".microai/agents/"
+        pattern: "*/agent.md"
+        output: agent_files
+
+      - id: 1.2
+        action: for_each
+        items: agent_files
+        steps:
+          - action: read
+            file: "{item}"
+            output: content
+
+          - action: parse_frontmatter
+            content: content
+            output: metadata
+
+          - action: count_files
+            path: ".microai/agents/{metadata.name}/knowledge/"
+            pattern: "*.md"
+            output: knowledge_count
+
+          - action: check_file
+            path: ".claude/commands/microai/{metadata.name}.md"
+            output: is_registered
+
+          - action: collect
+            data:
+              name: "{metadata.agent.metadata.name}"
+              title: "{metadata.agent.metadata.title}"
+              model: "{metadata.agent.metadata.model}"
+              icon: "{metadata.agent.metadata.icon}"
+              version: "{metadata.agent.metadata.version}"
+              knowledge_count: "{knowledge_count}"
+              registered: "{is_registered}"
+            output: agents_list
+
+  - id: display
+    name: Display results
+    steps:
+      - id: 2.1
+        action: sort
+        data: agents_list
+        by: name
+        order: asc
+
+      - id: 2.2
+        action: display
+        type: table
+        template: |
+          ╔═══════════════════════════════════════════════════════════════════════════════╗
+          ║                           MICROAI AGENTS                                       ║
+          ╠═══════════════════════════════════════════════════════════════════════════════╣
+          ║  Icon  │ Name                    │ Model   │ Knowledge │ Version │ Status     ║
+          ╠════════╪═════════════════════════╪═════════╪═══════════╪═════════╪════════════╣
+          {for agent in agents_list}
+          ║  {agent.icon:^4}  │ {agent.name:<23} │ {agent.model:<7} │ {agent.knowledge_count:^9} │ {agent.version:^7} │ {agent.status:<10} ║
+          {endfor}
+          ╠═══════════════════════════════════════════════════════════════════════════════╣
+          ║  Total: {agents_count} agents                                                  ║
+          ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+      - id: 2.3
+        action: display
+        type: summary
+        template: |
+
+          Quick Commands:
+            /microai:{agent_name}  - Activate an agent
+            *review {agent_name}   - Review agent quality
+            *create                - Create new agent
+
+          Legend:
+            ✓ Registered    - Command active in Claude Code
+            ⚠ Not registered - Need to run registration step
+
+# ════════════════════════════════════════════════════════════════════
+# FILTERS (Optional)
+# ════════════════════════════════════════════════════════════════════
+filters:
+  by_model:
+    description: "Filter by model type"
+    options: [opus, sonnet, haiku, all]
+    default: all
+
+  by_status:
+    description: "Filter by registration status"
+    options: [registered, unregistered, all]
+    default: all
+
+  by_tag:
+    description: "Filter by tag"
+    options_from: all_tags
+    default: all
+
+# ════════════════════════════════════════════════════════════════════
+# STATS (Optional)
+# ════════════════════════════════════════════════════════════════════
+stats:
+  enabled: true
+  metrics:
+    - name: total_agents
+      type: count
+
+    - name: by_model
+      type: group_count
+      field: model
+
+    - name: by_version
+      type: group_count
+      field: version
+
+    - name: total_knowledge
+      type: sum
+      field: knowledge_count
+
+    - name: registered_ratio
+      type: percentage
+      filter: registered == true
+
+  display_template: |
+
+    Statistics:
+      Total agents: {total_agents}
+      By model: opus({opus_count}), sonnet({sonnet_count}), haiku({haiku_count})
+      By version: v2.0({v2_count}), v1.2({v1_count}), unknown({unknown_count})
+      Total knowledge files: {total_knowledge}
+      Registration: {registered_count}/{total_agents} ({registered_ratio}%)

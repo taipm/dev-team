@@ -1,0 +1,429 @@
+# Agent Metadata Schema v2.1
+# Single source of truth for agent definition structure
+# Created: 2026-01-01
+# Updated: 2026-01-01 - LLM optimization (instruction.system, reasoning, on_start)
+
+schema:
+  version: "2.1"
+  description: |
+    MicroAI Agent Definition Schema v2.1
+    Defines the structure for agent.md frontmatter
+
+    Key changes from v2.0:
+    - instruction.system replaces persona.role/identity (full LLM prompt)
+    - reasoning replaces thinking (clearer naming)
+    - activation.on_start replaces activation.steps (natural language)
+    - persona simplified to style + principles
+
+    Key features:
+    - Nested under `agent:` root namespace
+    - Grouped capabilities (tools, skills, knowledge)
+    - Declarative menu with fuzzy triggers
+    - External workflow references
+    - LLM-optimized instruction block
+
+# ════════════════════════════════════════════════════════════════════
+# REQUIRED FIELDS
+# ════════════════════════════════════════════════════════════════════
+required:
+  agent.metadata:
+    id:
+      type: string
+      description: Unique agent identifier (kebab-case)
+      pattern: "^[a-z][a-z0-9-]*-agent$"
+      example: "father-agent"
+
+    name:
+      type: string
+      description: Human-readable agent name
+      example: "Father Agent"
+
+    title:
+      type: string
+      description: Agent's role/subtitle
+      example: "The Agent Creator"
+
+    model:
+      type: enum
+      values: [opus, sonnet, haiku]
+      description: LLM model to use
+      default: sonnet
+
+    language:
+      type: enum
+      values: [vi, en]
+      description: Primary language for responses
+      default: en
+
+  agent.instruction:
+    system:
+      type: string
+      multiline: true
+      description: |
+        Full system prompt for LLM. This is the PRIMARY way to define agent behavior.
+        Should include: identity, purpose, approach, activation behavior.
+      example: |
+        You are Father Agent – the architect of the MicroAI agent ecosystem.
+        Your purpose is to help users create and manage agents.
+        When activated, display menu and wait for command.
+
+  agent.activation:
+    on_start:
+      type: string
+      multiline: true
+      description: Natural language instruction for activation behavior
+      example: "Display menu, greet user, wait for command."
+
+# ════════════════════════════════════════════════════════════════════
+# OPTIONAL FIELDS
+# ════════════════════════════════════════════════════════════════════
+optional:
+  agent.metadata:
+    icon:
+      type: string
+      description: Emoji identifier
+      example: "👨‍👦"
+
+    color:
+      type: string
+      description: UI color
+      values: [purple, red, blue, green, yellow, orange, gray]
+
+    version:
+      type: string
+      description: Schema version used
+      default: "2.0"
+
+    tags:
+      type: array
+      items: string
+      description: Categorical tags
+
+  agent.capabilities:
+    tools:
+      type: array
+      items: string
+      description: Available tools
+      allowed_values:
+        - Bash
+        - Read
+        - Write
+        - Edit
+        - Glob
+        - Grep
+        - TodoWrite
+        - AskUserQuestion
+        - Task
+        - WebFetch
+        - WebSearch
+
+    skills:
+      type: array
+      items: string
+      description: Custom skills available
+
+    knowledge:
+      # Local knowledge (agent-specific)
+      index:
+        type: string
+        description: Path to local knowledge index (relative from agent.md)
+        example: "./knowledge/knowledge-index.yaml"
+      base_path:
+        type: string
+        description: Base path for local knowledge files
+        example: "./knowledge/"
+      templates:
+        type: array
+        items: string
+        description: Agent-specific templates/knowledge (local ./knowledge/ directory)
+        example: "./knowledge/01-agent-template.md"
+
+      # Shared knowledge (Knowledge Forge)
+      shared:
+        type: object
+        description: Reference to shared Knowledge Forge
+        properties:
+          registry:
+            type: string
+            description: Path to Knowledge Forge registry.yaml
+            example: "../../knowledge/registry.yaml"
+          auto_load:
+            type: array
+            items: string
+            description: Knowledge IDs to load on activation (from registry)
+            example: ["patterns/architecture-patterns", "thinking/thinking-frameworks"]
+          on_demand:
+            type: object
+            description: Knowledge IDs loaded by context/keyword
+            example:
+              thinking: ["thinking/thinking-frameworks"]
+              security: ["security/owasp-top-10"]
+
+  agent.persona:
+    style:
+      type: array
+      items: string
+      description: Communication style descriptors
+      example: [Methodical, Structured, Teacher-like]
+
+    principles:
+      type: array
+      items: string
+      description: Core principles guiding behavior (with explanation)
+      example:
+        - "Purpose first - understand WHY before HOW"
+        - "Clear boundaries - agents should do one thing well"
+
+  agent.reasoning:
+    type: object
+    description: Named reasoning patterns for different contexts
+    note: Renamed from 'thinking' for clarity
+    pattern:
+      context_name:
+        type: array
+        items: string
+        description: Steps as arrow-separated flow
+    example:
+      create: [Understand domain → Check overlap → Design minimal → Validate]
+      review: [Check metadata → Verify structure → Score & suggest]
+
+  agent.menu:
+    type: array
+    items:
+      cmd:
+        type: string
+        description: Command trigger (e.g., "*create")
+        pattern: "^\\*[a-z]+$"
+
+      trigger:
+        type: string
+        description: Fuzzy match patterns (pipe-separated)
+        example: "create|tạo|new agent"
+
+      workflow:
+        type: string
+        description: Path to workflow YAML or "inline"
+        example: "./workflows/create-agent.yaml"
+
+      description:
+        type: string
+        description: What this command does
+
+  agent.activation:
+    on_start:
+      type: string
+      multiline: true
+      description: Natural language instruction for what LLM should do when activated
+      example: |
+        Display menu box, greet user in Vietnamese, wait for command.
+        Match input against menu triggers. If no match, ask for clarification.
+
+    critical:
+      type: boolean
+      default: true
+      description: Whether activation sequence is mandatory
+
+  agent.memory:
+    enabled:
+      type: boolean
+      default: false
+      description: Whether agent uses persistent memory
+
+    files:
+      type: array
+      items: string
+      default: [context.md, decisions.md, learnings.md]
+      description: Memory file names
+
+    session_end:
+      type: array
+      items: string
+      description: Actions at session end
+
+  agent.instruction:
+    type: object
+    description: System prompt and behavioral constraints for LLM
+    properties:
+      system:
+        type: string
+        multiline: true
+        required: true
+        description: |
+          Full system prompt for LLM. Should include:
+          - Who the agent is (identity)
+          - What it does (purpose)
+          - How it behaves (approach)
+          - What to do on activation
+        example: |
+          You are Father Agent – the architect and creator of the MicroAI agent ecosystem.
+          Your purpose is to help users create, review, clone, and manage agents.
+          When activated, display your menu and wait for user command.
+
+      must:
+        type: array
+        items: string
+        description: Hard requirements the agent MUST follow (positive constraints)
+        example:
+          - Clarify user intent before executing any workflow
+          - Validate agent structure against schema before completion
+          - Ask user confirmation before writing files
+
+      must_not:
+        type: array
+        items: string
+        description: Hard constraints the agent MUST NOT violate (negative constraints)
+        example:
+          - Perform domain-specific analysis
+          - Assume missing information - always ask
+          - Skip validation steps
+
+# ════════════════════════════════════════════════════════════════════
+# VALIDATION RULES
+# ════════════════════════════════════════════════════════════════════
+validation:
+  rules:
+    - name: agent_root_required
+      check: "frontmatter must have 'agent:' as root key"
+      error: "Missing 'agent:' root namespace"
+
+    - name: metadata_complete
+      check: "agent.metadata must have id, name, title, model, language"
+      error: "Missing required metadata fields"
+
+    - name: persona_defined
+      check: "agent.persona must have role and identity"
+      error: "Missing persona definition"
+
+    - name: activation_steps
+      check: "agent.activation.steps must have at least 2 items"
+      error: "Activation must have at least 2 steps"
+
+    - name: workflow_exists
+      check: "referenced workflow files must exist"
+      error: "Workflow file not found: {path}"
+
+    - name: name_matches_directory
+      check: "agent.metadata.name must match parent directory name"
+      error: "Agent name doesn't match directory"
+
+  warnings:
+    - name: no_icon
+      check: "agent.metadata.icon should be defined"
+      message: "Consider adding an icon for UI display"
+
+    - name: no_menu
+      check: "agent.menu should have at least one item"
+      message: "Agent has no menu commands defined"
+
+    - name: no_knowledge
+      check: "agent.capabilities.knowledge should be defined"
+      message: "No knowledge files configured"
+
+# ════════════════════════════════════════════════════════════════════
+# EXAMPLE MINIMAL AGENT
+# ════════════════════════════════════════════════════════════════════
+examples:
+  minimal:
+    description: Minimal valid agent definition
+    content: |
+      ---
+      agent:
+        metadata:
+          id: example-agent
+          name: Example Agent
+          title: Example Role
+          model: sonnet
+          language: en
+
+        persona:
+          role: Example role
+          identity: Example identity
+
+        activation:
+          steps:
+            - Load persona
+            - Display greeting
+      ---
+
+      # Example Agent
+
+      Agent documentation here...
+
+  full:
+    description: Full-featured agent definition
+    content: |
+      ---
+      agent:
+        metadata:
+          id: full-agent
+          name: Full Featured Agent
+          title: Full Featured Role
+          icon: "🔮"
+          color: purple
+          version: "2.0"
+          model: opus
+          language: vi
+          tags: [example, full-featured]
+
+        capabilities:
+          tools: [Read, Write, Bash, Grep]
+          skills: [skill-name]
+          knowledge:
+            auto_load:
+              - core-knowledge.md
+            on_demand:
+              - advanced-topic.md
+
+        persona:
+          role: Full-featured agent role
+          identity: |
+            Detailed identity description
+            spanning multiple lines.
+          communication_style:
+            - Professional
+            - Detailed
+          principles:
+            - "First principle"
+            - "Second principle"
+
+        thinking:
+          main_task:
+            - Step 1
+            - Step 2
+          edge_cases:
+            - Handle case A
+            - Handle case B
+
+        menu:
+          - cmd: "*main"
+            trigger: "main|start|begin"
+            workflow: "./workflows/main.yaml"
+            description: "Main workflow"
+
+          - cmd: "*help"
+            trigger: "help|guide"
+            workflow: inline
+            description: "Show help"
+
+        activation:
+          critical: true
+          steps:
+            - Load persona
+            - Load knowledge
+            - Display menu
+          critical_actions:
+            - "Check prerequisites"
+
+        memory:
+          enabled: true
+          files: [context.md, decisions.md]
+          session_end:
+            - Save context
+            - Log decisions
+      ---
+
+      # Full Featured Agent
+
+      ## Documentation
+
+      Content here...

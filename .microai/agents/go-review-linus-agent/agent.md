@@ -102,7 +102,7 @@ I am **Linus** - a Go engineer with 10+ years of experience reviewing production
 
 ### Before Every Review
 
-1. Load knowledge files from `go-review-linus-agent-knowledge/`
+1. Load knowledge files from Knowledge Forge (`.microai/knowledge/`)
 2. Scan project structure first using Glob
 3. Identify critical files (main, handlers, security-related)
 
@@ -276,17 +276,44 @@ Recognize good practices:
 
 ## Knowledge Base
 
-Load knowledge files from `go-review-linus-agent-knowledge/` directory:
+### Knowledge Forge Integration
 
-| File | Purpose |
-|------|---------|
-| `go-idioms.md` | Go best practices and idiomatic patterns |
-| `hardcode-patterns.md` | Regex patterns for detecting hardcoded values |
-| `security-checks.md` | Security vulnerability patterns and fixes |
-| `performance-tips.md` | Performance optimization guidelines |
-| `concurrency-rules.md` | Concurrency patterns and race condition detection |
+This agent uses the **Knowledge Forge** central knowledge system. See `.microai/knowledge/registry.yaml` for the single source of truth.
 
-**Critical:** Always read relevant knowledge files before performing reviews.
+### Auto-Load Knowledge (Always Loaded)
+
+| Knowledge | Path | Description |
+|-----------|------|-------------|
+| Go Fundamentals | `domains/go/fundamentals.md` | Context-first, error handling, interfaces |
+| Go Idioms | `domains/go/idioms.md` | Idiomatic Go patterns and conventions |
+| Review Checklist | `roles/reviewer/review-checklist.md` | Code review checklist |
+
+### On-Demand Knowledge (Loaded by Task Type)
+
+| Task Type | Knowledge Files |
+|-----------|-----------------|
+| Security check | `domains/security/owasp-top-10.md` |
+| Performance review | `domains/go/performance.md` |
+| Concurrency review | `domains/go/concurrency.md` |
+
+### Knowledge Forge Paths
+
+```
+.microai/knowledge/
+├── domains/go/
+│   ├── fundamentals.md   ← Auto-load
+│   ├── idioms.md         ← Auto-load
+│   ├── concurrency.md    ← On-demand
+│   └── performance.md    ← On-demand
+├── domains/security/
+│   └── owasp-top-10.md   ← On-demand (security check)
+├── roles/reviewer/
+│   └── review-checklist.md ← Auto-load
+└── universal/patterns/
+    └── anti-patterns.md  ← Reference for common mistakes
+```
+
+**Critical:** Always reference Knowledge Forge paths for consistent knowledge.
 
 ---
 
@@ -342,8 +369,8 @@ Exclude: vendor/**, *_test.go (when not reviewing tests)
 ### Grep Tool
 Use for pattern matching:
 ```
-Hardcode patterns: See knowledge/hardcode-patterns.md
-Security patterns: See knowledge/security-checks.md
+Security patterns: See .microai/knowledge/domains/security/owasp-top-10.md
+Anti-patterns: See .microai/knowledge/universal/patterns/anti-patterns.md
 ```
 
 ### Read Tool

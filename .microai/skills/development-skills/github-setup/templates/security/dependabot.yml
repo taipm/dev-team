@@ -1,0 +1,145 @@
+# Dependabot configuration
+# Location: .github/dependabot.yml
+# Docs: https://docs.github.com/en/code-security/dependabot
+
+version: 2
+
+registries:
+  # Uncomment if using private npm registry
+  # npm-private:
+  #   type: npm-registry
+  #   url: https://npm.pkg.github.com
+  #   token: ${{ secrets.NPM_TOKEN }}
+
+updates:
+  # ==========================================================================
+  # GitHub Actions (always recommended)
+  # ==========================================================================
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+      - "ci"
+    open-pull-requests-limit: 5
+
+  # ==========================================================================
+  # Go (uncomment if Go project)
+  # ==========================================================================
+  # - package-ecosystem: "gomod"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #     day: "monday"
+  #     time: "09:00"
+  #     timezone: "UTC"
+  #   commit-message:
+  #     prefix: "deps(go)"
+  #   labels:
+  #     - "dependencies"
+  #     - "go"
+  #   open-pull-requests-limit: 10
+  #   groups:
+  #     go-minor:
+  #       patterns:
+  #         - "*"
+  #       update-types:
+  #         - "minor"
+  #         - "patch"
+
+  # ==========================================================================
+  # Python pip (uncomment if Python project)
+  # ==========================================================================
+  # - package-ecosystem: "pip"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #     day: "monday"
+  #     time: "09:00"
+  #     timezone: "UTC"
+  #   commit-message:
+  #     prefix: "deps(pip)"
+  #   labels:
+  #     - "dependencies"
+  #     - "python"
+  #   open-pull-requests-limit: 10
+  #   groups:
+  #     python-minor:
+  #       patterns:
+  #         - "*"
+  #       update-types:
+  #         - "minor"
+  #         - "patch"
+
+  # ==========================================================================
+  # npm (uncomment if Node.js project)
+  # ==========================================================================
+  # - package-ecosystem: "npm"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #     day: "monday"
+  #     time: "09:00"
+  #     timezone: "UTC"
+  #   commit-message:
+  #     prefix: "deps(npm)"
+  #   labels:
+  #     - "dependencies"
+  #     - "javascript"
+  #   open-pull-requests-limit: 10
+  #   groups:
+  #     npm-production:
+  #       dependency-type: "production"
+  #       update-types:
+  #         - "minor"
+  #         - "patch"
+  #     npm-dev:
+  #       dependency-type: "development"
+  #       update-types:
+  #         - "minor"
+  #         - "patch"
+  #   ignore:
+  #     # Ignore major version updates for specific packages
+  #     # - dependency-name: "typescript"
+  #     #   update-types: ["version-update:semver-major"]
+
+  # ==========================================================================
+  # Docker (uncomment if using Docker)
+  # ==========================================================================
+  # - package-ecosystem: "docker"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   commit-message:
+  #     prefix: "deps(docker)"
+  #   labels:
+  #     - "dependencies"
+  #     - "docker"
+
+  # ==========================================================================
+  # Terraform (uncomment if using Terraform)
+  # ==========================================================================
+  # - package-ecosystem: "terraform"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #   commit-message:
+  #     prefix: "deps(terraform)"
+  #   labels:
+  #     - "dependencies"
+  #     - "terraform"
+
+# =============================================================================
+# Notes
+# =============================================================================
+# - Uncomment the sections relevant to your project
+# - Adjust timezone to your team's location
+# - Modify open-pull-requests-limit based on your team's capacity
+# - Use groups to reduce PR noise by batching updates
+# - Use ignore to skip problematic or major updates

@@ -1,0 +1,313 @@
+# Review Agent Workflow
+# Extracted from father-agent for v2.0
+
+workflow:
+  name: review-agent
+  description: Review và cải thiện agent
+  version: "1.0"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 1: SELECT AGENT
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: select
+    name: Chọn agent để review
+    steps:
+      - id: 1.1
+        action: list
+        path: ".microai/agents/"
+        pattern: "*/agent.md"
+        display:
+          columns: [name, version, last_modified]
+          format: table
+
+      - id: 1.2
+        action: ask
+        question: "Chọn agent để review:"
+        type: select
+        options_from: step_1.1
+        output: target_agent
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 2: LOAD & ANALYZE
+# ════════════════════════════════════════════════════════════════════
+  - id: analyze
+    name: Load và phân tích
+    steps:
+      - id: 2.1
+        action: read
+        file: ".microai/agents/{target_agent}/agent.md"
+        output: agent_content
+
+      - id: 2.2
+        action: parse_frontmatter
+        content: agent_content
+        output: agent_metadata
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 3: CHECK STANDARDS
+# ════════════════════════════════════════════════════════════════════
+  - id: check_standards
+    name: Check against standards
+    steps:
+      - id: 3.1
+        name: Frontmatter Check
+        action: validate
+        schema: ".microai/schemas/agent-v2.0.schema.yaml"
+        data: agent_metadata
+        output: frontmatter_score
+        checks:
+          - field: agent.metadata.id
+            required: true
+            score: 10
+          - field: agent.metadata.name
+            required: true
+            score: 10
+          - field: agent.metadata.title
+            required: true
+            score: 10
+          - field: agent.metadata.model
+            required: true
+            score: 5
+          - field: agent.metadata.language
+            required: true
+            score: 5
+          - field: agent.metadata.icon
+            required: false
+            score: 3
+          - field: agent.metadata.color
+            required: false
+            score: 2
+
+      - id: 3.2
+        name: Persona Check
+        action: validate
+        checks:
+          - field: agent.persona.role
+            required: true
+            score: 10
+          - field: agent.persona.identity
+            required: true
+            score: 10
+          - field: agent.persona.communication_style
+            required: false
+            score: 5
+          - field: agent.persona.principles
+            required: false
+            score: 5
+            min_items: 3
+
+      - id: 3.3
+        name: Activation Check
+        action: validate
+        checks:
+          - field: agent.activation.steps
+            required: true
+            score: 10
+            min_items: 2
+          - field: agent.activation.critical
+            required: false
+            score: 3
+            expected: true
+
+      - id: 3.4
+        name: Menu Check
+        action: validate
+        checks:
+          - field: agent.menu
+            required: false
+            score: 10
+            min_items: 1
+          - each: agent.menu[]
+            has_fields: [cmd, trigger, description]
+            workflow_exists: true
+
+      - id: 3.5
+        name: Knowledge Check
+        action: check_files
+        path: ".microai/agents/{target_agent}/knowledge/"
+        checks:
+          - pattern: "*.md"
+            min_count: 1
+            score: 10
+          - file: "knowledge-index.yaml"
+            exists: true
+            score: 5
+
+      - id: 3.6
+        name: Command Check
+        action: check_files
+        checks:
+          - file: ".microai/commands/{target_agent}.md"
+            exists: true
+            score: 5
+          - file: ".claude/commands/microai/{target_agent}.md"
+            exists: true
+            score: 5
+
+      - id: 3.7
+        name: Code Examples Check
+        action: search
+        file: agent_content
+        pattern: "```"
+        min_count: 3
+        score: 10
+        message: "Cần ít nhất 3 code examples"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: GENERATE REPORT
+# ════════════════════════════════════════════════════════════════════
+  - id: report
+    name: Generate report
+    steps:
+      - id: 4.1
+        action: calculate
+        scores:
+          - frontmatter_score
+          - persona_score
+          - activation_score
+          - menu_score
+          - knowledge_score
+          - command_score
+          - examples_score
+        output: total_score
+        max_score: 100
+
+      - id: 4.2
+        action: categorize
+        score: total_score
+        categories:
+          - range: [90, 100]
+            grade: A
+            status: "Excellent - Production ready"
+          - range: [75, 89]
+            grade: B
+            status: "Good - Minor improvements needed"
+          - range: [60, 74]
+            grade: C
+            status: "Fair - Several issues to address"
+          - range: [40, 59]
+            grade: D
+            status: "Poor - Major rework needed"
+          - range: [0, 39]
+            grade: F
+            status: "Failing - Does not meet minimum standards"
+
+      - id: 4.3
+        action: collect_issues
+        from_steps: [3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7]
+        output: issues
+
+      - id: 4.4
+        action: display
+        type: report
+        template: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  AGENT REVIEW REPORT                                           ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Agent: {target_agent}                                         ║
+          ║  Score: {total_score}/100 ({grade})                            ║
+          ║  Status: {status}                                              ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  BREAKDOWN                                                      ║
+          ├───────────────────────────────────────────────────────────────┤
+          ║  Frontmatter:    {frontmatter_score}/40  {frontmatter_status}  ║
+          ║  Persona:        {persona_score}/30     {persona_status}       ║
+          ║  Activation:     {activation_score}/13  {activation_status}    ║
+          ║  Knowledge:      {knowledge_score}/15  {knowledge_status}      ║
+          ║  Command:        {command_score}/10   {command_status}         ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  ISSUES FOUND: {issue_count}                                   ║
+          ├───────────────────────────────────────────────────────────────┤
+          {for issue in issues}
+          ║  [{issue.severity}] {issue.message}                            ║
+          {endfor}
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  RECOMMENDATIONS                                               ║
+          ├───────────────────────────────────────────────────────────────┤
+          {for rec in recommendations}
+          ║  {rec.priority}. {rec.action}                                  ║
+          {endfor}
+          ╚═══════════════════════════════════════════════════════════════╝
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 5: AUTO-FIX (Optional)
+# ════════════════════════════════════════════════════════════════════
+  - id: auto_fix
+    name: Apply fixes (optional)
+    steps:
+      - id: 5.1
+        action: ask
+        question: "Muốn auto-fix các issues có thể fix tự động không?"
+        options:
+          - fix_all: "Fix tất cả"
+          - fix_safe: "Chỉ fix các issues an toàn"
+          - review_each: "Review từng issue"
+          - skip: "Bỏ qua"
+        output: fix_choice
+
+      - id: 5.2
+        condition: "fix_choice != 'skip'"
+        action: apply_fixes
+        issues: issues
+        mode: fix_choice
+        backup: true
+        backup_path: ".microai/agents/{target_agent}/backup/"
+
+      - id: 5.3
+        condition: "fix_choice != 'skip'"
+        action: validate
+        script: ".microai/scripts/validate-agent-v2.sh"
+        args: ["{target_agent}"]
+        display: result
+
+      - id: 5.4
+        action: display
+        type: summary
+        template: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  REVIEW COMPLETE                                               ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Issues fixed: {fixed_count}/{issue_count}                     ║
+          ║  New score: {new_score}/100                                    ║
+          ║  Backup: {backup_path}                                         ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+# ════════════════════════════════════════════════════════════════════
+# AUTO-FIXABLE ISSUES
+# ════════════════════════════════════════════════════════════════════
+auto_fixes:
+  missing_version:
+    action: add_field
+    field: agent.metadata.version
+    value: "2.0"
+    safe: true
+
+  missing_icon:
+    action: add_field
+    field: agent.metadata.icon
+    value: "🔮"
+    safe: true
+
+  missing_color:
+    action: add_field
+    field: agent.metadata.color
+    value: "gray"
+    safe: true
+
+  v1_to_v2_migration:
+    action: restructure
+    safe: false
+    requires_review: true
+
+  missing_activation_critical:
+    action: add_field
+    field: agent.activation.critical
+    value: true
+    safe: true
+
+  command_not_registered:
+    action: copy
+    source: ".microai/commands/{agent}.md"
+    dest: ".claude/commands/microai/{agent}.md"
+    safe: true

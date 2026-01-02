@@ -1,0 +1,5 @@
+file 'Scene1_Hook.mp4'
+file 'Scene2_Setup.mp4'
+file 'Scene3_KeyInsight.mp4'
+file 'Scene4_Revelation.mp4'
+file 'Scene5_Conclusion.mp4'

@@ -1,0 +1,410 @@
+# Knowledge Forge Registry
+# Single Source of Truth for all knowledge in the ecosystem
+#
+# Version: 2.0
+# Last Updated: 2026-01-01
+# Part of: Knowledge Forge Initiative
+
+version: "2.0"
+last_updated: "2026-01-01"
+
+# =============================================================================
+# LAYER 1: UNIVERSAL
+# Language-agnostic knowledge usable by ANY agent
+# =============================================================================
+
+universal:
+
+  # --- Thinking Frameworks ---
+  thinking/thinking-frameworks:
+    file: universal/thinking/thinking-frameworks.md
+    source: agents/deep-question-agent/knowledge/01-thinking-frameworks.md
+    tokens: 1500
+    tags: [thinking, methodology, socratic, first-principles]
+    description: "7 thinking frameworks: Socratic, 5-Why, First Principles, etc."
+    status: migrated  # ✅ DONE
+
+  thinking/problem-solving:
+    file: universal/thinking/problem-solving.md
+    source: null  # Created new
+    tokens: 1200
+    tags: [thinking, polya, pdsa]
+    description: "Polya 4-step method, PDSA cycle"
+    status: created  # ✅ DONE
+
+  # --- Patterns ---
+  patterns/architecture-patterns:
+    file: universal/patterns/architecture-patterns.md
+    source: knowledge/shared/architecture-patterns.md
+    tokens: 2000
+    tags: [architecture, design, patterns]
+    description: "Clean Architecture, Hexagonal, DDD patterns"
+    status: migrated  # ✅ DONE
+
+  patterns/design-patterns:
+    file: universal/patterns/design-patterns.md
+    source: null  # Created new
+    tokens: 1800
+    tags: [patterns, design, gof]
+    description: "Common software design patterns"
+    status: created  # ✅ DONE
+
+  patterns/anti-patterns:
+    file: universal/patterns/anti-patterns.md
+    source: null  # Created from multiple sources
+    tokens: 1500
+    tags: [anti-patterns, mistakes, avoid]
+    description: "Common mistakes and what NOT to do"
+    status: created  # ✅ DONE
+
+  # --- Processes ---
+  processes/code-review:
+    file: universal/processes/code-review.md
+    source: null  # Created new universal version
+    tokens: 1200
+    tags: [review, checklist, quality]
+    description: "Universal code review checklist"
+    status: created  # ✅ DONE
+
+  processes/estimation:
+    file: universal/processes/estimation.md
+    source: knowledge/shared/estimation-techniques.md
+    tokens: 1000
+    tags: [estimation, planning, agile]
+    description: "Software estimation techniques"
+    status: migrated  # ✅ DONE
+
+# =============================================================================
+# LAYER 2: DOMAINS
+# Technology/language-specific knowledge
+# =============================================================================
+
+domains:
+
+  # --- Go Language ---
+  go/fundamentals:
+    file: domains/go/fundamentals.md
+    source: teams/go-team/knowledge/shared/01-go-fundamentals.md
+    tokens: 2500
+    tags: [go, basics, idioms]
+    depends_on: []
+    description: "Go language fundamentals, idioms, best practices"
+    status: migrated  # ✅ DONE
+
+  go/concurrency:
+    file: domains/go/concurrency.md
+    source: agents/go-dev-agent/knowledge/06-concurrency.md
+    tokens: 1800
+    tags: [go, concurrency, goroutines, channels]
+    depends_on: [go/fundamentals]
+    description: "Goroutines, channels, sync patterns"
+    status: migrated  # ✅ DONE
+
+  go/http-patterns:
+    file: domains/go/http-patterns.md
+    source: agents/go-dev-agent/knowledge/04-http-patterns.md
+    tokens: 1600
+    tags: [go, http, api, handlers]
+    depends_on: [go/fundamentals]
+    description: "HTTP handlers, middleware, routing"
+    status: migrated  # ✅ DONE
+
+  go/error-handling:
+    file: domains/go/error-handling.md
+    source: teams/go-team/knowledge/shared/02-error-patterns.md
+    tokens: 1400
+    tags: [go, errors, handling]
+    depends_on: [go/fundamentals]
+    description: "Error wrapping, sentinel errors, handling patterns"
+    status: migrated  # ✅ DONE
+
+  go/testing:
+    file: domains/go/testing.md
+    source: teams/go-team/knowledge/shared/04-testing-patterns.md
+    tokens: 1500
+    tags: [go, testing, testify]
+    depends_on: [go/fundamentals]
+    description: "Table-driven tests, testify, mocking"
+    status: migrated  # ✅ DONE
+
+  go/performance:
+    file: domains/go/performance.md
+    source: null  # Created new
+    tokens: 1600
+    tags: [go, performance, optimization]
+    depends_on: [go/fundamentals, go/concurrency]
+    description: "Memory optimization, profiling, benchmarks"
+    status: created  # ✅ DONE
+
+  go/idioms:
+    file: domains/go/idioms.md
+    source: agents/go-review-linus-agent/knowledge/go-idioms.md
+    tokens: 1200
+    tags: [go, idioms, style]
+    depends_on: [go/fundamentals]
+    description: "Idiomatic Go patterns and conventions"
+    status: migrated  # ✅ DONE
+
+  go/graceful-shutdown:
+    file: domains/go/graceful-shutdown.md
+    source: agents/go-dev-agent/knowledge/02-graceful-shutdown.md
+    tokens: 1000
+    tags: [go, shutdown, signals]
+    depends_on: [go/fundamentals, go/concurrency]
+    description: "Graceful shutdown patterns"
+    status: migrated  # ✅ DONE
+
+  # --- Security ---
+  security/owasp-top-10:
+    file: domains/security/owasp-top-10.md
+    source: knowledge/shared/owasp-top-10.md
+    tokens: 3000
+    tags: [security, owasp, vulnerabilities, web]
+    description: "OWASP Top 10 web security vulnerabilities"
+    status: migrated  # ✅ DONE
+
+  security/secure-coding:
+    file: domains/security/secure-coding.md
+    source: teams/dev-security/knowledge/03-secure-code-review.md
+    tokens: 2000
+    tags: [security, coding, review]
+    description: "Secure coding practices"
+    status: migrated  # ✅ DONE
+
+  security/threat-modeling:
+    file: domains/security/threat-modeling.md
+    source: teams/dev-security/knowledge/02-threat-modeling.md
+    tokens: 1800
+    tags: [security, threats, modeling]
+    description: "Threat modeling methodology"
+    status: migrated  # ✅ DONE
+
+  security/attack-methodology:
+    file: domains/security/attack-methodology.md
+    source: agents/white-hacker-agent/knowledge/01-attack-methodology.md
+    tokens: 2500
+    tags: [security, pentesting, attack]
+    description: "Penetration testing methodology"
+    status: migrated  # ✅ DONE
+
+  # --- Testing ---
+  testing/strategies:
+    file: domains/testing/strategies.md
+    source: teams/go-team/knowledge/test/01-test-strategies.md
+    tokens: 1500
+    tags: [testing, strategies, tdd]
+    description: "Test strategies: unit, integration, e2e"
+    status: migrated  # ✅ DONE
+
+  testing/qa-process:
+    file: domains/testing/qa-process.md
+    source: teams/dev-qa/knowledge/01-testing-strategies.md
+    tokens: 1400
+    tags: [testing, qa, process]
+    description: "QA testing process and checklists"
+    status: migrated  # ✅ DONE
+
+  # --- DevOps ---
+  devops/docker-cicd:
+    file: domains/devops/docker-cicd.md
+    source: teams/go-team/knowledge/devops/01-docker-cicd.md
+    tokens: 1600
+    tags: [devops, docker, cicd, github-actions]
+    description: "Docker and CI/CD patterns"
+    status: migrated  # ✅ DONE
+
+# =============================================================================
+# LAYER 3: ROLES
+# Role-specific workflows and templates
+# =============================================================================
+
+roles:
+
+  # --- Architect ---
+  architect/adr-template:
+    file: roles/architect/adr-template.md
+    source: teams/dev-architect/knowledge/02-adr-guide.md
+    tokens: 1000
+    tags: [architect, adr, decisions]
+    description: "Architecture Decision Record template"
+    status: migrated  # ✅ DONE
+
+  architect/system-design:
+    file: roles/architect/system-design.md
+    source: teams/dev-architect/knowledge/03-system-design-checklist.md
+    tokens: 1200
+    tags: [architect, design, checklist]
+    description: "System design checklist"
+    status: migrated  # ✅ DONE
+
+  # --- Reviewer ---
+  reviewer/review-checklist:
+    file: roles/reviewer/review-checklist.md
+    source: teams/go-team/knowledge/reviewer/01-review-checklist.md
+    tokens: 1200
+    tags: [reviewer, checklist, pr]
+    description: "Code review checklist"
+    status: migrated  # ✅ DONE
+
+  # --- PM ---
+  pm/user-stories:
+    file: roles/pm/user-stories.md
+    source: teams/go-team/knowledge/pm/01-user-stories.md
+    tokens: 1000
+    tags: [pm, agile, user-stories, invest]
+    description: "User story format and INVEST criteria"
+    status: migrated  # ✅ DONE
+
+  pm/acceptance-criteria:
+    file: roles/pm/acceptance-criteria.md
+    source: teams/dev-user/knowledge/02-acceptance-criteria-guide.md
+    tokens: 1100
+    tags: [pm, acceptance, criteria]
+    description: "Acceptance criteria guidelines"
+    status: migrated  # ✅ DONE
+
+  # --- QA ---
+  qa/bug-reporting:
+    file: roles/qa/bug-reporting.md
+    source: teams/dev-qa/knowledge/02-bug-reporting-guide.md
+    tokens: 900
+    tags: [qa, bugs, reporting]
+    description: "Bug report format and severity"
+    status: migrated  # ✅ DONE
+
+  qa/test-review:
+    file: roles/qa/test-review.md
+    source: teams/dev-qa/knowledge/03-testability-review.md
+    tokens: 1000
+    tags: [qa, testability, review]
+    description: "Testability review checklist"
+    status: migrated  # ✅ DONE
+
+# =============================================================================
+# AGENT MAPPINGS
+# Which knowledge each agent should load
+# =============================================================================
+
+agents:
+
+  go-dev-agent:
+    description: "Go development specialist"
+    auto_load:
+      - go/fundamentals
+      - go/error-handling
+    on_demand:
+      concurrency_task: [go/concurrency]
+      http_task: [go/http-patterns]
+      security_review: [security/owasp-top-10]
+      testing: [go/testing]
+
+  go-review-linus-agent:
+    description: "Go code reviewer (Linus style)"
+    auto_load:
+      - go/fundamentals
+      - go/idioms
+      - reviewer/review-checklist
+    on_demand:
+      security_check: [security/owasp-top-10]
+      performance_review: [go/performance]
+
+  go-refactor-agent:
+    description: "Go refactoring specialist"
+    auto_load:
+      - go/fundamentals
+      - go/idioms
+    on_demand:
+      performance: [go/performance]
+      patterns: [patterns/design-patterns]
+
+  deep-question-agent:
+    description: "Deep questioning and thinking"
+    auto_load:
+      - thinking/thinking-frameworks
+    on_demand:
+      code_analysis: [patterns/anti-patterns]
+      architecture: [patterns/architecture-patterns]
+
+  white-hacker-agent:
+    description: "Security testing specialist"
+    auto_load:
+      - security/owasp-top-10
+      - security/attack-methodology
+    on_demand:
+      secure_review: [security/secure-coding]
+
+  father-agent:
+    description: "Agent creator meta-agent"
+    auto_load:
+      - patterns/architecture-patterns
+    on_demand:
+      thinking: [thinking/thinking-frameworks]
+
+# =============================================================================
+# TOKEN BUDGETS
+# =============================================================================
+
+budgets:
+  default_auto_load: 5000
+  max_on_demand: 10000
+  warning_threshold: 8000
+  hard_limit: 15000
+
+# =============================================================================
+# MIGRATION STATUS
+# =============================================================================
+
+migration:
+  total_entries: 32
+  status:
+    migrated: 24      # ✅ Files copied from existing sources
+    created: 8        # ✅ New files created
+    total_complete: 32
+
+  completed:
+    universal:
+      - thinking/thinking-frameworks     # migrated
+      - thinking/problem-solving         # created
+      - patterns/architecture-patterns   # migrated
+      - patterns/design-patterns         # created
+      - patterns/anti-patterns           # created
+      - processes/code-review            # created
+      - processes/estimation             # migrated
+
+    domains_go:
+      - fundamentals      # migrated
+      - concurrency       # migrated
+      - http-patterns     # migrated
+      - error-handling    # migrated
+      - testing           # migrated
+      - performance       # created
+      - idioms            # migrated
+      - graceful-shutdown # migrated
+
+    domains_security:
+      - owasp-top-10        # migrated
+      - secure-coding       # migrated
+      - threat-modeling     # migrated
+      - attack-methodology  # migrated
+
+    domains_testing:
+      - strategies   # migrated
+      - qa-process   # migrated
+
+    domains_devops:
+      - docker-cicd  # migrated
+
+    roles:
+      - architect/adr-template    # migrated
+      - architect/system-design   # migrated
+      - reviewer/review-checklist # migrated
+      - pm/user-stories           # migrated
+      - pm/acceptance-criteria    # migrated
+      - qa/bug-reporting          # migrated
+      - qa/test-review            # migrated
+
+  next_steps:
+    - "Update agent.md files to reference new Knowledge Forge paths"
+    - "Delete old scattered source files after verification"
+    - "Validate all agents can load knowledge"
+    - "Add smart loading to agent activation"

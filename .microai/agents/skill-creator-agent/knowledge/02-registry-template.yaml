@@ -1,0 +1,68 @@
+# Skills Registry Template
+# Quản lý tất cả skills trong MicroAI system
+
+version: "1.0"
+source: microai/skills
+updated: "2026-01-02"
+
+# Category Definitions
+categories:
+  document-skills:
+    description: "Skills for document processing (Word, PDF, Excel, PowerPoint)"
+    description_vi: "Skills xử lý tài liệu (Word, PDF, Excel, PowerPoint)"
+    icon: "📄"
+
+  development-skills:
+    description: "Skills for software development and tooling"
+    description_vi: "Skills phát triển phần mềm và công cụ"
+    icon: "🛠️"
+
+  design-skills:
+    description: "Skills for creative and visual design"
+    description_vi: "Skills thiết kế sáng tạo và trực quan"
+    icon: "🎨"
+
+  communication-skills:
+    description: "Skills for enterprise communication and writing"
+    description_vi: "Skills giao tiếp và viết lách doanh nghiệp"
+    icon: "💬"
+
+  analysis-skills:
+    description: "Skills for data analysis and research"
+    description_vi: "Skills phân tích dữ liệu và nghiên cứu"
+    icon: "📊"
+
+# Skill Registry
+skills:
+  # Example skill entry
+  - name: example-skill
+    category: development-skills
+    path: development-skills/example-skill
+    version: "1.0.0"
+    description: "When Claude needs to perform example task"
+    description_vi: "Khi Claude cần thực hiện tác vụ mẫu"
+    tags: [example, template, starter]
+    license: apache-2.0
+    dependencies: []                    # Optional: Other required skills
+    agent_mapping:                      # Optional: Which agents use this skill
+      - dev-agent
+      - backend-agent
+    status: active                      # active | deprecated | experimental
+    created: "2026-01-02"
+    updated: "2026-01-02"
+
+# Registry Schema
+# Each skill entry should have:
+#   - name: string (required) - Skill identifier
+#   - category: string (required) - One of defined categories
+#   - path: string (required) - Relative path from .microai/skills/
+#   - version: string (optional) - Semantic version
+#   - description: string (required) - English description
+#   - description_vi: string (required) - Vietnamese description
+#   - tags: array (required) - Searchable keywords
+#   - license: string (required) - apache-2.0 | proprietary
+#   - dependencies: array (optional) - Required skills
+#   - agent_mapping: array (optional) - Agents using this skill
+#   - status: string (optional) - Skill lifecycle status
+#   - created: string (optional) - Creation date
+#   - updated: string (optional) - Last update date

@@ -33,3 +33,22 @@ go.work.sum
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Security - Sensitive files
+*.pem
+*.key
+*.p12
+*.pfx
+secret*
+*secret*
+credential*
+*credential*
+api_key*
+*api_key*
+*.secrets
+.secrets.baseline
+
+# Logs and temporary files
+*.log
+tmp/
+temp/

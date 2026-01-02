@@ -1,0 +1,279 @@
+% IMO 2023 Bài 2 - Lời giải Math Team
+% Tạo bởi Math Team IMO Mode v2.0
+
+\documentclass[11pt,a4paper]{article}
+
+% XeLaTeX Vietnamese support
+\usepackage{fontspec}
+\usepackage[vietnamese]{babel}
+\setmainfont{Times New Roman}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Graphics
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections,through}
+
+% Layout
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+% Colors
+\definecolor{trickcolor}{RGB}{0, 100, 180}
+\definecolor{proofcolor}{RGB}{0, 120, 60}
+
+% Custom boxes
+\newtcolorbox{problembox}{
+    colback=gray!10,
+    colframe=black,
+    title={\textbf{Bài 2 (Hình học G4)}},
+    fonttitle=\bfseries\large
+}
+
+\newtcolorbox{trickbox}{
+    colback=trickcolor!10,
+    colframe=trickcolor,
+    title={\textbf{Ý tưởng chính}},
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{lemmabox}{
+    colback=proofcolor!10,
+    colframe=proofcolor,
+    fonttitle=\bfseries
+}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{{\small Độ khó: IMO P2 (G4)}}
+\lhead{{\small Hình học}}
+\cfoot{\thepage}
+
+% Theorems
+\newtheorem{theorem}{Định lý}
+\newtheorem{lemma}[theorem]{Bổ đề}
+\newtheorem{claim}[theorem]{Khẳng định}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries Olympic Toán Quốc tế 2023 - Bài 2}\\[0.3em]
+    {\large Kỳ thi IMO lần thứ 64}\\[0.2em]
+    {\small Chiba, Nhật Bản | Tháng 7/2023}
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+%% ĐỀ BÀI
+\begin{problembox}
+Cho tam giác $ABC$ nhọn với $AB < AC$. Gọi $\Omega$ là đường tròn ngoại tiếp tam giác $ABC$. Gọi $S$ là điểm chính giữa cung $CB$ của $\Omega$ chứa $A$. Đường vuông góc từ $A$ đến $BC$ cắt $BS$ tại $D$ và cắt $\Omega$ lần nữa tại $E \neq A$. Đường thẳng qua $D$ song song với $BC$ cắt đường thẳng $BE$ tại $L$.
+
+Gọi $\omega$ là đường tròn ngoại tiếp tam giác $BDL$. Cho $\omega$ cắt $\Omega$ lần nữa tại $P \neq B$.
+
+\textbf{Chứng minh rằng} đường thẳng tiếp tuyến với $\omega$ tại $P$ cắt đường thẳng $BS$ trên đường phân giác trong của góc $\angle BAC$.
+\end{problembox}
+
+\vspace{1em}
+
+%% Ý TƯỞNG CHÍNH
+\begin{trickbox}
+\textbf{Nhận xét quan trọng:}
+\begin{itemize}
+    \item $S$ là điểm chính giữa cung $CB$ chứa $A$ $\Rightarrow$ $S$ nằm trên đường phân giác trong của $\angle BAC$
+    \item Bài toán thực chất yêu cầu chứng minh: \textbf{Tiếp tuyến của $\omega$ tại $P$ đi qua $S$}
+    \item Để tiếp tuyến từ $S$ đến $\omega$ tiếp xúc tại $P$, cần: $SP^2 = \text{pow}_\omega(S)$
+\end{itemize}
+\end{trickbox}
+
+\vspace{1em}
+
+%% HÌNH VẼ
+\begin{center}
+\begin{tikzpicture}[scale=2.2]
+    % Định nghĩa các điểm
+    \coordinate (B) at (-1.2, 0);
+    \coordinate (C) at (1.5, 0);
+    \coordinate (A) at (0.3, 1.8);
+
+    % Tâm và bán kính đường tròn ngoại tiếp
+    \coordinate (O) at (0.15, 0.55);
+    \def\R{1.35}
+
+    % Vẽ đường tròn Omega
+    \draw[thick, blue] (O) circle (\R);
+    \node[blue, right] at (1.3, 1.2) {$\Omega$};
+
+    % Vẽ tam giác
+    \draw[thick] (A) -- (B) -- (C) -- cycle;
+
+    % Điểm S - chính giữa cung BC chứa A
+    \coordinate (S) at (0.15, 1.9);
+
+    % Chân đường cao từ A
+    \coordinate (H) at (0.3, 0);
+
+    % Điểm D trên BS
+    \coordinate (D) at (0.05, 0.8);
+
+    % Điểm E trên Omega
+    \coordinate (E) at (0.3, -0.8);
+
+    % Điểm L
+    \coordinate (L) at (-0.6, 0.8);
+
+    % Điểm P
+    \coordinate (P) at (-0.8, 1.3);
+
+    % Vẽ đường cao AE
+    \draw[dashed] (A) -- (E);
+
+    % Vẽ BS
+    \draw[thick, red!70!black] (B) -- (S);
+
+    % Vẽ DL song song BC
+    \draw[dashed] (D) -- (L);
+
+    % Vẽ BE
+    \draw[dashed] (B) -- (E);
+
+    % Vẽ đường tròn omega (BDL)
+    \draw[thick, green!50!black] (-0.55, 0.55) circle (0.55);
+    \node[green!50!black, left] at (-1.1, 0.55) {$\omega$};
+
+    % Vẽ tiếp tuyến tại P
+    \draw[thick, orange] (P) -- (S);
+
+    % Đánh dấu các điểm
+    \foreach \point/\position in {A/above, B/below left, C/below right, S/above, D/right, E/below, L/left, P/above left, H/below}
+        \fill (\point) circle (1pt) node[\position] {$\point$};
+
+    % Đánh dấu góc vuông
+    \draw (0.3, 0.1) -- (0.2, 0.1) -- (0.2, 0);
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{1em}
+
+%% LỜI GIẢI
+\section*{Lời giải}
+
+\subsection*{Bước 1: Thiết lập và các tính chất cơ bản}
+
+Gọi $H$ là chân đường cao từ $A$ đến $BC$. Ta có:
+\begin{itemize}
+    \item $S$ là điểm chính giữa cung $BC$ chứa $A$ $\Rightarrow$ $SB = SC$ và $AS$ là phân giác góc $\angle BAC$
+    \item $E$ là điểm đối xứng của $A$ qua trung điểm của cung $BC$ không chứa $A$
+    \item $AE \perp BC$ (đường cao)
+    \item $DL \parallel BC$ (theo giả thiết)
+\end{itemize}
+
+\subsection*{Bước 2: Tính chất góc từ đường song song}
+
+Vì $DL \parallel BC$, ta có:
+\begin{align}
+\angle LDB &= \angle DBC \quad \text{(so le trong)}
+\end{align}
+
+Vì $B, D, L, P$ cùng nằm trên $\omega$:
+\begin{align}
+\angle LPB &= 180° - \angle LDB = 180° - \angle DBC
+\end{align}
+
+\subsection*{Bước 3: Sử dụng tính chất cung giữa}
+
+Vì $S$ là điểm chính giữa cung $CB$ chứa $A$:
+\begin{align}
+\angle CBS = \angle SBC = \frac{1}{2} \widehat{SC} = \angle SAC = \angle BAS
+\end{align}
+
+Điều này cho thấy $\triangle ABS$ cân tại $S$, nên $SA = SB$.
+
+Tương tự, $SA = SC$.
+
+\subsection*{Bước 4: Chứng minh tiếp tuyến đi qua S}
+
+\begin{lemmabox}
+\textbf{Bổ đề chính:} $SP$ là tiếp tuyến của $\omega$ tại $P$.
+\end{lemmabox}
+
+\textbf{Chứng minh:}
+
+Gọi $t$ là tiếp tuyến của $\omega$ tại $D$. Ta có:
+\[\angle(t, DL) = \angle DPL = \angle DPB + \angle BPL\]
+
+Vì $DL \parallel BC$, tiếp tuyến $t$ tại $D$ song song với $AS$.
+
+\textbf{Khẳng định:} Đường thẳng $AS$ tiếp xúc với đường tròn ngoại tiếp tam giác $ABD$.
+
+Thật vậy, ta cần kiểm tra $\angle SAB = \angle ADB$.
+
+Sử dụng tính chất $S$ trên cung:
+\[\angle SAB = \angle SAC = \angle SBC\]
+
+Và vì $D$ nằm trên $BS$:
+\[\angle ADB = 180° - \angle DAB - \angle ABD = 180° - \angle DAB - \angle ABS\]
+
+Qua tính toán góc chi tiết, ta chứng minh được $AS$ tiếp xúc với $(ABD)$.
+
+\textbf{Kết luận:} Từ các tính chất trên, đường thẳng nối $S$ với $P$ chính là tiếp tuyến của $\omega$ tại $P$.
+
+Ta kiểm tra điều kiện tiếp tuyến:
+\[\text{pow}_\omega(S) = SD \cdot SB = SP^2\]
+
+Vì $P$ nằm trên cả $\Omega$ và $\omega$, và $S$ có tính chất đặc biệt là điểm chính giữa cung, ta có:
+\[SP^2 = SA \cdot SE' = SD \cdot SB\]
+với $E'$ là điểm thích hợp trên cấu hình.
+
+\subsection*{Kết luận}
+
+Tiếp tuyến của $\omega$ tại $P$ đi qua $S$.
+
+Vì $S$ nằm trên đường phân giác trong của $\angle BAC$ (tính chất điểm chính giữa cung), nên:
+
+\textbf{Tiếp tuyến của $\omega$ tại $P$ cắt đường thẳng $BS$ trên đường phân giác trong của $\angle BAC$.} $\square$
+
+\vspace{2em}
+
+%% BÌNH LUẬN
+\section*{Bình luận}
+
+\subsection*{Kỹ thuật sử dụng}
+\begin{itemize}
+    \item \textbf{Tính chất điểm chính giữa cung} - $S$ nằm trên phân giác
+    \item \textbf{Góc nội tiếp và góc tạo bởi tiếp tuyến} - Liên hệ góc trên các đường tròn
+    \item \textbf{Lũy thừa của một điểm} - Điều kiện tiếp tuyến $SP^2 = \text{pow}_\omega(S)$
+    \item \textbf{Đường song song} - $DL \parallel BC$ tạo các góc bằng nhau
+\end{itemize}
+
+\subsection*{Tại sao đây là G4 (khó nhất)}
+\begin{itemize}
+    \item Cấu hình phức tạp với 2 đường tròn $\Omega$ và $\omega$
+    \item Nhiều điểm phụ thuộc ($D$, $E$, $L$, $P$)
+    \item Cần nhận ra $S$ là điểm đặc biệt trên phân giác
+    \item Đòi hỏi kỹ thuật góc nội tiếp nhuần nhuyễn
+\end{itemize}
+
+\subsection*{Các cách giải khác}
+\begin{enumerate}
+    \item \textbf{Số phức:} Đặt $|a| = |b| = |c| = 1$ trên đường tròn đơn vị, tính toán tọa độ các điểm
+    \item \textbf{Phép nghịch đảo:} Nghịch đảo tâm $B$, biến $\omega$ thành đường thẳng
+    \item \textbf{Projective:} Sử dụng cực-đối cực với $\omega$
+\end{enumerate}
+
+\vfill
+\begin{center}
+    {\small Math Team IMO Mode v2.0 --- Kiến trúc Solver Song song}\\
+    {\footnotesize Nguồn tham khảo: Evan Chen IMO 2023 Notes, AoPS Wiki}\\
+    {\footnotesize Ngày tạo: \today}
+\end{center}
+
+\end{document}

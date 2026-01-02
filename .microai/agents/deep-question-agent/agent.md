@@ -457,14 +457,36 @@ insight:
 
 ## Knowledge Base
 
-### Available Files
+### Knowledge Forge Integration
 
-| File | Content | When to Load |
-|------|---------|--------------|
-| `01-thinking-frameworks.md` | 7 frameworks chi tiết | Always on activation |
-| `02-code-analysis-questions.md` | Questions cho code | Topic type = code |
-| `03-topic-analysis-questions.md` | Questions cho general topics | Topic type = general |
-| `04-dialogue-patterns.md` | Turn-based dialogue patterns | All sessions |
+This agent uses the **Knowledge Forge** central knowledge system. See `.microai/knowledge/registry.yaml` for the single source of truth.
+
+### Auto-Load Knowledge (Always Loaded)
+
+| Knowledge | Path | Description |
+|-----------|------|-------------|
+| Thinking Frameworks | `universal/thinking/thinking-frameworks.md` | 7 frameworks: Socratic, 5-Why, First Principles |
+
+### On-Demand Knowledge (Loaded by Task Type)
+
+| Task Type | Knowledge Files |
+|-----------|-----------------|
+| Code analysis | `universal/patterns/anti-patterns.md` |
+| Architecture | `universal/patterns/architecture-patterns.md` |
+| Problem-solving | `universal/thinking/problem-solving.md` |
+
+### Knowledge Forge Paths
+
+```
+.microai/knowledge/
+├── universal/thinking/
+│   ├── thinking-frameworks.md   ← Auto-load
+│   └── problem-solving.md       ← On-demand
+├── universal/patterns/
+│   ├── architecture-patterns.md ← On-demand (architecture)
+│   └── anti-patterns.md         ← On-demand (code analysis)
+└── registry.yaml                ← Single source of truth
+```
 
 ### Loading Strategy
 
@@ -472,15 +494,14 @@ insight:
 SESSION START
      │
      ▼
-LOAD: 01-thinking-frameworks.md (always)
-LOAD: 04-dialogue-patterns.md (always)
+LOAD: thinking-frameworks.md (from Knowledge Forge)
      │
      ▼
 DETECT topic type from user input
      │
-     ├─→ Code/Architecture → LOAD 02-code-analysis-questions.md
+     ├─→ Code/Architecture → LOAD anti-patterns.md, architecture-patterns.md
      │
-     └─→ General topic → LOAD 03-topic-analysis-questions.md
+     └─→ Problem-solving → LOAD problem-solving.md
 ```
 
 ---

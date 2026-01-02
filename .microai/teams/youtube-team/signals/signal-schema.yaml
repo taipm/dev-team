@@ -1,0 +1,321 @@
+# YouTube Team Signal Schema
+# Defines all signals for video production workflow
+
+version: "1.0.0"
+team: youtube-team
+
+# Signal Categories
+categories:
+  lifecycle:
+    description: "Main workflow progression signals"
+    signals:
+      - problem_received
+      - analysis_complete
+      - script_complete
+      - script_approved
+      - creators_dispatched
+      - solution_complete
+      - animation_complete
+      - voiceover_complete
+      - assets_ready
+      - render_started
+      - render_complete
+      - video_complete
+      - thumbnail_complete
+      - session_complete
+
+  quality:
+    description: "Quality control and review signals"
+    signals:
+      - review_requested
+      - revision_needed
+      - quality_approved
+
+  error:
+    description: "Error and failure signals"
+    signals:
+      - analysis_failed
+      - script_rejected
+      - render_failed
+      - composition_failed
+
+  control:
+    description: "User control signals"
+    signals:
+      - user_interrupt
+      - user_skip
+      - user_retry
+
+# Signal Definitions
+signals:
+  # ═══════════════════════════════════════════════════════════════
+  # LIFECYCLE SIGNALS
+  # ═══════════════════════════════════════════════════════════════
+
+  problem_received:
+    description: "User submitted a math problem for video creation"
+    emitter: youtube-maestro
+    listeners: [content-analyzer, youtube-scribe]
+    payload:
+      problem_text: string
+      user_preferences:
+        format: "shorts|standard|both"
+        style: "educational|entertaining|quick"
+        language: "vi|en"
+
+  analysis_complete:
+    description: "Content analysis finished, ready for scripting"
+    emitter: content-analyzer
+    listeners: [script-planner, youtube-maestro]
+    payload:
+      problem_type: string
+      video_format: string
+      key_moments: array
+      visual_opportunities: array
+      estimated_duration: number
+      difficulty_for_audience: string
+
+  script_complete:
+    description: "Video script is ready for review"
+    emitter: script-planner
+    listeners: [youtube-maestro]
+    payload:
+      script:
+        intro: object
+        problem_statement: object
+        solution_steps: array
+        conclusion: object
+      timing_marks: array
+      visual_cues: array
+      total_duration: number
+
+  script_approved:
+    description: "Script approved, dispatch creators"
+    emitter: youtube-maestro
+    listeners: [solution-writer, animation-designer, voiceover-writer]
+    payload:
+      approved_script: object
+      target_format: string
+      quality_preset: string
+
+  creators_dispatched:
+    description: "All creator agents have been activated"
+    emitter: youtube-maestro
+    listeners: [youtube-scribe]
+    payload:
+      dispatched_creators: array
+      expected_completion: number
+
+  solution_complete:
+    description: "Mathematical solution is ready"
+    emitter: solution-writer
+    listeners: [youtube-maestro]
+    payload:
+      solution_steps: array
+      key_insights: array
+      latex_content: string
+
+  animation_complete:
+    description: "Manim animation code is ready"
+    emitter: animation-designer
+    listeners: [youtube-maestro]
+    payload:
+      scenes: array
+      manim_code: string
+      estimated_render_time: number
+
+  voiceover_complete:
+    description: "Narration script is ready"
+    emitter: voiceover-writer
+    listeners: [youtube-maestro]
+    payload:
+      narration_script: string
+      timing_marks: array
+      word_count: number
+      estimated_duration: number
+
+  assets_ready:
+    description: "All creator outputs collected, ready to render"
+    emitter: youtube-maestro
+    listeners: [manim-renderer]
+    payload:
+      solution: object
+      animation: object
+      voiceover: object
+      render_preset: string
+
+  render_started:
+    description: "Manim rendering has begun"
+    emitter: manim-renderer
+    listeners: [youtube-scribe]
+    payload:
+      scene_count: number
+      quality: string
+      estimated_time: number
+
+  render_complete:
+    description: "Manim rendering finished"
+    emitter: manim-renderer
+    listeners: [video-compositor]
+    payload:
+      video_files: array
+      total_duration: number
+      render_log: string
+
+  video_complete:
+    description: "Final video is ready"
+    emitter: video-compositor
+    listeners: [thumbnail-creator, youtube-maestro]
+    payload:
+      video_path: string
+      duration: number
+      chapters: array
+      format: string
+
+  thumbnail_complete:
+    description: "Thumbnail created"
+    emitter: thumbnail-creator
+    listeners: [youtube-maestro]
+    payload:
+      thumbnail_path: string
+      alt_thumbnails: array
+
+  session_complete:
+    description: "Video production session finished"
+    emitter: youtube-maestro
+    listeners: [youtube-scribe]
+    payload:
+      video_path: string
+      thumbnail_path: string
+      duration: number
+      production_metrics:
+        total_time: number
+        agents_used: array
+        quality: string
+
+  # ═══════════════════════════════════════════════════════════════
+  # QUALITY SIGNALS
+  # ═══════════════════════════════════════════════════════════════
+
+  review_requested:
+    description: "Request user review at checkpoint"
+    emitter: youtube-maestro
+    listeners: []
+    payload:
+      checkpoint: string
+      preview_data: object
+      options: array
+
+  revision_needed:
+    description: "Content needs revision"
+    emitter: youtube-maestro
+    listeners: [solution-writer, animation-designer, voiceover-writer]
+    payload:
+      target_agent: string
+      revision_notes: string
+
+  quality_approved:
+    description: "Quality check passed"
+    emitter: youtube-maestro
+    listeners: [youtube-scribe]
+    payload:
+      checkpoint: string
+      approval_notes: string
+
+  # ═══════════════════════════════════════════════════════════════
+  # ERROR SIGNALS
+  # ═══════════════════════════════════════════════════════════════
+
+  analysis_failed:
+    description: "Content analysis failed"
+    emitter: content-analyzer
+    listeners: [youtube-maestro]
+    payload:
+      error: string
+      suggestion: string
+
+  script_rejected:
+    description: "Script rejected by user"
+    emitter: youtube-maestro
+    listeners: [script-planner]
+    payload:
+      reason: string
+      revision_request: string
+
+  render_failed:
+    description: "Manim rendering failed"
+    emitter: manim-renderer
+    listeners: [youtube-maestro]
+    payload:
+      error: string
+      failed_scene: string
+      suggestion: string
+
+  composition_failed:
+    description: "Video composition failed"
+    emitter: video-compositor
+    listeners: [youtube-maestro]
+    payload:
+      error: string
+      suggestion: string
+
+  # ═══════════════════════════════════════════════════════════════
+  # CONTROL SIGNALS
+  # ═══════════════════════════════════════════════════════════════
+
+  user_interrupt:
+    description: "User interrupted production"
+    emitter: user
+    listeners: [youtube-maestro]
+    payload:
+      action: "pause|skip|retry|cancel"
+      reason: string
+
+  user_skip:
+    description: "User chose to skip current step"
+    emitter: user
+    listeners: [youtube-maestro]
+    payload:
+      skipped_step: string
+
+  user_retry:
+    description: "User requested retry"
+    emitter: user
+    listeners: [youtube-maestro]
+    payload:
+      retry_from: string
+      modified_params: object
+
+# Sync Points
+sync_points:
+  after_analysis:
+    wait_for: [analysis_complete]
+    action: activate_script_planner
+
+  after_script:
+    wait_for: [script_complete]
+    action: await_user_approval
+
+  after_creators:
+    wait_for: [solution_complete, animation_complete, voiceover_complete]
+    strategy: wait_all
+    min_required: 2
+    timeout: 300000
+    action: start_rendering
+
+  after_render:
+    wait_for: [render_complete]
+    action: start_composition
+
+  after_composition:
+    wait_for: [video_complete]
+    action: create_thumbnail
+
+# Timeouts (milliseconds)
+timeouts:
+  analysis: 60000       # 1 minute
+  scripting: 120000     # 2 minutes
+  creator: 300000       # 5 minutes each
+  rendering: 600000     # 10 minutes
+  composition: 300000   # 5 minutes
+  thumbnail: 60000      # 1 minute

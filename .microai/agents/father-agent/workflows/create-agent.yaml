@@ -1,0 +1,222 @@
+# Create Agent Workflow
+# Extracted from father-agent for v2.0
+
+workflow:
+  name: create-agent
+  description: Tạo agent mới từ đầu
+  version: "1.0"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 1: DISCOVERY
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: discovery
+    name: Thu thập thông tin
+    steps:
+      - id: 1.1
+        action: ask
+        question: "Agent này sẽ chuyên về domain gì?"
+        output: domain
+        validation:
+          required: true
+          min_length: 10
+
+      - id: 1.2
+        action: ask
+        question: "Target codebase/project là gì?"
+        output: target_project
+        validation:
+          required: false
+
+      - id: 1.3
+        action: ask
+        question: "Những patterns chính cần document?"
+        output: patterns
+        validation:
+          required: true
+          type: list
+
+      - id: 1.4
+        action: ask
+        question: "Communication style mong muốn?"
+        output: style
+        options:
+          - "Professional và formal"
+          - "Friendly và casual"
+          - "Teacher-like và methodical"
+          - "Direct và concise"
+
+  - id: validate
+    name: Validate input
+    steps:
+      - id: 2.1
+        action: check
+        condition: "domain.specificity >= 3"
+        error: "Domain chưa đủ specific. Hãy mô tả chi tiết hơn."
+
+      - id: 2.2
+        action: search
+        target: ".microai/agents/"
+        pattern: "**/*.md"
+        check: overlap
+        on_overlap:
+          suggest: "Agent {existing} có overlap. Suggest extend thay vì create mới?"
+          options:
+            - extend_existing
+            - create_anyway
+            - cancel
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 2: STRUCTURE
+# ════════════════════════════════════════════════════════════════════
+  - id: structure
+    name: Tạo cấu trúc
+    steps:
+      - id: 3.1
+        action: mkdir
+        path: ".microai/agents/{agent_name}/"
+
+      - id: 3.2
+        action: mkdir
+        path: ".microai/agents/{agent_name}/knowledge/"
+
+      - id: 3.3
+        action: mkdir
+        path: ".microai/agents/{agent_name}/workflows/"
+        condition: has_complex_workflows
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 3: CONTENT GENERATION
+# ════════════════════════════════════════════════════════════════════
+  - id: content
+    name: Generate content
+    steps:
+      - id: 4.1
+        action: load_template
+        template: "knowledge/01-agent-template.md"
+        output: agent_template
+
+      - id: 4.2
+        action: generate
+        type: agent_definition
+        inputs:
+          - domain
+          - target_project
+          - patterns
+          - style
+        template: agent_template
+        output_path: ".microai/agents/{agent_name}/agent.md"
+
+      - id: 4.3
+        action: generate_knowledge
+        for_each: patterns
+        template: "knowledge/03-knowledge-template.md"
+        naming: "{index:02d}-{pattern_name}.md"
+        output_path: ".microai/agents/{agent_name}/knowledge/"
+
+      - id: 4.4
+        action: generate
+        type: knowledge_index
+        template: "knowledge/04-index-template.yaml"
+        output_path: ".microai/agents/{agent_name}/knowledge/knowledge-index.yaml"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: REGISTRATION (2-Step)
+# ════════════════════════════════════════════════════════════════════
+  - id: registration
+    name: Register command
+    steps:
+      - id: 5.1
+        action: load_template
+        template: "knowledge/02-command-template.md"
+        output: command_template
+
+      - id: 5.2
+        name: "Step 1 - BUILD: Create in library"
+        action: write
+        content: command_template
+        path: ".microai/commands/{agent_name}.md"
+
+      - id: 5.3
+        name: "Step 2 - REGISTER: Copy to runtime"
+        action: copy
+        source: ".microai/commands/{agent_name}.md"
+        dest: ".claude/commands/microai/{agent_name}.md"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 5: VERIFICATION
+# ════════════════════════════════════════════════════════════════════
+  - id: verification
+    name: Verify creation
+    steps:
+      - id: 6.1
+        action: check_files
+        paths:
+          - ".microai/agents/{agent_name}/agent.md"
+          - ".microai/commands/{agent_name}.md"
+          - ".claude/commands/microai/{agent_name}.md"
+        on_missing: error
+
+      - id: 6.2
+        action: validate
+        script: ".microai/scripts/validate-agent-v2.sh"
+        args: ["{agent_name}"]
+
+      - id: 6.3
+        action: display
+        type: summary
+        template: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  AGENT CREATED SUCCESSFULLY                                    ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Name: {agent_name}                                            ║
+          ║  Path: .microai/agents/{agent_name}/                           ║
+          ║  Command: /microai:{agent_name}                                ║
+          ║                                                                 ║
+          ║  Files created:                                                 ║
+          ║    - agent.md                                                   ║
+          ║    - knowledge/{count} files                                    ║
+          ║    - command registered                                         ║
+          ║                                                                 ║
+          ║  Test: Gõ /microai:{agent_name} để test                        ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+# ════════════════════════════════════════════════════════════════════
+# OPTIONAL: MEMORY SETUP
+# ════════════════════════════════════════════════════════════════════
+  - id: memory_setup
+    name: Setup memory (optional)
+    condition: user_wants_memory
+    steps:
+      - id: 7.1
+        action: mkdir
+        path: ".microai/agents/{agent_name}/memory/"
+
+      - id: 7.2
+        action: write
+        template: "knowledge/06-memory-template.md"
+        files:
+          - context.md
+          - decisions.md
+          - learnings.md
+        path: ".microai/agents/{agent_name}/memory/"
+
+# ════════════════════════════════════════════════════════════════════
+# ERROR HANDLING
+# ════════════════════════════════════════════════════════════════════
+error_handling:
+  on_validation_error:
+    action: rollback
+    message: "Validation failed. Rolling back changes."
+
+  on_file_exists:
+    action: ask
+    question: "File đã tồn tại. Overwrite?"
+    options:
+      - overwrite
+      - skip
+      - cancel
+
+  on_cancel:
+    action: cleanup
+    message: "Operation cancelled. Cleaning up..."

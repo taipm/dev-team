@@ -1,0 +1,556 @@
+\chapter{Phương pháp điểm rơi - Lý thuyết tổng quát}
+
+\begin{flushright}
+\textit{``Một bài toán hay đặt ra không chỉ là thử thách, mà còn là cơ hội để ta hiểu sâu hơn về toán học.''} \\
+--- Issai Schur
+\end{flushright}
+
+\section{Giới thiệu}
+
+Trong Chương 1, chúng ta đã làm quen với khái niệm điểm rơi và hiểu được tầm quan trọng của nó trong việc chứng minh bất đẳng thức. Câu hỏi tự nhiên đặt ra là: \textit{Làm thế nào để xác định điểm rơi một cách có hệ thống?}
+
+Chương này sẽ trình bày các phương pháp lý thuyết để xác định và sử dụng điểm rơi:
+\begin{itemize}
+    \item Nguyên lý xác định điểm rơi qua thử điểm đặc biệt và đạo hàm
+    \item Phương pháp Lagrange multipliers cho bất đẳng thức có ràng buộc
+    \item Phương pháp SOS (Sum of Squares) --- phân tích thành tổng bình phương
+    \item Phương pháp pqr cho hệ 3 biến
+\end{itemize}
+
+\section{Nguyên lý xác định điểm rơi}
+
+\subsection{Phương pháp thử điểm đặc biệt}
+
+Ý tưởng đơn giản nhất là \textbf{thử các điểm đặc biệt} để tìm điểm rơi. Các điểm cần thử bao gồm:
+
+\begin{enumerate}
+    \item \textbf{Điểm đối xứng:} $a = b = c$
+    \item \textbf{Điểm biên:} $a = 0$ hoặc $a = b, c = 0$
+    \item \textbf{Điểm hỗn hợp:} $a = b \neq c$
+\end{enumerate}
+
+\begin{algorithm}[Xác định điểm rơi bằng thử điểm]
+Cho bất đẳng thức $f(a,b,c) \geq g(a,b,c)$ với ràng buộc $h(a,b,c) = k$.
+
+\textbf{Bước 1:} Thử $a = b = c$ thỏa mãn ràng buộc. Kiểm tra VT $=$ VP?
+
+\textbf{Bước 2:} Nếu Bước 1 không thành công, thử $a = b, c = 0$.
+
+\textbf{Bước 3:} Nếu Bước 2 không thành công, thử $a = 0, b = c$.
+
+\textbf{Bước 4:} So sánh các giá trị $f - g$ tại các điểm thử để xác định điểm rơi.
+\end{algorithm}
+
+\begin{example}[Xác định điểm rơi bằng thử điểm]
+Cho $a, b, c \geq 0$ với $a + b + c = 3$. Xác định điểm rơi của:
+\[
+a^2 + b^2 + c^2 \geq ?
+\]
+
+\textbf{Thử điểm:}
+\begin{itemize}
+    \item $a = b = c = 1$: VT $= 3$
+    \item $a = 3, b = c = 0$: VT $= 9$
+    \item $a = b = 1.5, c = 0$: VT $= 4.5$
+\end{itemize}
+
+\textbf{Kết luận:} Giá trị nhỏ nhất là $3$, đạt tại $a = b = c = 1$.
+
+Vậy bất đẳng thức là $a^2 + b^2 + c^2 \geq 3$ với điểm rơi $(1, 1, 1)$.
+\end{example}
+
+\subsection{Phương pháp đạo hàm riêng}
+
+Từ góc độ giải tích, điểm rơi của bất đẳng thức $f(a,b,c) \geq g(a,b,c)$ chính là điểm cực trị của hàm:
+\[
+h(a,b,c) = f(a,b,c) - g(a,b,c)
+\]
+
+Tại điểm cực trị nội, các đạo hàm riêng triệt tiêu:
+\[
+\frac{\partial h}{\partial a} = \frac{\partial h}{\partial b} = \frac{\partial h}{\partial c} = 0
+\]
+
+\begin{theorem}[Điều kiện cần cho cực trị]
+Nếu $h(a,b,c)$ có cực trị tại điểm nội $(a_0, b_0, c_0)$ trong miền xác định, thì:
+\[
+\nabla h(a_0, b_0, c_0) = \mathbf{0}
+\]
+\end{theorem}
+
+\begin{example}[Sử dụng đạo hàm riêng]
+Tìm giá trị nhỏ nhất của $f(a,b,c) = a^2 + b^2 + c^2$ với $a + b + c = 3$, $a,b,c > 0$.
+
+\textbf{Lời giải.} Sử dụng Lagrange:
+\[
+\mathcal{L}(a,b,c,\lambda) = a^2 + b^2 + c^2 - \lambda(a + b + c - 3)
+\]
+
+Đạo hàm riêng:
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial a} &= 2a - \lambda = 0 \\
+\frac{\partial \mathcal{L}}{\partial b} &= 2b - \lambda = 0 \\
+\frac{\partial \mathcal{L}}{\partial c} &= 2c - \lambda = 0
+\end{align*}
+
+Từ hệ phương trình, ta có $a = b = c = \frac{\lambda}{2}$.
+
+Với ràng buộc $a + b + c = 3$: $\frac{3\lambda}{2} = 3 \Rightarrow \lambda = 2$.
+
+Vậy $a = b = c = 1$, và $f_{\min} = 3$.
+\end{example}
+
+\begin{note}
+Phương pháp đạo hàm chỉ cho điểm cực trị nội. Cần kiểm tra thêm điểm biên để có kết luận hoàn chỉnh.
+\end{note}
+
+\section{Phương pháp Lagrange Multipliers}
+
+\subsection{Lý thuyết cơ bản}
+
+Phương pháp nhân tử Lagrange là công cụ mạnh để tìm cực trị của hàm với ràng buộc.
+
+\begin{theorem}[Lagrange Multipliers]
+Cho $f: \mathbb{R}^n \to \mathbb{R}$ và ràng buộc $g(\mathbf{x}) = c$. Nếu $f$ đạt cực trị tại $\mathbf{x}_0$ trên tập ràng buộc, thì tồn tại $\lambda \in \mathbb{R}$ sao cho:
+\[
+\nabla f(\mathbf{x}_0) = \lambda \nabla g(\mathbf{x}_0)
+\]
+\end{theorem}
+
+\textbf{Quy trình:}
+\begin{enumerate}
+    \item Lập hàm Lagrange: $\mathcal{L}(\mathbf{x}, \lambda) = f(\mathbf{x}) - \lambda(g(\mathbf{x}) - c)$
+    \item Giải hệ phương trình: $\nabla \mathcal{L} = \mathbf{0}$
+    \item Kiểm tra điểm tìm được là cực đại hay cực tiểu
+\end{enumerate}
+
+\subsection{Áp dụng cho bất đẳng thức}
+
+\begin{example}[Lagrange với ràng buộc tích]
+Cho $a, b, c > 0$ với $abc = 1$. Chứng minh rằng:
+\[
+a + b + c \geq 3
+\]
+
+\textbf{Lời giải.} Tìm giá trị nhỏ nhất của $f = a + b + c$ với $g = abc = 1$.
+
+Hàm Lagrange:
+\[
+\mathcal{L} = a + b + c - \lambda(abc - 1)
+\]
+
+Đạo hàm:
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial a} &= 1 - \lambda bc = 0 \Rightarrow \lambda = \frac{1}{bc} \\
+\frac{\partial \mathcal{L}}{\partial b} &= 1 - \lambda ac = 0 \Rightarrow \lambda = \frac{1}{ac} \\
+\frac{\partial \mathcal{L}}{\partial c} &= 1 - \lambda ab = 0 \Rightarrow \lambda = \frac{1}{ab}
+\end{align*}
+
+Từ $\frac{1}{bc} = \frac{1}{ac} = \frac{1}{ab}$, suy ra $a = b = c$.
+
+Với $abc = 1$: $a^3 = 1 \Rightarrow a = 1$.
+
+Vậy $a = b = c = 1$, và $f_{\min} = 3$.
+
+\textbf{Điểm rơi:} $(1, 1, 1)$.
+\end{example}
+
+\begin{example}[Lagrange với bất đẳng thức phức tạp]
+Cho $a, b, c > 0$ với $a + b + c = 3$. Tìm giá trị nhỏ nhất của:
+\[
+P = \frac{1}{a} + \frac{1}{b} + \frac{1}{c}
+\]
+
+\textbf{Lời giải.} Hàm Lagrange:
+\[
+\mathcal{L} = \frac{1}{a} + \frac{1}{b} + \frac{1}{c} - \lambda(a + b + c - 3)
+\]
+
+Đạo hàm:
+\[
+\frac{\partial \mathcal{L}}{\partial a} = -\frac{1}{a^2} - \lambda = 0 \Rightarrow a^2 = -\frac{1}{\lambda}
+\]
+
+Tương tự: $b^2 = c^2 = -\frac{1}{\lambda}$.
+
+Do $a, b, c > 0$, ta có $a = b = c$.
+
+Với $a + b + c = 3$: $a = b = c = 1$.
+
+Vậy $P_{\min} = 3$, đạt tại $(1, 1, 1)$.
+\end{example}
+
+\subsection{Điều kiện KKT cho bất đẳng thức với ràng buộc bất đẳng thức}
+
+Khi có thêm ràng buộc dạng bất đẳng thức (ví dụ $a \geq 0$), ta sử dụng điều kiện Karush-Kuhn-Tucker (KKT).
+
+\begin{theorem}[Điều kiện KKT]
+Cho bài toán tối ưu:
+\begin{align*}
+\min \quad & f(\mathbf{x}) \\
+\text{s.t.} \quad & g_i(\mathbf{x}) \leq 0, \quad i = 1, \ldots, m \\
+& h_j(\mathbf{x}) = 0, \quad j = 1, \ldots, p
+\end{align*}
+
+Tại điểm cực trị $\mathbf{x}^*$, tồn tại $\mu_i \geq 0$ và $\lambda_j$ sao cho:
+\[
+\nabla f(\mathbf{x}^*) + \sum_{i=1}^m \mu_i \nabla g_i(\mathbf{x}^*) + \sum_{j=1}^p \lambda_j \nabla h_j(\mathbf{x}^*) = \mathbf{0}
+\]
+với điều kiện bổ sung: $\mu_i g_i(\mathbf{x}^*) = 0$ (complementary slackness).
+\end{theorem}
+
+\begin{note}
+Điều kiện complementary slackness $\mu_i g_i(\mathbf{x}^*) = 0$ cho biết: tại điểm tối ưu, ràng buộc hoặc chặt ($g_i = 0$), hoặc nhân tử bằng không ($\mu_i = 0$). Điều này giải thích tại sao điểm rơi thường nằm trên biên!
+\end{note}
+
+\section{Phương pháp SOS (Sum of Squares)}
+
+\subsection{Nguyên lý cơ bản}
+
+Phương pháp SOS dựa trên quan sát đơn giản: \textbf{bình phương của số thực luôn không âm}.
+
+\begin{definition}[Phân tích SOS]
+Một đa thức $P(x_1, \ldots, x_n)$ được gọi là \textbf{SOS} (Sum of Squares) nếu có thể viết dưới dạng:
+\[
+P = \sum_{i} Q_i^2
+\]
+với $Q_i$ là các đa thức.
+\end{definition}
+
+\begin{theorem}[SOS implies non-negative]
+Nếu $P$ là SOS, thì $P(\mathbf{x}) \geq 0$ với mọi $\mathbf{x} \in \mathbb{R}^n$.
+\end{theorem}
+
+\subsection{Dạng SOS chuẩn cho 3 biến đối xứng}
+
+Với bất đẳng thức đối xứng 3 biến, dạng SOS phổ biến là:
+\begin{equation}
+(a-b)^2 S_c + (b-c)^2 S_a + (c-a)^2 S_b \geq 0
+\end{equation}
+trong đó $S_a, S_b, S_c$ là các hệ số (có thể phụ thuộc vào $a, b, c$).
+
+\begin{theorem}[Điều kiện đủ cho SOS đối xứng]
+Bất đẳng thức $(a-b)^2 S_c + (b-c)^2 S_a + (c-a)^2 S_b \geq 0$ đúng nếu:
+\begin{itemize}
+    \item $S_a, S_b, S_c \geq 0$, hoặc
+    \item $S_a + S_b + S_c \geq 0$ và $S_a S_b + S_b S_c + S_c S_a \geq 0$
+\end{itemize}
+\end{theorem}
+
+\subsection{Ví dụ phương pháp SOS}
+
+\begin{example}[SOS cơ bản]
+Chứng minh rằng với $a, b, c \geq 0$:
+\[
+a^3 + b^3 + c^3 \geq 3abc
+\]
+
+\textbf{Lời giải.} Biến đổi:
+\begin{align*}
+a^3 + b^3 + c^3 - 3abc &= (a + b + c)(a^2 + b^2 + c^2 - ab - bc - ca) \\
+&= \frac{1}{2}(a + b + c)[(a-b)^2 + (b-c)^2 + (c-a)^2]
+\end{align*}
+
+Đây là SOS với $S_a = S_b = S_c = \frac{1}{2}(a + b + c) \geq 0$.
+
+\textbf{Điểm rơi:}
+\begin{itemize}
+    \item $a = b = c$ (các bình phương đều bằng 0), hoặc
+    \item $a + b + c = 0$ (với $a, b, c \geq 0$ thì $a = b = c = 0$)
+\end{itemize}
+\end{example}
+
+\begin{example}[SOS nâng cao - IMO 1983/6]
+Cho $a, b, c$ là các cạnh của một tam giác. Chứng minh rằng:
+\[
+a^2b(a-b) + b^2c(b-c) + c^2a(c-a) \geq 0
+\]
+
+\textbf{Lời giải.} Ta phân tích biểu thức dưới dạng SOS. Đặt:
+\[
+P = a^2b(a-b) + b^2c(b-c) + c^2a(c-a)
+\]
+
+Sau khi biến đổi (khá phức tạp), ta được:
+\[
+P = \frac{1}{2}[(a-b)^2(a+b-c)c + (b-c)^2(b+c-a)a + (c-a)^2(c+a-b)b]
+\]
+
+Do $a, b, c$ là các cạnh tam giác, ta có:
+\begin{itemize}
+    \item $a + b > c \Rightarrow a + b - c > 0$
+    \item $b + c > a \Rightarrow b + c - a > 0$
+    \item $c + a > b \Rightarrow c + a - b > 0$
+\end{itemize}
+
+Vậy $P \geq 0$.
+
+\textbf{Điểm rơi:} $a = b$ hoặc $b = c$ hoặc $c = a$ (tam giác cân).
+\end{example}
+
+\subsection{Kỹ thuật tìm hệ số SOS}
+
+\begin{algorithm}[Tìm phân tích SOS]
+Cho đa thức đối xứng $P(a,b,c)$ bậc $n$.
+
+\textbf{Bước 1:} Viết $P$ dưới dạng $(a-b)^2 S_c + (b-c)^2 S_a + (c-a)^2 S_b + R$
+
+\textbf{Bước 2:} Xác định $S_a, S_b, S_c$ sao cho $R = 0$ hoặc $R$ cũng là SOS.
+
+\textbf{Bước 3:} Kiểm tra $S_a, S_b, S_c \geq 0$ với mọi $a, b, c$ trong miền xác định.
+
+\textbf{Gợi ý:} Thử $S_c = \alpha a + \beta b + \gamma c$ với các hệ số cần tìm.
+\end{algorithm}
+
+\section{Phương pháp pqr}
+
+\subsection{Giới thiệu}
+
+Phương pháp pqr là kỹ thuật mạnh cho bất đẳng thức 3 biến, đặc biệt hiệu quả khi điểm rơi không đối xứng hoàn toàn.
+
+\begin{definition}[Đại lượng pqr]
+Cho $a, b, c$ là ba số thực. Đặt:
+\begin{align*}
+p &= a + b + c & \text{(tổng)} \\
+q &= ab + bc + ca & \text{(tổng các tích đôi một)} \\
+r &= abc & \text{(tích)}
+\end{align*}
+\end{definition}
+
+\begin{theorem}[Vieta ngược]
+Các số $a, b, c$ là ba nghiệm của phương trình:
+\begin{equation}
+x^3 - px^2 + qx - r = 0
+\end{equation}
+\end{theorem}
+
+\subsection{Biểu diễn đa thức theo pqr}
+
+Mọi đa thức đối xứng của $a, b, c$ đều có thể biểu diễn qua $p, q, r$:
+
+\begin{align*}
+a^2 + b^2 + c^2 &= p^2 - 2q \\
+a^3 + b^3 + c^3 &= p^3 - 3pq + 3r \\
+a^2b + ab^2 + b^2c + bc^2 + c^2a + ca^2 &= pq - 3r \\
+a^2bc + ab^2c + abc^2 &= pr \\
+(a-b)^2(b-c)^2(c-a)^2 &= p^2q^2 - 4p^3r - 4q^3 + 18pqr - 27r^2
+\end{align*}
+
+\subsection{Điều kiện thực}
+
+\begin{theorem}[Điều kiện để $a, b, c$ thực]
+Ba số $a, b, c$ (nghiệm của $x^3 - px^2 + qx - r = 0$) là thực khi và chỉ khi:
+\begin{equation}
+T(p,q,r) = p^2q^2 - 4p^3r - 4q^3 + 18pqr - 27r^2 \geq 0
+\end{equation}
+
+Lưu ý: $T(p,q,r) = (a-b)^2(b-c)^2(c-a)^2$
+\end{theorem}
+
+\subsection{Định lý chính của pqr}
+
+\begin{theorem}[Tejs' Theorem]
+Khi hai trong ba đại lượng $p, q, r$ cố định, đại lượng thứ ba đạt cực đại hoặc cực tiểu khi:
+\begin{itemize}
+    \item Hai trong ba biến $a, b, c$ bằng nhau, hoặc
+    \item Một trong ba biến $a, b, c$ bằng $0$
+\end{itemize}
+\end{theorem}
+
+\begin{corollary}[Điểm rơi của đa thức đối xứng]
+Mọi đa thức đối xứng bậc $\leq 5$ với các biến thực không âm $a, b, c$ có cực trị toàn cục sẽ đạt giá trị đó tại các bộ $(a, b, c)$ với:
+\begin{enumerate}
+    \item Hai biến bằng nhau: $(t, t, s)$, hoặc
+    \item Một biến bằng 0: $(a, b, 0)$
+\end{enumerate}
+\end{corollary}
+
+\subsection{Ví dụ phương pháp pqr}
+
+\begin{example}[pqr cơ bản]
+Cho $a, b, c \geq 0$ với $a + b + c = 3$. Chứng minh rằng:
+\[
+ab + bc + ca \leq 3
+\]
+
+\textbf{Lời giải.} Với $p = 3$ cố định, ta cần tìm $q_{\max}$.
+
+Theo Tejs' Theorem, cực trị đạt khi $a = b$ hoặc một biến bằng 0.
+
+\textbf{Trường hợp 1:} $a = b = t$, $c = 3 - 2t$ với $t \in [0, 1.5]$
+\[
+q = t^2 + 2t(3-2t) = t^2 + 6t - 4t^2 = -3t^2 + 6t
+\]
+$q'(t) = -6t + 6 = 0 \Rightarrow t = 1$
+
+Tại $t = 1$: $a = b = 1, c = 1$, $q = 3$.
+
+\textbf{Trường hợp 2:} $c = 0$, $a + b = 3$
+\[
+q = ab \leq \left(\frac{a+b}{2}\right)^2 = \frac{9}{4} < 3
+\]
+
+Vậy $q_{\max} = 3$, đạt tại $a = b = c = 1$.
+\end{example}
+
+\begin{example}[pqr nâng cao]
+Cho $a, b, c \geq 0$ với $a + b + c = 2$. Tìm giá trị lớn nhất của:
+\[
+P = a^2b + b^2c + c^2a
+\]
+
+\textbf{Lời giải.} Đây là bất đẳng thức cyclic, không đối xứng.
+
+Theo Tejs' Theorem, thử các trường hợp biên:
+
+\textbf{Trường hợp 1:} $a = b = t$, $c = 2 - 2t$
+\[
+P = t^2 \cdot t + t^2(2-2t) + (2-2t)^2 t = t^3 + 2t^2 - 2t^3 + 4t(1-t)^2
+\]
+Đơn giản hóa và tìm cực trị...
+
+\textbf{Trường hợp 2:} $c = 0$, $a + b = 2$
+\[
+P = a^2b = a^2(2-a)
+\]
+$P'(a) = 4a - 3a^2 = a(4 - 3a) = 0 \Rightarrow a = \frac{4}{3}$
+
+Tại $a = \frac{4}{3}$, $b = \frac{2}{3}$:
+\[
+P = \frac{16}{9} \cdot \frac{2}{3} = \frac{32}{27}
+\]
+
+So sánh các giá trị, ta có $P_{\max} = \frac{32}{27}$.
+
+\textbf{Điểm rơi:} $\left(\frac{4}{3}, \frac{2}{3}, 0\right)$ và các hoán vị cyclic.
+\end{example}
+
+\subsection{Miền $(p, q, r)$ khả thi}
+
+\begin{definition}[Miền Schur]
+Với $p$ cố định và $a, b, c \geq 0$, miền các cặp $(q, r)$ khả thi được giới hạn bởi:
+\begin{itemize}
+    \item Đường cong $T(p, q, r) = 0$ (điều kiện thực)
+    \item Ràng buộc $r \geq 0$ (tích không âm)
+    \item Ràng buộc $q \leq \frac{p^2}{3}$ (từ AM-GM cho $a^2 + b^2 + c^2$)
+\end{itemize}
+\end{definition}
+
+\section{Bài tập}
+
+\subsection{Bài tập cơ bản}
+
+\begin{exercise}[Lagrange cơ bản]
+Cho $a, b, c > 0$ với $a + b + c = 6$. Tìm giá trị lớn nhất của $abc$.
+\end{exercise}
+
+\begin{solution}
+Hàm Lagrange: $\mathcal{L} = abc - \lambda(a + b + c - 6)$
+
+Đạo hàm:
+\[
+\frac{\partial \mathcal{L}}{\partial a} = bc - \lambda = 0 \Rightarrow \lambda = bc
+\]
+
+Tương tự: $\lambda = ac = ab$. Suy ra $a = b = c = 2$.
+
+$abc_{\max} = 8$, đạt tại $(2, 2, 2)$.
+\end{solution}
+
+\begin{exercise}[SOS đơn giản]
+Sử dụng SOS, chứng minh: $(a + b)(b + c)(c + a) \geq 8abc$ với $a, b, c > 0$.
+\end{exercise}
+
+\begin{solution}
+Áp dụng AM-GM cho từng cặp:
+\[
+a + b \geq 2\sqrt{ab}, \quad b + c \geq 2\sqrt{bc}, \quad c + a \geq 2\sqrt{ca}
+\]
+
+Nhân ba bất đẳng thức:
+\[
+(a+b)(b+c)(c+a) \geq 8\sqrt{a^2b^2c^2} = 8abc
+\]
+
+Hoặc dùng SOS:
+\[
+(a+b)(b+c)(c+a) - 8abc = a(b-c)^2 + b(c-a)^2 + c(a-b)^2 \geq 0
+\]
+
+\textbf{Điểm rơi:} $a = b = c$.
+\end{solution}
+
+\subsection{Bài tập nâng cao}
+
+\begin{exercise}[pqr nâng cao]
+Cho $a, b, c \geq 0$ với $a + b + c = 1$. Chứng minh rằng:
+\[
+a^2 + b^2 + c^2 + 3abc \geq \frac{1}{3}
+\]
+\end{exercise}
+
+\begin{solution}
+Với $p = 1$, ta có:
+\[
+a^2 + b^2 + c^2 = p^2 - 2q = 1 - 2q
+\]
+
+Cần chứng minh: $1 - 2q + 3r \geq \frac{1}{3}$, tức là $3r \geq 2q - \frac{2}{3}$.
+
+Theo Tejs' Theorem, thử $a = b = t$, $c = 1 - 2t$:
+\begin{align*}
+q &= t^2 + 2t(1-2t) = t^2 + 2t - 4t^2 = -3t^2 + 2t \\
+r &= t^2(1-2t)
+\end{align*}
+
+VT $- \frac{1}{3} = 2t^2 + (1-2t)^2 + 3t^2(1-2t) - \frac{1}{3}$
+
+Sau khi đơn giản hóa, ta thấy VT $\geq \frac{1}{3}$.
+
+\textbf{Điểm rơi:} $a = b = c = \frac{1}{3}$.
+\end{solution}
+
+\begin{exercise}[Lagrange với hai ràng buộc]
+Cho $a, b, c > 0$ với $a + b + c = 3$ và $ab + bc + ca = 3$. Chứng minh $a = b = c = 1$.
+\end{exercise}
+
+\begin{solution}
+Từ $p = 3$ và $q = 3$, ta có:
+\[
+a^2 + b^2 + c^2 = p^2 - 2q = 9 - 6 = 3
+\]
+
+Mặt khác, bất đẳng thức Cauchy-Schwarz:
+\[
+(a^2 + b^2 + c^2)(1 + 1 + 1) \geq (a + b + c)^2
+\]
+\[
+3 \cdot 3 \geq 9 \quad \checkmark
+\]
+
+Dấu bằng khi $a = b = c$. Kết hợp $a + b + c = 3$, ta có $a = b = c = 1$.
+\end{solution}
+
+\section{Tóm tắt}
+
+\begin{keypoints}
+\begin{enumerate}
+    \item \textbf{Phương pháp thử điểm:} Thử các điểm đặc biệt $(a,a,a)$, $(a,a,0)$, $(a,b,0)$
+    \item \textbf{Đạo hàm riêng:} Tại điểm cực trị nội, $\nabla h = 0$
+    \item \textbf{Lagrange multipliers:} $\nabla f = \lambda \nabla g$ tại điểm tối ưu
+    \item \textbf{Điều kiện KKT:} Complementary slackness giải thích điểm rơi trên biên
+    \item \textbf{Phương pháp SOS:} Viết $P = \sum (a-b)^2 S_c \geq 0$
+    \item \textbf{Phương pháp pqr:} $p = a+b+c$, $q = ab+bc+ca$, $r = abc$
+    \item \textbf{Tejs' Theorem:} Cực trị đạt khi hai biến bằng nhau hoặc một biến bằng 0
+\end{enumerate}
+\end{keypoints}
+
+\section{Tiếp theo}
+
+Trong Chương 3, chúng ta sẽ áp dụng các lý thuyết này vào \textbf{điểm rơi đối xứng} --- trường hợp quan trọng nhất khi $a = b = c$. Chúng ta sẽ học:
+\begin{itemize}
+    \item Nhận dạng bất đẳng thức có điểm rơi đối xứng
+    \item Kỹ thuật chuẩn hóa (normalization)
+    \item Kỹ thuật Schur và các biến thể
+    \item Phương pháp mixing variables
+\end{itemize}

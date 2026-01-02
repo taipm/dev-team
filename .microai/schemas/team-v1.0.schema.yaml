@@ -1,0 +1,387 @@
+# Team Schema v1.0
+# Định nghĩa cấu trúc chuẩn cho MicroAI Teams
+
+schema:
+  version: "1.0"
+  description: "Schema chuẩn cho team workflow và cấu trúc"
+
+# ════════════════════════════════════════════════════════════════════
+# REQUIRED FIELDS - Bắt buộc phải có
+# ════════════════════════════════════════════════════════════════════
+
+required:
+  # Workflow frontmatter
+  workflow:
+    name:
+      type: string
+      format: kebab-case
+      description: "Team name (e.g., 'python-team', 'go-team')"
+      example: "python-team"
+
+    description:
+      type: string
+      min_length: 20
+      description: "Mô tả ngắn về team và mục đích"
+      example: "AI Coding Team cho Python development - Full-stack từ requirements đến release"
+
+    model:
+      type: string
+      enum: [opus, sonnet, haiku]
+      default: opus
+      description: "Default model cho team"
+
+    tools:
+      type: array
+      items: string
+      min_items: 1
+      description: "Tools team được phép sử dụng"
+      example: [Read, Write, Edit, Bash, Glob, Task]
+
+    language:
+      type: string
+      default: vi
+      description: "Ngôn ngữ giao tiếp chính"
+
+  # Team structure
+  structure:
+    agents:
+      type: directory
+      required: true
+      min_files: 2
+      description: "Thư mục chứa agent definitions"
+
+    steps:
+      type: directory
+      required: true
+      min_files: 3
+      description: "Thư mục chứa workflow steps"
+
+    knowledge:
+      type: directory
+      required: true
+      description: "Thư mục chứa team knowledge"
+
+# ════════════════════════════════════════════════════════════════════
+# RECOMMENDED FIELDS - Khuyến nghị có
+# ════════════════════════════════════════════════════════════════════
+
+recommended:
+  # Style
+  style:
+    color:
+      type: string
+      format: hex-color
+      description: "Team color cho UI"
+      example: "#3776AB"
+
+    icon:
+      type: string
+      description: "Team icon/emoji"
+      example: "🐍"
+
+  # Output configuration
+  output:
+    output_folder:
+      type: string
+      format: path
+      description: "Đường dẫn lưu output/logs"
+      example: "./.microai/teams/{team_name}/logs"
+
+  # Checkpoint system
+  checkpoint:
+    enabled:
+      type: boolean
+      default: true
+      description: "Bật checkpoint cho session recovery"
+
+    storage_path:
+      type: string
+      format: path
+      description: "Đường dẫn lưu checkpoints"
+
+    git_integration:
+      type: boolean
+      default: true
+      description: "Tích hợp với git branches"
+
+    auto_checkpoint:
+      type: boolean
+      default: true
+      description: "Tự động checkpoint sau mỗi step"
+
+  # Communication bus
+  communication:
+    enabled:
+      type: boolean
+      default: true
+      description: "Bật inter-agent communication"
+
+    bus_path:
+      type: string
+      format: path
+      description: "Đường dẫn message bus"
+
+    message_timeout_ms:
+      type: integer
+      default: 5000
+      description: "Timeout cho messages"
+
+    topics:
+      type: array
+      items: string
+      description: "Communication topics"
+      example:
+        - requirements
+        - architecture
+        - code_change
+        - testing
+        - review
+
+  # Kanban tracking
+  kanban:
+    enabled:
+      type: boolean
+      default: true
+      description: "Bật kanban board tracking"
+
+    board_path:
+      type: string
+      format: path
+      description: "Đường dẫn kanban board"
+
+    signals:
+      type: object
+      description: "Signal configurations"
+      properties:
+        on_step_start: boolean
+        on_step_complete: boolean
+        on_agent_activate: boolean
+
+    wip_enforcement:
+      type: boolean
+      default: true
+      description: "Enforce WIP limits"
+
+# ════════════════════════════════════════════════════════════════════
+# OPTIONAL FIELDS - Tùy chọn
+# ════════════════════════════════════════════════════════════════════
+
+optional:
+  # Autonomous mode
+  autonomous:
+    enabled:
+      type: boolean
+      default: false
+      description: "Bật autonomous mode"
+
+    level:
+      type: string
+      enum: [cautious, balanced, aggressive]
+      default: balanced
+      description: "Mức độ autonomous"
+
+    auto_approve:
+      type: object
+      description: "Những gì được auto-approve"
+      properties:
+        specs: boolean
+        architecture: boolean
+        code_changes: boolean
+        security_low_medium: boolean
+        security_high_critical: boolean
+
+    thresholds:
+      type: object
+      properties:
+        min_coverage:
+          type: integer
+          default: 80
+        max_iterations:
+          type: integer
+          default: 3
+
+  # Parallel execution
+  parallel:
+    enabled:
+      type: boolean
+      default: false
+      description: "Bật parallel execution"
+
+    max_workers:
+      type: integer
+      default: 3
+      description: "Số workers tối đa"
+
+    parallelizable_groups:
+      type: array
+      description: "Nhóm steps có thể chạy song song"
+      items:
+        type: object
+        properties:
+          name: string
+          steps: array
+
+# ════════════════════════════════════════════════════════════════════
+# DIRECTORY STRUCTURE
+# ════════════════════════════════════════════════════════════════════
+
+directory_structure:
+  description: "Cấu trúc thư mục chuẩn cho team"
+  template: |
+    .microai/teams/{team_name}/
+    ├── workflow.md              # Main workflow definition (REQUIRED)
+    ├── agents/                  # Agent definitions (REQUIRED)
+    │   ├── {role-1}-agent.md
+    │   ├── {role-2}-agent.md
+    │   └── ...
+    ├── steps/                   # Workflow steps (REQUIRED)
+    │   ├── step-01-init.md
+    │   ├── step-02-{phase}.md
+    │   └── ...
+    ├── knowledge/               # Team knowledge (REQUIRED)
+    │   ├── knowledge-index.yaml
+    │   ├── shared/              # Shared across agents
+    │   └── {role}/              # Role-specific
+    ├── memory/                  # Team memory (RECOMMENDED)
+    │   ├── context.md
+    │   ├── sessions.md
+    │   └── learnings.md
+    ├── templates/               # Output templates (RECOMMENDED)
+    │   └── {output-type}.md
+    ├── checkpoints/             # Session checkpoints (OPTIONAL)
+    ├── communication/           # Message bus (OPTIONAL)
+    ├── kanban/                  # Kanban board (OPTIONAL)
+    └── logs/                    # Session logs (REQUIRED)
+
+# ════════════════════════════════════════════════════════════════════
+# WORKFLOW CONTENT STRUCTURE
+# ════════════════════════════════════════════════════════════════════
+
+workflow_content:
+  sections:
+    - name: "Frontmatter (YAML)"
+      required: true
+      description: "Metadata và configuration"
+
+    - name: "Team Overview"
+      required: true
+      description: "Mục tiêu, vai trò orchestrator"
+
+    - name: "Team Members Table"
+      required: true
+      description: "Bảng liệt kê agents với role, icon, focus"
+
+    - name: "Workflow Architecture"
+      required: true
+      description: "Flow diagram ASCII/Mermaid"
+
+    - name: "Configuration"
+      required: true
+      description: "Paths, session state"
+
+    - name: "Observer Controls"
+      required: true
+      description: "Commands để control workflow"
+
+    - name: "Execution Steps"
+      required: true
+      description: "Mô tả từng step"
+
+    - name: "Error Handling"
+      recommended: true
+      description: "Xử lý lỗi"
+
+    - name: "Exit Conditions"
+      recommended: true
+      description: "Điều kiện kết thúc"
+
+# ════════════════════════════════════════════════════════════════════
+# VALIDATION RULES
+# ════════════════════════════════════════════════════════════════════
+
+validation:
+  workflow:
+    - "Frontmatter phải có đủ required fields"
+    - "Model phải là opus, sonnet, hoặc haiku"
+    - "Tools phải là mảng non-empty"
+    - "Color phải là hex format nếu có"
+
+  agents:
+    - "Mỗi agent phải có frontmatter với name, description"
+    - "Agent name phải match filename"
+    - "Phải có ít nhất 2 agents"
+
+  steps:
+    - "Phải có step-01-init.md"
+    - "Phải có step cuối (synthesis/close)"
+    - "Step naming: step-{NN}-{name}.md"
+
+  knowledge:
+    - "Phải có knowledge-index.yaml"
+    - "Index phải reference files thực sự tồn tại"
+
+# ════════════════════════════════════════════════════════════════════
+# EXAMPLES
+# ════════════════════════════════════════════════════════════════════
+
+examples:
+  minimal_workflow: |
+    ---
+    name: my-team
+    description: AI Team for XYZ development
+    model: opus
+    tools: [Read, Write, Edit, Bash, Glob, Task]
+    language: vi
+    ---
+
+    # My Team Workflow
+
+    ## Team Members
+    | Agent | Role | Icon |
+    |-------|------|------|
+    | dev | Developer | 💻 |
+    | reviewer | Reviewer | 🔍 |
+
+    ## Workflow
+    ...
+
+  full_workflow: |
+    ---
+    name: python-team
+    description: AI Coding Team cho Python development
+    model: opus
+    tools: [Read, Write, Edit, Bash, Glob, Task]
+    language: vi
+    color: "#3776AB"
+    output_folder: ./.microai/teams/python-team/logs
+    checkpoint:
+      enabled: true
+      storage_path: ./.microai/teams/python-team/checkpoints
+      git_integration: true
+      auto_checkpoint: true
+    communication:
+      enabled: true
+      bus_path: ./.microai/teams/python-team/communication
+      message_timeout_ms: 5000
+      topics: [requirements, architecture, code_change, testing, review]
+    kanban:
+      enabled: true
+      board_path: ./.microai/teams/python-team/kanban/board.yaml
+      signals:
+        on_step_start: true
+        on_step_complete: true
+        on_agent_activate: true
+      wip_enforcement: true
+    autonomous:
+      enabled: false
+      level: balanced
+      thresholds:
+        min_coverage: 80
+        max_iterations: 3
+    parallel:
+      enabled: false
+      max_workers: 3
+    ---
+
+    # Python Team Workflow
+    ...

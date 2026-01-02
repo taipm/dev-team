@@ -1,0 +1,263 @@
+# Math Team Agent Registry
+# Signal-based orchestration for mathematical problem solving
+
+version: "1.0.0"
+team_name: math-team
+last_updated: "2026-01-01"
+
+# Agent Categories
+categories:
+  core:
+    description: "Core orchestration agents"
+    agents: [maestro, scribe]
+
+  analyzers:
+    description: "Problem analysis agents"
+    agents: [analyzer]
+
+  solvers:
+    description: "Mathematical solver agents (run in parallel)"
+    agents: [algebraic, geometric, calculus, combinatorics, number-theory]
+
+  output:
+    description: "Solution synthesis and formatting"
+    agents: [synthesizer, latex-editor]
+
+  illustrators:
+    description: "Diagram and figure generation agents"
+    agents: [geometry-illustrator]
+
+# Agent Definitions
+agents:
+  # ═══════════════════════════════════════════════════════════════
+  # CORE AGENTS
+  # ═══════════════════════════════════════════════════════════════
+
+  maestro:
+    id: math-maestro
+    name: "Math Maestro"
+    description: "Orchestrates math problem-solving workflow via signals"
+    category: core
+    model: opus
+    path: ./agents/core/math-maestro.md
+    tools: [Read, Write, Bash, Glob, TodoWrite, Task]
+    signals:
+      emits:
+        - problem_received
+        - solvers_dispatched
+        - all_solutions_ready
+        - session_complete
+      listens:
+        - analysis_complete
+        - solution_complete
+        - synthesis_complete
+        - document_ready
+
+  scribe:
+    id: math-scribe
+    name: "Math Scribe"
+    description: "Silent documentation and session tracking"
+    category: core
+    model: haiku
+    path: ./agents/core/math-scribe.md
+    tools: [Read, Write, Edit]
+    mode: silent
+    signals:
+      listens: [all]  # Listens to all signals for logging
+
+  # ═══════════════════════════════════════════════════════════════
+  # ANALYZER AGENT
+  # ═══════════════════════════════════════════════════════════════
+
+  analyzer:
+    id: problem-analyzer
+    name: "Problem Analyzer"
+    description: "Analyzes math problem, classifies type, identifies approaches"
+    category: analyzers
+    model: sonnet
+    path: ./agents/analyzers/problem-analyzer.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/techniques/polya-method.md
+    signals:
+      listens: [problem_received]
+      emits: [analysis_complete]
+    output:
+      problem_type: "algebra|geometry|calculus|combinatorics|number_theory|mixed"
+      difficulty: "thpt|university|competition|olympiad"
+      approaches: []
+
+  # ═══════════════════════════════════════════════════════════════
+  # SOLVER AGENTS (Parallel Execution)
+  # ═══════════════════════════════════════════════════════════════
+
+  algebraic:
+    id: algebraic-solver
+    name: "Algebraic Solver"
+    description: "Specialist in algebraic manipulation, equations, inequalities"
+    category: solvers
+    model: sonnet
+    path: ./agents/solvers/algebraic-solver.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/domains/algebra/equations.md
+        - ./knowledge/domains/algebra/inequalities.md
+    problem_types: [algebra, mixed]
+    signals:
+      listens: [solvers_dispatched]
+      emits: [solution_complete]
+    parallel: true
+
+  geometric:
+    id: geometric-solver
+    name: "Geometric Solver"
+    description: "Specialist in geometry, visualization, coordinate methods"
+    category: solvers
+    model: sonnet
+    path: ./agents/solvers/geometric-solver.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/domains/geometry/euclidean.md
+    problem_types: [geometry, trigonometry, mixed]
+    signals:
+      listens: [solvers_dispatched]
+      emits: [solution_complete]
+    parallel: true
+
+  calculus:
+    id: calculus-solver
+    name: "Calculus Solver"
+    description: "Specialist in limits, derivatives, integrals, analysis"
+    category: solvers
+    model: sonnet
+    path: ./agents/solvers/calculus-solver.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/domains/calculus/limits-derivatives.md
+    problem_types: [calculus, analysis, optimization, mixed]
+    signals:
+      listens: [solvers_dispatched]
+      emits: [solution_complete]
+    parallel: true
+
+  combinatorics:
+    id: combinatorics-solver
+    name: "Combinatorics Solver"
+    description: "Specialist in counting, probability, discrete math"
+    category: solvers
+    model: sonnet
+    path: ./agents/solvers/combinatorics-solver.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/domains/combinatorics/counting.md
+    problem_types: [combinatorics, probability, discrete, mixed]
+    signals:
+      listens: [solvers_dispatched]
+      emits: [solution_complete]
+    parallel: true
+
+  number-theory:
+    id: number-theory-solver
+    name: "Number Theory Solver"
+    description: "Specialist in number theory, modular arithmetic (Olympic focus)"
+    category: solvers
+    model: opus  # Higher model for Olympic problems
+    path: ./agents/solvers/number-theory-solver.md
+    tools: [Read]
+    knowledge:
+      auto_load:
+        - ./knowledge/domains/number-theory/divisibility.md
+        - ./knowledge/domains/number-theory/modular-arithmetic.md
+    problem_types: [number_theory, olympiad, mixed]
+    signals:
+      listens: [solvers_dispatched]
+      emits: [solution_complete]
+    parallel: true
+
+  # ═══════════════════════════════════════════════════════════════
+  # OUTPUT AGENTS
+  # ═══════════════════════════════════════════════════════════════
+
+  synthesizer:
+    id: math-synthesizer
+    name: "Math Synthesizer"
+    description: "Combines multiple solutions, creates comparison, selects best"
+    category: output
+    model: opus
+    path: ./agents/output/math-synthesizer.md
+    tools: [Read, Write]
+    sync_strategy: wait_all
+    signals:
+      listens: [all_solutions_ready]
+      emits: [synthesis_complete]
+    output:
+      best_solution: {}
+      all_solutions_ranked: []
+      final_answer: ""
+      comparison_notes: ""
+
+  latex-editor:
+    id: latex-editor
+    name: "LaTeX Editor"
+    description: "Formats solutions in LaTeX, generates PDF"
+    category: output
+    model: sonnet
+    path: ./agents/output/latex-editor.md
+    tools: [Read, Write, Bash]
+    integration: ~/.claude/agents/latex-agent.md
+    signals:
+      listens: [synthesis_complete, illustration_complete]
+      emits: [document_ready]
+    output_styles:
+      detailed: "Textbook style with full explanations"
+      concise: "Paper style with minimal text"
+      olympiad: "Competition style with tricks highlighted"
+
+  # ═══════════════════════════════════════════════════════════════
+  # ILLUSTRATOR AGENTS
+  # ═══════════════════════════════════════════════════════════════
+
+  geometry-illustrator:
+    id: geometry-illustrator
+    name: "Geometry Illustrator"
+    description: "TikZ specialist for geometry diagrams and figures"
+    category: illustrators
+    model: sonnet
+    path: ./agents/illustrators/geometry-illustrator.md
+    tools: [Read, Write, Bash]
+    knowledge:
+      auto_load:
+        - ./knowledge/domains/geometry/tikz-patterns.md
+    problem_types: [geometry, trigonometry]
+    signals:
+      listens: [solution_complete, illustration_requested]
+      emits: [illustration_complete]
+    capabilities:
+      - tikz_generation
+      - geometric_construction
+      - labeled_diagrams
+      - right_angle_marks
+      - circle_constructions
+      - parallel_line_marks
+
+# Parallel Execution Configuration
+parallel:
+  max_workers: 3
+  timeout_per_solver: 180000  # 3 minutes
+  sync_strategy: wait_all
+  on_timeout: proceed_with_completed
+  min_solutions: 1
+
+# Statistics
+stats:
+  total_agents: 11
+  core: 2
+  analyzers: 1
+  solvers: 5
+  output: 2
+  illustrators: 1

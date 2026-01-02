@@ -1,0 +1,36 @@
+# Knowledge Index for Facebook Post Agent
+# Version: 1.0
+
+knowledge:
+  files:
+    - id: api-reference
+      path: ./01-api-reference.md
+      keywords: [api, endpoint, graph, facebook, post, feed, photos]
+      description: Facebook Graph API endpoints and parameters
+      auto_load: true
+
+    - id: authentication
+      path: ./02-authentication.md
+      keywords: [token, auth, permission, oauth, access]
+      description: Token management and authentication guide
+      auto_load: true
+
+    - id: post-templates
+      path: ./03-post-templates.md
+      keywords: [template, content, format, text, image, link]
+      description: Content templates for different post types
+      auto_load: false
+
+    - id: error-handling
+      path: ./04-error-handling.md
+      keywords: [error, fix, troubleshoot, rate limit, permission]
+      description: Error codes and recovery strategies
+      auto_load: true
+
+loading_strategy:
+  on_activation:
+    - api-reference
+    - authentication
+    - error-handling
+  on_demand:
+    - post-templates

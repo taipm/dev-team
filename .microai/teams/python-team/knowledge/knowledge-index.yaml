@@ -1,0 +1,254 @@
+# Python Team Knowledge Index
+# Full-stack Python development team
+
+version: "1.0"
+team: python-team
+
+# ════════════════════════════════════════════════════════════════════
+# CORE FILES - Always loaded
+# ════════════════════════════════════════════════════════════════════
+core_files:
+  - shared/python-fundamentals.md
+
+# ════════════════════════════════════════════════════════════════════
+# ROLE-BASED LOADING
+# ════════════════════════════════════════════════════════════════════
+role_knowledge:
+  pm-agent:
+    files:
+      - pm/user-stories.md
+    description: "User story patterns, API contracts, MoSCoW prioritization"
+
+  architect-agent:
+    files:
+      - architect/patterns.md
+      - architect/fastapi-architecture.md
+    description: "Design patterns, clean architecture, FastAPI structure"
+
+  python-dev-agent:
+    files:
+      - dev/type-hints.md
+      - dev/fastapi-patterns.md
+      - dev/pydantic-patterns.md
+    description: "Type hints, FastAPI implementation, Pydantic validation"
+
+  tester-agent:
+    files:
+      - test/pytest-patterns.md
+      - test/mocking-strategies.md
+    description: "pytest fixtures, mocking, coverage strategies"
+
+  reviewer-agent:
+    files:
+      - review/code-quality.md
+      - review/mypy-guide.md
+      - review/security-checklist.md
+    description: "Code quality standards, mypy, OWASP security"
+
+  devops-agent:
+    files:
+      - devops/docker-patterns.md
+      - devops/github-actions.md
+    description: "Docker multi-stage builds, CI/CD pipelines"
+
+# ════════════════════════════════════════════════════════════════════
+# MODE-BASED LOADING
+# ════════════════════════════════════════════════════════════════════
+mode_triggers:
+  fastapi:
+    keywords: ["fastapi", "async", "api", "rest", "starlette"]
+    files:
+      - architect/fastapi-architecture.md
+      - dev/fastapi-patterns.md
+
+  testing:
+    keywords: ["test", "pytest", "coverage", "mock", "fixture"]
+    files:
+      - test/pytest-patterns.md
+      - test/mocking-strategies.md
+
+  review:
+    keywords: ["review", "quality", "security", "mypy", "type"]
+    files:
+      - review/code-quality.md
+      - review/mypy-guide.md
+      - review/security-checklist.md
+
+  deployment:
+    keywords: ["docker", "deploy", "ci", "cd", "github", "actions"]
+    files:
+      - devops/docker-patterns.md
+      - devops/github-actions.md
+
+  pydantic:
+    keywords: ["pydantic", "validation", "schema", "basemodel"]
+    files:
+      - dev/pydantic-patterns.md
+
+# ════════════════════════════════════════════════════════════════════
+# KEYWORD MAPPING
+# ════════════════════════════════════════════════════════════════════
+keyword_mapping:
+  # Architecture
+  pattern:
+    files: [architect/patterns.md]
+    priority: 1
+  repository:
+    files: [architect/patterns.md]
+    priority: 1
+  dependency_injection:
+    files: [architect/patterns.md, architect/fastapi-architecture.md]
+    priority: 1
+
+  # Type hints
+  type:
+    files: [dev/type-hints.md]
+    priority: 1
+  mypy:
+    files: [dev/type-hints.md, review/mypy-guide.md]
+    priority: 1
+  generic:
+    files: [dev/type-hints.md]
+    priority: 2
+
+  # Pydantic
+  pydantic:
+    files: [dev/pydantic-patterns.md]
+    priority: 1
+  validation:
+    files: [dev/pydantic-patterns.md]
+    priority: 1
+  basemodel:
+    files: [dev/pydantic-patterns.md]
+    priority: 1
+
+  # Testing
+  pytest:
+    files: [test/pytest-patterns.md]
+    priority: 1
+  fixture:
+    files: [test/pytest-patterns.md]
+    priority: 1
+  mock:
+    files: [test/mocking-strategies.md]
+    priority: 1
+  coverage:
+    files: [test/pytest-patterns.md]
+    priority: 2
+
+  # Security
+  security:
+    files: [review/security-checklist.md]
+    priority: 1
+  owasp:
+    files: [review/security-checklist.md]
+    priority: 1
+  injection:
+    files: [review/security-checklist.md]
+    priority: 1
+
+  # DevOps
+  docker:
+    files: [devops/docker-patterns.md]
+    priority: 1
+  dockerfile:
+    files: [devops/docker-patterns.md]
+    priority: 1
+  github_actions:
+    files: [devops/github-actions.md]
+    priority: 1
+  ci:
+    files: [devops/github-actions.md]
+    priority: 1
+
+  # User Stories
+  user_story:
+    files: [pm/user-stories.md]
+    priority: 1
+  acceptance_criteria:
+    files: [pm/user-stories.md]
+    priority: 1
+  api_contract:
+    files: [pm/user-stories.md]
+    priority: 1
+
+# ════════════════════════════════════════════════════════════════════
+# FILE DESCRIPTIONS
+# ════════════════════════════════════════════════════════════════════
+files:
+  # Shared
+  shared/python-fundamentals.md:
+    title: "Python Fundamentals"
+    description: "Python 3.11+ features, type hints basics, best practices"
+    lines: ~50
+
+  # PM
+  pm/user-stories.md:
+    title: "User Story Patterns"
+    description: "INVEST criteria, acceptance criteria, API contracts"
+    lines: ~150
+
+  # Architect
+  architect/patterns.md:
+    title: "Architecture Patterns"
+    description: "Repository, Service Layer, DI, Factory, Clean Architecture"
+    lines: ~200
+
+  architect/fastapi-architecture.md:
+    title: "FastAPI Architecture"
+    description: "Project structure, dependencies, routing, middleware"
+    lines: ~250
+
+  # Developer
+  dev/type-hints.md:
+    title: "Type Hints Guide"
+    description: "Generics, Protocol, TypedDict, overload, mypy config"
+    lines: ~300
+
+  dev/fastapi-patterns.md:
+    title: "FastAPI Patterns"
+    description: "Schemas, pagination, auth, async DB, WebSocket"
+    lines: ~300
+
+  dev/pydantic-patterns.md:
+    title: "Pydantic v2 Patterns"
+    description: "Validation, computed fields, settings, serialization"
+    lines: ~250
+
+  # Tester
+  test/pytest-patterns.md:
+    title: "Pytest Patterns"
+    description: "Fixtures, parametrize, markers, coverage, API tests"
+    lines: ~300
+
+  test/mocking-strategies.md:
+    title: "Mocking Strategies"
+    description: "Mock, patch, AsyncMock, side effects, assertions"
+    lines: ~250
+
+  # Reviewer
+  review/code-quality.md:
+    title: "Code Quality Standards"
+    description: "PEP 8, ruff config, code smells, review checklist"
+    lines: ~200
+
+  review/mypy-guide.md:
+    title: "mypy Guide"
+    description: "Configuration, common errors, type: ignore usage"
+    lines: ~200
+
+  review/security-checklist.md:
+    title: "Security Checklist"
+    description: "OWASP Top 10, injection, auth, XSS, logging"
+    lines: ~300
+
+  # DevOps
+  devops/docker-patterns.md:
+    title: "Docker Patterns"
+    description: "Multi-stage builds, compose, security, health checks"
+    lines: ~250
+
+  devops/github-actions.md:
+    title: "GitHub Actions"
+    description: "CI workflow, Docker build, deploy, matrix, security scan"
+    lines: ~300

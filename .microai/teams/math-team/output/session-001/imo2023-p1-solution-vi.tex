@@ -1,0 +1,218 @@
+% IMO 2023 Bài 1 - Lời giải Math Team
+% Tạo bởi Math Team IMO Mode v2.0
+
+\documentclass[11pt,a4paper]{article}
+
+% XeLaTeX Vietnamese support
+\usepackage{fontspec}
+\usepackage[vietnamese]{babel}
+\setmainfont{Times New Roman}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Layout
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{array}
+\usepackage{booktabs}
+
+% Colors
+\definecolor{trickcolor}{RGB}{0, 100, 180}
+\definecolor{notecolor}{RGB}{180, 100, 0}
+\definecolor{proofcolor}{RGB}{0, 120, 60}
+
+% Custom boxes
+\newtcolorbox{problembox}{
+    colback=gray!10,
+    colframe=black,
+    title={\textbf{Bài 1}},
+    fonttitle=\bfseries\large
+}
+
+\newtcolorbox{trickbox}{
+    colback=trickcolor!10,
+    colframe=trickcolor,
+    title={\textbf{Ý tưởng chính}},
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{answerbox}{
+    colback=proofcolor!10,
+    colframe=proofcolor,
+    fonttitle=\bfseries
+}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{{\small Độ khó: IMO P1}}
+\lhead{{\small Số học}}
+\cfoot{\thepage}
+
+% Theorems - Vietnamese
+\newtheorem{theorem}{Định lý}
+\newtheorem{lemma}[theorem]{Bổ đề}
+\newtheorem{claim}[theorem]{Khẳng định}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries Olympic Toán Quốc tế 2023 - Bài 1}\\[0.3em]
+    {\large Kỳ thi IMO lần thứ 64}\\[0.2em]
+    {\small Chiba, Nhật Bản | Tháng 7/2023}
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+%% ĐỀ BÀI
+\begin{problembox}
+Tìm tất cả các số nguyên hợp số $n > 1$ thỏa mãn tính chất sau: nếu $d_1, d_2, \ldots, d_k$ là tất cả các ước dương của $n$ với
+\[1 = d_1 < d_2 < \cdots < d_k = n,\]
+thì $d_i$ chia hết $d_{i+1} + d_{i+2}$ với mọi $1 \leq i \leq k-2$.
+\end{problembox}
+
+\vspace{1em}
+
+%% Ý TƯỞNG CHÍNH
+\begin{trickbox}
+\textbf{Nhận xét quan trọng:} Cấu trúc ước của lũy thừa nguyên tố $p^a$ tạo thành cấp số nhân $\{1, p, p^2, \ldots, p^a\}$, làm cho điều kiện chia hết tự động thỏa mãn:
+\[d_i = p^{i-1} \mid p^i + p^{i+1} = p^i(1+p) = d_{i+1}(1+p)\]
+
+Với các số có $\geq 2$ ước nguyên tố phân biệt, luôn tồn tại ``điểm chuyển tiếp'' mà tại đó điều kiện bị vi phạm.
+\end{trickbox}
+
+\vspace{1em}
+
+%% ĐÁP ÁN
+\begin{answerbox}
+\textbf{Đáp án:} $\boxed{n = p^a \text{ với } p \text{ là số nguyên tố và } a \geq 2}$
+
+Tất cả các hợp số thỏa mãn điều kiện chính là các \textbf{lũy thừa nguyên tố} với số mũ ít nhất bằng 2.
+\end{answerbox}
+
+\vspace{1.5em}
+
+%% LỜI GIẢI
+\section*{Lời giải}
+
+\subsection*{Bước 1: Khảo sát các trường hợp nhỏ}
+
+\begin{center}
+\begin{tabular}{c|c|l|c}
+\toprule
+$n$ & Lũy thừa nguyên tố? & Các ước & Thỏa mãn? \\
+\midrule
+$4 = 2^2$ & Có & $1, 2, 4$ & $\checkmark$ \\
+$6 = 2 \cdot 3$ & Không & $1, 2, 3, 6$ & $\times$ $(2 \nmid 9)$ \\
+$8 = 2^3$ & Có & $1, 2, 4, 8$ & $\checkmark$ \\
+$9 = 3^2$ & Có & $1, 3, 9$ & $\checkmark$ \\
+$10 = 2 \cdot 5$ & Không & $1, 2, 5, 10$ & $\times$ $(2 \nmid 15)$ \\
+$12 = 2^2 \cdot 3$ & Không & $1, 2, 3, 4, 6, 12$ & $\times$ $(2 \nmid 7)$ \\
+$16 = 2^4$ & Có & $1, 2, 4, 8, 16$ & $\checkmark$ \\
+$25 = 5^2$ & Có & $1, 5, 25$ & $\checkmark$ \\
+$27 = 3^3$ & Có & $1, 3, 9, 27$ & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Dự đoán:} Đáp án chính xác là các lũy thừa nguyên tố $n = p^a$ với $a \geq 2$.
+
+\subsection*{Bước 2: Chứng minh lũy thừa nguyên tố thỏa mãn điều kiện}
+
+\begin{theorem}
+Với mọi số nguyên tố $p$ và số nguyên $a \geq 2$, số $n = p^a$ thỏa mãn tính chất đã cho.
+\end{theorem}
+
+\begin{proof}
+Các ước của $n = p^a$ chính xác là $\{1, p, p^2, \ldots, p^a\}$, nên $d_j = p^{j-1}$ với $j = 1, 2, \ldots, a+1$.
+
+Với mọi $1 \leq i \leq a-1$, ta kiểm tra $d_i \mid d_{i+1} + d_{i+2}$:
+\begin{align*}
+d_{i+1} + d_{i+2} &= p^i + p^{i+1} = p^i(1 + p)
+\end{align*}
+
+Vì $d_i = p^{i-1}$ chia hết $p^i = p \cdot p^{i-1}$, ta có:
+\[d_i = p^{i-1} \mid p^i(1+p) = d_{i+1} + d_{i+2}\]
+
+Do đó điều kiện đúng với mọi $i$ hợp lệ.
+\end{proof}
+
+\subsection*{Bước 3: Chứng minh các số không phải lũy thừa nguyên tố không thỏa mãn}
+
+\begin{theorem}
+Nếu $n$ có ít nhất hai ước nguyên tố phân biệt, thì $n$ không thỏa mãn điều kiện.
+\end{theorem}
+
+\begin{proof}
+Gọi $p < q$ là hai ước nguyên tố nhỏ nhất phân biệt của $n$. Dãy ước bắt đầu bằng:
+\[d_1 = 1, \quad d_2 = p\]
+
+Chìa khóa là phân tích điều gì xảy ra tại $d_3$ và $d_4$.
+
+\textbf{Trường hợp 1:} $q < p^2$ (nên $d_3 = q$)
+
+Khi đó $d_4 \geq \min(p^2, pq)$.
+
+Nếu $d_4 = p^2$: Ta cần $p \mid d_3 + d_4 = q + p^2$, tức là $p \mid q$. Nhưng $q$ là số nguyên tố và $q > p$, nên $p \nmid q$. \textbf{Mâu thuẫn.}
+
+Nếu $d_4 = pq$: Ta cần $p \mid q + pq = q(1+p)$. Vì $\gcd(p,q) = 1$ và $p \nmid (1+p)$, điều này không thể xảy ra. \textbf{Mâu thuẫn.}
+
+\textbf{Trường hợp 2:} $p^2 \leq q$ (nên $d_3 = p^2$ nếu $p^2 \mid n$)
+
+Cuối cùng, $q$ phải xuất hiện trong dãy ước. Gọi $d_j = p^m$ và $d_{j+1} = q$ với $m$ nào đó.
+
+Tại $i = j-1$: $d_i = p^{m-1}$, và ta cần $p^{m-1} \mid p^m + q$.
+
+Vì $p^{m-1} \mid p^m$, ta cần $p^{m-1} \mid q$. Nhưng $q$ là số nguyên tố và $q \neq p$. \textbf{Mâu thuẫn.}
+
+Trong mọi trường hợp, các số không phải lũy thừa nguyên tố đều không thỏa mãn điều kiện.
+\end{proof}
+
+\subsection*{Kết luận}
+
+Tập hợp đầy đủ các hợp số thỏa mãn tính chất là:
+\[\boxed{n = p^a \text{ với } p \text{ là số nguyên tố và } a \geq 2}\]
+
+Ví dụ: $4, 8, 9, 16, 25, 27, 32, 49, 64, 81, 121, 125, \ldots$
+
+\vspace{2em}
+
+%% BÌNH LUẬN
+\section*{Bình luận}
+
+\subsection*{Kỹ thuật sử dụng}
+\begin{itemize}
+    \item \textbf{Khảo sát trường hợp nhỏ} - Thử $n = 4, 6, 8, \ldots$ để nhận ra quy luật
+    \item \textbf{Phân tích chuỗi chia hết} - Nghiên cứu cấu trúc $d_i \mid d_{i+1} + d_{i+2}$
+    \item \textbf{Chứng minh phản chứng} - Chỉ ra các số không phải lũy thừa nguyên tố không thỏa mãn
+    \item \textbf{Cấu trúc phân tích thừa số} - Ý tưởng chính về dãy ước hình học và không hình học
+\end{itemize}
+
+\subsection*{Tại sao đây là bài IMO P1}
+\begin{itemize}
+    \item Điểm khởi đầu dễ tiếp cận (trường hợp nhỏ)
+    \item Đáp án gọn gàng (lũy thừa nguyên tố)
+    \item Yêu cầu phân tích trường hợp cẩn thận nhưng không cần lý thuyết sâu
+    \item Kiểm tra độ trưởng thành toán học hơn là kiến thức chuyên sâu
+\end{itemize}
+
+\subsection*{Mở rộng}
+
+\textbf{Câu hỏi:} Với những $n$ nào thì $d_i \mid d_{i+1} + d_{i+2} + \cdots + d_{i+m}$ đúng với mọi $i$ hợp lệ?
+
+\textbf{Dự đoán:} Đáp án vẫn là lũy thừa nguyên tố, vì cấu trúc hình học của $\{1, p, p^2, \ldots\}$ làm cho mọi tổng đều chia hết cho các số hạng trước đó.
+
+\vfill
+\begin{center}
+    {\small Math Team IMO Mode v2.0 --- Kiến trúc Solver Song song}\\
+    {\footnotesize Ngày tạo: \today}
+\end{center}
+
+\end{document}

@@ -1195,75 +1195,45 @@ benchstat old.txt new.txt
 
 ## Knowledge Base
 
-### Relevance-Based Loading (Optimized)
+### Knowledge Forge Integration
 
-**INSTEAD OF loading ALL knowledge files**, use selective loading based on task keywords:
+This agent uses the **Knowledge Forge** central knowledge system. See `.microai/knowledge/registry.yaml` for the single source of truth.
 
-```bash
-# Get relevant files for your task
-./learning/tools/select-knowledge.sh "implement http server with graceful shutdown"
+### Auto-Load Knowledge (Always Loaded)
 
-# Output: Only load 02-graceful-shutdown.md + 04-http-patterns.md + core files
-# Reduction: 60% (4/10 files instead of all 10)
+| Knowledge | Path | Description |
+|-----------|------|-------------|
+| Go Fundamentals | `domains/go/fundamentals.md` | Context-first, error handling, interfaces |
+| Error Handling | `domains/go/error-handling.md` | Wrapping, sentinel errors, patterns |
 
-# For scripting (get file list only)
-./learning/tools/select-knowledge.sh --files "worker pool"
-```
+### On-Demand Knowledge (Loaded by Task Type)
 
-### Core Files (Always Load)
+| Task Type | Knowledge Files |
+|-----------|-----------------|
+| Concurrency work | `domains/go/concurrency.md` |
+| HTTP/API work | `domains/go/http-patterns.md` |
+| Security review | `domains/security/owasp-top-10.md` |
+| Testing | `domains/go/testing.md` |
+| Performance | `domains/go/performance.md` |
+| Graceful shutdown | `domains/go/graceful-shutdown.md` |
 
-These files are ALWAYS loaded regardless of task:
-
-| File | Why Always Load |
-|------|-----------------|
-| `08-anti-patterns.md` | Prevents common Go mistakes |
-| `10-learned-anti-patterns.md` | Prevents project-specific mistakes |
-
-### Keyword → File Mapping
-
-| Task Keywords | Knowledge File | Priority |
-|---------------|----------------|----------|
-| graceful, shutdown, signal, cleanup | `02-graceful-shutdown.md` | 2 |
-| stdin, interactive, cli, terminal, repl | `03-interactive-cli.md` | 2 |
-| http, server, client, handler, api, rest | `04-http-patterns.md` | 2 |
-| openai, llm, gpt, chat, completion | `05-llm-openai-go.md` | 2 |
-| goroutine, channel, mutex, concurrent, worker, pool | `06-concurrency.md` | 1 (high) |
-| ollama, llama, local, mistral | `07-llm-ollama-local.md` | 3 |
-| pattern, learned, best, practice | `09-learned-patterns.md` | 2 |
-| decision, architecture, design | `11-project-decisions.md` | 3 |
-
-### Loading Strategy
+### Knowledge Forge Paths
 
 ```
-TASK RECEIVED
-     |
-     v
-EXTRACT KEYWORDS from task description
-     |
-     v
-MATCH KEYWORDS against knowledge-index.yaml
-     |
-     v
-LOAD: Core files + Matched files ONLY
-     |
-     v
-REDUCTION: Typically 50-80% fewer files
+.microai/knowledge/
+├── domains/go/           ← Go-specific knowledge
+│   ├── fundamentals.md   ← Auto-load
+│   ├── error-handling.md ← Auto-load
+│   ├── concurrency.md    ← On-demand
+│   ├── http-patterns.md  ← On-demand
+│   ├── testing.md        ← On-demand
+│   ├── performance.md    ← On-demand
+│   └── graceful-shutdown.md
+├── domains/security/     ← Security knowledge
+│   └── owasp-top-10.md   ← On-demand (security review)
+└── universal/            ← Language-agnostic
+    └── patterns/anti-patterns.md
 ```
-
-### Available Knowledge Files
-
-| File | Content | Lines |
-|------|---------|-------|
-| `02-graceful-shutdown.md` | Signal handling, context cancellation, cleanup patterns | ~355 |
-| `03-interactive-cli.md` | Stdin + goroutine coordination, REPL patterns | ~431 |
-| `04-http-patterns.md` | Server/client timeouts, middleware, graceful shutdown | ~534 |
-| `05-llm-openai-go.md` | OpenAI SDK: chat, streaming, tools, embeddings, audio | ~714 |
-| `06-concurrency.md` | Worker pools, mutexes, channels, atomics, errgroup | ~631 |
-| `07-llm-ollama-local.md` | Ollama local LLM: streaming, chat, model management | ~636 |
-| `08-anti-patterns.md` | Common mistakes với severity và fixes | ~483 |
-| `09-learned-patterns.md` | Patterns discovered through experience | ~100 |
-| `10-learned-anti-patterns.md` | Anti-patterns discovered through experience | ~250 |
-| `11-project-decisions.md` | Architectural decisions and rationale | ~150 |
 
 ### Mandatory Checklist
 

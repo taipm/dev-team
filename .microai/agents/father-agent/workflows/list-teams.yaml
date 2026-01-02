@@ -1,0 +1,34 @@
+# List Teams Workflow
+# Father Agent - Display all teams
+
+workflow:
+  name: list-teams
+  version: "1.0"
+  description: Liệt kê tất cả teams trong ecosystem
+
+actions:
+  - scan_teams: |
+      Scan .microai/teams/ directory
+      Với mỗi team, extract:
+      - Team name
+      - Number of agents
+      - Team type (từ workflow.md)
+      - Session modes
+
+  - display_table: |
+      | Team | Agents | Type | Modes | Status |
+      |------|--------|------|-------|--------|
+
+  - display_stats: |
+      Total teams: X
+      Total team agents: Y
+      Most common type: Z
+
+output_format: |
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                     TEAM REGISTRY                              ║
+  ╠═══════════════════════════════════════════════════════════════╣
+  ║  {table}                                                       ║
+  ╠═══════════════════════════════════════════════════════════════╣
+  ║  Total: {count} teams | {agent_count} agents                   ║
+  ╚═══════════════════════════════════════════════════════════════╝

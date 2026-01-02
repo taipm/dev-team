@@ -1,7 +1,7 @@
 # Father Agent Knowledge Index
-# Meta-agent cho việc tạo agents
+# Meta-agent cho việc tạo agents và teams
 
-version: "1.2"
+version: "1.3"
 agent: father-agent
 
 # Core files - luôn load
@@ -215,6 +215,60 @@ keyword_mapping:
     files: [09-document-organization.md]
     priority: 2
 
+  # ═══════════════════════════════════════════════════════════════
+  # TEAM CREATION KEYWORDS
+  # ═══════════════════════════════════════════════════════════════
+
+  # Create team workflow
+  create-team:
+    files: [12-team-workflow-template.md, 13-team-agent-template.md, 14-team-step-template.md, 15-team-command-template.md]
+    priority: 1
+  team:
+    files: [12-team-workflow-template.md, 07-team-memory-template.md]
+    priority: 1
+  tạo-team:
+    files: [12-team-workflow-template.md, 13-team-agent-template.md, 14-team-step-template.md]
+    priority: 1
+
+  # Team components
+  team-workflow:
+    files: [12-team-workflow-template.md]
+    priority: 1
+  team-agent:
+    files: [13-team-agent-template.md]
+    priority: 1
+  team-step:
+    files: [14-team-step-template.md]
+    priority: 1
+  team-command:
+    files: [15-team-command-template.md]
+    priority: 1
+  session:
+    files: [12-team-workflow-template.md, 14-team-step-template.md]
+    priority: 1
+
+  # Team types
+  dialogue:
+    files: [12-team-workflow-template.md, 13-team-agent-template.md]
+    priority: 1
+  pipeline:
+    files: [12-team-workflow-template.md, 14-team-step-template.md]
+    priority: 1
+  multi-agent:
+    files: [12-team-workflow-template.md, 13-team-agent-template.md, 07-team-memory-template.md]
+    priority: 1
+
+  # Dialogue features
+  turn-based:
+    files: [14-team-step-template.md]
+    priority: 1
+  consensus:
+    files: [14-team-step-template.md]
+    priority: 2
+  observer:
+    files: [12-team-workflow-template.md]
+    priority: 2
+
 # File descriptions
 files:
   01-agent-template.md:
@@ -286,3 +340,24 @@ files:
     title: "Skills Mapping Guide"
     description: "Hướng dẫn chọn skills phù hợp cho từng loại agent. Bao gồm skill matrix, mapping by domain, và best practices."
     lines: ~300
+
+  # Team templates (12-15)
+  12-team-workflow-template.md:
+    title: "Team Workflow Template"
+    description: "Template cho workflow.md của team. Bao gồm overview, members, modes, flow diagram, observer controls."
+    lines: ~200
+
+  13-team-agent-template.md:
+    title: "Team Agent Template"
+    description: "Template cho agents trong team. Đơn giản hóa so với standalone agent, focus vào dialogue behavior."
+    lines: ~150
+
+  14-team-step-template.md:
+    title: "Team Step Templates"
+    description: "Templates cho 5 steps chuẩn: init, presentation, dialogue loop, synthesis, close."
+    lines: ~250
+
+  15-team-command-template.md:
+    title: "Team Command Template"
+    description: "Template cho slash command invoke team session. Bao gồm load sequence và usage examples."
+    lines: ~100

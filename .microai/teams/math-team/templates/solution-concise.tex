@@ -1,0 +1,56 @@
+% Math Team - Concise Solution Template (Paper Style)
+% Vietnamese support via XeLaTeX
+
+\documentclass[11pt,a4paper]{article}
+
+% XeLaTeX Vietnamese support
+\usepackage{fontspec}
+\usepackage[vietnamese]{babel}
+\setmainfont{Times New Roman}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Layout
+\usepackage{geometry}
+\geometry{margin=2cm}
+
+% Minimal styling
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    {\large\bfseries BÀI TOÁN VÀ LỜI GIẢI}
+\end{center}
+
+\vspace{0.5em}
+\hrule
+\vspace{1em}
+
+%% PROBLEM
+\noindent\textbf{Bài toán.}
+{{PROBLEM_TEXT}}
+
+\vspace{1em}
+
+%% SOLUTION
+\noindent\textbf{Lời giải.}
+
+{{CONDENSED_STEPS}}
+
+\vspace{1em}
+
+%% ANSWER
+\noindent\textbf{Đáp số.}
+\[
+\boxed{{{FINAL_ANSWER}}}
+\]
+
+\vfill
+\begin{flushright}
+{\small Math Team --- \today}
+\end{flushright}
+
+\end{document}

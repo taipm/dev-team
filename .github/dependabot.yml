@@ -1,0 +1,20 @@
+# Dependabot configuration
+# https://docs.github.com/en/code-security/dependabot
+
+version: 2
+
+updates:
+  # GitHub Actions - always keep updated for security
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+      - "ci"
+    open-pull-requests-limit: 5

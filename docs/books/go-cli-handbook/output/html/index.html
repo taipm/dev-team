@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building CLI Applications with Go</title>
+    <style>
+        :root {
+            --primary-color: #00ADD8;
+            --secondary-color: #5DC9E2;
+            --text-color: #333;
+            --bg-color: #fff;
+            --code-bg: #f8f8f8;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        blockquote {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        blockquote cite {
+            display: block;
+            text-align: right;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        code {
+            font-family: 'Fira Code', 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+
+        p code {
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .toc {
+            background-color: #f5f7fa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .toc ol {
+            margin: 0.5rem 0 0 0;
+        }
+
+        .toc a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+
+        .key-takeaways {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d1e9f0 100%);
+            border: 1px solid var(--secondary-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .key-takeaways h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: var(--primary-color);
+        }
+
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .chapter-nav a {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .chapter-nav a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .chapter-divider {
+            margin: 3rem 0;
+            border-top: 3px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Building CLI Applications with Go</h1>
+        <p class="subtitle">A Practical Guide to Command-Line Tool Development</p>
+        <p class="meta">Version 1.2.0 | January 2, 2026 | Book Writer Team</p>
+    </header>
+
+    <nav class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+            <li><a href="#chapter-1">Introduction to CLI Development</a></li>
+            <li><a href="#chapter-2">Parsing Arguments and Flags</a></li>
+            <li><a href="#chapter-3">Using Cobra for Professional CLIs</a></li>
+            <li>Working with Files and Streams <em>(Coming Soon)</em></li>
+            <li>Terminal User Interfaces <em>(Coming Soon)</em></li>
+            <li>Configuration Management <em>(Coming Soon)</em></li>
+            <li>Error Handling and Logging <em>(Coming Soon)</em></li>
+            <li>Testing CLI Applications <em>(Coming Soon)</em></li>
+            <li>Concurrency in CLI Tools <em>(Coming Soon)</em></li>
+            <li>Building and Distribution <em>(Coming Soon)</em></li>
+            <li>Real-World Project <em>(Coming Soon)</em></li>
+        </ol>
+    </nav>
+
+    <main>
+        <!-- ===================== CHAPTER 1 ===================== -->
+        <article id="chapter-1">
+            <h2>Chapter 1: Introduction to CLI Development</h2>
+
+            <blockquote>
+                "The command line is a powerful tool. Master it, and you'll find yourself more productive than you ever thought possible."
+                <cite>— Anonymous Developer</cite>
+            </blockquote>
+
+            <h3>Introduction</h3>
+            <p>Every developer has a collection of scripts and small programs that make their daily work easier. Maybe it's a tool to format log files, a script to deploy code, or a utility to manage configurations. At some point, these scripts grow complex enough that they need proper argument parsing, help messages, and error handling. That's when you need a real command-line interface (CLI) application.</p>
+
+            <h3>Why Go for CLI Applications?</h3>
+
+            <h4>Single Binary Distribution</h4>
+            <p>Go compiles to a single static binary with no external dependencies:</p>
+            <pre><code># Build your application
+go build -o myapp
+
+# Ship it anywhere - no runtime needed
+scp myapp server:/usr/local/bin/</code></pre>
+
+            <h4>Fast Startup Time</h4>
+            <p>CLI tools need to start instantly. Go programs typically start in milliseconds:</p>
+            <pre><code>time ./myapp --help
+# real    0m0.003s  <- Go is fast!</code></pre>
+
+            <h4>Cross-Platform Compilation</h4>
+            <pre><code># Build for Linux from macOS
+GOOS=linux GOARCH=amd64 go build -o myapp-linux
+
+# Build for Windows
+GOOS=windows GOARCH=amd64 go build -o myapp.exe
+
+# Build for ARM
+GOOS=linux GOARCH=arm64 go build -o myapp-arm</code></pre>
+
+            <h4>Strong Standard Library</h4>
+            <table>
+                <tr><th>Package</th><th>Purpose</th></tr>
+                <tr><td><code>flag</code></td><td>Command-line flag parsing</td></tr>
+                <tr><td><code>os</code></td><td>Environment variables, exit codes</td></tr>
+                <tr><td><code>os/exec</code></td><td>Running external commands</td></tr>
+                <tr><td><code>io</code></td><td>Input/output interfaces</td></tr>
+                <tr><td><code>fmt</code></td><td>Formatted I/O</td></tr>
+                <tr><td><code>bufio</code></td><td>Buffered I/O</td></tr>
+            </table>
+
+            <h3>Your First CLI Application</h3>
+            <pre><code>package main
+
+import (
+    "flag"
+    "fmt"
+    "os"
+)
+
+var version = "dev"
+
+func main() {
+    name := flag.String("name", "World", "Name to greet")
+    excited := flag.Bool("excited", false, "Add excitement")
+    showVersion := flag.Bool("version", false, "Show version")
+
+    flag.Parse()
+
+    if *showVersion {
+        fmt.Printf("hello-cli version %s\n", version)
+        os.Exit(0)
+    }
+
+    greeting := fmt.Sprintf("Hello, %s", *name)
+    if *excited {
+        greeting += "!"
+    } else {
+        greeting += "."
+    }
+
+    fmt.Println(greeting)
+}</code></pre>
+
+            <div class="key-takeaways">
+                <h3>Key Takeaways</h3>
+                <ol>
+                    <li>Go's single-binary output eliminates deployment complexity</li>
+                    <li>Always write errors to stderr, output to stdout</li>
+                    <li>Exit codes are contracts with the shell—respect them</li>
+                    <li>The <code>flag</code> package handles basic needs; Cobra awaits for complex CLIs</li>
+                </ol>
+            </div>
+        </article>
+
+        <div class="chapter-divider"></div>
+
+        <!-- ===================== CHAPTER 2 ===================== -->
+        <article id="chapter-2">
+            <h2>Chapter 2: Parsing Arguments and Flags</h2>
+
+            <blockquote>
+                "A program should be light and agile, its subroutines connected like a string of pearls."
+                <cite>— The Tao of Programming</cite>
+            </blockquote>
+
+            <h3>Introduction</h3>
+            <p>In Chapter 1, we built a simple CLI application using the <code>flag</code> package. But real-world CLI tools need more sophisticated argument handling: positional arguments, required flags, custom types, environment variable fallbacks, and manual subcommand routing.</p>
+
+            <h3>Flag Definition Methods</h3>
+            <p><strong>Pointer Style:</strong></p>
+            <pre><code>name := flag.String("name", "default", "description")
+// name is *string, use *name to get value</code></pre>
+
+            <p><strong>Variable Style:</strong></p>
+            <pre><code>var name string
+flag.StringVar(&name, "name", "default", "description")
+// name is string, use directly</code></pre>
+
+            <h3>Supported Flag Types</h3>
+            <table>
+                <tr><th>Type</th><th>Functions</th><th>Example</th></tr>
+                <tr><td><code>bool</code></td><td><code>Bool</code>, <code>BoolVar</code></td><td><code>--verbose</code></td></tr>
+                <tr><td><code>int</code></td><td><code>Int</code>, <code>IntVar</code></td><td><code>--port 8080</code></td></tr>
+                <tr><td><code>string</code></td><td><code>String</code>, <code>StringVar</code></td><td><code>--name "value"</code></td></tr>
+                <tr><td><code>time.Duration</code></td><td><code>Duration</code>, <code>DurationVar</code></td><td><code>--timeout 30s</code></td></tr>
+            </table>
+
+            <h3>Custom Flag Types</h3>
+            <p>Any type implementing <code>flag.Value</code> can be used as a flag:</p>
+            <pre><code>type StringSlice []string
+
+func (s *StringSlice) String() string {
+    return strings.Join(*s, ", ")
+}
+
+func (s *StringSlice) Set(value string) error {
+    *s = append(*s, value)
+    return nil
+}
+
+func main() {
+    var tags StringSlice
+    flag.Var(&tags, "tag", "Add a tag (can be repeated)")
+    flag.Parse()
+    fmt.Printf("Tags: %v\n", tags)
+}</code></pre>
+
+            <h3>Environment Variable Fallbacks</h3>
+            <pre><code>func envOr(key, fallback string) string {
+    if v := os.Getenv(key); v != "" {
+        return v
+    }
+    return fallback
+}
+
+func main() {
+    host := flag.String("host", envOr("APP_HOST", "localhost"),
+        "Server host (env: APP_HOST)")
+    flag.Parse()
+}</code></pre>
+
+            <h3>Manual Subcommand Routing</h3>
+            <pre><code>func main() {
+    if len(os.Args) < 2 {
+        printUsage()
+        os.Exit(2)
+    }
+
+    switch os.Args[1] {
+    case "serve":
+        serveCmd(os.Args[2:])
+    case "config":
+        configCmd(os.Args[2:])
+    default:
+        fmt.Fprintf(os.Stderr, "Unknown command: %s\n", os.Args[1])
+        os.Exit(2)
+    }
+}
+
+func serveCmd(args []string) {
+    fs := flag.NewFlagSet("serve", flag.ExitOnError)
+    port := fs.Int("port", 8080, "Port to listen on")
+    fs.Parse(args)
+    fmt.Printf("Starting server on port %d\n", *port)
+}</code></pre>
+
+            <div class="key-takeaways">
+                <h3>Key Takeaways</h3>
+                <ol>
+                    <li>Use <code>flag.StringVar</code> style for cleaner code with many flags</li>
+                    <li>Duration flags save parsing code for time values</li>
+                    <li>Custom types via <code>flag.Value</code> enable powerful validation</li>
+                    <li>Environment fallbacks should be visible in help text</li>
+                    <li>Each subcommand needs its own <code>FlagSet</code> for isolation</li>
+                </ol>
+            </div>
+        </article>
+
+        <div class="chapter-divider"></div>
+
+        <!-- ===================== CHAPTER 3 ===================== -->
+        <article id="chapter-3">
+            <h2>Chapter 3: Using Cobra for Professional CLIs</h2>
+
+            <blockquote>
+                "Complexity is the enemy of execution."
+                <cite>— Tony Robbins</cite>
+            </blockquote>
+
+            <h3>Introduction</h3>
+            <p>Enter Cobra—the CLI framework that powers some of the most popular command-line tools in the world: Kubernetes (<code>kubectl</code>), Docker, GitHub CLI (<code>gh</code>), Hugo, and hundreds more.</p>
+
+            <h3>Industry Adoption</h3>
+            <table>
+                <tr><th>Tool</th><th>Company</th><th>Stars</th></tr>
+                <tr><td>kubectl</td><td>Google/CNCF</td><td>100k+</td></tr>
+                <tr><td>docker</td><td>Docker</td><td>68k+</td></tr>
+                <tr><td>gh</td><td>GitHub</td><td>35k+</td></tr>
+                <tr><td>hugo</td><td>Hugo Authors</td><td>72k+</td></tr>
+                <tr><td>terraform</td><td>HashiCorp</td><td>40k+</td></tr>
+            </table>
+
+            <h3>What Cobra Provides</h3>
+            <table>
+                <tr><th>Feature</th><th>Standard Library</th><th>Cobra</th></tr>
+                <tr><td>Basic flags</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Subcommands</td><td>Manual</td><td>Built-in</td></tr>
+                <tr><td>Nested subcommands</td><td>Complex</td><td>Easy</td></tr>
+                <tr><td>Shell completions</td><td>No</td><td>Automatic</td></tr>
+                <tr><td>Man page generation</td><td>No</td><td>Automatic</td></tr>
+                <tr><td>Viper integration</td><td>No</td><td>Seamless</td></tr>
+            </table>
+
+            <h3>Getting Started</h3>
+            <pre><code># Add Cobra to your project
+go get -u github.com/spf13/cobra@latest
+
+# Optional: Install the Cobra CLI generator
+go install github.com/spf13/cobra-cli@latest</code></pre>
+
+            <h3>Root Command</h3>
+            <pre><code>package cmd
+
+import (
+    "fmt"
+    "os"
+
+    "github.com/spf13/cobra"
+)
+
+var verbose bool
+
+var rootCmd = &cobra.Command{
+    Use:   "taskctl",
+    Short: "A task management CLI tool",
+    Run: func(cmd *cobra.Command, args []string) {
+        cmd.Help()
+    },
+}
+
+func Execute() {
+    if err := rootCmd.Execute(); err != nil {
+        fmt.Fprintln(os.Stderr, err)
+        os.Exit(1)
+    }
+}
+
+func init() {
+    rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false,
+        "Enable verbose output")
+}</code></pre>
+
+            <h3>Adding Subcommands</h3>
+            <pre><code>var addCmd = &cobra.Command{
+    Use:   "add [task description]",
+    Short: "Add a new task",
+    Args:  cobra.MinimumNArgs(1),
+    RunE: func(cmd *cobra.Command, args []string) error {
+        description := strings.Join(args, " ")
+        fmt.Printf("Added task: %s\n", description)
+        return nil
+    },
+}
+
+func init() {
+    rootCmd.AddCommand(addCmd)
+}</code></pre>
+
+            <h3>Persistent vs Local Flags</h3>
+            <pre><code>// Persistent flags: inherited by all subcommands
+rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Config file")
+
+// Local flags: only for this command
+serveCmd.Flags().IntVarP(&port, "port", "p", 8080, "Port to listen on")</code></pre>
+
+            <h3>Command Hierarchy</h3>
+            <pre><code>// cmd/config.go
+var configCmd = &cobra.Command{
+    Use:   "config",
+    Short: "Manage configuration",
+}
+
+func init() {
+    rootCmd.AddCommand(configCmd)
+}
+
+// cmd/config_get.go
+var configGetCmd = &cobra.Command{
+    Use:   "get [key]",
+    Short: "Get a configuration value",
+    Args:  cobra.ExactArgs(1),
+    Run: func(cmd *cobra.Command, args []string) {
+        fmt.Printf("Config value for %s: ...\n", args[0])
+    },
+}
+
+func init() {
+    configCmd.AddCommand(configGetCmd)
+}</code></pre>
+
+            <h3>Pre/Post Run Hooks</h3>
+            <p><strong>Execution order:</strong></p>
+            <ol>
+                <li><code>PersistentPreRun</code> (root)</li>
+                <li><code>PreRun</code> (command)</li>
+                <li><code>Run</code> (command)</li>
+                <li><code>PostRun</code> (command)</li>
+                <li><code>PersistentPostRun</code> (root)</li>
+            </ol>
+
+            <h3>Shell Completions</h3>
+            <pre><code># Generate bash completions
+./myapp completion bash > /etc/bash_completion.d/myapp
+
+# Generate zsh completions
+./myapp completion zsh > "${fpath[1]}/_myapp"
+
+# Generate fish completions
+./myapp completion fish > ~/.config/fish/completions/myapp.fish</code></pre>
+
+            <h3>Integrating with Viper</h3>
+            <pre><code>func init() {
+    rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "",
+        "config file (default: $HOME/.myapp.yaml)")
+
+    // Bind flags to viper
+    rootCmd.PersistentFlags().String("log-level", "info", "Log level")
+    viper.BindPFlag("log-level", rootCmd.PersistentFlags().Lookup("log-level"))
+
+    // Environment variable binding
+    viper.SetEnvPrefix("MYAPP")
+    viper.AutomaticEnv()
+}</code></pre>
+
+            <h3>Configuration Precedence</h3>
+            <ol>
+                <li>Explicit <code>Set</code> calls</li>
+                <li>Command-line flags</li>
+                <li>Environment variables</li>
+                <li>Config file</li>
+                <li>Default values</li>
+            </ol>
+
+            <div class="key-takeaways">
+                <h3>Key Takeaways</h3>
+                <ol>
+                    <li>Use <code>RunE</code> instead of <code>Run</code> when errors can occur</li>
+                    <li>Persistent flags on root are inherited by all subcommands</li>
+                    <li>Bind flags to Viper for unified configuration</li>
+                    <li>Shell completions are free—just generate them</li>
+                    <li>Pre/PostRun hooks are perfect for setup and cleanup</li>
+                </ol>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>Generated by MicroAI Book Writer Team | January 2, 2026</p>
+        <p>Building CLI Applications with Go - Version 1.2.0</p>
+        <p><strong>3 of 11 chapters complete</strong></p>
+    </footer>
+</body>
+</html>

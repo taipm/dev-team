@@ -1,0 +1,187 @@
+# Clone Agent Workflow
+# Extracted from father-agent for v2.0
+
+workflow:
+  name: clone-agent
+  description: Clone agent có sẵn cho project/domain khác
+  version: "1.0"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 1: SELECT SOURCE
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: select_source
+    name: Chọn source agent
+    steps:
+      - id: 1.1
+        action: list
+        path: ".microai/agents/"
+        pattern: "*/agent.md"
+        display:
+          columns: [name, description, knowledge_count]
+          format: table
+
+      - id: 1.2
+        action: ask
+        question: "Chọn agent để clone:"
+        type: select
+        options_from: step_1.1
+        output: source_agent
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 2: COLLECT NEW INFO
+# ════════════════════════════════════════════════════════════════════
+  - id: collect_info
+    name: Thu thập thông tin mới
+    steps:
+      - id: 2.1
+        action: ask
+        question: "Tên agent mới (kebab-case):"
+        output: new_agent_name
+        validation:
+          pattern: "^[a-z][a-z0-9-]*-agent$"
+          error: "Tên phải dạng kebab-case và kết thúc bằng -agent"
+
+      - id: 2.2
+        action: ask
+        question: "Domain mới (nếu khác):"
+        output: new_domain
+        required: false
+
+      - id: 2.3
+        action: ask
+        question: "Những gì cần customize?"
+        type: multiselect
+        options:
+          - persona
+          - knowledge
+          - workflows
+          - tools
+          - language
+        output: customize_items
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 3: COPY STRUCTURE
+# ════════════════════════════════════════════════════════════════════
+  - id: copy_structure
+    name: Copy cấu trúc
+    steps:
+      - id: 3.1
+        action: copy_directory
+        source: ".microai/agents/{source_agent}/"
+        dest: ".microai/agents/{new_agent_name}/"
+        exclude:
+          - "memory/*"
+          - "*.log"
+
+      - id: 3.2
+        action: rename_files
+        path: ".microai/agents/{new_agent_name}/"
+        pattern: "{source_agent}"
+        replace: "{new_agent_name}"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: ADAPT CONTENT
+# ════════════════════════════════════════════════════════════════════
+  - id: adapt_content
+    name: Adapt nội dung
+    steps:
+      - id: 4.1
+        action: edit
+        file: ".microai/agents/{new_agent_name}/agent.md"
+        changes:
+          - section: "agent.metadata"
+            updates:
+              id: ".microai/agents/{new_agent_name}/agent.md"
+              name: "{new_agent_name}"
+              title: "{generated_title}"
+
+          - section: "agent.persona"
+            condition: "persona in customize_items"
+            action: ask_and_update
+            questions:
+              - "Role mới cho agent này?"
+              - "Identity mới?"
+
+      - id: 4.2
+        action: edit_knowledge
+        condition: "knowledge in customize_items"
+        path: ".microai/agents/{new_agent_name}/knowledge/"
+        for_each: knowledge_files
+        prompt: "Customize knowledge file {file}?"
+
+      - id: 4.3
+        action: update_index
+        file: ".microai/agents/{new_agent_name}/knowledge/knowledge-index.yaml"
+        update_references: true
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 5: REGISTER NEW COMMAND
+# ════════════════════════════════════════════════════════════════════
+  - id: register
+    name: Register command mới
+    steps:
+      - id: 5.1
+        action: generate
+        type: command
+        template: "knowledge/02-command-template.md"
+        vars:
+          agent_name: "{new_agent_name}"
+          agent_path: ".microai/agents/{new_agent_name}/agent.md"
+        output: ".microai/commands/{new_agent_name}.md"
+
+      - id: 5.2
+        action: copy
+        source: ".microai/commands/{new_agent_name}.md"
+        dest: ".claude/commands/microai/{new_agent_name}.md"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 6: VERIFY & SUMMARY
+# ════════════════════════════════════════════════════════════════════
+  - id: verify
+    name: Verify và summary
+    steps:
+      - id: 6.1
+        action: validate
+        script: ".microai/scripts/validate-agent-v2.sh"
+        args: ["{new_agent_name}"]
+
+      - id: 6.2
+        action: diff
+        source: ".microai/agents/{source_agent}/agent.md"
+        target: ".microai/agents/{new_agent_name}/agent.md"
+        display: summary
+
+      - id: 6.3
+        action: display
+        type: summary
+        template: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  AGENT CLONED SUCCESSFULLY                                     ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Source: {source_agent}                                        ║
+          ║  New:    {new_agent_name}                                      ║
+          ║                                                                 ║
+          ║  Customized:                                                    ║
+          {for item in customize_items}
+          ║    - {item}                                                     ║
+          {endfor}
+          ║                                                                 ║
+          ║  Test: /microai:{new_agent_name}                               ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+# ════════════════════════════════════════════════════════════════════
+# ERROR HANDLING
+# ════════════════════════════════════════════════════════════════════
+error_handling:
+  on_source_not_found:
+    action: error
+    message: "Source agent not found: {source_agent}"
+
+  on_target_exists:
+    action: ask
+    question: "Agent {new_agent_name} đã tồn tại. Overwrite?"
+    options:
+      - overwrite
+      - rename
+      - cancel

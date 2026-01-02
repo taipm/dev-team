@@ -1,0 +1,370 @@
+# Voiceover Timing Marks
+# Video: Vẻ đẹp của dãy Fibonacci
+# Format: HH:MM:SS.mmm
+
+version: "1.0"
+language: vi
+total_duration: "00:12:00.000"
+
+scenes:
+  scene_01_hook:
+    start: "00:00:00.000"
+    end: "00:00:30.000"
+    segments:
+      - id: "hook_open"
+        start: "00:00:00.000"
+        end: "00:00:05.000"
+        text: "Bạn có biết rằng ADN - mã di truyền của sự sống - được xây dựng trên dãy Fibonacci?"
+        visual_cue: "dna_title_fade_in"
+        emphasis:
+          - word: "ADN"
+            style: "slow"
+          - word: "Fibonacci"
+            style: "clear"
+
+      - id: "hook_measurements"
+        start: "00:00:05.000"
+        end: "00:00:15.000"
+        text: "Chiều rộng vòng xoắn là 21 Angstrom. Chiều cao mỗi vòng là 34 Angstrom."
+        visual_cue: "measurement_overlay"
+        emphasis:
+          - word: "21"
+            style: "number_clear"
+          - word: "34"
+            style: "number_clear"
+
+      - id: "hook_ratio"
+        start: "00:00:15.000"
+        end: "00:00:22.000"
+        text: "34 chia 21 bằng 1.619... Tỷ lệ Vàng!"
+        visual_cue: "ratio_calculation"
+        pause_before: 1.0
+        emphasis:
+          - word: "Tỷ lệ Vàng"
+            style: "revelation"
+
+      - id: "hook_sequence"
+        start: "00:00:22.000"
+        end: "00:00:30.000"
+        text: "Đây là dãy Fibonacci: 1, 1, 2, 3, 5, 8, 13, 21, 34..."
+        visual_cue: "sequence_appear"
+
+  scene_02_origin:
+    start: "00:00:30.000"
+    end: "00:02:30.000"
+    segments:
+      - id: "origin_intro"
+        start: "00:00:30.000"
+        end: "00:00:50.000"
+        text: "Câu chuyện bắt đầu từ thế kỷ 13, tại Ý. Một nhà toán học tên Leonardo xứ Pisa, hay còn gọi là Fibonacci."
+        visual_cue: "title_card"
+
+      - id: "origin_problem"
+        start: "00:00:50.000"
+        end: "00:01:20.000"
+        text: "Ông đặt ra một câu hỏi đơn giản: Nếu một cặp thỏ sinh ra một cặp thỏ con mỗi tháng, và mỗi cặp thỏ con mất một tháng để trưởng thành... thì sau 12 tháng, có bao nhiêu cặp thỏ?"
+        visual_cue: "rabbit_diagram_start"
+        emphasis:
+          - word: "đơn giản"
+            style: "ironic"
+
+      - id: "origin_counting"
+        start: "00:01:20.000"
+        end: "00:02:00.000"
+        text: "Tháng 1: một cặp. Tháng 2: vẫn một cặp. Tháng 3: hai cặp. Tháng 4: ba cặp. Rồi năm, tám, mười ba..."
+        visual_cue: "month_by_month"
+        pause_after: 0.5
+
+      - id: "origin_reveal"
+        start: "00:02:00.000"
+        end: "00:02:30.000"
+        text: "Và dãy Fibonacci ra đời! 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89..."
+        visual_cue: "sequence_reveal"
+        emphasis:
+          - word: "ra đời"
+            style: "triumphant"
+
+  scene_03_pattern:
+    start: "00:02:30.000"
+    end: "00:04:00.000"
+    segments:
+      - id: "pattern_question"
+        start: "00:02:30.000"
+        end: "00:02:50.000"
+        text: "Nhìn vào dãy số: 1, 1, 2, 3, 5, 8, 13, 21. Bạn có thấy quy luật gì không?"
+        visual_cue: "numbers_with_boxes"
+        emphasis:
+          - word: "quy luật"
+            style: "questioning"
+
+      - id: "pattern_reveal"
+        start: "00:02:50.000"
+        end: "00:03:20.000"
+        text: "Mỗi số bằng tổng hai số trước đó! 1 cộng 1 bằng 2. 1 cộng 2 bằng 3. 2 cộng 3 bằng 5..."
+        visual_cue: "addition_arrows"
+        pause_before: 1.0
+        emphasis:
+          - word: "tổng hai số trước đó"
+            style: "revelation"
+
+      - id: "pattern_formula"
+        start: "00:03:20.000"
+        end: "00:03:45.000"
+        text: "Viết thành công thức: F_n bằng F_{n-1} cộng F_{n-2}."
+        visual_cue: "formula_reveal"
+
+      - id: "pattern_transition"
+        start: "00:03:45.000"
+        end: "00:04:00.000"
+        text: "Đơn giản đến không ngờ. Nhưng đây chính là lúc điều kỳ diệu bắt đầu..."
+        visual_cue: "transition_to_next"
+        emphasis:
+          - word: "kỳ diệu"
+            style: "mysterious"
+
+  scene_04_golden_ratio:
+    start: "00:04:00.000"
+    end: "00:05:30.000"
+    segments:
+      - id: "golden_intro"
+        start: "00:04:00.000"
+        end: "00:04:15.000"
+        text: "Bây giờ hãy thử một điều thú vị. Chia mỗi số Fibonacci cho số trước đó."
+        visual_cue: "number_line_appear"
+
+      - id: "golden_calculations"
+        start: "00:04:15.000"
+        end: "00:04:50.000"
+        text: "2 chia 1 bằng 2. 3 chia 2 bằng 1.5. 5 chia 3 bằng 1.666... 8 chia 5 bằng 1.6. 13 chia 8 bằng 1.625..."
+        visual_cue: "ratio_calculations"
+
+      - id: "golden_convergence"
+        start: "00:04:50.000"
+        end: "00:05:15.000"
+        text: "Càng đi xa, các tỷ số này tiến gần đến một con số thần bí: 1.6180339..."
+        visual_cue: "convergence_animation"
+        pause_before: 1.5
+        emphasis:
+          - word: "1.6180339"
+            style: "slow_deliberate"
+
+      - id: "golden_reveal"
+        start: "00:05:15.000"
+        end: "00:05:30.000"
+        text: "Đây chính là Tỷ lệ Vàng. Số Phi. Một trong những hằng số đẹp nhất của toán học!"
+        visual_cue: "phi_symbol_flash"
+        emphasis:
+          - word: "Tỷ lệ Vàng"
+            style: "reverent"
+          - word: "Số Phi"
+            style: "emphasized"
+
+  scene_05_spirals:
+    start: "00:05:30.000"
+    end: "00:07:00.000"
+    segments:
+      - id: "spiral_build"
+        start: "00:05:30.000"
+        end: "00:05:50.000"
+        text: "Bây giờ, hãy vẽ những hình vuông với cạnh là các số Fibonacci. 1, 1, 2, 3, 5, 8, 13..."
+        visual_cue: "squares_building"
+
+      - id: "spiral_arcs"
+        start: "00:05:50.000"
+        end: "00:06:15.000"
+        text: "Rồi nối các góc bằng cung tròn."
+        visual_cue: "arcs_drawing"
+        pause_during: true
+
+      - id: "spiral_reveal"
+        start: "00:06:15.000"
+        end: "00:06:40.000"
+        text: "Đường xoắn ốc hiện ra! Không phải đường xoắn ốc thường - mà là xoắn ốc Fibonacci, anh em họ của xoắn ốc Vàng."
+        visual_cue: "spiral_complete"
+        emphasis:
+          - word: "Xoắn ốc hiện ra"
+            style: "wonder"
+          - word: "xoắn ốc Vàng"
+            style: "special"
+
+      - id: "spiral_nature"
+        start: "00:06:40.000"
+        end: "00:07:00.000"
+        text: "Giống hệt vỏ ốc, vỏ sên biển, thậm chí cả thiên hà xoắn ốc!"
+        visual_cue: "nature_comparison"
+        emphasis:
+          - word: "thiên hà"
+            style: "awe"
+
+  scene_06_nature:
+    start: "00:07:00.000"
+    end: "00:09:00.000"
+    segments:
+      - id: "nature_intro"
+        start: "00:07:00.000"
+        end: "00:07:15.000"
+        text: "Fibonacci không chỉ là toán học. Nó là ngôn ngữ của tự nhiên!"
+        visual_cue: "section_title"
+        emphasis:
+          - word: "ngôn ngữ của tự nhiên"
+            style: "powerful"
+
+      - id: "nature_sunflower"
+        start: "00:07:15.000"
+        end: "00:07:40.000"
+        text: "Nhìn hoa hướng dương. Các hạt sắp xếp thành 55 vòng xoắn theo một chiều, 89 theo chiều kia. Cả hai đều là số Fibonacci!"
+        visual_cue: "sunflower_animation"
+
+      - id: "nature_honeybee"
+        start: "00:07:40.000"
+        end: "00:08:05.000"
+        text: "Cây gia phả ong mật? Một ong đực có 1 mẹ. Một ong cái có 2 cha mẹ. Tiến lên: 3, 5, 8... Lại là Fibonacci!"
+        visual_cue: "honeybee_tree"
+
+      - id: "nature_others"
+        start: "00:08:05.000"
+        end: "00:08:30.000"
+        text: "Quả thông với 8 và 13 vòng xoắn. Cánh hoa: lily 3 cánh, mao lương 5, cúc 21..."
+        visual_cue: "montage"
+
+      - id: "nature_dna"
+        start: "00:08:30.000"
+        end: "00:08:50.000"
+        text: "Và quay lại ADN - 34 và 21 Angstrom."
+        visual_cue: "dna_callback"
+
+      - id: "nature_mystery"
+        start: "00:08:50.000"
+        end: "00:09:00.000"
+        text: "Tại sao lại như vậy? Đây là một trong những bí ẩn lớn nhất của vũ trụ."
+        visual_cue: "mystery_question"
+        pause_before: 2.0
+        emphasis:
+          - word: "bí ẩn lớn nhất"
+            style: "mysterious"
+
+  scene_07_binet:
+    start: "00:09:00.000"
+    end: "00:10:30.000"
+    segments:
+      - id: "binet_question"
+        start: "00:09:00.000"
+        end: "00:09:15.000"
+        text: "Cuối cùng, một 'trò ảo thuật' toán học. Có thể tính số Fibonacci thứ n mà không cần cộng hết các số trước?"
+        visual_cue: "question_pose"
+        emphasis:
+          - word: "trò ảo thuật"
+            style: "playful"
+
+      - id: "binet_formula"
+        start: "00:09:15.000"
+        end: "00:09:35.000"
+        text: "Công thức Binet: F_n bằng phi mũ n trừ psi mũ n, chia cho căn 5."
+        visual_cue: "formula_reveal"
+        emphasis:
+          - word: "Công thức Binet"
+            style: "proper_noun"
+
+      - id: "binet_components"
+        start: "00:09:35.000"
+        end: "00:09:55.000"
+        text: "Công thức này dùng số vô tỷ, căn bậc hai của 5, lũy thừa của Tỷ lệ Vàng... Toàn những thứ 'xấu xí' về mặt số học."
+        visual_cue: "formula_breakdown"
+
+      - id: "binet_demo"
+        start: "00:09:55.000"
+        end: "00:10:15.000"
+        text: "Thử với n bằng 10. Tính, tính... và kết quả là 55. Chính xác!"
+        visual_cue: "calculation_demo"
+        emphasis:
+          - word: "55"
+            style: "triumphant"
+
+      - id: "binet_magic"
+        start: "00:10:15.000"
+        end: "00:10:30.000"
+        text: "Một công thức kỳ diệu: số vô tỷ cho ra số nguyên hoàn hảo!"
+        visual_cue: "magic_reveal"
+        emphasis:
+          - word: "số nguyên hoàn hảo"
+            style: "amazed"
+
+  scene_08_philosophy:
+    start: "00:10:30.000"
+    end: "00:11:30.000"
+    segments:
+      - id: "philosophy_scale"
+        start: "00:10:30.000"
+        end: "00:10:50.000"
+        text: "Từ nguyên tử đến thiên hà, từ tế bào đến đại dương, Fibonacci xuất hiện khắp nơi."
+        visual_cue: "cosmic_zoom"
+        emphasis:
+          - word: "khắp nơi"
+            style: "sweeping"
+
+      - id: "philosophy_quote"
+        start: "00:10:50.000"
+        end: "00:11:10.000"
+        text: "Galileo từng nói: 'Vũ trụ được viết bằng ngôn ngữ toán học.'"
+        visual_cue: "quote_appear"
+        pause_before: 1.5
+        emphasis:
+          - word: "ngôn ngữ toán học"
+            style: "thoughtful"
+
+      - id: "philosophy_close"
+        start: "00:11:10.000"
+        end: "00:11:30.000"
+        text: "Và Fibonacci là một trong những câu tuyệt đẹp nhất trong ngôn ngữ ấy."
+        visual_cue: "final_reflection"
+        emphasis:
+          - word: "tuyệt đẹp nhất"
+            style: "heartfelt"
+
+  scene_09_outro:
+    start: "00:11:30.000"
+    end: "00:12:00.000"
+    segments:
+      - id: "outro_thanks"
+        start: "00:11:30.000"
+        end: "00:11:40.000"
+        text: "Cảm ơn bạn đã cùng tôi khám phá vẻ đẹp của dãy Fibonacci!"
+        visual_cue: "thank_you_text"
+        emphasis:
+          - word: "Cảm ơn"
+            style: "warm"
+
+      - id: "outro_reminder"
+        start: "00:11:40.000"
+        end: "00:11:50.000"
+        text: "Lần tới khi bạn nhìn một bông hoa hướng dương hay một chiếc vỏ ốc, hãy nhớ: bạn đang nhìn vào toán học."
+        visual_cue: "nature_reminder"
+
+      - id: "outro_cta"
+        start: "00:11:50.000"
+        end: "00:12:00.000"
+        text: "Nhớ nhấn Subscribe và bấm chuông để không bỏ lỡ video tiếp theo nhé!"
+        visual_cue: "subscribe_cta"
+        emphasis:
+          - word: "Subscribe"
+            style: "clear_cta"
+          - word: "bấm chuông"
+            style: "friendly"
+
+# Global pause settings
+pauses:
+  revelation: 1.0
+  transition: 0.5
+  emphasis: 0.3
+  visual_sync: 0.5
+
+# Emphasis style definitions
+emphasis_styles:
+  slow: { rate: 0.7, pitch: 1.0 }
+  revelation: { rate: 0.8, pitch: 1.1 }
+  questioning: { rate: 1.0, pitch: 1.05 }
+  triumphant: { rate: 0.9, pitch: 1.15 }
+  mysterious: { rate: 0.8, pitch: 0.95 }
+  awe: { rate: 0.7, pitch: 1.1 }
+  warm: { rate: 0.9, pitch: 1.05 }
+  clear_cta: { rate: 1.0, pitch: 1.0 }

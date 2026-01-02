@@ -1,0 +1,91 @@
+# CODEOWNERS - Define code ownership for review requirements
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Each line is a file pattern followed by one or more owners.
+# Order matters: later patterns take precedence over earlier ones.
+# Owners can be @username, @org/team-name, or email@example.com
+
+# =============================================================================
+# Default Owners
+# =============================================================================
+# These owners will be requested for review when someone opens a PR
+# that modifies code that doesn't match any later pattern.
+
+*                       @your-username
+
+# =============================================================================
+# Directory-Specific Owners
+# =============================================================================
+
+# API / Backend
+# /src/api/             @backend-team
+# /internal/            @backend-team
+
+# Frontend
+# /src/frontend/        @frontend-team
+# /src/components/      @frontend-team
+# /src/pages/           @frontend-team
+
+# Documentation
+# /docs/                @docs-team
+# *.md                  @docs-team
+
+# =============================================================================
+# Critical Files (Require Senior Review)
+# =============================================================================
+
+# GitHub configuration - impacts CI/CD and security
+/.github/               @your-username
+/.github/workflows/     @your-username
+
+# Security-related files
+/SECURITY.md            @your-username
+/.pre-commit-config.yaml @your-username
+
+# Configuration files
+*.json                  @your-username
+*.yaml                  @your-username
+*.yml                   @your-username
+*.toml                  @your-username
+
+# =============================================================================
+# Infrastructure
+# =============================================================================
+
+# Docker
+# Dockerfile            @devops-team
+# docker-compose*.yml   @devops-team
+
+# Kubernetes
+# /k8s/                 @devops-team
+# /helm/                @devops-team
+
+# Terraform
+# /terraform/           @devops-team
+# *.tf                  @devops-team
+
+# =============================================================================
+# Language-Specific
+# =============================================================================
+
+# Go
+# go.mod                @backend-team
+# go.sum                @backend-team
+
+# Python
+# requirements*.txt     @backend-team
+# pyproject.toml        @backend-team
+# setup.py              @backend-team
+
+# Node.js
+# package.json          @frontend-team
+# package-lock.json     @frontend-team
+# tsconfig.json         @frontend-team
+
+# =============================================================================
+# Notes
+# =============================================================================
+# - Replace @your-username with your GitHub username
+# - Replace team names like @backend-team with actual GitHub teams
+# - Uncomment relevant sections based on your project structure
+# - Add team members as needed: @user1 @user2 @org/team-name

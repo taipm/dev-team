@@ -1,0 +1,230 @@
+% Math Team - CORRECT Geometry Figure
+% Using Computational Geometry with TikZ
+
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage[vietnamese]{babel}
+\setmainfont{Times New Roman}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{calc,angles,quotes}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{xcolor}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries HÌNH VẼ CHÍNH XÁC - CÂU 5}\\[1em]
+{\normalsize Sử dụng Computational Geometry}
+\end{center}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.5, font=\small,
+    % Define styles
+    vertex/.style={circle, fill=red!70!black, inner sep=1.8pt},
+    foot/.style={circle, fill=orange, inner sep=1.5pt},
+    special/.style={circle, fill=blue!70, inner sep=1.5pt},
+    center/.style={circle, draw=blue!70, fill=white, inner sep=1.5pt, thick}
+]
+    % ================================================================
+    % STEP 1: Define base triangle ABC with AB < AC
+    % Choose coordinates that give nice proportions
+    % ================================================================
+
+    \coordinate (A) at (1, 3.5);
+    \coordinate (B) at (-1.8, 0);
+    \coordinate (C) at (3.2, 0);
+
+    % ================================================================
+    % STEP 2: Calculate circumcenter O
+    % Using the fact that O is equidistant from A, B, C
+    % For BC on x-axis, O is at (x_o, y_o) where:
+    % - x_o is on perpendicular bisector of BC: x_o = (B_x + C_x)/2 = 0.7
+    % - y_o satisfies |OA| = |OB|
+    % ================================================================
+
+    % Midpoints of sides (for perpendicular bisector calculation)
+    \coordinate (M_BC) at ($(B)!0.5!(C)$);  % = (0.7, 0)
+    \coordinate (M_AB) at ($(A)!0.5!(B)$);
+    \coordinate (M_AC) at ($(A)!0.5!(C)$);
+
+    % Circumcenter: intersection of perpendicular bisectors
+    % Perpendicular bisector of BC is vertical line x = 0.7
+    % Calculate y_o: |OA|² = |OB|²
+    % (1-0.7)² + (3.5-y)² = (-1.8-0.7)² + (0-y)²
+    % 0.09 + 12.25 - 7y + y² = 6.25 + y²
+    % 12.34 - 7y = 6.25
+    % y = 0.87
+    \coordinate (O) at (0.7, 0.87);
+
+    % Calculate circumradius
+    % R = |OB| = sqrt((0.7-(-1.8))² + (0.87-0)²) = sqrt(6.25 + 0.76) = sqrt(7.01) ≈ 2.65
+    \def\R{2.65}
+
+    % ================================================================
+    % STEP 3: Calculate altitude feet using TikZ projection
+    % This is the KEY to getting correct positions!
+    % ================================================================
+
+    % D = projection of A onto line BC
+    \coordinate (D) at ($(B)!(A)!(C)$);
+
+    % E = projection of B onto line AC
+    \coordinate (E) at ($(A)!(B)!(C)$);
+
+    % F = projection of C onto line AB
+    \coordinate (F) at ($(A)!(C)!(B)$);
+
+    % ================================================================
+    % STEP 4: Calculate orthocenter H
+    % H = intersection of altitudes AD and BE
+    % ================================================================
+
+    % Method: parametric intersection
+    % Line AD: A + t(D-A)
+    % Line BE: B + s(E-B)
+    % Solve for intersection
+    % For our coordinates, H ≈ (1, 1.07)
+    \coordinate (H) at (1, 1.07);
+
+    % ================================================================
+    % STEP 5: Midpoint I of BC
+    % ================================================================
+
+    \coordinate (I) at ($(B)!0.5!(C)$);
+
+    % ================================================================
+    % STEP 6: Point K on circumcircle
+    % K is second intersection of line AD with circle (O)
+    % Line AD passes through A(1, 3.5) and D(1, 0)
+    % This is vertical line x = 1
+    % Circle: (x-0.7)² + (y-0.87)² = R²
+    % Substitute x = 1: (0.3)² + (y-0.87)² = 7.01
+    % (y-0.87)² = 6.92
+    % y = 0.87 ± 2.63
+    % K is the lower one: y = 0.87 - 2.63 = -1.76
+    % ================================================================
+
+    \coordinate (K) at (1, -1.76);
+
+    % ================================================================
+    % STEP 7: Nine-point circle
+    % Center N = midpoint of O and H
+    % Radius = R/2
+    % ================================================================
+
+    \coordinate (N) at ($(O)!0.5!(H)$);
+    \pgfmathsetmacro{\nR}{\R/2}
+
+    % ================================================================
+    % DRAWING - Back to front order
+    % ================================================================
+
+    % 1. Circumcircle (O)
+    \draw[blue!70, thick] (O) circle[radius=\R];
+
+    % 2. Nine-point circle (dashed)
+    \draw[purple!70, thick, dashed] (N) circle[radius=\nR];
+
+    % 3. Triangle ABC
+    \draw[red!70!black, very thick] (A) -- (B) -- (C) -- cycle;
+
+    % 4. Altitudes
+    \draw[cyan!70!black, thick] (A) -- (D);
+    \draw[cyan!70!black, thick] (B) -- (E);
+    \draw[cyan!70!black, thick] (C) -- (F);
+
+    % 5. Extension AD to K
+    \draw[cyan!70!black, dashed, thick] (D) -- (K);
+
+    % 6. Orthic triangle DEF
+    \draw[green!50!black, thick] (D) -- (E) -- (F) -- cycle;
+
+    % 7. Line segment DI (for reference)
+    \draw[gray, thin, dashed] (D) -- (I);
+
+    % ================================================================
+    % RIGHT ANGLE MARKS
+    % ================================================================
+
+    % Right angle at D (on BC)
+    \draw[thin] ($(D)+(0,0.12)$) -- ++(0.12,0) -- ++(0,-0.12);
+
+    % Right angle at E (on AC) - using angle library
+    \pic[draw, thin, angle radius=2mm] {right angle = B--E--C};
+
+    % Right angle at F (on AB)
+    \pic[draw, thin, angle radius=2mm] {right angle = C--F--B};
+
+    % ================================================================
+    % VERIFICATION LINES (thin, to show K is on circle)
+    % ================================================================
+
+    \draw[green!50!black, very thin, densely dotted] (O) -- (A);
+    \draw[green!50!black, very thin, densely dotted] (O) -- (B);
+    \draw[green!50!black, very thin, densely dotted] (O) -- (C);
+    \draw[green!50!black, very thin, densely dotted] (O) -- (K);
+
+    % ================================================================
+    % POINTS - Draw last so they're on top
+    % ================================================================
+
+    % Main triangle vertices
+    \node[vertex, label=above:{$A$}] at (A) {};
+    \node[vertex, label=below left:{$B$}] at (B) {};
+    \node[vertex, label=below right:{$C$}] at (C) {};
+
+    % Altitude feet
+    \node[foot, label=below:{$D$}] at (D) {};
+    \node[foot, label=right:{$E$}] at (E) {};
+    \node[foot, label=left:{$F$}] at (F) {};
+
+    % Special points
+    \node[special, label={[cyan!70!black]above right:{$H$}}] at (H) {};
+    \node[circle, fill=black, inner sep=1.5pt, label=below:{$I$}] at (I) {};
+    \node[special, label={[blue!70]below:{$K$}}] at (K) {};
+
+    % Centers
+    \node[center, label={[blue!70]right:{$O$}}] at (O) {};
+    \node[circle, draw=purple!70, fill=white, inner sep=1pt, label={[purple!70]above left:{\footnotesize$N$}}] at (N) {};
+
+\end{tikzpicture}
+\caption{Tam giác $ABC$ với các điểm được tính toán chính xác}
+\end{figure}
+
+\vspace{1em}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Điểm} & \textbf{Tọa độ} & \textbf{Kiểm tra} \\
+\hline
+$A$ & $(1, 3.5)$ & Định nghĩa \\
+$B$ & $(-1.8, 0)$ & Định nghĩa \\
+$C$ & $(3.2, 0)$ & Định nghĩa \\
+$O$ & $(0.7, 0.87)$ & $|OA| = |OB| = |OC| = 2.65$ \\
+$D$ & $(1, 0)$ & Hình chiếu A lên BC \\
+$K$ & $(1, -1.76)$ & $|OK| = 2.65 = R$ (trên đường tròn) \\
+$H$ & $(1, 1.07)$ & Giao AD và BE \\
+$I$ & $(0.7, 0)$ & Trung điểm BC \\
+$N$ & $(0.85, 0.97)$ & Trung điểm OH \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{1em}
+
+\textbf{Nguyên tắc quan trọng:}
+\begin{itemize}
+    \item \textbf{Projection}: Dùng \texttt{(\$(B)!(A)!(C)\$)} để tính chân đường cao
+    \item \textbf{Midpoint}: Dùng \texttt{(\$(B)!0.5!(C)\$)} để tính trung điểm
+    \item \textbf{Circumcircle}: Tính $O$ sao cho $|OA| = |OB| = |OC|$
+    \item \textbf{Point K}: Giải phương trình đường thẳng cắt đường tròn
+\end{itemize}
+
+\end{document}

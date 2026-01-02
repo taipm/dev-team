@@ -1,0 +1,141 @@
+# Math Team Configuration
+# Signal-based orchestration for mathematical problem solving
+
+version: "1.0.0"
+team_name: math-team
+last_updated: "2026-01-01"
+
+# Workflow Settings
+workflow:
+  default_output_style: detailed
+  show_all_approaches: true
+  max_parallel_solvers: 3
+
+  # Checkpoint behavior
+  checkpoints:
+    after_analysis: true
+    after_solvers: false
+    after_synthesis: true
+    after_pdf: true
+
+  # Timeouts (milliseconds)
+  timeouts:
+    analysis: 60000      # 1 minute
+    solver: 180000       # 3 minutes per solver
+    synthesis: 120000    # 2 minutes
+    latex: 60000         # 1 minute
+
+# Difficulty Presets
+difficulty_presets:
+  thpt:
+    description: "Bài tập THPT, SGK"
+    model_for_solvers: sonnet
+    max_approaches: 2
+    timeout_per_solver: 60000
+
+  university:
+    description: "Đề thi đại học"
+    model_for_solvers: sonnet
+    max_approaches: 3
+    timeout_per_solver: 120000
+
+  competition:
+    description: "Đề thi HSG, VMO cấp tỉnh"
+    model_for_solvers: sonnet
+    max_approaches: 3
+    timeout_per_solver: 180000
+    knowledge_boost: true
+
+  olympiad:
+    description: "IMO, VMO quốc gia"
+    model_for_solvers: opus
+    max_approaches: 2
+    timeout_per_solver: 300000
+    knowledge_boost: true
+    deep_thinking: true
+
+# Solver Selection Priority
+solver_priority:
+  by_difficulty:
+    thpt:
+      prefer: [algebraic, geometric]
+    university:
+      prefer: [calculus, algebraic, geometric]
+    competition:
+      prefer: [combinatorics, number-theory, algebraic]
+    olympiad:
+      prefer: [number-theory, combinatorics]
+
+  by_type:
+    algebra: [algebraic]
+    geometry: [geometric]
+    calculus: [calculus]
+    combinatorics: [combinatorics]
+    number_theory: [number-theory]
+    mixed: [algebraic, geometric, calculus]
+
+# Output Settings
+output:
+  default_language: vi
+  pdf_engine: xelatex
+  fallback_engine: lualatex
+  output_directory: .microai/teams/math-team/output
+
+  styles:
+    detailed:
+      description: "Textbook style - giải thích từng bước"
+      show_all_steps: true
+      include_comments: true
+      include_diagrams: true
+      include_verification: true
+
+    concise:
+      description: "Paper style - gọn, chuyên nghiệp"
+      show_all_steps: false
+      include_comments: false
+      include_diagrams: true
+      include_verification: false
+
+    olympiad:
+      description: "Competition style - highlight tricks"
+      show_all_steps: true
+      include_comments: false
+      highlight_tricks: true
+      include_alternatives: true
+
+# Evaluation Weights
+evaluation:
+  weights:
+    correctness: 0.35
+    completeness: 0.25
+    elegance: 0.20
+    clarity: 0.15
+    generalizability: 0.05
+
+# Token Budgets
+budgets:
+  analyzer: 2000
+  solver: 3000
+  synthesizer: 5000
+  latex_editor: 2000
+  total_session: 20000
+
+# Logging
+logging:
+  enabled: true
+  log_signals: true
+  log_metrics: true
+  session_log_path: .microai/teams/math-team/output/{session_id}/session.log
+
+# Integration
+integrations:
+  latex_agent:
+    enabled: true
+    path: ~/.claude/agents/latex-agent.md
+
+  kanban:
+    enabled: false
+
+  checkpoint:
+    enabled: true
+    storage_path: .microai/teams/math-team/checkpoints

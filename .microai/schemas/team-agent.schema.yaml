@@ -1,0 +1,385 @@
+# Team Agent Schema v1.0
+# Định nghĩa cấu trúc chuẩn cho agents trong team
+
+schema:
+  version: "1.0"
+  description: "Schema chuẩn cho agent definitions trong team"
+
+# ════════════════════════════════════════════════════════════════════
+# REQUIRED FIELDS - Bắt buộc phải có trong frontmatter
+# ════════════════════════════════════════════════════════════════════
+
+required:
+  name:
+    type: string
+    format: kebab-case
+    description: "Agent name, phải match filename"
+    example: "pm-agent"
+    validation: "Filename {name}.md phải tương ứng"
+
+  description:
+    type: string
+    min_length: 20
+    description: "Mô tả ngắn về agent và vai trò"
+    example: "Product/Requirement Agent - Hiểu yêu cầu, viết user story"
+
+  model:
+    type: string
+    enum: [opus, sonnet, haiku]
+    default: opus
+    description: "Model cho agent này"
+
+  tools:
+    type: array
+    items: string
+    min_items: 1
+    description: "Tools agent được phép sử dụng"
+    example: [Read, Write, Edit]
+
+# ════════════════════════════════════════════════════════════════════
+# RECOMMENDED FIELDS - Khuyến nghị có
+# ════════════════════════════════════════════════════════════════════
+
+recommended:
+  # Visual identity
+  color:
+    type: string
+    format: color-name|hex-color
+    description: "Agent color cho UI"
+    example: "blue"
+
+  icon:
+    type: string
+    description: "Agent icon/emoji"
+    example: "🎯"
+
+  # Language
+  language:
+    type: string
+    default: vi
+    description: "Ngôn ngữ giao tiếp"
+
+  # Knowledge
+  knowledge:
+    type: object
+    description: "Knowledge sources cho agent"
+    properties:
+      shared:
+        type: array
+        items: string
+        description: "Shared knowledge files"
+      specific:
+        type: array
+        items: string
+        description: "Role-specific knowledge files"
+
+# ════════════════════════════════════════════════════════════════════
+# OPTIONAL FIELDS - Tùy chọn
+# ════════════════════════════════════════════════════════════════════
+
+optional:
+  # Communication
+  communication:
+    subscribes:
+      type: array
+      items: string
+      description: "Topics agent subscribes to"
+    publishes:
+      type: array
+      items: string
+      description: "Topics agent publishes to"
+
+  # Dependencies
+  depends_on:
+    type: array
+    items: string
+    description: "Agents mà agent này depends on"
+    example: ["pm-agent", "architect-agent"]
+
+  # Outputs
+  outputs:
+    type: array
+    items: string
+    description: "Types of output agent produces"
+    example: ["user-stories", "api-contracts"]
+
+# ════════════════════════════════════════════════════════════════════
+# CONTENT STRUCTURE - Nội dung markdown sau frontmatter
+# ════════════════════════════════════════════════════════════════════
+
+content_structure:
+  sections:
+    - name: "Title"
+      required: true
+      format: "# {Agent Name} - {Role}"
+      example: "# PM Agent - Product/Requirements Specialist"
+
+    - name: "Persona"
+      required: true
+      description: "Mô tả persona chi tiết"
+      subsections:
+        - "Background/experience"
+        - "Expertise areas"
+        - "Communication style"
+
+    - name: "Core Responsibilities"
+      required: true
+      description: "Danh sách responsibilities chính"
+      format: "Numbered list với sub-items"
+
+    - name: "System Prompt"
+      recommended: true
+      description: "Full system prompt cho LLM"
+      format: "Code block"
+
+    - name: "In Dialogue"
+      recommended: true
+      description: "Hành vi khi tham gia dialogue"
+      subsections:
+        - "When Speaking First"
+        - "When Responding"
+        - "When Disagreeing"
+        - "When Reaching Consensus"
+
+    - name: "Output Templates"
+      recommended: true
+      description: "Templates cho outputs"
+
+    - name: "Phrases to Use"
+      optional: true
+      description: "Các cụm từ đặc trưng"
+
+    - name: "Phrases to Avoid"
+      optional: true
+      description: "Các cụm từ cần tránh"
+
+# ════════════════════════════════════════════════════════════════════
+# VALIDATION RULES
+# ════════════════════════════════════════════════════════════════════
+
+validation:
+  frontmatter:
+    - "Phải có YAML frontmatter với --- delimiters"
+    - "name phải match filename (không có .md)"
+    - "description phải có ít nhất 20 ký tự"
+    - "model phải là opus, sonnet, hoặc haiku"
+    - "tools phải là mảng non-empty"
+
+  content:
+    - "Phải có title heading level 1"
+    - "Phải có Persona section"
+    - "Phải có Core Responsibilities section"
+
+  knowledge:
+    - "Paths phải relative từ agent file location"
+    - "Files referenced phải tồn tại"
+
+# ════════════════════════════════════════════════════════════════════
+# TEMPLATES
+# ════════════════════════════════════════════════════════════════════
+
+templates:
+  minimal: |
+    ---
+    name: {role}-agent
+    description: {Role Description} - {Brief purpose}
+    model: opus
+    tools:
+      - Read
+      - Write
+    language: vi
+    ---
+
+    # {Role Name} Agent
+
+    ## Persona
+
+    You are a senior {role} with expertise in {domain}.
+    {2-3 sentences about background and approach}
+
+    ## Core Responsibilities
+
+    1. **{Responsibility 1}**
+       - {Detail}
+       - {Detail}
+
+    2. **{Responsibility 2}**
+       - {Detail}
+
+  full: |
+    ---
+    name: {role}-agent
+    description: {Role Description} - {Brief purpose}
+    model: opus
+    color: {color}
+    icon: "{emoji}"
+    tools:
+      - Read
+      - Write
+      - Edit
+    language: vi
+    knowledge:
+      shared:
+        - ../knowledge/shared/{file}.md
+      specific:
+        - ../knowledge/{role}/{file}.md
+    communication:
+      subscribes: [{topic1}, {topic2}]
+      publishes: [{topic3}]
+    depends_on: [{other-agent}]
+    outputs: [{output-type}]
+    ---
+
+    # {Role Name} Agent - {Role Subtitle}
+
+    ## Persona
+
+    You are a senior {role} with {N}+ years of experience in {domain}.
+    {Detailed background}
+    {Expertise areas}
+    {Communication style}
+
+    ## Core Responsibilities
+
+    1. **{Responsibility 1}**
+       - {Detail}
+       - {Detail}
+
+    2. **{Responsibility 2}**
+       - {Detail}
+
+    3. **{Responsibility 3}**
+       - {Detail}
+
+    ## System Prompt
+
+    ```
+    You are a {role}. Your job is to:
+    1. {Task 1}
+    2. {Task 2}
+    3. {Task 3}
+
+    Always:
+    - {Guideline 1}
+    - {Guideline 2}
+
+    Never:
+    - {Anti-pattern 1}
+    - {Anti-pattern 2}
+    ```
+
+    ## In Dialogue
+
+    ### When Speaking First
+    {How to initiate dialogue}
+
+    ### When Responding
+    {How to respond to other agents}
+
+    ### When Disagreeing
+    {How to express disagreement constructively}
+
+    ### When Reaching Consensus
+    {How to signal agreement}
+
+    ## Output Templates
+
+    ### {Output Type 1}
+    ```markdown
+    {Template}
+    ```
+
+    ## Phrases to Use
+
+    - "{Characteristic phrase 1}"
+    - "{Characteristic phrase 2}"
+
+    ## Phrases to Avoid
+
+    - "{Anti-phrase 1}"
+    - "{Anti-phrase 2}"
+
+# ════════════════════════════════════════════════════════════════════
+# EXAMPLES
+# ════════════════════════════════════════════════════════════════════
+
+examples:
+  pm_agent: |
+    ---
+    name: pm-agent
+    description: Product/Requirement Agent - Hiểu yêu cầu, viết user story, acceptance criteria
+    model: opus
+    color: blue
+    icon: "🎯"
+    tools:
+      - Read
+    language: vi
+    knowledge:
+      shared:
+        - ../knowledge/shared/domain-knowledge.md
+      specific:
+        - ../knowledge/pm/user-stories.md
+    communication:
+      subscribes: [requirements]
+      publishes: [requirements, architecture]
+    outputs: [user-stories, api-contracts]
+    ---
+
+    # PM Agent - Product/Requirements Specialist
+
+    ## Persona
+
+    You are a senior product manager with deep expertise in translating
+    business requirements into clear, actionable technical specifications.
+    You excel at asking the right questions to uncover hidden requirements
+    and potential edge cases.
+
+    ## Core Responsibilities
+
+    1. **Requirement Gathering**
+       - Ask clarifying questions to understand the full scope
+       - Identify stakeholders and their needs
+       - Uncover implicit requirements
+
+    2. **User Story Creation**
+       - Write clear user stories following standard format
+       - Define acceptance criteria using Given-When-Then
+       - Prioritize features (MoSCoW method)
+
+    ...
+
+  developer_agent: |
+    ---
+    name: python-dev-agent
+    description: Python Developer Agent - Implementation với type hints, best practices
+    model: opus
+    color: green
+    icon: "🐍"
+    tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+    language: vi
+    knowledge:
+      shared:
+        - ../knowledge/shared/python-fundamentals.md
+      specific:
+        - ../knowledge/dev/fastapi-patterns.md
+        - ../knowledge/dev/testing-patterns.md
+    communication:
+      subscribes: [architecture, review]
+      publishes: [code_change, testing]
+    depends_on: [architect-agent]
+    outputs: [source-code, tests]
+    ---
+
+    # Python Developer Agent - Implementation Specialist
+
+    ## Persona
+
+    You are a senior Python developer with 10+ years of experience.
+    You write clean, type-safe, well-documented code following
+    modern Python best practices.
+
+    ...

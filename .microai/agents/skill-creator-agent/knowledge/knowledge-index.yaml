@@ -1,0 +1,112 @@
+# Knowledge Index for Skill Creator Agent
+# Defines keyword-based loading for knowledge files
+
+version: "1.0"
+agent: skill-creator-agent
+
+# Files and descriptions
+files:
+  01-skill-template.md:
+    title: "Skill Template"
+    description: "SKILL.md template and folder structure"
+    lines: ~120
+    priority: 1
+
+  02-registry-template.yaml:
+    title: "Registry Template"
+    description: "skills-registry.yaml format and schema"
+    lines: ~80
+    priority: 2
+
+  03-best-practices.md:
+    title: "Best Practices"
+    description: "Do's, Don'ts, and quality guidelines"
+    lines: ~150
+    priority: 1
+
+  04-skill-patterns.md:
+    title: "Skill Patterns"
+    description: "Content patterns for different skill types"
+    lines: ~200
+    priority: 2
+
+  05-review-checklist.md:
+    title: "Review Checklist"
+    description: "Quality scoring and review process"
+    lines: ~180
+    priority: 2
+
+# Keyword mappings
+keywords:
+  # Create workflow
+  create:
+    - 01-skill-template.md
+    - 03-best-practices.md
+  new:
+    - 01-skill-template.md
+    - 03-best-practices.md
+  tạo:
+    - 01-skill-template.md
+    - 03-best-practices.md
+
+  # Clone workflow
+  clone:
+    - 01-skill-template.md
+    - 04-skill-patterns.md
+  copy:
+    - 01-skill-template.md
+  sao chép:
+    - 01-skill-template.md
+
+  # Registry workflow
+  registry:
+    - 02-registry-template.yaml
+  register:
+    - 02-registry-template.yaml
+  đăng ký:
+    - 02-registry-template.yaml
+  list:
+    - 02-registry-template.yaml
+
+  # Analyze workflow
+  analyze:
+    - 05-review-checklist.md
+    - 03-best-practices.md
+  review:
+    - 05-review-checklist.md
+  kiểm tra:
+    - 05-review-checklist.md
+  đánh giá:
+    - 05-review-checklist.md
+
+  # Package workflow
+  package:
+    - 01-skill-template.md
+    - 02-registry-template.yaml
+  bundle:
+    - 01-skill-template.md
+  share:
+    - 02-registry-template.yaml
+
+  # Pattern-related
+  pattern:
+    - 04-skill-patterns.md
+  template:
+    - 01-skill-template.md
+    - 04-skill-patterns.md
+  mẫu:
+    - 01-skill-template.md
+    - 04-skill-patterns.md
+
+  # Quality-related
+  quality:
+    - 03-best-practices.md
+    - 05-review-checklist.md
+  score:
+    - 05-review-checklist.md
+  checklist:
+    - 05-review-checklist.md
+
+# Always load for any command
+always_load:
+  - 03-best-practices.md
