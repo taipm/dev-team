@@ -1,0 +1,13 @@
+Bạn có bao giờ nghĩ rằng một cây dương xỉ có thể được tạo ra từ chỉ bốn phép toán đơn giản?
+
+Đây là Barnsley Fern, một trong những fractal nổi tiếng nhất trong toán học. Được đặt theo tên nhà toán học Michael Barnsley, nó cho thấy vẻ đẹp kỳ diệu ẩn chứa trong những công thức toán học.
+
+Hãy quan sát khi cây dương xỉ bắt đầu hình thành. Mỗi điểm mới được tạo ra bằng cách áp dụng một trong bốn phép biến đổi, được chọn ngẫu nhiên theo xác suất khác nhau.
+
+Phép biến đổi đầu tiên chỉ chiếm một phần trăm, tạo ra thân cây. Phép thứ hai chiếm tám mươi lăm phần trăm, tạo nên phần lớn các lá. Hai phép còn lại tạo ra các nhánh bên trái và phải.
+
+Điều kỳ diệu là mỗi nhánh nhỏ lại giống hệt hình dạng của toàn bộ cây. Đây chính là tính tự đồng dạng, đặc trưng của fractal.
+
+Với mỗi lần lặp, hàng trăm điểm mới xuất hiện. Từ một điểm ban đầu, giờ đây chúng ta có hàng trăm nghìn điểm, tạo nên một cây dương xỉ hoàn chỉnh.
+
+Toán học không chỉ là những con số khô khan. Nó là ngôn ngữ của tự nhiên, và Barnsley Fern là bằng chứng cho điều đó. Đừng quên subscribe để khám phá thêm những kỳ quan toán học khác.

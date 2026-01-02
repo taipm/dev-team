@@ -102,6 +102,37 @@ keyword_triggers:
   binary.search|divide: greedy-divide-conquer
 ```
 
+## Workspace Creation (CRITICAL)
+
+**MUST** create workspace BEFORE any code generation:
+
+```bash
+# Generate workspace path
+WORKSPACE=".microai/workspaces/dev-algo/$(date +%Y-%m-%d)-{topic_slug}"
+
+# Create workspace structure
+mkdir -p "$WORKSPACE/src"
+mkdir -p "$WORKSPACE/output"
+mkdir -p "$WORKSPACE/docs"
+
+# Create README
+echo "# Dev-Algo Session: {topic}" > "$WORKSPACE/README.md"
+echo "Date: $(date +%Y-%m-%d)" >> "$WORKSPACE/README.md"
+echo "Mode: {mode}" >> "$WORKSPACE/README.md"
+```
+
+### Workspace Rules
+1. **ALL source code** MUST go to `$WORKSPACE/src/`
+2. **ALL generated files** (videos, images, etc.) MUST go to `$WORKSPACE/output/`
+3. **NEVER** create files in project root
+4. Commands that generate output should `cd $WORKSPACE/output` first
+
+### Banner Update
+Display workspace path in welcome banner:
+```
+║  Workspace: .microai/workspaces/dev-algo/{date}-{topic}/   ║
+```
+
 ## Session State Initialization
 
 ```yaml
@@ -110,6 +141,13 @@ session:
   started_at: "{ISO timestamp}"
   mode: "{solve/review/interview}"
   topic: "{user topic}"
+
+  # NEW: Workspace configuration
+  workspace:
+    root: ".microai/workspaces/dev-algo/{date}-{topic_slug}"
+    src: "{workspace.root}/src"
+    output: "{workspace.root}/output"
+    docs: "{workspace.root}/docs"
 
   turn_state:
     current_turn: 0

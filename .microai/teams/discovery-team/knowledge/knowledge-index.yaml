@@ -1,0 +1,69 @@
+# Discovery Team - Knowledge Index
+# Catalog of all knowledge files available to the team
+
+version: "1.0"
+team: discovery-team
+
+# ═══════════════════════════════════════════════════════════════════════════
+# SHARED KNOWLEDGE (All agents)
+# ═══════════════════════════════════════════════════════════════════════════
+shared:
+  - id: discovery-methodology
+    path: shared/discovery-methodology.md
+    description: Core methodology for facts-based codebase discovery
+    auto_load: true
+
+  - id: fact-extraction-rules
+    path: shared/fact-extraction-rules.md
+    description: Rules for extracting facts with evidence
+    auto_load: true
+
+# ═══════════════════════════════════════════════════════════════════════════
+# AGENT-SPECIFIC KNOWLEDGE
+# ═══════════════════════════════════════════════════════════════════════════
+agent_specific:
+  reader:
+    - id: code-reading-patterns
+      path: reader/code-reading-patterns.md
+      description: Patterns for efficiently reading and understanding code
+
+  analyzer:
+    - id: analysis-frameworks
+      path: analyzer/analysis-frameworks.md
+      description: Frameworks for pattern recognition and relationship mapping
+
+  questioner:
+    - id: question-bank
+      path: question-bank.yaml
+      description: Standard question bank for codebase discovery
+
+  chronicler:
+    - id: reporting-templates
+      path: chronicler/reporting-templates.md
+      description: Templates for generating reports and outputs
+
+# ═══════════════════════════════════════════════════════════════════════════
+# QUESTION BANK
+# ═══════════════════════════════════════════════════════════════════════════
+question_bank:
+  path: question-bank.yaml
+  version: "1.0"
+  categories: 9
+  total_questions: 32
+
+# ═══════════════════════════════════════════════════════════════════════════
+# LOADING RULES
+# ═══════════════════════════════════════════════════════════════════════════
+loading:
+  always:
+    - shared/discovery-methodology.md
+    - shared/fact-extraction-rules.md
+    - question-bank.yaml
+
+  on_agent_activation:
+    reader: reader/code-reading-patterns.md
+    analyzer: analyzer/analysis-frameworks.md
+    chronicler: chronicler/reporting-templates.md
+
+  on_demand:
+    - external references

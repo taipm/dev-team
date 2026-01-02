@@ -1,0 +1,229 @@
+# MathArt YouTube Videos Kanban Board
+# Created: 2026-01-02
+# Team: youtube-math-art-team
+
+board:
+  name: "MathArt YouTube Videos"
+  columns:
+    - name: Backlog
+      wip_limit: null
+    - name: In Progress
+      wip_limit: 1
+    - name: Rendered
+      wip_limit: null
+    - name: Published
+      wip_limit: null
+
+tasks:
+  # === RENDERED ===
+  - id: MA-001
+    title: "Koch Snowflake Animation"
+    category: Fractals
+    column: Rendered
+    priority: high
+    duration: 90s
+    resolution: 720p
+    completed_at: "2026-01-01"
+
+  - id: MA-002
+    title: "Mandelbrot Zoom (Seahorse Valley)"
+    category: Fractals
+    column: Rendered
+    priority: high
+    duration: 90s
+    resolution: 720p
+    completed_at: "2026-01-02"
+
+  - id: MA-003
+    title: "Julia Set Morphing"
+    category: Fractals
+    column: Rendered
+    priority: high
+    duration: 90s
+    resolution: 720p
+    completed_at: "2026-01-02"
+    notes: "Full pipeline test - includes Shorts and Audio"
+    outputs:
+      main: julia_set_final_720p.mp4
+      shorts: julia_set_shorts.mp4
+      audio: background_music.m4a
+      thumbnail: thumbnail.png
+
+  - id: MA-028
+    title: "Double Pendulum Chaos"
+    category: Physics-Math
+    column: Rendered
+    priority: medium
+    duration: 90s
+    resolution: 720p
+    completed_at: "2026-01-02"
+
+  # === BACKLOG: Fractals ===
+  - id: MA-004
+    title: "Barnsley Fern Growth"
+    category: Fractals
+    column: Backlog
+    priority: high
+
+  - id: MA-005
+    title: "Sierpinski Triangle Zoom"
+    category: Fractals
+    column: Backlog
+    priority: medium
+
+  - id: MA-006
+    title: "Dragon Curve Evolution"
+    category: Fractals
+    column: Backlog
+    priority: medium
+
+  - id: MA-007
+    title: "Apollonian Gasket"
+    category: Fractals
+    column: Backlog
+    priority: low
+
+  # === BACKLOG: Sacred Geometry ===
+  - id: MA-008
+    title: "Flower of Life Construction"
+    category: Sacred Geometry
+    column: Backlog
+    priority: high
+
+  - id: MA-009
+    title: "Golden Spiral Expansion"
+    category: Sacred Geometry
+    column: Backlog
+    priority: medium
+
+  - id: MA-010
+    title: "Metatron's Cube 3D Rotation"
+    category: Sacred Geometry
+    column: Backlog
+    priority: medium
+
+  - id: MA-011
+    title: "Sri Yantra Sacred"
+    category: Sacred Geometry
+    column: Backlog
+    priority: low
+
+  # === BACKLOG: Mathematical Curves ===
+  - id: MA-012
+    title: "Lissajous Harmonics"
+    category: Mathematical Curves
+    column: Backlog
+    priority: high
+
+  - id: MA-013
+    title: "Rose Curves Gallery"
+    category: Mathematical Curves
+    column: Backlog
+    priority: medium
+
+  - id: MA-014
+    title: "Spirograph Patterns"
+    category: Mathematical Curves
+    column: Backlog
+    priority: medium
+
+  - id: MA-015
+    title: "Butterfly Curve"
+    category: Mathematical Curves
+    column: Backlog
+    priority: low
+
+  # === BACKLOG: Space-Filling Curves ===
+  - id: MA-016
+    title: "Hilbert Curve Evolution"
+    category: Space-Filling Curves
+    column: Backlog
+    priority: high
+
+  - id: MA-017
+    title: "Peano Curve"
+    category: Space-Filling Curves
+    column: Backlog
+    priority: medium
+
+  - id: MA-018
+    title: "Gosper Flowsnake"
+    category: Space-Filling Curves
+    column: Backlog
+    priority: medium
+
+  - id: MA-019
+    title: "Moore Curve"
+    category: Space-Filling Curves
+    column: Backlog
+    priority: low
+
+  # === BACKLOG: 3D Mathematical Objects ===
+  - id: MA-020
+    title: "Klein Bottle Rotation"
+    category: 3D Objects
+    column: Backlog
+    priority: high
+
+  - id: MA-021
+    title: "Mobius Strip Journey"
+    category: 3D Objects
+    column: Backlog
+    priority: medium
+
+  - id: MA-022
+    title: "Torus Knots"
+    category: 3D Objects
+    column: Backlog
+    priority: medium
+
+  - id: MA-023
+    title: "Hopf Fibration"
+    category: 3D Objects
+    column: Backlog
+    priority: low
+
+  # === BACKLOG: Number Visualization ===
+  - id: MA-024
+    title: "Pi Digit Spiral"
+    category: Number Viz
+    column: Backlog
+    priority: high
+
+  - id: MA-025
+    title: "Prime Number Spiral (Ulam)"
+    category: Number Viz
+    column: Backlog
+    priority: medium
+
+  - id: MA-026
+    title: "Collatz Conjecture Tree"
+    category: Number Viz
+    column: Backlog
+    priority: medium
+
+  - id: MA-027
+    title: "Riemann Zeta Landscape"
+    category: Number Viz
+    column: Backlog
+    priority: low
+
+  # === BACKLOG: Physics-Math ===
+  - id: MA-029
+    title: "Wave Interference Patterns"
+    category: Physics-Math
+    column: Backlog
+    priority: medium
+
+  - id: MA-030
+    title: "Lorenz Attractor 3D"
+    category: Physics-Math
+    column: Backlog
+    priority: high
+
+metrics:
+  total: 30
+  rendered: 4
+  published: 0
+  backlog: 26
+  last_updated: "2026-01-02"

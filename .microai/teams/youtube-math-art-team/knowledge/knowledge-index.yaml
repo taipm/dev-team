@@ -1,0 +1,43 @@
+# YouTube MathArt Team - Knowledge Index
+
+knowledge:
+  shared:
+    - id: mathart-categories
+      path: ./shared/mathart-categories.md
+      description: MathArt categories và topics từ Kanban
+
+  concept:
+    - id: visual-design
+      path: ./concept/visual-design.md
+      description: Visual design principles cho MathArt
+
+    - id: color-palettes
+      path: ./concept/color-palettes.md
+      description: Pre-defined color palettes
+
+  algorithm:
+    - id: animation-patterns
+      path: ./algorithm/animation-patterns.md
+      description: Common animation patterns
+
+    - id: optimization
+      path: ./algorithm/optimization.md
+      description: Performance optimization techniques
+
+  render:
+    - id: ffmpeg-settings
+      path: ./render/ffmpeg-settings.md
+      description: FFmpeg encoding settings
+
+    - id: youtube-specs
+      path: ./render/youtube-specs.md
+      description: YouTube recommended specifications
+
+  review:
+    - id: quality-checklist
+      path: ./review/quality-checklist.md
+      description: Quality validation checklist
+
+    - id: common-issues
+      path: ./review/common-issues.md
+      description: Common issues và fixes

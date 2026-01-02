@@ -111,12 +111,38 @@ Triggers: "*interview", topic contains "interview", "mock", "practice"
 
 ## Output Paths
 
+### Workspace Structure
+Mỗi session tạo workspace riêng để tổ chức artifacts:
+
+```
+.microai/workspaces/dev-algo/
+└── {YYYY-MM-DD}-{topic}/           # Session workspace
+    ├── src/                        # Source code files
+    │   ├── main.py                 # Main implementation
+    │   └── utils.py                # Helper modules
+    ├── output/                     # Generated artifacts
+    │   ├── *.mp4                   # Videos
+    │   ├── *.png                   # Images
+    │   └── *.gif                   # Animations
+    ├── docs/                       # Documentation
+    │   └── session-report.md       # Session summary
+    └── README.md                   # Workspace description
+```
+
+### Session Logs (Permanent)
 ```
 .microai/docs/teams/dev-algo/logs/
 ├── 2024-01-15-solve-two-sum.md
 ├── 2024-01-15-review-binary-search.md
 └── 2024-01-15-interview-dp-practice.md
 ```
+
+### Workspace Rules
+1. **ALWAYS** create workspace trước khi viết code
+2. **NEVER** write files to project root
+3. Source code goes to `src/`
+4. Generated files (videos, images) go to `output/`
+5. Session có thể chạy `cd` vào workspace để làm việc
 
 ## Usage
 

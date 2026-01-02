@@ -1,0 +1,542 @@
+# Question Bank - Discovery Team
+# Bộ câu hỏi chuẩn cho codebase discovery
+# Language: Vietnamese
+
+version: "1.0"
+description: "Bộ câu hỏi có cấu trúc để khám phá codebase một cách hệ thống"
+language: "vi"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# HƯỚNG DẪN SỬ DỤNG
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# Mỗi câu hỏi có các trường:
+#   - id: Định danh duy nhất (category-XX)
+#   - question: Nội dung câu hỏi
+#   - depth: Độ sâu (1=bề mặt, 2=trung bình, 3=sâu)
+#   - dependencies: Các câu hỏi phải trả lời trước
+#   - evidence_required: Loại evidence cần tìm
+#   - search_hints: Gợi ý tìm kiếm (glob patterns, keywords)
+#
+# Để thêm câu hỏi tùy chỉnh, thêm vào category "custom" ở cuối file.
+#
+# ═══════════════════════════════════════════════════════════════════════════
+
+categories:
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 1: KIẾN TRÚC & CẤU TRÚC
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: architecture
+    name: "Kiến trúc & Cấu trúc"
+    name_en: "Architecture & Structure"
+    icon: "🏗️"
+    description: "Câu hỏi về cách codebase được tổ chức và kiến trúc tổng thể"
+
+    questions:
+      - id: arch-01
+        question: "Codebase được tổ chức theo pattern nào? (monorepo, package-per-feature, layer-based, etc.)"
+        depth: 1
+        dependencies: []
+        evidence_required:
+          - "cấu trúc thư mục gốc"
+          - "file package.json/go.mod/requirements.txt"
+          - "file README"
+        search_hints:
+          glob: ["*", "*/", "README*", "package.json", "go.mod", "*.toml"]
+          grep: []
+
+      - id: arch-02
+        question: "Có bao nhiêu module/package chính? Mỗi module có trách nhiệm gì?"
+        depth: 2
+        dependencies: [arch-01]
+        evidence_required:
+          - "ranh giới module (directories, packages)"
+          - "imports và exports"
+          - "README hoặc docs của từng module"
+        search_hints:
+          glob: ["**/package.json", "**/go.mod", "**/README*", "src/*/", "pkg/*/", "internal/*/"]
+          grep: ["module ", "package ", "export "]
+
+      - id: arch-03
+        question: "Các layers chính (presentation, business logic, data) được phân chia thế nào?"
+        depth: 2
+        dependencies: [arch-01]
+        evidence_required:
+          - "cấu trúc thư mục layer"
+          - "import patterns giữa layers"
+          - "separation of concerns"
+        search_hints:
+          glob: ["cmd/", "api/", "internal/", "pkg/", "src/", "lib/", "handlers/", "services/", "repositories/"]
+          grep: []
+
+      - id: arch-04
+        question: "Dependency flow giữa các modules như thế nào? Có circular dependencies không?"
+        depth: 3
+        dependencies: [arch-02]
+        evidence_required:
+          - "import statements"
+          - "dependency graphs"
+          - "module references"
+        search_hints:
+          glob: ["**/*.go", "**/*.ts", "**/*.py", "**/*.java"]
+          grep: ["import ", "from ", "require("]
+
+      - id: arch-05
+        question: "Có shared utilities/common code không? Nằm ở đâu?"
+        depth: 2
+        dependencies: [arch-01]
+        evidence_required:
+          - "thư mục utils/common/shared"
+          - "exported utilities"
+        search_hints:
+          glob: ["**/utils/**", "**/common/**", "**/shared/**", "**/lib/**", "**/pkg/**"]
+          grep: []
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 2: ĐIỂM KHỞI ĐẦU
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: entry_points
+    name: "Điểm khởi đầu"
+    name_en: "Entry Points & Initialization"
+    icon: "🚪"
+    description: "Câu hỏi về entry points và quá trình khởi động"
+
+    questions:
+      - id: entry-01
+        question: "Main entry point của application ở đâu? (main.go, index.ts, app.py, etc.)"
+        depth: 1
+        dependencies: []
+        evidence_required:
+          - "file main (main.go, index.js, app.py, etc.)"
+          - "scripts trong package.json"
+          - "Makefile hoặc dockerfile"
+        search_hints:
+          glob: ["main.*", "index.*", "app.*", "cmd/**/main.*", "src/index.*"]
+          grep: ["func main()", "if __name__", "module.exports"]
+
+      - id: entry-02
+        question: "Application khởi động qua những bước nào? (init, config, startup sequence)"
+        depth: 2
+        dependencies: [entry-01]
+        evidence_required:
+          - "init functions"
+          - "constructor chains"
+          - "bootstrap code"
+        search_hints:
+          glob: ["**/init.*", "**/bootstrap.*", "**/startup.*", "**/setup.*"]
+          grep: ["func init()", "constructor", "bootstrap", "startup", "initialize"]
+
+      - id: entry-03
+        question: "Configuration được load từ đâu và như thế nào?"
+        depth: 2
+        dependencies: [entry-02]
+        evidence_required:
+          - "config files (yaml, json, env)"
+          - "config loading code"
+          - "environment variables"
+        search_hints:
+          glob: ["**/config.*", "**/*.yaml", "**/*.yml", "**/*.env*", "**/settings.*"]
+          grep: ["os.Getenv", "process.env", "config.load", "dotenv"]
+
+      - id: entry-04
+        question: "Có multiple entry points không? (CLI, API, workers, etc.)"
+        depth: 2
+        dependencies: [entry-01]
+        evidence_required:
+          - "cmd/ directory với multiple mains"
+          - "different package.json scripts"
+          - "separate processes"
+        search_hints:
+          glob: ["cmd/*/", "bin/", "scripts/"]
+          grep: []
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 3: LUỒNG DỮ LIỆU
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: data_flow
+    name: "Luồng dữ liệu"
+    name_en: "Data Flow & State"
+    icon: "🔄"
+    description: "Câu hỏi về cách dữ liệu di chuyển và state được quản lý"
+
+    questions:
+      - id: data-01
+        question: "State được quản lý ở đâu và như thế nào? (global state, context, stores)"
+        depth: 2
+        dependencies: [arch-02]
+        evidence_required:
+          - "state files/stores"
+          - "context providers"
+          - "global variables"
+        search_hints:
+          glob: ["**/store.*", "**/state.*", "**/context.*", "**/redux/**", "**/vuex/**"]
+          grep: ["createStore", "useState", "useContext", "global", "singleton"]
+
+      - id: data-02
+        question: "Data flow từ input đến output như thế nào? (request lifecycle)"
+        depth: 3
+        dependencies: [entry-02, data-01]
+        evidence_required:
+          - "handler functions"
+          - "middleware chain"
+          - "response builders"
+        search_hints:
+          glob: ["**/handler*", "**/middleware*", "**/controller*"]
+          grep: ["func.*Handler", "middleware", "router", "endpoint"]
+
+      - id: data-03
+        question: "Có caching layer không? Caching strategy là gì?"
+        depth: 2
+        dependencies: [data-01]
+        evidence_required:
+          - "cache implementation"
+          - "cache config"
+          - "cache invalidation"
+        search_hints:
+          glob: ["**/cache*", "**/redis*", "**/memcache*"]
+          grep: ["cache", "Cache", "redis", "memcached", "ttl"]
+
+      - id: data-04
+        question: "Dữ liệu được validate ở đâu và như thế nào?"
+        depth: 2
+        dependencies: [data-02]
+        evidence_required:
+          - "validation code"
+          - "schema definitions"
+          - "error messages"
+        search_hints:
+          glob: ["**/valid*", "**/schema*"]
+          grep: ["validate", "Validate", "schema", "Schema"]
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 4: THƯ VIỆN & SERVICES
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: dependencies
+    name: "Thư viện & Services"
+    name_en: "External Dependencies"
+    icon: "📦"
+    description: "Câu hỏi về dependencies và external services"
+
+    questions:
+      - id: dep-01
+        question: "Những external dependencies chính là gì? (frameworks, libraries)"
+        depth: 1
+        dependencies: []
+        evidence_required:
+          - "package.json dependencies"
+          - "go.mod require"
+          - "requirements.txt"
+        search_hints:
+          glob: ["package.json", "go.mod", "go.sum", "requirements.txt", "Gemfile", "pom.xml", "build.gradle"]
+          grep: []
+
+      - id: dep-02
+        question: "Application connect với những external services nào? (DB, API, cache, queue)"
+        depth: 2
+        dependencies: [dep-01]
+        evidence_required:
+          - "connection strings"
+          - "client initialization"
+          - "config files"
+        search_hints:
+          glob: ["**/db*", "**/database*", "**/client*", "**/connection*"]
+          grep: ["postgres", "mysql", "mongo", "redis", "rabbitmq", "kafka", "http.Client"]
+
+      - id: dep-03
+        question: "Có sử dụng message queue không? Pattern nào? (pub/sub, request/reply)"
+        depth: 2
+        dependencies: [dep-02]
+        evidence_required:
+          - "queue configuration"
+          - "publisher/subscriber code"
+          - "message handlers"
+        search_hints:
+          glob: ["**/queue*", "**/pubsub*", "**/message*", "**/event*"]
+          grep: ["publish", "subscribe", "queue", "Queue", "message", "event"]
+
+      - id: dep-04
+        question: "Third-party APIs được integrate như thế nào?"
+        depth: 2
+        dependencies: [dep-01]
+        evidence_required:
+          - "API clients"
+          - "HTTP calls to external services"
+          - "SDK usage"
+        search_hints:
+          glob: ["**/client*", "**/api/*", "**/external/*", "**/integration/*"]
+          grep: ["http.Get", "fetch", "axios", "apiKey", "Bearer"]
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 5: PATTERNS & CONVENTIONS
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: patterns
+    name: "Patterns & Conventions"
+    name_en: "Patterns & Conventions"
+    icon: "📐"
+    description: "Câu hỏi về design patterns và coding conventions"
+
+    questions:
+      - id: pat-01
+        question: "Code style conventions nào được sử dụng? (naming, formatting, structure)"
+        depth: 1
+        dependencies: []
+        evidence_required:
+          - ".eslintrc, .prettierrc"
+          - ".editorconfig"
+          - "golangci.yaml"
+          - "code samples"
+        search_hints:
+          glob: [".eslint*", ".prettier*", ".editorconfig", "golangci*", "tsconfig*"]
+          grep: []
+
+      - id: pat-02
+        question: "Design patterns nào được áp dụng? (DI, Factory, Repository, etc.)"
+        depth: 2
+        dependencies: [arch-02]
+        evidence_required:
+          - "pattern implementations"
+          - "interface definitions"
+          - "factory functions"
+        search_hints:
+          glob: ["**/factory*", "**/repository*", "**/service*", "**/provider*"]
+          grep: ["interface ", "Factory", "Repository", "Provider", "Inject"]
+
+      - id: pat-03
+        question: "Error handling được implement như thế nào?"
+        depth: 2
+        dependencies: [arch-02]
+        evidence_required:
+          - "error types/classes"
+          - "error handling patterns"
+          - "error responses"
+        search_hints:
+          glob: ["**/error*", "**/exception*"]
+          grep: ["error", "Error", "throw", "catch", "panic", "recover"]
+
+      - id: pat-04
+        question: "Logging strategy là gì? Log levels và formats?"
+        depth: 2
+        dependencies: [arch-02]
+        evidence_required:
+          - "logger configuration"
+          - "log calls"
+          - "log format"
+        search_hints:
+          glob: ["**/log*", "**/logger*"]
+          grep: ["log.", "logger", "Logger", "console.log", "print("]
+
+      - id: pat-05
+        question: "Naming conventions cho files, functions, variables là gì?"
+        depth: 1
+        dependencies: [pat-01]
+        evidence_required:
+          - "file naming patterns"
+          - "function naming patterns"
+          - "variable naming patterns"
+        search_hints:
+          glob: ["**/*"]
+          grep: []
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 6: TESTING
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: testing
+    name: "Testing"
+    name_en: "Testing Infrastructure"
+    icon: "🧪"
+    description: "Câu hỏi về testing strategy và infrastructure"
+
+    questions:
+      - id: test-01
+        question: "Testing framework nào được sử dụng? Test files ở đâu?"
+        depth: 1
+        dependencies: []
+        evidence_required:
+          - "test config"
+          - "test file patterns"
+          - "test scripts"
+        search_hints:
+          glob: ["**/*test*", "**/*spec*", "jest.config*", "vitest.config*", "pytest.ini"]
+          grep: ["test", "describe", "it(", "Test", "t.Run"]
+
+      - id: test-02
+        question: "Test coverage hiện tại là bao nhiêu? Phần nào chưa được test?"
+        depth: 2
+        dependencies: [test-01]
+        evidence_required:
+          - "coverage reports"
+          - "coverage config"
+        search_hints:
+          glob: ["**/coverage/**", "**/.nyc_output/**", "**/htmlcov/**"]
+          grep: ["coverage"]
+
+      - id: test-03
+        question: "Có integration tests không? E2E tests?"
+        depth: 2
+        dependencies: [test-01]
+        evidence_required:
+          - "integration test files"
+          - "e2e test files"
+          - "test fixtures"
+        search_hints:
+          glob: ["**/integration/**", "**/e2e/**", "**/fixtures/**", "**/testdata/**"]
+          grep: []
+
+      - id: test-04
+        question: "Mock và test fixtures được tổ chức như thế nào?"
+        depth: 2
+        dependencies: [test-01]
+        evidence_required:
+          - "mock files"
+          - "fixtures"
+          - "test utilities"
+        search_hints:
+          glob: ["**/mock*", "**/stub*", "**/fake*", "**/fixture*", "**/testutil*"]
+          grep: ["mock", "Mock", "stub", "Stub", "fake", "Fake"]
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 7: BẢO MẬT & HIỆU NĂNG
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: security
+    name: "Bảo mật & Hiệu năng"
+    name_en: "Security & Performance"
+    icon: "🔒"
+    description: "Câu hỏi về security measures và performance considerations"
+
+    questions:
+      - id: sec-01
+        question: "Authentication được implement như thế nào?"
+        depth: 2
+        dependencies: [data-02]
+        evidence_required:
+          - "auth handlers"
+          - "token/session management"
+          - "auth middleware"
+        search_hints:
+          glob: ["**/auth*", "**/login*", "**/session*", "**/token*"]
+          grep: ["auth", "Auth", "login", "Login", "JWT", "Bearer", "session", "Session"]
+
+      - id: sec-02
+        question: "Authorization/RBAC được implement thế nào?"
+        depth: 2
+        dependencies: [sec-01]
+        evidence_required:
+          - "permission checks"
+          - "role definitions"
+          - "access control"
+        search_hints:
+          glob: ["**/permission*", "**/role*", "**/access*", "**/policy*"]
+          grep: ["permission", "role", "authorize", "can", "allow", "deny"]
+
+      - id: sec-03
+        question: "Secrets/credentials được quản lý như thế nào?"
+        depth: 2
+        dependencies: [entry-03]
+        evidence_required:
+          - "secret loading"
+          - "environment variables"
+          - ".gitignore patterns"
+        search_hints:
+          glob: [".env*", "**/secret*", ".gitignore"]
+          grep: ["SECRET", "KEY", "PASSWORD", "CREDENTIAL", "TOKEN"]
+
+      - id: sec-04
+        question: "Có rate limiting không? Implementation như thế nào?"
+        depth: 2
+        dependencies: [data-02]
+        evidence_required:
+          - "rate limit config"
+          - "rate limit middleware"
+        search_hints:
+          glob: ["**/rate*", "**/limit*", "**/throttle*"]
+          grep: ["rate", "limit", "throttle", "Limiter"]
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 8: BUILD & DEPLOY
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: build_deploy
+    name: "Build & Deploy"
+    name_en: "Build & Deployment"
+    icon: "🚀"
+    description: "Câu hỏi về build process và deployment"
+
+    questions:
+      - id: build-01
+        question: "Build process như thế nào? Build tools được sử dụng?"
+        depth: 1
+        dependencies: []
+        evidence_required:
+          - "build scripts"
+          - "Makefile/build files"
+          - "CI config"
+        search_hints:
+          glob: ["Makefile", "Dockerfile*", "*.dockerfile", "build.*", ".github/workflows/*", ".gitlab-ci*"]
+          grep: []
+
+      - id: build-02
+        question: "CI/CD pipeline được setup như thế nào?"
+        depth: 2
+        dependencies: [build-01]
+        evidence_required:
+          - "CI config files"
+          - "pipeline stages"
+          - "deployment scripts"
+        search_hints:
+          glob: [".github/workflows/*", ".gitlab-ci*", "Jenkinsfile", ".circleci/*", "azure-pipelines*"]
+          grep: []
+
+      - id: build-03
+        question: "Deployment target là gì? (K8s, Docker, serverless, etc.)"
+        depth: 2
+        dependencies: [build-01]
+        evidence_required:
+          - "deployment configs"
+          - "kubernetes manifests"
+          - "serverless configs"
+        search_hints:
+          glob: ["**/k8s/**", "**/kubernetes/**", "**/deploy/**", "serverless*", "*.yaml"]
+          grep: ["apiVersion", "kind:", "service:", "deployment:"]
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # CATEGORY 9: TÙY CHỈNH
+  # ═══════════════════════════════════════════════════════════════════════
+  - id: custom
+    name: "Câu hỏi tùy chỉnh"
+    name_en: "Custom Questions"
+    icon: "✏️"
+    description: "Thêm câu hỏi riêng của bạn vào đây"
+
+    questions: []
+    # Ví dụ cách thêm câu hỏi:
+    # - id: custom-01
+    #   question: "Câu hỏi của bạn ở đây?"
+    #   depth: 2
+    #   dependencies: []
+    #   evidence_required:
+    #     - "loại evidence cần tìm"
+    #   search_hints:
+    #     glob: ["patterns"]
+    #     grep: ["keywords"]
+
+# ═══════════════════════════════════════════════════════════════════════════
+# METADATA
+# ═══════════════════════════════════════════════════════════════════════════
+
+metadata:
+  total_questions: 32  # Excluding custom
+  categories_count: 9
+  depth_distribution:
+    level_1: 8   # Surface level
+    level_2: 19  # Moderate depth
+    level_3: 5   # Deep dive
+
+  recommended_session_size:
+    quick: 5-8     # ~30 minutes
+    standard: 10-15  # ~1 hour
+    comprehensive: 20+  # ~2+ hours
+
+  update_history:
+    - date: "2024-01-20"
+      version: "1.0"
+      changes: "Initial release"
