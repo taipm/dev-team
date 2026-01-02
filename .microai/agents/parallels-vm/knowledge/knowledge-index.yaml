@@ -1,0 +1,33 @@
+# Knowledge Index for Parallels VM Agent
+# Version: 1.0
+
+index:
+  - id: prlctl-reference
+    file: prlctl-reference.md
+    description: Complete prlctl CLI reference
+    priority: high
+    tags: [cli, commands, prlctl]
+
+  - id: ssh-config
+    file: ssh-config.md
+    description: SSH configuration for VMs
+    priority: high
+    tags: [ssh, devops, networking]
+
+  - id: vm-templates
+    file: vm-templates.md
+    description: Common VM configurations and templates
+    priority: medium
+    tags: [templates, config]
+
+  - id: backup-strategies
+    file: backup-strategies.md
+    description: Backup and restore strategies
+    priority: medium
+    tags: [backup, restore, snapshots]
+
+  - id: troubleshooting
+    file: troubleshooting.md
+    description: Common issues and solutions
+    priority: low
+    tags: [troubleshooting, errors, fixes]

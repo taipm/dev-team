@@ -340,6 +340,12 @@ agents:
     on_demand:
       thinking: [thinking/thinking-frameworks]
 
+  parallels-vm:
+    description: "DevOps VM manager for Parallels Desktop on Mac"
+    auto_load: []
+    on_demand:
+      devops: [devops/docker-cicd]
+
 # =============================================================================
 # TOKEN BUDGETS
 # =============================================================================
