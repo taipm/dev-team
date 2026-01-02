@@ -1,7 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_shorts/1920p30/partial_movie_files/DerivativeShort/2017681337_223614898_223132457.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_shorts/1920p30/partial_movie_files/DerivativeShort/1496375296_1510940495_3710805644.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_shorts/1920p30/partial_movie_files/DerivativeShort/1496375296_1493850003_3395600178.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_shorts/1920p30/partial_movie_files/DerivativeShort/1496375296_3712502634_3995742144.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_shorts/1920p30/partial_movie_files/DerivativeShort/1496375296_4245559400_2687870202.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_shorts/1920p30/partial_movie_files/DerivativeShort/1496375296_3394500337_2505460603.mp4'

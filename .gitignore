@@ -52,3 +52,21 @@ api_key*
 *.log
 tmp/
 temp/
+
+# Media files - Large binary files
+*.mp3
+*.mp4
+*.wav
+*.avi
+*.mkv
+*.mov
+*.flv
+*.wmv
+*.m4a
+*.flac
+*.ogg
+
+# Manim/Animation generated media
+**/media/videos/
+**/media/Tex/
+**/media/texts/

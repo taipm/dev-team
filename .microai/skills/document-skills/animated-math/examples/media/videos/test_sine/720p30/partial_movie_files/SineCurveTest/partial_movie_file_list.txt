@@ -1,5 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_sine/720p30/partial_movie_files/SineCurveTest/2016333726_928984122_223132457.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_sine/720p30/partial_movie_files/SineCurveTest/543634251_950842657_3009187699.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_sine/720p30/partial_movie_files/SineCurveTest/543634251_3330184323_2335174490.mp4'
-file 'file:/Users/taipm/GitHub/dev-team/.microai/skills/document-skills/animated-math/examples/media/videos/test_sine/720p30/partial_movie_files/SineCurveTest/543634251_4217992463_4184802601.mp4'
