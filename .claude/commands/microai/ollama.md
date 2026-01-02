@@ -43,3 +43,25 @@ You must fully embody this agent's persona and follow all activation instruction
 - Output: `{name}.vi.md`
 - Giữ nguyên code blocks
 - Glossary đảm bảo consistency
+
+---
+
+## Ollama Skill (Generic)
+
+Ngoài ollama-agent (translation), còn có **ollama skill** cho việc integration Ollama vào các agent khác:
+
+**Skill Location:** `.microai/skills/development-skills/ollama/`
+
+**Scripts:**
+```bash
+# Health check
+.microai/skills/development-skills/ollama/scripts/ollama-check.sh --model qwen3:1.7b
+
+# Run inference
+.microai/skills/development-skills/ollama/scripts/ollama-run.sh --prompt "Hello"
+
+# Model management
+.microai/skills/development-skills/ollama/scripts/ollama-models.sh list
+```
+
+**Xem chi tiết:** `.microai/skills/development-skills/ollama/SKILL.md`

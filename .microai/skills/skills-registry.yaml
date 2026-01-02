@@ -123,6 +123,16 @@ skills:
     license: apache-2.0
     created: "2026-01-02"
 
+  - name: ollama
+    category: development-skills
+    path: development-skills/ollama
+    version: "1.0.0"
+    description: "Local LLM integration via Ollama. Use when agents need local AI inference without external API calls. Supports multiple models (qwen3, llama, codellama, mistral), streaming, configurable timeouts"
+    description_vi: "Tich hop LLM local qua Ollama. Su dung khi agents can inference AI local khong can goi API ben ngoai. Ho tro nhieu models, streaming, timeout tuy chinh"
+    tags: [llm, ollama, local, inference, ai, translation, code-generation, qwen, llama, codellama, mistral]
+    license: apache-2.0
+    created: "2026-01-02"
+
   # Design Skills
   - name: algorithmic-art
     category: design-skills
