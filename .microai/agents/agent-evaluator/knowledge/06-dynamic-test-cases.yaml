@@ -1,0 +1,374 @@
+# Dynamic Test Cases for Real Execution Testing
+# Version: 1.0
+# Purpose: Standard test prompts for evaluating agent intelligence through actual execution
+
+version: "1.0"
+description: |
+  Test cases for dynamic evaluation via Ollama/Claude execution.
+  Each test includes prompt, expected keywords, and scoring.
+
+# ════════════════════════════════════════════════════════════════════
+# REASONING TESTS (20 points total)
+# ════════════════════════════════════════════════════════════════════
+
+reasoning_tests:
+  description: "Đánh giá khả năng suy luận logic và giải quyết vấn đề"
+  total_points: 20
+
+  # Logic tests (7 points)
+  logic:
+    - id: R-L1
+      prompt: "All programmers use computers. John is a programmer. Does John use a computer?"
+      keywords: ["yes", "correct", "true", "does", "uses"]
+      points: 2
+      difficulty: easy
+
+    - id: R-L2
+      prompt: "If it rains, the ground gets wet. The ground is wet. Did it rain?"
+      keywords: ["not necessarily", "cannot conclude", "might", "other reasons", "fallacy"]
+      points: 3
+      difficulty: medium
+
+    - id: R-L3
+      prompt: "No fish can fly. Some pets are fish. Can all pets fly?"
+      keywords: ["no", "not all", "some cannot", "fish cannot"]
+      points: 2
+      difficulty: easy
+
+  # Multi-step tests (8 points)
+  multistep:
+    - id: R-M1
+      prompt: "Module A imports B. B imports C. C imports D. What is the correct initialization order?"
+      keywords: ["D", "C", "B", "A"]
+      order_matters: true
+      points: 3
+      difficulty: medium
+
+    - id: R-M2
+      prompt: |
+        There are 3 servers: Web, API, Database.
+        - Web depends on API
+        - API depends on Database
+        If Database fails, which services are affected?
+      keywords: ["API", "Web", "both", "all", "cascade"]
+      points: 3
+      difficulty: medium
+
+    - id: R-M3
+      prompt: "Task X takes 2 hours. Task Y takes 3 hours and depends on X. Task Z takes 1 hour and depends on Y. Total time if run sequentially?"
+      keywords: ["6", "six", "hours"]
+      points: 2
+      difficulty: easy
+
+  # Edge case tests (5 points)
+  edge:
+    - id: R-E1
+      prompt: "Service A calls B. B calls A. What problem does this create?"
+      keywords: ["circular", "cycle", "infinite", "loop", "deadlock", "stack overflow"]
+      points: 3
+      difficulty: medium
+
+    - id: R-E2
+      prompt: "What happens when you divide by zero in most programming languages?"
+      keywords: ["error", "exception", "undefined", "crash", "infinity", "NaN"]
+      points: 2
+      difficulty: easy
+
+# ════════════════════════════════════════════════════════════════════
+# ADAPTABILITY TESTS (15 points total)
+# ════════════════════════════════════════════════════════════════════
+
+adaptability_tests:
+  description: "Đánh giá khả năng xử lý tình huống mơ hồ và phục hồi lỗi"
+  total_points: 15
+
+  # Ambiguity handling (8 points)
+  ambiguity:
+    - id: A-A1
+      prompt: "Fix the bug"
+      keywords: ["which", "what", "where", "more information", "clarify", "specify", "details"]
+      points: 3
+      difficulty: medium
+
+    - id: A-A2
+      prompt: "Make it faster"
+      keywords: ["what", "which", "component", "specific", "measure", "current", "target"]
+      points: 3
+      difficulty: medium
+
+    - id: A-A3
+      prompt: "Review the code"
+      keywords: ["which", "file", "what", "focus", "specific", "security", "performance", "style"]
+      points: 2
+      difficulty: easy
+
+  # Error recovery (7 points)
+  recovery:
+    - id: A-R1
+      prompt: "Run command: xyz_nonexistent_command_12345"
+      keywords: ["not found", "doesn't exist", "error", "invalid", "unknown", "try", "did you mean"]
+      points: 3
+      difficulty: medium
+
+    - id: A-R2
+      prompt: "Read file: /this/path/does/not/exist/anywhere.txt"
+      keywords: ["not found", "doesn't exist", "cannot", "check path", "verify", "create"]
+      points: 2
+      difficulty: easy
+
+    - id: A-R3
+      prompt: "Deploy to production environment: undefined_env_xyz"
+      keywords: ["not found", "unknown", "available environments", "check", "verify", "configure"]
+      points: 2
+      difficulty: easy
+
+# ════════════════════════════════════════════════════════════════════
+# OUTPUT QUALITY TESTS (10 points total)
+# ════════════════════════════════════════════════════════════════════
+
+output_tests:
+  description: "Đánh giá chất lượng và format của output"
+  total_points: 10
+
+  format:
+    - id: O-F1
+      prompt: "List exactly 3 benefits of code review"
+      keywords: ["1", "2", "3", "first", "second", "third"]
+      check_count: 3
+      points: 3
+      difficulty: easy
+
+    - id: O-F2
+      prompt: "Explain recursion in exactly 2 sentences"
+      keywords: ["function", "calls itself", "base case", "recursive"]
+      check_sentences: 2
+      points: 3
+      difficulty: medium
+
+  completeness:
+    - id: O-C1
+      prompt: "What are the 4 pillars of OOP?"
+      keywords: ["encapsulation", "inheritance", "polymorphism", "abstraction"]
+      required_all: true
+      points: 4
+      difficulty: easy
+
+# ════════════════════════════════════════════════════════════════════
+# CREATIVITY TESTS (10 points total) - NEW DIMENSION
+# ════════════════════════════════════════════════════════════════════
+
+creativity_tests:
+  description: "Đánh giá khả năng sáng tạo và giải quyết vấn đề mới"
+  total_points: 10
+
+  novel_solutions:
+    - id: C-N1
+      prompt: "Propose 2 unconventional ways to reduce API latency besides caching"
+      keywords: ["precompute", "edge", "compression", "batch", "predict", "async", "parallel", "CDN"]
+      min_ideas: 2
+      points: 4
+      difficulty: hard
+
+    - id: C-N2
+      prompt: "How would you debug a problem that only happens in production, not locally?"
+      keywords: ["logs", "monitoring", "reproduce", "environment", "data", "traffic", "load", "config"]
+      points: 3
+      difficulty: medium
+
+  problem_reframing:
+    - id: C-P1
+      prompt: "Users complain the app is slow. But metrics show response time is 50ms. What else could be the problem?"
+      keywords: ["perceived", "UX", "loading", "animation", "feedback", "network", "client", "render"]
+      points: 3
+      difficulty: hard
+
+# ════════════════════════════════════════════════════════════════════
+# DOMAIN-SPECIFIC TESTS (15 points total per domain)
+# ════════════════════════════════════════════════════════════════════
+
+domain_tests:
+  description: "Test cases theo từng loại agent"
+
+  # Go Development
+  go_dev:
+    - id: D-GO1
+      prompt: "What is the zero value of a slice in Go?"
+      keywords: ["nil", "null", "empty"]
+      points: 3
+      difficulty: easy
+
+    - id: D-GO2
+      prompt: "When should you use a pointer receiver vs value receiver in Go?"
+      keywords: ["modify", "large struct", "consistency", "nil", "copy"]
+      points: 4
+      difficulty: medium
+
+    - id: D-GO3
+      prompt: "How do you prevent race conditions when accessing a map from multiple goroutines?"
+      keywords: ["mutex", "sync.Map", "channel", "lock", "RWMutex"]
+      points: 4
+      difficulty: medium
+
+    - id: D-GO4
+      prompt: "What is the difference between make and new in Go?"
+      keywords: ["make", "slice", "map", "channel", "new", "pointer", "zero"]
+      points: 4
+      difficulty: medium
+
+  # Python Development
+  python_dev:
+    - id: D-PY1
+      prompt: "What is the difference between list and tuple in Python?"
+      keywords: ["mutable", "immutable", "list", "tuple", "change"]
+      points: 3
+      difficulty: easy
+
+    - id: D-PY2
+      prompt: "Explain Python's GIL and its impact on multithreading"
+      keywords: ["Global Interpreter Lock", "thread", "CPU", "I/O", "multiprocessing"]
+      points: 4
+      difficulty: medium
+
+    - id: D-PY3
+      prompt: "What are Python decorators and when would you use them?"
+      keywords: ["wrapper", "function", "@", "modify", "logging", "auth", "cache"]
+      points: 4
+      difficulty: medium
+
+    - id: D-PY4
+      prompt: "How do you handle memory leaks in Python?"
+      keywords: ["garbage", "reference", "cycle", "weakref", "profiler", "del"]
+      points: 4
+      difficulty: hard
+
+  # QA/Testing
+  qa:
+    - id: D-QA1
+      prompt: "What is the test pyramid and why is it important?"
+      keywords: ["unit", "integration", "e2e", "pyramid", "fast", "cost"]
+      points: 4
+      difficulty: easy
+
+    - id: D-QA2
+      prompt: "Explain boundary value analysis with an example"
+      keywords: ["boundary", "edge", "min", "max", "limit", "-1", "+1"]
+      points: 4
+      difficulty: medium
+
+    - id: D-QA3
+      prompt: "When should you use mocking vs real dependencies in tests?"
+      keywords: ["unit", "integration", "isolation", "speed", "external", "database"]
+      points: 4
+      difficulty: medium
+
+    - id: D-QA4
+      prompt: "How do you test asynchronous code effectively?"
+      keywords: ["await", "async", "callback", "promise", "timeout", "mock"]
+      points: 3
+      difficulty: medium
+
+  # DevOps
+  devops:
+    - id: D-DO1
+      prompt: "What is the difference between blue-green and canary deployments?"
+      keywords: ["blue-green", "switch", "canary", "gradual", "percentage", "traffic"]
+      points: 4
+      difficulty: medium
+
+    - id: D-DO2
+      prompt: "How do you implement zero-downtime database migrations?"
+      keywords: ["backward compatible", "rolling", "dual write", "feature flag", "expand-contract"]
+      points: 4
+      difficulty: hard
+
+    - id: D-DO3
+      prompt: "What metrics should you monitor for a production API?"
+      keywords: ["latency", "error rate", "throughput", "saturation", "availability"]
+      points: 4
+      difficulty: easy
+
+    - id: D-DO4
+      prompt: "Explain the 12-factor app methodology in one sentence per factor"
+      keywords: ["codebase", "dependencies", "config", "backing", "build", "processes", "port", "concurrency", "disposability", "dev-prod", "logs", "admin"]
+      points: 3
+      difficulty: hard
+
+# ════════════════════════════════════════════════════════════════════
+# SCORING CONFIGURATION
+# ════════════════════════════════════════════════════════════════════
+
+scoring:
+  method: keyword_matching
+
+  # Keyword matching rules
+  keyword_rules:
+    case_sensitive: false
+    partial_match: true
+    min_match_ratio: 0.5  # Need 50% keywords to pass
+
+  # Difficulty multipliers
+  difficulty_weights:
+    easy: 1.0
+    medium: 1.2
+    hard: 1.5
+
+  # Grade thresholds
+  grade_thresholds:
+    A+: 90
+    A: 80
+    B: 70
+    C: 60
+    D: 50
+    F: 0
+
+# ════════════════════════════════════════════════════════════════════
+# TEST EXECUTION CONFIG
+# ════════════════════════════════════════════════════════════════════
+
+execution:
+  provider: ollama
+  model: "qwen3:1.7b"
+  timeout_per_test: 30
+  max_retries: 2
+
+  # System prompt prefix for all tests
+  system_prefix: |
+    You are being evaluated. Answer concisely and directly.
+    Focus on accuracy and completeness.
+
+  # Categories to run by default
+  default_categories:
+    - reasoning
+    - adaptability
+    - output
+
+  # Domain detection based on agent tags
+  domain_mapping:
+    go-dev-agent: go_dev
+    python-dev-agent: python_dev
+    qa-agent: qa
+    tester-agent: qa
+    devops-agent: devops
+    codebase-manager-agent: devops
+
+# ════════════════════════════════════════════════════════════════════
+# OUTPUT FORMAT
+# ════════════════════════════════════════════════════════════════════
+
+output:
+  format: json
+  include:
+    - test_id
+    - status
+    - score
+    - response_preview
+    - matched_keywords
+    - duration
+
+  summary:
+    - total_tests
+    - passed
+    - failed
+    - total_score
+    - max_score
+    - grade

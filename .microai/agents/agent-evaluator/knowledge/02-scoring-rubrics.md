@@ -1,288 +1,275 @@
-# Scoring Rubrics
+# Scoring Rubrics v2.0
 
-> Chi tiết cách tính điểm cho từng dimension.
+> Chi tiết cách tính điểm với Real Execution Testing.
+> Updated: 2026-01-03
 
 ---
 
-## Static Analysis Rubrics (40 points)
+## Score Distribution Overview
 
-### Structure Check (10 points)
+```
+╔═══════════════════════════════════════════════════════════════════════╗
+║           AGENT INTELLIGENCE SCORING v2.0                              ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║                                                                        ║
+║  PHASE A: STATIC ANALYSIS         30 points (30%)                     ║
+║  ├── Structure Check               8 points                            ║
+║  ├── Metadata Compliance           8 points                            ║
+║  ├── Knowledge Coverage            7 points                            ║
+║  └── Design Patterns               7 points                            ║
+║                                                                        ║
+║  PHASE B: DYNAMIC TESTING         55 points (55%) ★ REAL EXECUTION    ║
+║  ├── Reasoning Tests              20 points                            ║
+║  ├── Adaptability Tests           15 points                            ║
+║  ├── Output Quality Tests         10 points                            ║
+║  └── Creativity Tests (NEW)       10 points                            ║
+║                                                                        ║
+║  PHASE C: SYNTHESIS               15 points (15%)                     ║
+║  ├── Cross-dimension Analysis      6 points                            ║
+║  ├── Pattern Recognition           5 points                            ║
+║  └── Confidence Level              4 points                            ║
+║                                                                        ║
+║  TOTAL:                          100 points                            ║
+║                                                                        ║
+╚═══════════════════════════════════════════════════════════════════════╝
+```
+
+**Key Change in v2.0**: Dynamic Testing increased from 40% to 55% based on Deep Thinking Team analysis.
+
+---
+
+## Phase A: Static Analysis (30 points)
+
+### A1. Structure Check (8 points)
 
 | Check | Points | Pass Criteria |
 |-------|--------|---------------|
 | Directory exists | 2 | `.microai/agents/{name}/` exists |
 | agent.md present | 2 | Valid markdown with YAML frontmatter |
 | knowledge/ exists | 2 | Directory with ≥1 .md file |
-| memory/ exists | 2 | Directory with context.md |
-| Command registered | 2 | `.claude/commands/microai/{name}.md` exists |
+| memory/ exists | 1 | Directory with context.md |
+| Command registered | 1 | `.claude/commands/microai/{name}.md` exists |
 
-### Metadata Compliance (10 points)
+### A2. Metadata Compliance (8 points)
 
 | Check | Points | Pass Criteria |
 |-------|--------|---------------|
 | id field | 2 | kebab-case, unique |
-| name field | 2 | Human-readable name |
+| name + version | 2 | Human-readable name, semver version |
 | model field | 2 | Valid: opus/sonnet/haiku |
-| language field | 2 | Explicit: vi/en |
-| persona section | 2 | role + identity defined |
+| persona section | 2 | role + identity + principles defined |
 
-### Knowledge Coverage (10 points)
-
-| Check | Points | Pass Criteria |
-|-------|--------|---------------|
-| File count | 3 | ≥3 knowledge files |
-| knowledge-index.yaml | 2 | Valid index exists |
-| Code examples | 3 | ≥3 code blocks in files |
-| Anti-patterns | 2 | Documented what NOT to do |
-
-### Design Patterns (10 points)
+### A3. Knowledge Coverage (7 points)
 
 | Check | Points | Pass Criteria |
 |-------|--------|---------------|
-| Activation protocol | 3 | Clear numbered steps |
-| Menu system | 3 | Commands with triggers |
-| Workflow references | 2 | External YAML workflows |
-| Principles defined | 2 | ≥3 guiding principles |
+| File count | 2 | ≥3 knowledge files |
+| knowledge-index.yaml | 2 | Valid index with auto_load rules |
+| Code examples | 2 | ≥3 code blocks in knowledge files |
+| Anti-patterns | 1 | Documented what NOT to do |
+
+### A4. Design Patterns (7 points)
+
+| Check | Points | Pass Criteria |
+|-------|--------|---------------|
+| Activation protocol | 2 | Clear activation steps |
+| Clarification protocol | 2 | Handles ambiguous inputs |
+| Error recovery | 2 | Graceful error handling defined |
+| Menu system | 1 | Commands with triggers |
 
 ---
 
-## Dynamic Testing Rubrics (40 points)
+## Phase B: Dynamic Testing (55 points) ★
 
-### Reasoning Tests (15 points)
-
-#### Logic Tests (5 points)
-
-| Test | Points | Expected |
-|------|--------|----------|
-| Syllogism | 2 | Correct deduction |
-| Transitivity | 2 | A→B, B→C ⟹ A→C |
-| Negation | 1 | Handle "not" correctly |
-
-**Test Cases:**
+### Execution Provider
 
 ```yaml
-logic_tests:
-  - id: L1
-    prompt: "All A are B. All B are C. Is all A are C?"
-    expected: "Yes"
-    keywords: ["yes", "correct", "true", "đúng"]
-    points: 2
+provider:
+  primary: ollama
+  model: "qwen3:1.7b"
+  timeout: 30
+  script: ".microai/skills/development-skills/ollama/scripts/ollama-run.sh"
 
-  - id: L2
-    prompt: "If it rains, the ground is wet. The ground is wet. Did it rain?"
-    expected: "Not necessarily (affirming the consequent fallacy)"
-    keywords: ["not necessarily", "cannot conclude", "fallacy"]
-    points: 2
-
-  - id: L3
-    prompt: "No cats are dogs. Some pets are cats. Can some pets be dogs?"
-    expected: "Yes, some pets can still be dogs"
-    keywords: ["yes", "possible"]
-    points: 1
+fallback:
+  provider: claude
+  model: sonnet
+  timeout: 60
 ```
 
-#### Multi-step Tests (5 points)
+### B1. Reasoning Tests (20 points)
 
-```yaml
-multistep_tests:
-  - id: M1
-    prompt: "Task A depends on B. B depends on C. C depends on D. What execution order?"
-    expected: "D → C → B → A"
-    keywords: ["D", "C", "B", "A"]
-    order_matters: true
-    points: 3
+#### Logic Tests (7 points)
 
-  - id: M2
-    prompt: |
-      There are 3 boxes: Red, Blue, Green.
-      - Red is left of Blue
-      - Green is right of Blue
-      What is the order from left to right?
-    expected: "Red, Blue, Green"
-    keywords: ["Red", "Blue", "Green"]
-    order_matters: true
-    points: 2
-```
+| ID | Test | Points | Keywords |
+|----|------|--------|----------|
+| R-L1 | Syllogism (A→B, B→C, A→C?) | 2 | yes, correct, true |
+| R-L2 | Affirming consequent fallacy | 3 | not necessarily, cannot conclude |
+| R-L3 | Negative quantifier | 2 | no, not all, some cannot |
 
-#### Edge Case Tests (5 points)
+#### Multi-step Reasoning (8 points)
 
-```yaml
-edge_tests:
-  - id: E1
-    prompt: "A depends on B. B depends on A. What happens?"
-    expected: "Circular dependency error"
-    keywords: ["circular", "cycle", "error", "cannot"]
-    points: 3
+| ID | Test | Points | Keywords |
+|----|------|--------|----------|
+| R-M1 | Dependency order (A←B←C←D) | 3 | D, C, B, A (order matters) |
+| R-M2 | Cascade failure analysis | 3 | API, Web, both, all |
+| R-M3 | Sequential task calculation | 2 | 6, six, hours |
 
-  - id: E2
-    prompt: "Sort this list: []. What is the result?"
-    expected: "Empty list []"
-    keywords: ["empty", "[]", "nothing"]
-    points: 2
-```
+#### Edge Case Handling (5 points)
 
-### Knowledge Tests (10 points)
+| ID | Test | Points | Keywords |
+|----|------|--------|----------|
+| R-E1 | Circular dependency detection | 3 | circular, cycle, infinite, loop |
+| R-E2 | Division by zero | 2 | error, exception, undefined |
 
-**Domain-specific tests generated based on agent type:**
+### B2. Adaptability Tests (15 points)
 
-```yaml
-knowledge_tests:
-  dev_agent:
-    - prompt: "What are the SOLID principles?"
-      keywords: ["Single responsibility", "Open-closed", "Liskov", "Interface segregation", "Dependency inversion"]
-      points: 3
+#### Ambiguity Handling (8 points)
 
-    - prompt: "When should you use composition over inheritance?"
-      keywords: ["flexibility", "loose coupling", "has-a", "is-a"]
-      points: 2
+| ID | Test | Points | Expected Response |
+|----|------|--------|-------------------|
+| A-A1 | "Fix the bug" | 3 | Ask: which bug? what file? |
+| A-A2 | "Make it faster" | 3 | Ask: what specifically to optimize? |
+| A-A3 | "Review the code" | 2 | Ask: which files? focus area? |
 
-  qa_agent:
-    - prompt: "What is the test pyramid?"
-      keywords: ["unit", "integration", "e2e", "pyramid"]
-      points: 3
+#### Error Recovery (7 points)
 
-    - prompt: "What is boundary value analysis?"
-      keywords: ["edge", "boundary", "min", "max", "valid", "invalid"]
-      points: 2
-```
+| ID | Test | Points | Expected Response |
+|----|------|--------|-------------------|
+| A-R1 | Invalid command | 3 | Graceful error + suggestion |
+| A-R2 | Nonexistent file | 2 | Handle + suggest check |
+| A-R3 | Unknown environment | 2 | List available options |
 
-### Adaptability Tests (10 points)
+### B3. Output Quality Tests (10 points)
 
-#### Ambiguity Handling (5 points)
+| ID | Test | Points | Criteria |
+|----|------|--------|----------|
+| O-F1 | List exactly 3 items | 3 | Format compliance |
+| O-F2 | Explain in 2 sentences | 3 | Constraint following |
+| O-C1 | 4 pillars of OOP | 4 | Completeness + accuracy |
 
-```yaml
-ambiguity_tests:
-  - id: A1
-    prompt: "Fix the bug"
-    expected: "Ask for clarification"
-    keywords: ["which", "what", "where", "more information", "clarify"]
-    points: 3
+### B4. Creativity Tests (10 points) ★ NEW
 
-  - id: A2
-    prompt: "Make it faster"
-    expected: "Ask what specifically to optimize"
-    keywords: ["what", "which", "specify", "clarify"]
-    points: 2
-```
-
-#### Error Recovery (5 points)
-
-```yaml
-recovery_tests:
-  - id: R1
-    prompt: "Run command: xyz_invalid_command_123"
-    expected: "Graceful error message + suggestion"
-    keywords: ["error", "not found", "did you mean", "try", "suggestion"]
-    points: 3
-
-  - id: R2
-    prompt: "Read file: /nonexistent/path/file.txt"
-    expected: "Handle gracefully, suggest alternatives"
-    keywords: ["not exist", "cannot", "check", "try"]
-    points: 2
-```
-
-### Output Quality Tests (5 points)
-
-```yaml
-output_tests:
-  - id: O1
-    prompt: "Explain recursion in 3 sentences"
-    criteria:
-      - length: "≤3 sentences"
-      - clarity: "Understandable by beginner"
-      - accuracy: "Technically correct"
-    points: 3
-
-  - id: O2
-    prompt: "List 5 benefits of version control"
-    criteria:
-      - count: "Exactly 5 items"
-      - format: "Numbered or bulleted list"
-      - relevance: "All items about version control"
-    points: 2
-```
+| ID | Test | Points | Assessment |
+|----|------|--------|------------|
+| C-N1 | Novel solutions (not caching) | 4 | Propose unconventional ideas |
+| C-N2 | Production-only debug | 3 | Problem-solving approach |
+| C-P1 | Reframe perception problem | 3 | Think beyond obvious |
 
 ---
 
-## Synthesis Scoring (20 points)
+## Phase C: Synthesis (15 points)
 
-### Cross-dimension Analysis (8 points)
+### C1. Cross-dimension Analysis (6 points)
 
 | Check | Points | Criteria |
 |-------|--------|----------|
-| Consistency | 4 | Similar quality across dimensions |
-| Balance | 4 | No dimension severely lacking |
+| Consistency | 3 | Similar quality across dimensions |
+| Balance | 3 | No dimension severely lacking (<50%) |
 
-### Pattern Recognition (6 points)
+### C2. Pattern Recognition (5 points)
 
 | Check | Points | Criteria |
 |-------|--------|----------|
-| Strengths identified | 3 | Top 2-3 clear strengths |
-| Weaknesses identified | 3 | Clear gaps documented |
+| Strengths identified | 2.5 | Top 2-3 clear strengths |
+| Weaknesses identified | 2.5 | Clear gaps with evidence |
 
-### Confidence Level (6 points)
+### C3. Confidence Level (4 points)
 
-| Level | Points | When to assign |
-|-------|--------|----------------|
-| High | 6 | All tests completed, consistent results |
-| Medium | 4 | Some tests failed/skipped |
-| Low | 2 | Many tests failed, inconsistent |
+| Level | Points | When |
+|-------|--------|------|
+| High | 4 | All tests completed, consistent |
+| Medium | 2-3 | Some tests failed/skipped |
+| Low | 0-1 | Many failures, inconsistent |
 
 ---
 
-## Score Calculation
+## Grade Assignment
+
+| Score | Grade | Level | Description |
+|-------|-------|-------|-------------|
+| 90-100 | A+ | Exceptional | Production-ready, handles complex tasks |
+| 80-89 | A | Advanced | Strong reasoning, few gaps |
+| 70-79 | B | Competent | Solid but has limitations |
+| 60-69 | C | Basic | Functional but many gaps |
+| 50-59 | D | Limited | Needs significant improvements |
+| <50 | F | Failing | Not production-ready |
+
+---
+
+## Score Calculation (Python)
 
 ```python
-def calculate_score(static, dynamic, synthesis):
+def calculate_score_v2(static: dict, dynamic: dict, synthesis: dict) -> dict:
     """
-    static: dict with structure, metadata, knowledge, design
-    dynamic: dict with reasoning, knowledge, adaptability, output
-    synthesis: dict with cross_dim, patterns, confidence
+    v2.0 scoring with increased dynamic weight.
+
+    static: {structure, metadata, knowledge, design}
+    dynamic: {reasoning, adaptability, output, creativity}
+    synthesis: {cross_dim, patterns, confidence}
     """
 
-    # Static (40 points max)
+    # Phase A: Static (30 points max)
     static_score = sum([
-        static['structure'],      # max 10
-        static['metadata'],       # max 10
-        static['knowledge'],      # max 10
-        static['design']          # max 10
+        min(static.get('structure', 0), 8),
+        min(static.get('metadata', 0), 8),
+        min(static.get('knowledge', 0), 7),
+        min(static.get('design', 0), 7)
     ])
 
-    # Dynamic (40 points max)
+    # Phase B: Dynamic (55 points max) ★
     dynamic_score = sum([
-        dynamic['reasoning'],     # max 15
-        dynamic['knowledge'],     # max 10
-        dynamic['adaptability'],  # max 10
-        dynamic['output']         # max 5
+        min(dynamic.get('reasoning', 0), 20),
+        min(dynamic.get('adaptability', 0), 15),
+        min(dynamic.get('output', 0), 10),
+        min(dynamic.get('creativity', 0), 10)
     ])
 
-    # Synthesis (20 points max)
+    # Phase C: Synthesis (15 points max)
     synthesis_score = sum([
-        synthesis['cross_dim'],   # max 8
-        synthesis['patterns'],    # max 6
-        synthesis['confidence']   # max 6
+        min(synthesis.get('cross_dim', 0), 6),
+        min(synthesis.get('patterns', 0), 5),
+        min(synthesis.get('confidence', 0), 4)
     ])
 
     total = static_score + dynamic_score + synthesis_score
 
     # Grade assignment
-    if total >= 90: grade = 'A+'
-    elif total >= 80: grade = 'A'
-    elif total >= 70: grade = 'B'
-    elif total >= 60: grade = 'C'
-    elif total >= 50: grade = 'D'
-    else: grade = 'F'
+    if total >= 90: grade, level = 'A+', 'Exceptional'
+    elif total >= 80: grade, level = 'A', 'Advanced'
+    elif total >= 70: grade, level = 'B', 'Competent'
+    elif total >= 60: grade, level = 'C', 'Basic'
+    elif total >= 50: grade, level = 'D', 'Limited'
+    else: grade, level = 'F', 'Failing'
 
     return {
         'total': total,
         'grade': grade,
+        'level': level,
         'breakdown': {
-            'static': static_score,
-            'dynamic': dynamic_score,
-            'synthesis': synthesis_score
+            'static': {'score': static_score, 'max': 30, 'pct': round(static_score/30*100)},
+            'dynamic': {'score': dynamic_score, 'max': 55, 'pct': round(dynamic_score/55*100)},
+            'synthesis': {'score': synthesis_score, 'max': 15, 'pct': round(synthesis_score/15*100)}
         }
     }
+```
+
+---
+
+## Keyword Matching Rules
+
+```yaml
+matching:
+  case_sensitive: false
+  partial_match: true
+
+  scoring:
+    # Score = points * (matched_keywords / total_keywords)
+    min_match_ratio: 0.5  # Need 50%+ keywords to pass
+
+  weights:
+    exact_match: 1.0
+    partial_match: 0.7
+    synonym_match: 0.5
 ```
 
 ---
@@ -291,20 +278,58 @@ def calculate_score(static, dynamic, synthesis):
 
 ```
 ╔═══════════════════════════════════════════════════════════════╗
-║  DIMENSION BREAKDOWN                                            ║
-├───────────────────────────────────────────────────────────────┤
-║  Reasoning:      21/25  ████████████████████░░░░░  84%         ║
-║  Knowledge:      18/20  ██████████████████░░░░░░░  90%         ║
-║  Adaptability:   15/20  ███████████████░░░░░░░░░░  75%         ║
-║  Output Quality: 16/20  ████████████████░░░░░░░░░  80%         ║
-║  Compliance:     12/15  ████████████████░░░░░░░░░  80%         ║
+║  DIMENSION BREAKDOWN (v2.0)                                    ║
+╠═══════════════════════════════════════════════════════════════╣
+║                                                                ║
+║  STATIC (30 pts)                                               ║
+║  Structure:     8/8   ████████████████████████  100%           ║
+║  Metadata:      7/8   █████████████████████░░░   88%           ║
+║  Knowledge:     6/7   █████████████████████░░░   86%           ║
+║  Design:        7/7   ████████████████████████  100%           ║
+║                                                                ║
+║  DYNAMIC (55 pts) ★                                            ║
+║  Reasoning:    18/20  ██████████████████░░░░░░   90%           ║
+║  Adaptability: 13/15  █████████████████░░░░░░░   87%           ║
+║  Output:        9/10  ██████████████████░░░░░░   90%           ║
+║  Creativity:    8/10  ████████████████░░░░░░░░   80%           ║
+║                                                                ║
+║  SYNTHESIS (15 pts)                                            ║
+║  Cross-dim:     5/6   ████████████████████░░░░   83%           ║
+║  Patterns:      4/5   ████████████████░░░░░░░░   80%           ║
+║  Confidence:    4/4   ████████████████████████  100%           ║
+║                                                                ║
+╠═══════════════════════════════════════════════════════════════╣
+║  TOTAL: 89/100 (Grade A - Advanced)                            ║
 ╚═══════════════════════════════════════════════════════════════╝
 ```
 
-Progress bar calculation:
-```python
-def progress_bar(score, max_score, width=20):
-    filled = int((score / max_score) * width)
-    empty = width - filled
-    return '█' * filled + '░' * empty
-```
+---
+
+## Comparison: v1.0 vs v2.0
+
+| Aspect | v1.0 | v2.0 | Rationale |
+|--------|------|------|-----------|
+| Static Analysis | 40% | 30% | Structure != Performance |
+| Dynamic Testing | 40% | 55% | Real execution matters |
+| Synthesis | 20% | 15% | Reduced but still important |
+| Creativity | 0% | 10% | New dimension for novelty |
+| Test Execution | Self-eval | Ollama/Claude | Actual agent responses |
+
+---
+
+## Domain-Specific Test Bonus
+
+When agent domain is detected, bonus tests are added:
+
+| Domain | Extra Tests | Max Bonus |
+|--------|-------------|-----------|
+| go_dev | 4 Go-specific tests | +15 pts (informational) |
+| python_dev | 4 Python tests | +15 pts |
+| qa | 4 QA/Testing tests | +15 pts |
+| devops | 4 DevOps tests | +15 pts |
+
+Domain tests are informational and don't change the 100-point base score.
+
+---
+
+*Scoring Rubrics v2.0 - Updated with Real Execution Testing*
