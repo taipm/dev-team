@@ -1,0 +1,49 @@
+# Knowledge Index - go-review-linus-agent
+# Auto-load and on-demand knowledge configuration
+
+version: "1.0"
+agent: go-review-linus-agent
+
+# Files in this knowledge/ directory
+local_files:
+  - file: hardcode-patterns.md
+    description: Patterns to detect hardcoded values, magic numbers, credentials
+    keywords: [hardcode, magic, credentials, secrets, constants]
+    auto_load: true
+
+  - file: security-checks.md
+    description: Security vulnerability patterns (OWASP-based)
+    keywords: [security, injection, xss, sqli, vulnerability]
+    auto_load: true
+
+  - file: concurrency-rules.md
+    description: Concurrency anti-patterns and race condition detection
+    keywords: [concurrency, race, goroutine, mutex, channel, deadlock]
+    auto_load: false
+    load_on: ["*concurrency", "race", "goroutine"]
+
+  - file: performance-tips.md
+    description: Performance optimization patterns and anti-patterns
+    keywords: [performance, optimization, allocation, benchmark]
+    auto_load: false
+    load_on: ["*performance", "*benchmark", "optimize"]
+
+# Context-aware loading rules
+context_rules:
+  - context: "security review"
+    load: [security-checks.md, hardcode-patterns.md]
+
+  - context: "concurrency review"
+    load: [concurrency-rules.md]
+
+  - context: "performance review"
+    load: [performance-tips.md]
+
+  - context: "full review"
+    load: [hardcode-patterns.md, security-checks.md, concurrency-rules.md, performance-tips.md]
+
+# Search configuration
+search:
+  enabled: true
+  index_fields: [keywords, description]
+  fuzzy_match: true

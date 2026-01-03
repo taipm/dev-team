@@ -1,0 +1,137 @@
+# Quick Score Workflow
+# Fast static-only scoring without dynamic testing
+
+workflow:
+  name: quick-score
+  description: Tính điểm nhanh (chỉ static analysis)
+  version: "1.0"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 1: SELECT AGENT
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: select
+    name: "Chọn agent"
+    steps:
+      - id: 1.1
+        action: list
+        path: ".microai/agents/"
+        pattern: "*/agent.md"
+        output: agents
+
+      - id: 1.2
+        action: ask
+        question: "Chọn agent để tính điểm nhanh:"
+        type: select
+        options_from: agents
+        output: target_agent
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 2: QUICK STATIC ANALYSIS
+# ════════════════════════════════════════════════════════════════════
+  - id: quick_analysis
+    name: "Quick Analysis"
+    steps:
+      - id: 2.1
+        name: "Structure (10 pts)"
+        action: check_exists
+        paths:
+          - ".microai/agents/{target_agent}/": 2
+          - ".microai/agents/{target_agent}/agent.md": 2
+          - ".microai/agents/{target_agent}/knowledge/": 2
+          - ".microai/agents/{target_agent}/memory/": 2
+          - ".claude/commands/microai/{target_agent}.md": 2
+        output: structure_score
+
+      - id: 2.2
+        name: "Metadata (10 pts)"
+        action: check_fields
+        file: ".microai/agents/{target_agent}/agent.md"
+        required:
+          - agent.metadata.id: 2
+          - agent.metadata.name: 2
+          - agent.metadata.model: 2
+          - agent.metadata.language: 2
+          - agent.persona.role: 2
+        output: metadata_score
+
+      - id: 2.3
+        name: "Knowledge (10 pts)"
+        action: count_files
+        path: ".microai/agents/{target_agent}/knowledge/"
+        scoring:
+          files_gte_3: 3
+          has_index: 2
+          code_blocks_gte_3: 3
+          has_antipatterns: 2
+        output: knowledge_score
+
+      - id: 2.4
+        name: "Design (10 pts)"
+        action: check_fields
+        file: ".microai/agents/{target_agent}/agent.md"
+        checks:
+          - agent.activation.steps[min:2]: 3
+          - agent.menu[min:1]: 3
+          - agent.persona.principles[min:2]: 2
+          - workflows/*.yaml[count:1]: 2
+        output: design_score
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 3: CALCULATE & DISPLAY
+# ════════════════════════════════════════════════════════════════════
+  - id: result
+    name: "Result"
+    steps:
+      - id: 3.1
+        action: calculate
+        formula: |
+          static_total = structure_score + metadata_score + knowledge_score + design_score
+          # Estimate dynamic score as 60% of static performance
+          estimated_dynamic = static_total * 0.6
+          estimated_total = (static_total + estimated_dynamic) / 2
+        output: scores
+
+      - id: 3.2
+        action: grade
+        score: scores.estimated_total
+        scale:
+          - [90, 100]: "A+"
+          - [80, 89]: "A"
+          - [70, 79]: "B"
+          - [60, 69]: "C"
+          - [50, 59]: "D"
+          - [0, 49]: "F"
+        output: grade
+
+      - id: 3.3
+        action: display
+        template: quick_score_card
+
+# ════════════════════════════════════════════════════════════════════
+# DISPLAY TEMPLATE
+# ════════════════════════════════════════════════════════════════════
+display:
+  quick_score_card: |
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  QUICK SCORE                                                   ║
+    ╠═══════════════════════════════════════════════════════════════╣
+    ║  Agent: {target_agent}                                         ║
+    ║  Static Score: {static_total}/40                               ║
+    ║  Estimated Total: {estimated_total}/100 ({grade})              ║
+    ╠═══════════════════════════════════════════════════════════════╣
+    ║  BREAKDOWN                                                      ║
+    ├───────────────────────────────────────────────────────────────┤
+    ║  Structure:  {structure_score}/10  {structure_bar}             ║
+    ║  Metadata:   {metadata_score}/10   {metadata_bar}              ║
+    ║  Knowledge:  {knowledge_score}/10  {knowledge_bar}             ║
+    ║  Design:     {design_score}/10     {design_bar}                ║
+    ╠═══════════════════════════════════════════════════════════════╣
+    ║  ⚠️  This is a quick estimate. Run *evaluate for full analysis ║
+    ╚═══════════════════════════════════════════════════════════════╝
+
+notes:
+  - "Quick score only uses static analysis (40 points)"
+  - "Dynamic testing (40 points) is estimated at 60% of static"
+  - "Synthesis (20 points) is not calculated"
+  - "For accurate score, use *evaluate command"

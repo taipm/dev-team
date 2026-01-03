@@ -1,0 +1,44 @@
+# Knowledge Index for Agent Evaluator
+# Maps keywords to relevant knowledge files
+
+version: "1.0"
+last_updated: "2026-01-03"
+
+files:
+  - id: intelligence-dimensions
+    path: 01-intelligence-dimensions.md
+    keywords: [dimensions, reasoning, knowledge, adaptability, output, compliance, criteria]
+    summary: "5 dimensions of agent intelligence with detailed breakdown"
+
+  - id: scoring-rubrics
+    path: 02-scoring-rubrics.md
+    keywords: [score, rubric, points, grade, scale, weight]
+    summary: "Detailed scoring rubrics for each dimension (0-100)"
+
+  - id: test-case-library
+    path: 03-test-case-library.md
+    keywords: [test, case, reasoning, logic, puzzle, benchmark]
+    summary: "Library of test cases for dynamic testing"
+
+  - id: common-weaknesses
+    path: 04-common-weaknesses.md
+    keywords: [weakness, issue, problem, gap, failure, anti-pattern]
+    summary: "Common weaknesses found in agents"
+
+  - id: improvement-patterns
+    path: 05-improvement-patterns.md
+    keywords: [improve, pattern, best practice, fix, recommendation]
+    summary: "Best practices and improvement patterns"
+
+search_priority:
+  - intelligence-dimensions  # Load first for overview
+  - scoring-rubrics          # Load for scoring tasks
+  - test-case-library        # Load for testing tasks
+  - common-weaknesses        # Load for analysis
+  - improvement-patterns     # Load for recommendations
+
+auto_load:
+  on_evaluate: [intelligence-dimensions, scoring-rubrics, test-case-library]
+  on_score: [scoring-rubrics]
+  on_benchmark: [test-case-library, scoring-rubrics]
+  on_recommend: [common-weaknesses, improvement-patterns]

@@ -1,0 +1,228 @@
+# Test Reasoning Workflow
+# Run specific reasoning tests on an agent
+
+workflow:
+  name: test-reasoning
+  description: Chạy test cases reasoning cụ thể
+  version: "1.0"
+
+config:
+  provider: ollama
+  model: "qwen3:1.7b"
+  timeout: 30
+  script: ".microai/skills/development-skills/ollama/scripts/ollama-run.sh"
+  prefix: "/no_think"
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 1: SELECT TEST
+# ════════════════════════════════════════════════════════════════════
+phases:
+  - id: select
+    name: "Chọn test category"
+    steps:
+      - id: 1.1
+        action: ask
+        question: "Chọn loại test:"
+        type: select
+        options:
+          - logic: "Logic Tests (syllogism, transitivity)"
+          - multistep: "Multi-step Reasoning (dependencies, chains)"
+          - edge: "Edge Cases (cycles, empty, boundaries)"
+          - domain: "Domain Knowledge (based on agent type)"
+          - adaptability: "Adaptability (ambiguity, error recovery)"
+          - all: "All Tests (comprehensive)"
+        output: test_category
+
+      - id: 1.2
+        action: ask
+        question: "Test target:"
+        type: select
+        options:
+          - select_agent: "Chọn agent cụ thể"
+          - direct_test: "Test trực tiếp (không cần agent)"
+        output: test_target
+
+      - id: 1.3
+        condition: "test_target == 'select_agent'"
+        action: list
+        path: ".microai/agents/"
+        pattern: "*/agent.md"
+        output: agents
+
+      - id: 1.4
+        condition: "test_target == 'select_agent'"
+        action: ask
+        question: "Chọn agent:"
+        type: select
+        options_from: agents
+        output: target_agent
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 2: LOAD TESTS
+# ════════════════════════════════════════════════════════════════════
+  - id: load_tests
+    name: "Load test cases"
+    steps:
+      - id: 2.1
+        action: read
+        file: "./knowledge/03-test-case-library.md"
+        output: test_library
+
+      - id: 2.2
+        action: filter_tests
+        library: test_library
+        category: test_category
+        output: test_cases
+
+      - id: 2.3
+        action: display
+        message: |
+          📋 Loaded {len(test_cases)} tests for category: {test_category}
+          Running with Ollama ({config.model})...
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 3: RUN TESTS
+# ════════════════════════════════════════════════════════════════════
+  - id: run_tests
+    name: "Execute tests"
+    steps:
+      - id: 3.1
+        action: foreach
+        items: test_cases
+        as: test
+        do:
+          - id: 3.1.1
+            action: display
+            message: "Testing: {test.name}..."
+
+          - id: 3.1.2
+            action: execute
+            command: |
+              {config.script} "{config.prefix} {test.prompt}"
+            timeout: config.timeout
+            output: response
+
+          - id: 3.1.3
+            action: score_response
+            response: response
+            expected_keywords: test.keywords
+            min_matches: test.min_matches || 1
+            output: test_result
+
+          - id: 3.1.4
+            action: store
+            key: "results.{test.id}"
+            value:
+              test: test
+              response: response
+              score: test_result.score
+              passed: test_result.passed
+              match_ratio: test_result.match_ratio
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: ANALYZE & REPORT
+# ════════════════════════════════════════════════════════════════════
+  - id: analyze
+    name: "Analyze results"
+    steps:
+      - id: 4.1
+        action: calculate
+        data: results
+        metrics:
+          - total_tests: count
+          - passed: "count(passed == true)"
+          - failed: "count(passed == false)"
+          - pass_rate: "passed / total_tests * 100"
+          - total_points: "sum(score)"
+          - max_points: "sum(test.points)"
+        output: summary
+
+      - id: 4.2
+        action: categorize_failures
+        data: results
+        filter: "passed == false"
+        output: failures
+
+      - id: 4.3
+        action: display
+        template: test_report
+
+# ════════════════════════════════════════════════════════════════════
+# DISPLAY TEMPLATES
+# ════════════════════════════════════════════════════════════════════
+display:
+  test_report: |
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  REASONING TEST RESULTS                                        ║
+    ╠═══════════════════════════════════════════════════════════════╣
+    ║  Category: {test_category}                                     ║
+    ║  Target: {target_agent || 'Direct test'}                       ║
+    ║  Provider: {config.provider} ({config.model})                  ║
+    ╠═══════════════════════════════════════════════════════════════╣
+    ║  SUMMARY                                                        ║
+    ├───────────────────────────────────────────────────────────────┤
+    ║  Total Tests: {summary.total_tests}                            ║
+    ║  Passed: {summary.passed} ✅                                   ║
+    ║  Failed: {summary.failed} ❌                                   ║
+    ║  Pass Rate: {summary.pass_rate:.1f}%                           ║
+    ║  Points: {summary.total_points}/{summary.max_points}           ║
+    ╚═══════════════════════════════════════════════════════════════╝
+
+  test_details: |
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  TEST DETAILS                                                   ║
+    ├───────────────────────────────────────────────────────────────┤
+    {for result in results.values()}
+    ║  [{result.passed ? '✅' : '❌'}] {result.test.name}             ║
+    ║      Prompt: {result.test.prompt[:50]}...                      ║
+    ║      Expected: {result.test.keywords[:3]}                      ║
+    ║      Match: {result.match_ratio:.0%}                           ║
+    ║      Points: {result.score}/{result.test.points}               ║
+    ├───────────────────────────────────────────────────────────────┤
+    {endfor}
+    ╚═══════════════════════════════════════════════════════════════╝
+
+  failures_analysis: |
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║  FAILURE ANALYSIS                                               ║
+    ├───────────────────────────────────────────────────────────────┤
+    {for failure in failures}
+    ║  ❌ {failure.test.name}                                        ║
+    ║     Expected: {failure.test.keywords}                          ║
+    ║     Got: {failure.response[:100]}...                           ║
+    ║     Gap: {failure.analysis}                                    ║
+    ├───────────────────────────────────────────────────────────────┤
+    {endfor}
+    ╚═══════════════════════════════════════════════════════════════╝
+
+# ════════════════════════════════════════════════════════════════════
+# TEST SCORING LOGIC
+# ════════════════════════════════════════════════════════════════════
+scoring:
+  keyword_match:
+    description: "Count keyword matches in response"
+    algorithm: |
+      matches = 0
+      for keyword in expected_keywords:
+          if keyword.lower() in response.lower():
+              matches += 1
+      ratio = matches / len(expected_keywords)
+      passed = ratio >= threshold (default 0.6)
+      score = passed ? test.points : 0
+
+  partial_scoring:
+    description: "Give partial credit for partial matches"
+    algorithm: |
+      ratio = matches / len(expected_keywords)
+      score = test.points * ratio
+
+  llm_grading:
+    description: "Use LLM to grade response (more expensive)"
+    prompt: |
+      Grade this response on a scale of 0-{max_points}:
+
+      Question: {test.prompt}
+      Expected answer should contain: {test.keywords}
+      Actual response: {response}
+
+      Score (0-{max_points}):
