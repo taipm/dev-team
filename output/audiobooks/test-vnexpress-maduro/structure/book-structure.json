@@ -1,0 +1,14 @@
+{
+  "analysis_date": "2026-01-04T16:00:00+07:00",
+  "genre": "news",
+  "genre_confidence": 0.95,
+  "structure_type": "single_article",
+  "has_front_matter": false,
+  "has_back_matter": false,
+  "narrator_recommendation": "single",
+  "pacing_recommendation": "moderate",
+  "special_notes": [
+    "News article - clear, professional narration",
+    "Contains proper nouns that need careful pronunciation"
+  ]
+}

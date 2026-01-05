@@ -1,0 +1,365 @@
+# Lesson 001 - Timeline với sync chính xác
+# Total duration: ~4 phút (240 giây)
+
+segments:
+  # === PHASE 1: INTRO (0:00 - 0:12) ===
+  - id: "01_intro"
+    start: 0.0
+    text_vi: "Chào mừng đến với Bài 1, series Từ vựng TOEIC Part 5"
+    text_display: "BÀI 1: TỪ VỰNG TOEIC PART 5"
+    visual: "title_card"
+
+  - id: "02_overview"
+    start: 4.0
+    text_vi: "Hôm nay chúng ta học 5 động từ thường gặp nhất trong Part 5"
+    text_display: "5 ĐỘNG TỪ THƯỜNG GẶP"
+    visual: "overview_card"
+
+  - id: "03_wordlist"
+    start: 8.0
+    text_vi: "accomplish, achieve, acknowledge, acquire, và adapt"
+    text_display: |
+      1. accomplish
+      2. achieve
+      3. acknowledge
+      4. acquire
+      5. adapt
+    visual: "word_list"
+
+  # === PHASE 2: WORD 1 - ACCOMPLISH (0:12 - 0:42) ===
+  - id: "10_word1_intro"
+    start: 12.0
+    text_vi: "Từ thứ nhất"
+    text_display: "TỪ 1/5"
+    visual: "word_number"
+
+  - id: "11_word1_word"
+    start: 13.0
+    text_en: "Accomplish"
+    text_display: "ACCOMPLISH"
+    visual: "word_card"
+
+  - id: "12_word1_ipa"
+    start: 15.0
+    text_en: "/əˈkɑːmplɪʃ/"
+    text_display: "/əˈkɑːmplɪʃ/ - verb"
+    visual: "ipa_card"
+
+  - id: "13_word1_def"
+    start: 17.0
+    text_vi: "Nghĩa là hoàn thành, đạt được"
+    text_display: "hoàn thành, đạt được"
+    visual: "definition_card"
+
+  - id: "14_word1_ex_en"
+    start: 20.0
+    text_en: "The team accomplished all their goals ahead of schedule."
+    text_display: "The team [accomplished] all their goals ahead of schedule."
+    visual: "example_card"
+
+  - id: "15_word1_ex_vi"
+    start: 25.0
+    text_vi: "Nhóm đã hoàn thành tất cả mục tiêu trước thời hạn."
+    text_display: "Nhóm đã hoàn thành tất cả mục tiêu trước thời hạn."
+    visual: "translation_card"
+
+  - id: "16_word1_tip"
+    start: 30.0
+    text_vi: "Nhớ collocation: accomplish a goal, accomplish a task. Không dùng accomplish to do."
+    text_display: |
+      ✓ accomplish a goal
+      ✓ accomplish a task
+      ✗ accomplish to do
+    visual: "tip_card"
+
+  # === PHASE 3: WORD 2 - ACHIEVE (0:42 - 1:12) ===
+  - id: "20_word2_intro"
+    start: 42.0
+    text_vi: "Từ thứ hai"
+    text_display: "TỪ 2/5"
+    visual: "word_number"
+
+  - id: "21_word2_word"
+    start: 43.0
+    text_en: "Achieve"
+    text_display: "ACHIEVE"
+    visual: "word_card"
+
+  - id: "22_word2_ipa"
+    start: 45.0
+    text_en: "/əˈtʃiːv/"
+    text_display: "/əˈtʃiːv/ - verb"
+    visual: "ipa_card"
+
+  - id: "23_word2_def"
+    start: 47.0
+    text_vi: "Nghĩa là đạt được, giành được"
+    text_display: "đạt được, giành được"
+    visual: "definition_card"
+
+  - id: "24_word2_ex_en"
+    start: 50.0
+    text_en: "She achieved remarkable success in her career."
+    text_display: "She [achieved] remarkable success in her career."
+    visual: "example_card"
+
+  - id: "25_word2_ex_vi"
+    start: 55.0
+    text_vi: "Cô ấy đã đạt được thành công đáng kể trong sự nghiệp."
+    text_display: "Cô ấy đã đạt được thành công đáng kể trong sự nghiệp."
+    visual: "translation_card"
+
+  - id: "26_word2_tip"
+    start: 60.0
+    text_vi: "So sánh: achieve nhấn mạnh kết quả, accomplish nhấn mạnh quá trình."
+    text_display: |
+      achieve = kết quả
+      accomplish = quá trình
+    visual: "tip_card"
+
+  # === PHASE 4: WORD 3 - ACKNOWLEDGE (1:12 - 1:42) ===
+  - id: "30_word3_intro"
+    start: 72.0
+    text_vi: "Từ thứ ba"
+    text_display: "TỪ 3/5"
+    visual: "word_number"
+
+  - id: "31_word3_word"
+    start: 73.0
+    text_en: "Acknowledge"
+    text_display: "ACKNOWLEDGE"
+    visual: "word_card"
+
+  - id: "32_word3_ipa"
+    start: 75.0
+    text_en: "/əkˈnɑːlɪdʒ/"
+    text_display: "/əkˈnɑːlɪdʒ/ - verb"
+    visual: "ipa_card"
+
+  - id: "33_word3_def"
+    start: 77.0
+    text_vi: "Nghĩa là thừa nhận, công nhận"
+    text_display: "thừa nhận, công nhận"
+    visual: "definition_card"
+
+  - id: "34_word3_ex_en"
+    start: 80.0
+    text_en: "The manager acknowledged the employee's contribution."
+    text_display: "The manager [acknowledged] the employee's contribution."
+    visual: "example_card"
+
+  - id: "35_word3_ex_vi"
+    start: 85.0
+    text_vi: "Quản lý đã công nhận đóng góp của nhân viên."
+    text_display: "Quản lý đã công nhận đóng góp của nhân viên."
+    visual: "translation_card"
+
+  - id: "36_word3_tip"
+    start: 90.0
+    text_vi: "Phát âm: ack-NOW-ledge. Collocation: acknowledge receipt."
+    text_display: |
+      Phát âm: ack-NOW-ledge
+      ✓ acknowledge receipt
+    visual: "tip_card"
+
+  # === PHASE 5: WORD 4 - ACQUIRE (1:42 - 2:12) ===
+  - id: "40_word4_intro"
+    start: 102.0
+    text_vi: "Từ thứ tư"
+    text_display: "TỪ 4/5"
+    visual: "word_number"
+
+  - id: "41_word4_word"
+    start: 103.0
+    text_en: "Acquire"
+    text_display: "ACQUIRE"
+    visual: "word_card"
+
+  - id: "42_word4_ipa"
+    start: 105.0
+    text_en: "/əˈkwaɪər/"
+    text_display: "/əˈkwaɪər/ - verb"
+    visual: "ipa_card"
+
+  - id: "43_word4_def"
+    start: 107.0
+    text_vi: "Nghĩa là có được, thu được, mua lại"
+    text_display: "có được, thu được, mua lại"
+    visual: "definition_card"
+
+  - id: "44_word4_ex_en"
+    start: 110.0
+    text_en: "The company acquired a smaller competitor last year."
+    text_display: "The company [acquired] a smaller competitor last year."
+    visual: "example_card"
+
+  - id: "45_word4_ex_vi"
+    start: 115.0
+    text_vi: "Công ty đã mua lại một đối thủ nhỏ hơn năm ngoái."
+    text_display: "Công ty đã mua lại một đối thủ nhỏ hơn năm ngoái."
+    visual: "translation_card"
+
+  - id: "46_word4_tip"
+    start: 120.0
+    text_vi: "Collocation: acquire skills, acquire knowledge, acquire a company."
+    text_display: |
+      ✓ acquire skills
+      ✓ acquire knowledge
+      ✓ acquire a company
+    visual: "tip_card"
+
+  # === PHASE 6: WORD 5 - ADAPT (2:12 - 2:42) ===
+  - id: "50_word5_intro"
+    start: 132.0
+    text_vi: "Từ thứ năm, từ cuối cùng"
+    text_display: "TỪ 5/5"
+    visual: "word_number"
+
+  - id: "51_word5_word"
+    start: 134.0
+    text_en: "Adapt"
+    text_display: "ADAPT"
+    visual: "word_card"
+
+  - id: "52_word5_ipa"
+    start: 136.0
+    text_en: "/əˈdæpt/"
+    text_display: "/əˈdæpt/ - verb"
+    visual: "ipa_card"
+
+  - id: "53_word5_def"
+    start: 138.0
+    text_vi: "Nghĩa là thích nghi, điều chỉnh"
+    text_display: "thích nghi, điều chỉnh"
+    visual: "definition_card"
+
+  - id: "54_word5_ex_en"
+    start: 141.0
+    text_en: "Employees must adapt to the new working environment."
+    text_display: "Employees must [adapt] to the new working environment."
+    visual: "example_card"
+
+  - id: "55_word5_ex_vi"
+    start: 146.0
+    text_vi: "Nhân viên phải thích nghi với môi trường làm việc mới."
+    text_display: "Nhân viên phải thích nghi với môi trường làm việc mới."
+    visual: "translation_card"
+
+  - id: "56_word5_tip"
+    start: 151.0
+    text_vi: "Phân biệt: adapt là thay đổi để phù hợp, adopt là chấp nhận áp dụng."
+    text_display: |
+      adapt = thay đổi để phù hợp
+      adopt = chấp nhận, áp dụng
+    visual: "tip_card"
+
+  # === PHASE 7: ACTIVE RECALL QUIZ (2:42 - 3:30) ===
+  - id: "60_quiz_intro"
+    start: 162.0
+    text_vi: "Bây giờ kiểm tra xem bạn nhớ được bao nhiêu"
+    text_display: "KIỂM TRA NHANH"
+    visual: "quiz_intro"
+
+  - id: "61_quiz_q1"
+    start: 166.0
+    text_vi: "Câu 1. Điền từ vào chỗ trống. The team blank all their goals."
+    text_display: "The team _____ all their goals."
+    visual: "quiz_question"
+
+  - id: "62_quiz_pause1"
+    start: 172.0
+    text_vi: null
+    text_display: "Suy nghĩ..."
+    visual: "pause"
+    pause_duration: 4.0
+
+  - id: "63_quiz_a1"
+    start: 176.0
+    text_vi: "Đáp án là accomplished"
+    text_display: "✓ accomplished"
+    visual: "quiz_answer"
+
+  - id: "64_quiz_q2"
+    start: 179.0
+    text_vi: "Câu 2. She blank remarkable success in her career."
+    text_display: "She _____ remarkable success."
+    visual: "quiz_question"
+
+  - id: "65_quiz_pause2"
+    start: 185.0
+    text_vi: null
+    text_display: "Suy nghĩ..."
+    visual: "pause"
+    pause_duration: 4.0
+
+  - id: "66_quiz_a2"
+    start: 189.0
+    text_vi: "Đáp án là achieved"
+    text_display: "✓ achieved"
+    visual: "quiz_answer"
+
+  - id: "67_quiz_q3"
+    start: 192.0
+    text_vi: "Câu 3. Từ nào nghĩa là thừa nhận, công nhận?"
+    text_display: |
+      A. accomplish
+      B. achieve
+      C. acknowledge
+      D. acquire
+    visual: "quiz_mc"
+
+  - id: "68_quiz_pause3"
+    start: 198.0
+    text_vi: null
+    text_display: "Suy nghĩ..."
+    visual: "pause"
+    pause_duration: 4.0
+
+  - id: "69_quiz_a3"
+    start: 202.0
+    text_vi: "Đáp án là C, acknowledge"
+    text_display: "✓ C. acknowledge"
+    visual: "quiz_answer"
+
+  # === PHASE 8: SUMMARY (3:30 - 3:50) ===
+  - id: "70_summary_intro"
+    start: 206.0
+    text_vi: "Tóm tắt 5 từ đã học hôm nay"
+    text_display: "TÓM TẮT BÀI 1"
+    visual: "summary_intro"
+
+  - id: "71_summary_words"
+    start: 209.0
+    text_vi: "accomplish là hoàn thành. achieve là đạt được. acknowledge là công nhận. acquire là thu được. adapt là thích nghi."
+    text_display: |
+      accomplish = hoàn thành
+      achieve = đạt được
+      acknowledge = công nhận
+      acquire = thu được
+      adapt = thích nghi
+    visual: "summary_list"
+
+  # === PHASE 9: PREVIEW NEXT (3:50 - 4:00) ===
+  - id: "80_preview"
+    start: 225.0
+    text_vi: "Bài sau sẽ học 5 từ tiếp theo: adequate, adhere, adjacent, adjust, administer."
+    text_display: |
+      BÀI 2 SẼ HỌC:
+      adequate, adhere, adjacent,
+      adjust, administer
+    visual: "preview_card"
+
+  - id: "81_reminder"
+    start: 233.0
+    text_vi: "Nhớ xem lại video này sau 1 ngày để nhớ lâu hơn nhé!"
+    text_display: "Xem lại sau 1 ngày để nhớ lâu!"
+    visual: "reminder_card"
+
+  # === PHASE 10: CTA (4:00 - 4:10) ===
+  - id: "90_cta"
+    start: 238.0
+    text_vi: "Đăng ký kênh và bấm chuông để không bỏ lỡ bài học mới. Hẹn gặp lại!"
+    text_display: |
+      ĐĂNG KÝ KÊNH
+      để học TOEIC mỗi ngày!
+    visual: "cta_card"

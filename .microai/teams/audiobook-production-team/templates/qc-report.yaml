@@ -1,0 +1,132 @@
+# QC Report Template
+# Output from Quality Reviewer Agent
+
+---
+
+# Report Identification
+generated_at: ""
+audiobook_id: ""
+report_version: "1.0"
+
+# Summary
+summary:
+  total_chapters: 0
+  total_duration: "0:00:00"
+  average_score: 0
+  grade: A|B|C|D|F
+  decision: APPROVED|APPROVED_WITH_NOTES|REVIEW_REQUIRED|FIXES_REQUIRED|REJECTED
+
+# Scoring Breakdown
+scoring:
+  technical_quality:
+    weight: 30
+    score: 0
+    max: 100
+    checks:
+      - name: file_integrity
+        status: PASS|FAIL
+        details: ""
+      - name: format_compliance
+        status: PASS|FAIL
+        details: ""
+      - name: duration_accuracy
+        status: PASS|FAIL
+        details: ""
+
+  loudness_compliance:
+    weight: 25
+    score: 0
+    max: 100
+    checks:
+      - name: integrated_lufs
+        status: PASS|FAIL
+        value: 0
+        target: -14
+        tolerance: 2
+      - name: true_peak
+        status: PASS|FAIL
+        value: 0
+        max: -1.5
+      - name: loudness_range
+        status: PASS|FAIL
+        value: 0
+        range: [5, 15]
+
+  content_quality:
+    weight: 25
+    score: 0
+    max: 100
+    checks:
+      - name: no_clipping
+        status: PASS|FAIL
+        details: ""
+      - name: no_artifacts
+        status: PASS|FAIL
+        details: ""
+      - name: pacing
+        status: PASS|FAIL
+        details: ""
+
+  structure_quality:
+    weight: 20
+    score: 0
+    max: 100
+    checks:
+      - name: chapters_present
+        status: PASS|FAIL
+        count: 0
+      - name: silences_appropriate
+        status: PASS|FAIL
+        max_silence_found: 0
+      - name: fades_applied
+        status: PASS|FAIL
+        details: ""
+      - name: transitions
+        status: PASS|FAIL
+        details: ""
+
+# Chapter-by-Chapter Scores
+chapter_scores:
+  - chapter: 1
+    file: chapter-001.mp3
+    score: 0
+    loudness_lufs: 0
+    true_peak_db: 0
+    duration: "0:00"
+    issues: []
+
+# Issues Found
+issues:
+  critical: []
+  major: []
+  minor: []
+
+# ACX Compliance (Optional)
+acx_compliance:
+  compliant: true|false
+  checks:
+    - name: rms_range
+      status: PASS|FAIL
+      value: 0
+      range: [-23, -18]
+    - name: peak_max
+      status: PASS|FAIL
+      value: 0
+      max: -3
+    - name: noise_floor
+      status: PASS|FAIL
+      value: 0
+      max: -60
+    - name: room_tone
+      status: PASS|FAIL
+      details: ""
+  notes: ""
+
+# Recommendations
+recommendations: []
+
+# Decision Details
+decision_details:
+  reason: ""
+  action_required: ""
+  next_step: ""

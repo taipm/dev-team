@@ -1,0 +1,408 @@
+# Phase 1: DECOMPOSE - Tasks Output
+# Project: Casio FX-880 Calculator App
+# Generated: 2026-01-04
+
+summary:
+  total_tasks: 15
+  total_estimated_hours: 15.5
+  entry_points: ["TASK-001"]
+  exit_points: ["TASK-015"]
+
+first_principles:
+  question: "Máy tính Casio FX-880 thực sự là gì?"
+  breakdown:
+    - "Display: Hiển thị input/output, cursor"
+    - "Keypad: Các nút vật lý được số hoá"
+    - "Processor: Engine tính toán"
+    - "Memory: Lưu trạng thái, biến"
+  fundamental_truths:
+    - "Calculator = Input + Process + Output"
+    - "UI must look physical (skeuomorphic)"
+    - "Every button maps to a function"
+
+tasks:
+  # === RESEARCH & DESIGN ===
+  - id: "TASK-001"
+    name: "Research Casio FX-880 layout"
+    description: "Thu thập hình ảnh và thông tin về layout, màu sắc, button positions của FX-880"
+    type: "analysis"
+    input:
+      required:
+        - name: "Internet access"
+          format: "Web search"
+      provided_by: "external"
+    output:
+      deliverable: "Layout specification document"
+      format: "Markdown"
+      location: "tasks/TASK-001/output/layout-spec.md"
+    verify:
+      criteria:
+        - "Có đầy đủ vị trí các buttons"
+        - "Có thông tin màu sắc"
+        - "Có kích thước tỉ lệ"
+      method: "review"
+      done_when: "Spec có đủ info để implement UI"
+    estimated_hours: 0.5
+    dependencies: []
+    skills_required: ["Research"]
+
+  - id: "TASK-002"
+    name: "Design color palette & typography"
+    description: "Xác định color codes và fonts cho calculator"
+    type: "design"
+    input:
+      required:
+        - name: "Layout spec"
+          format: "Markdown"
+      provided_by: "TASK-001"
+    output:
+      deliverable: "Design tokens file"
+      format: "CSS variables"
+      location: "deliverables/src/css/variables.css"
+    verify:
+      criteria:
+        - "Màu body calculator đúng"
+        - "Màu buttons đúng"
+        - "Font LCD-style defined"
+      method: "visual comparison"
+      done_when: "Colors match reference photos"
+    estimated_hours: 0.5
+    dependencies: ["TASK-001"]
+    skills_required: ["CSS", "Design"]
+
+  # === HTML STRUCTURE ===
+  - id: "TASK-003"
+    name: "Create HTML structure"
+    description: "Tạo semantic HTML structure cho calculator với tất cả elements"
+    type: "code"
+    input:
+      required:
+        - name: "Layout spec"
+          format: "Markdown"
+      provided_by: "TASK-001"
+    output:
+      deliverable: "HTML file"
+      format: "HTML5"
+      location: "deliverables/src/index.html"
+    verify:
+      criteria:
+        - "Valid HTML5"
+        - "Có display area"
+        - "Có tất cả buttons theo layout"
+        - "Semantic structure"
+      method: "HTML validator"
+      done_when: "Structure matches layout spec"
+    estimated_hours: 1.0
+    dependencies: ["TASK-001"]
+    skills_required: ["HTML"]
+
+  # === CSS STYLING ===
+  - id: "TASK-004"
+    name: "Style calculator body"
+    description: "CSS cho body calculator: frame, shadow, rounded corners"
+    type: "code"
+    input:
+      required:
+        - name: "HTML structure"
+          format: "HTML"
+        - name: "Design tokens"
+          format: "CSS"
+      provided_by: "TASK-003, TASK-002"
+    output:
+      deliverable: "Body CSS"
+      format: "CSS"
+      location: "deliverables/src/css/body.css"
+    verify:
+      criteria:
+        - "Calculator frame realistic"
+        - "Proper shadows"
+        - "3D effect visible"
+      method: "visual"
+      done_when: "Looks like real calculator body"
+    estimated_hours: 1.5
+    dependencies: ["TASK-002", "TASK-003"]
+    skills_required: ["CSS", "Design"]
+
+  - id: "TASK-005"
+    name: "Style display screen"
+    description: "CSS cho LCD display: green tint, segment font, proper sizing"
+    type: "code"
+    input:
+      required:
+        - name: "HTML structure"
+          format: "HTML"
+        - name: "Design tokens"
+          format: "CSS"
+      provided_by: "TASK-003, TASK-002"
+    output:
+      deliverable: "Display CSS"
+      format: "CSS"
+      location: "deliverables/src/css/display.css"
+    verify:
+      criteria:
+        - "LCD green tint effect"
+        - "Monospace/segment font"
+        - "Proper contrast"
+      method: "visual"
+      done_when: "Display looks like LCD screen"
+    estimated_hours: 1.0
+    dependencies: ["TASK-002", "TASK-003"]
+    skills_required: ["CSS"]
+
+  - id: "TASK-006"
+    name: "Style keypad buttons"
+    description: "CSS cho tất cả buttons: 3D effect, hover states, active states"
+    type: "code"
+    input:
+      required:
+        - name: "HTML structure"
+          format: "HTML"
+        - name: "Design tokens"
+          format: "CSS"
+      provided_by: "TASK-003, TASK-002"
+    output:
+      deliverable: "Buttons CSS"
+      format: "CSS"
+      location: "deliverables/src/css/buttons.css"
+    verify:
+      criteria:
+        - "3D button effect"
+        - "Different colors for button types"
+        - "Hover/active states"
+        - "Proper spacing"
+      method: "visual + interaction"
+      done_when: "Buttons look and feel real"
+    estimated_hours: 1.5
+    dependencies: ["TASK-002", "TASK-003"]
+    skills_required: ["CSS"]
+
+  # === JAVASCRIPT - MATH ENGINE ===
+  - id: "TASK-007"
+    name: "Implement basic arithmetic"
+    description: "JavaScript cho +, -, ×, ÷, =, clear operations"
+    type: "code"
+    input:
+      required: []
+      provided_by: "none"
+    output:
+      deliverable: "Basic math module"
+      format: "JavaScript"
+      location: "deliverables/src/js/math-basic.js"
+    verify:
+      criteria:
+        - "Addition works"
+        - "Subtraction works"
+        - "Multiplication works"
+        - "Division works"
+        - "Handles decimals"
+        - "Division by zero handled"
+      method: "unit tests"
+      done_when: "All basic operations pass tests"
+    estimated_hours: 1.0
+    dependencies: []
+    skills_required: ["JavaScript"]
+
+  - id: "TASK-008"
+    name: "Implement scientific functions"
+    description: "JavaScript cho sin, cos, tan, log, ln, sqrt, power, factorial"
+    type: "code"
+    input:
+      required:
+        - name: "Basic math module"
+          format: "JavaScript"
+      provided_by: "TASK-007"
+    output:
+      deliverable: "Scientific math module"
+      format: "JavaScript"
+      location: "deliverables/src/js/math-scientific.js"
+    verify:
+      criteria:
+        - "Trigonometric functions work"
+        - "Logarithmic functions work"
+        - "Power/root functions work"
+        - "Handles edge cases"
+      method: "unit tests"
+      done_when: "All scientific functions pass tests"
+    estimated_hours: 2.0
+    dependencies: ["TASK-007"]
+    skills_required: ["JavaScript", "Math"]
+
+  - id: "TASK-009"
+    name: "Implement memory functions"
+    description: "JavaScript cho M+, M-, MR, MC operations"
+    type: "code"
+    input:
+      required:
+        - name: "Basic math module"
+          format: "JavaScript"
+      provided_by: "TASK-007"
+    output:
+      deliverable: "Memory module"
+      format: "JavaScript"
+      location: "deliverables/src/js/memory.js"
+    verify:
+      criteria:
+        - "M+ adds to memory"
+        - "M- subtracts from memory"
+        - "MR recalls memory"
+        - "MC clears memory"
+      method: "unit tests"
+      done_when: "Memory operations work correctly"
+    estimated_hours: 1.0
+    dependencies: ["TASK-007"]
+    skills_required: ["JavaScript"]
+
+  # === INTEGRATION ===
+  - id: "TASK-010"
+    name: "Wire buttons to display"
+    description: "Connect button clicks to calculator logic and update display"
+    type: "code"
+    input:
+      required:
+        - name: "HTML structure"
+          format: "HTML"
+        - name: "Math modules"
+          format: "JavaScript"
+      provided_by: "TASK-003, TASK-007"
+    output:
+      deliverable: "Main app file"
+      format: "JavaScript"
+      location: "deliverables/src/js/app.js"
+    verify:
+      criteria:
+        - "Button clicks register"
+        - "Display updates correctly"
+        - "Calculations execute"
+        - "Clear functions work"
+      method: "manual testing"
+      done_when: "Calculator is functional"
+    estimated_hours: 1.5
+    dependencies: ["TASK-003", "TASK-007"]
+    skills_required: ["JavaScript", "DOM"]
+
+  - id: "TASK-011"
+    name: "Add keyboard support"
+    description: "Enable keyboard input for numbers and operators"
+    type: "code"
+    input:
+      required:
+        - name: "App.js"
+          format: "JavaScript"
+      provided_by: "TASK-010"
+    output:
+      deliverable: "Keyboard handler"
+      format: "JavaScript"
+      location: "deliverables/src/js/keyboard.js"
+    verify:
+      criteria:
+        - "Number keys work"
+        - "Operator keys work"
+        - "Enter = equals"
+        - "Backspace = delete"
+      method: "manual testing"
+      done_when: "Full keyboard support"
+    estimated_hours: 1.0
+    dependencies: ["TASK-010"]
+    skills_required: ["JavaScript"]
+
+  - id: "TASK-012"
+    name: "Implement calculation history"
+    description: "Show last 5 calculations in display area"
+    type: "code"
+    input:
+      required:
+        - name: "App.js"
+          format: "JavaScript"
+      provided_by: "TASK-010"
+    output:
+      deliverable: "History module"
+      format: "JavaScript"
+      location: "deliverables/src/js/history.js"
+    verify:
+      criteria:
+        - "Stores last 5 calculations"
+        - "Can scroll through history"
+        - "History persists in session"
+      method: "manual testing"
+      done_when: "History feature works"
+    estimated_hours: 1.0
+    dependencies: ["TASK-010"]
+    skills_required: ["JavaScript"]
+
+  # === POLISH ===
+  - id: "TASK-013"
+    name: "Add sound effects"
+    description: "Button click sounds for tactile feedback"
+    type: "code"
+    input:
+      required:
+        - name: "App.js"
+          format: "JavaScript"
+      provided_by: "TASK-010"
+    output:
+      deliverable: "Sound module + audio files"
+      format: "JavaScript + MP3"
+      location: "deliverables/src/js/sounds.js, deliverables/src/audio/"
+    verify:
+      criteria:
+        - "Click sound plays on button press"
+        - "Sound can be toggled off"
+        - "No audio lag"
+      method: "manual testing"
+      done_when: "Sound feedback works"
+    estimated_hours: 0.5
+    dependencies: ["TASK-010"]
+    skills_required: ["JavaScript", "Audio"]
+
+  - id: "TASK-014"
+    name: "Responsive design"
+    description: "Make calculator work on mobile devices"
+    type: "code"
+    input:
+      required:
+        - name: "All CSS files"
+          format: "CSS"
+      provided_by: "TASK-004, TASK-005, TASK-006"
+    output:
+      deliverable: "Responsive CSS"
+      format: "CSS"
+      location: "deliverables/src/css/responsive.css"
+    verify:
+      criteria:
+        - "Works on mobile viewport"
+        - "Buttons touchable size"
+        - "No horizontal scroll"
+      method: "device testing"
+      done_when: "Works on phone and tablet"
+    estimated_hours: 1.0
+    dependencies: ["TASK-004", "TASK-005", "TASK-006"]
+    skills_required: ["CSS", "Responsive"]
+
+  - id: "TASK-015"
+    name: "Final testing & polish"
+    description: "Comprehensive testing and bug fixes"
+    type: "test"
+    input:
+      required:
+        - name: "Complete app"
+          format: "All files"
+      provided_by: "All previous tasks"
+    output:
+      deliverable: "Test report and final app"
+      format: "Markdown + working app"
+      location: "tasks/TASK-015/output/test-report.md"
+    verify:
+      criteria:
+        - "All KRs met"
+        - "No critical bugs"
+        - "Performance acceptable"
+      method: "comprehensive testing"
+      done_when: "Ready for release"
+    estimated_hours: 1.5
+    dependencies: ["TASK-010", "TASK-014"]
+    skills_required: ["Testing"]
+
+metadata:
+  created_at: "2026-01-04T22:05:00+07:00"
+  created_by: "DECOMPOSER Agent"
+  version: "1.0"

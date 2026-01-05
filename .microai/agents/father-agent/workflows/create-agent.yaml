@@ -1,10 +1,11 @@
 # Create Agent Workflow
 # Extracted from father-agent for v2.0
+# Updated for v2.2: Added mandatory Design Review phase
 
 workflow:
   name: create-agent
-  description: Tạo agent mới từ đầu
-  version: "1.0"
+  description: Tạo agent mới từ đầu (with Design Review)
+  version: "2.0"
 
 # ════════════════════════════════════════════════════════════════════
 # PHASE 1: DISCOVERY
@@ -67,36 +68,171 @@ phases:
             - cancel
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 2: STRUCTURE
+# PHASE 3: DESIGN REVIEW (MANDATORY - v2.2)
+# ════════════════════════════════════════════════════════════════════
+  - id: design_review
+    name: Design Review (Mandatory)
+    description: Create design document and submit to Deep Thinking Team
+    steps:
+      - id: 3.1
+        action: load_template
+        template: "knowledge/16-design-document-template.md"
+        output: design_template
+
+      - id: 3.2
+        action: generate
+        type: design_document
+        inputs:
+          - domain
+          - target_project
+          - patterns
+          - style
+          - overlap_check_results
+        template: design_template
+        vars:
+          operation_type: "create-agent"
+          name: "{agent_name}"
+          uuid: "{generate_uuid}"
+          review_mode: "standard"
+        output_path: ".microai/agents/father-agent/designs/{agent_name}-design.md"
+        output: design_doc_path
+
+      - id: 3.3
+        action: display
+        type: info
+        template: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  DESIGN DOCUMENT CREATED                                       ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Agent: {agent_name}                                           ║
+          ║  Path: {design_doc_path}                                       ║
+          ║                                                                ║
+          ║  Submitting to Deep Thinking Team for mandatory review...     ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+      - id: 3.4
+        action: determine_review_mode
+        criteria:
+          deep:
+            - has_complex_workflows: true
+            - knowledge_count: ">5"
+          standard:
+            - default: true
+        output: review_mode
+
+      - id: 3.5
+        name: "Submit to Deep Thinking Team"
+        action: invoke_skill
+        skill: "microai:deep-thinking"
+        args:
+          problem: |
+            Review this agent design:
+
+            Agent: {agent_name}
+            Domain: {domain}
+            Purpose: Create new agent
+
+            Design Document: {design_doc_path}
+
+            Key questions:
+            1. Is this design sound and follows v2.0 spec?
+            2. Any critical risks or missing components?
+            3. Better alternatives or improvements?
+          mode: "{review_mode}"
+        output: review_result
+
+      - id: 3.6
+        action: parse_review
+        input: review_result
+        output: review_status
+        # Expected: approved, rejected, approved-with-conditions
+
+      - id: 3.7
+        name: "Approval Gate"
+        action: branch
+        on: review_status
+        cases:
+          approved:
+            - action: display
+              message: |
+                ╔═══════════════════════════════════════════════════════════════╗
+                ║  DESIGN APPROVED ✓                                            ║
+                ║  Proceeding with agent creation...                            ║
+                ╚═══════════════════════════════════════════════════════════════╝
+            - action: update_design_doc
+              path: "{design_doc_path}"
+              field: status
+              value: "approved"
+            - action: continue
+
+          rejected:
+            - action: display
+              message: |
+                ╔═══════════════════════════════════════════════════════════════╗
+                ║  DESIGN REJECTED ✗                                            ║
+                ╠═══════════════════════════════════════════════════════════════╣
+                ║  Reason: {review_result.rejection_reason}                     ║
+                ║                                                                ║
+                ║  Action Required: Revise design and resubmit                  ║
+                ║  (Skip is NOT allowed)                                        ║
+                ╚═══════════════════════════════════════════════════════════════╝
+            - action: update_design_doc
+              path: "{design_doc_path}"
+              field: status
+              value: "rejected"
+            - action: goto
+              target: 3.1
+              # Loop back to revise design - NO SKIP ALLOWED
+
+          approved-with-conditions:
+            - action: display
+              message: |
+                ╔═══════════════════════════════════════════════════════════════╗
+                ║  DESIGN APPROVED WITH CONDITIONS                              ║
+                ╠═══════════════════════════════════════════════════════════════╣
+                {for condition in review_result.conditions}
+                ║  - {condition}                                                ║
+                {endfor}
+                ╚═══════════════════════════════════════════════════════════════╝
+            - action: apply_conditions
+              conditions: review_result.conditions
+            - action: update_design_doc
+              path: "{design_doc_path}"
+              field: status
+              value: "approved-with-conditions"
+            - action: continue
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: STRUCTURE (renumbered from Phase 2)
 # ════════════════════════════════════════════════════════════════════
   - id: structure
     name: Tạo cấu trúc
     steps:
-      - id: 3.1
+      - id: 4.1
         action: mkdir
         path: ".microai/agents/{agent_name}/"
 
-      - id: 3.2
+      - id: 4.2
         action: mkdir
         path: ".microai/agents/{agent_name}/knowledge/"
 
-      - id: 3.3
+      - id: 4.3
         action: mkdir
         path: ".microai/agents/{agent_name}/workflows/"
         condition: has_complex_workflows
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 3: CONTENT GENERATION
+# PHASE 5: CONTENT GENERATION (renumbered from Phase 3)
 # ════════════════════════════════════════════════════════════════════
   - id: content
     name: Generate content
     steps:
-      - id: 4.1
+      - id: 5.1
         action: load_template
         template: "knowledge/01-agent-template.md"
         output: agent_template
 
-      - id: 4.2
+      - id: 5.2
         action: generate
         type: agent_definition
         inputs:
@@ -107,49 +243,49 @@ phases:
         template: agent_template
         output_path: ".microai/agents/{agent_name}/agent.md"
 
-      - id: 4.3
+      - id: 5.3
         action: generate_knowledge
         for_each: patterns
         template: "knowledge/03-knowledge-template.md"
         naming: "{index:02d}-{pattern_name}.md"
         output_path: ".microai/agents/{agent_name}/knowledge/"
 
-      - id: 4.4
+      - id: 5.4
         action: generate
         type: knowledge_index
         template: "knowledge/04-index-template.yaml"
         output_path: ".microai/agents/{agent_name}/knowledge/knowledge-index.yaml"
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 4: REGISTRATION (2-Step)
+# PHASE 6: REGISTRATION (2-Step) (renumbered from Phase 4)
 # ════════════════════════════════════════════════════════════════════
   - id: registration
     name: Register command
     steps:
-      - id: 5.1
+      - id: 6.1
         action: load_template
         template: "knowledge/02-command-template.md"
         output: command_template
 
-      - id: 5.2
+      - id: 6.2
         name: "Step 1 - BUILD: Create in library"
         action: write
         content: command_template
         path: ".microai/commands/{agent_name}.md"
 
-      - id: 5.3
+      - id: 6.3
         name: "Step 2 - REGISTER: Copy to runtime"
         action: copy
         source: ".microai/commands/{agent_name}.md"
         dest: ".claude/commands/microai/{agent_name}.md"
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 5: VERIFICATION
+# PHASE 7: VERIFICATION (renumbered from Phase 5)
 # ════════════════════════════════════════════════════════════════════
   - id: verification
     name: Verify creation
     steps:
-      - id: 6.1
+      - id: 7.1
         action: check_files
         paths:
           - ".microai/agents/{agent_name}/agent.md"
@@ -157,12 +293,18 @@ phases:
           - ".claude/commands/microai/{agent_name}.md"
         on_missing: error
 
-      - id: 6.2
+      - id: 7.2
         action: validate
         script: ".microai/scripts/validate-agent-v2.sh"
         args: ["{agent_name}"]
 
-      - id: 6.3
+      - id: 7.3
+        name: "Archive Design Document"
+        action: move
+        source: ".microai/agents/father-agent/designs/{agent_name}-design.md"
+        dest: ".microai/agents/father-agent/designs/archive/{date}-create-agent-{agent_name}.md"
+
+      - id: 7.4
         action: display
         type: summary
         template: |
@@ -178,21 +320,24 @@ phases:
           ║    - knowledge/{count} files                                    ║
           ║    - command registered                                         ║
           ║                                                                 ║
+          ║  Design Review: PASSED ✓                                       ║
+          ║  Design Doc: designs/archive/{date}-create-agent-{agent_name} ║
+          ║                                                                 ║
           ║  Test: Gõ /microai:{agent_name} để test                        ║
           ╚═══════════════════════════════════════════════════════════════╝
 
 # ════════════════════════════════════════════════════════════════════
-# OPTIONAL: MEMORY SETUP
+# OPTIONAL: MEMORY SETUP (renumbered)
 # ════════════════════════════════════════════════════════════════════
   - id: memory_setup
     name: Setup memory (optional)
     condition: user_wants_memory
     steps:
-      - id: 7.1
+      - id: 8.1
         action: mkdir
         path: ".microai/agents/{agent_name}/memory/"
 
-      - id: 7.2
+      - id: 8.2
         action: write
         template: "knowledge/06-memory-template.md"
         files:
@@ -200,6 +345,20 @@ phases:
           - decisions.md
           - learnings.md
         path: ".microai/agents/{agent_name}/memory/"
+
+      - id: 8.3
+        name: "Link Design Document to Memory"
+        action: write
+        content: |
+          # Design Origin
+
+          This agent was created with the following design document:
+
+          - **Design Doc**: `../../../father-agent/designs/archive/{date}-create-agent-{agent_name}.md`
+          - **Reviewed by**: Deep Thinking Team
+          - **Status**: Approved
+          - **Created**: {date}
+        path: ".microai/agents/{agent_name}/memory/design-origin.md"
 
 # ════════════════════════════════════════════════════════════════════
 # ERROR HANDLING

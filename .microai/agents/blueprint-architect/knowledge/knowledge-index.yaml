@@ -1,0 +1,81 @@
+# Blueprint Architect Knowledge Index
+# Smart keyword detection for auto-loading relevant knowledge
+
+version: "1.0"
+base_path: ./
+
+# Core files - always consider loading
+core:
+  - file: 01-cognitive-model.md
+    priority: high
+    description: 4-layer thinking model, Level-2 focus
+
+# Keyword-based loading
+mappings:
+  # Cognitive Model
+  - keywords: [level, abstraction, thinking, cognitive, model, layer]
+    files: [01-cognitive-model.md]
+    priority: high
+
+  # Contract System
+  - keywords: [contract, pre, post, invariant, precondition, postcondition, spec, specification]
+    files: [02-contract-system.md]
+    priority: high
+
+  - keywords: [performance, latency, complexity, O(n), throughput, resource]
+    files: [02-contract-system.md]
+    priority: medium
+
+  - keywords: [concurrency, thread, atomic, race, lock, parallel, async]
+    files: [02-contract-system.md]
+    priority: medium
+
+  # Function Patterns
+  - keywords: [auth, login, session, token, password, authentication]
+    files: [03-function-patterns.md]
+    priority: high
+    section: authentication
+
+  - keywords: [data, crud, create, read, update, delete, query, database]
+    files: [03-function-patterns.md]
+    priority: high
+    section: data-access
+
+  - keywords: [file, upload, download, storage, s3, blob]
+    files: [03-function-patterns.md]
+    priority: high
+    section: file-operations
+
+  - keywords: [email, sms, notification, push, message, communication]
+    files: [03-function-patterns.md]
+    priority: high
+    section: communication
+
+  - keywords: [payment, stripe, checkout, subscription, invoice]
+    files: [03-function-patterns.md]
+    priority: high
+    section: payment
+
+  # Handoff Protocol
+  - keywords: [handoff, implement, coding, agent, go-dev, python-dev, typescript]
+    files: [04-handoff-protocol.md]
+    priority: high
+
+  - keywords: [library, framework, mapping, go, python, typescript, rust]
+    files: [04-handoff-protocol.md]
+    priority: medium
+
+  # Quality Metrics
+  - keywords: [quality, metric, score, completeness, success, rate]
+    files: [05-quality-metrics.md]
+    priority: medium
+
+  - keywords: [feedback, improve, learn, pattern]
+    files: [05-quality-metrics.md]
+    priority: low
+
+# Default loading strategy
+defaults:
+  max_files: 3
+  always_load: [01-cognitive-model.md]
+  fallback: [02-contract-system.md]

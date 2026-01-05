@@ -1,0 +1,161 @@
+# Facebook Post Task Workflow
+# Prepare and post content to Facebook
+
+name: fb-post-task
+description: Create and publish Facebook posts
+version: "1.0"
+
+pre_conditions:
+  - check: memory_loaded
+  - check: fb_token_valid
+    env_var: FB_PAGE_TOKEN
+  - check: fb_page_configured
+    env_var: FB_PAGE_ID
+
+inputs:
+  content:
+    type: string
+    required: false
+    description: Post content (or generate from draft)
+  type:
+    type: enum
+    values: [text, link, image, multi_photo]
+    default: text
+  draft_path:
+    type: string
+    required: false
+    description: Path to draft file
+
+steps:
+  - id: prepare_content
+    name: Prepare Content
+    actions:
+      - action: load_or_generate_content
+        sources:
+          - input_content
+          - draft_path
+          - generate_from_research
+      - action: optimize_for_engagement
+        max_length: 500
+        add_line_breaks: true
+      - action: generate_hashtags
+        count: 3
+        relevant_to: content
+      - action: format_final
+        template: |
+          {content}
+
+          {hashtags}
+    output: prepared_content
+
+  - id: preview
+    name: Preview and Confirm
+    checkpoint: true
+    actions:
+      - action: display_preview
+        content: "{prepared_content}"
+        format: |
+          ╔═══════════════════════════════════════════════════╗
+          ║              FACEBOOK POST PREVIEW                 ║
+          ╠═══════════════════════════════════════════════════╣
+          {content}
+          ╚═══════════════════════════════════════════════════╝
+      - action: ask_confirmation
+        question: "Post this to Facebook?"
+        options: [yes, edit, save_draft, cancel]
+    on_response:
+      yes: continue
+      edit: goto prepare_content
+      save_draft: goto save_draft
+      cancel: abort
+
+  - id: post
+    name: Publish to Facebook
+    agent_call:
+      type: Skill
+      skill: "microai:fb-post"
+      args: "*post"
+      inputs:
+        content: "{prepared_content}"
+        type: "{type}"
+    timeout_ms: 60000
+    capture_output: true
+    output: post_result
+
+  - id: verify
+    name: Verify Post
+    actions:
+      - action: check_post_success
+        result: "{post_result}"
+      - action: extract_post_info
+        fields:
+          - post_id
+          - post_url
+          - timestamp
+      - action: save_post_record
+        path: "output/daily/{date}/facebook/posts/{timestamp}.md"
+        content: |
+          # Facebook Post Record
+
+          **Date**: {date}
+          **Time**: {time}
+          **Post ID**: {post_id}
+          **URL**: {post_url}
+
+          ## Content
+
+          {prepared_content}
+
+          ## Status
+          - Published: true
+          - Engagement: (pending)
+      - action: update_kanban
+        status: completed
+
+  - id: save_draft
+    name: Save as Draft
+    condition: user_chose_draft
+    actions:
+      - action: save_file
+        path: "output/daily/{date}/facebook/drafts/{topic}.md"
+        content: |
+          # Facebook Draft
+
+          **Created**: {date} {time}
+          **Status**: draft
+
+          ## Content
+
+          {prepared_content}
+
+          ## Notes
+          - Ready for review
+          - Edit and run *post to publish
+      - action: update_kanban
+        status: blocked
+        reason: "Saved as draft for review"
+      - action: log
+        message: "Draft saved: {draft_path}"
+
+post_actions:
+  - action: log_metrics
+    metrics:
+      post_type: "{type}"
+      content_length: "{length}"
+      time_spent: "{duration}"
+  - action: update_daily_stats
+    field: posts.published
+    increment: 1
+
+on_error:
+  - action: save_draft
+    path: "output/daily/{date}/facebook/drafts/{topic}-failed.md"
+    include_error: true
+  - action: log_error
+    file: memory/errors.log
+  - action: suggest_retry
+    based_on_error:
+      auth_error: "Check FB_PAGE_TOKEN, may need refresh"
+      rate_limit: "Wait 10 minutes and retry"
+      content_policy: "Review content for policy compliance"
+      network_error: "Check internet connection"

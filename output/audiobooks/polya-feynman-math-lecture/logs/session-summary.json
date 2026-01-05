@@ -1,0 +1,106 @@
+{
+  "session_id": "polya-feynman-math-lecture",
+  "status": "COMPLETED",
+  "started_at": "2026-01-04T19:15:00+07:00",
+  "completed_at": "2026-01-04T19:31:00+07:00",
+  "processing_time_minutes": 16,
+
+  "input": {
+    "source": "Original content combining Polya and Feynman methodologies",
+    "source_type": "original",
+    "language": "vi",
+    "word_count": 1850,
+    "genre": "education"
+  },
+
+  "output": {
+    "total_chapters": 1,
+    "total_duration": "8:31",
+    "total_duration_seconds": 511,
+    "file_size_mb": 12,
+    "formats_created": ["MP3"],
+    "files": {
+      "voiceover_only": "polya-feynman-math-lecture.mp3",
+      "with_music": "polya-feynman-math-lecture-with-music.mp3",
+      "final": "polya-feynman-math-lecture-final.mp3"
+    }
+  },
+
+  "quality": {
+    "average_score": 95,
+    "grade": "A",
+    "decision": "APPROVED",
+    "loudness_lufs": -14,
+    "true_peak_db": -1.5
+  },
+
+  "production": {
+    "segments_generated": 54,
+    "voice": "vi-VN-NamMinhNeural",
+    "tts_engine": "Edge-TTS",
+    "background_music": {
+      "type": "ambient",
+      "source": "generated",
+      "description": "Pink noise filtered for study atmosphere (80-400Hz)",
+      "mix_level": "12%",
+      "fade_in": "3s",
+      "fade_out": "3s"
+    }
+  },
+
+  "content_sections": [
+    "Phần mở đầu - Giới thiệu",
+    "Phần 1: Phương pháp Polya - 4 bước giải toán",
+    "  - Bước 1: Hiểu vấn đề",
+    "  - Bước 2: Lập kế hoạch",
+    "  - Bước 3: Thực hiện kế hoạch",
+    "  - Bước 4: Nhìn lại",
+    "Phần 2: Kỹ thuật Feynman - Học bằng cách giải thích đơn giản",
+    "  - Bước 1: Viết ra những gì bạn biết",
+    "  - Bước 2: Giải thích như dạy trẻ 10 tuổi",
+    "  - Bước 3: Xác định lỗ hổng kiến thức",
+    "  - Bước 4: Đơn giản hóa và dùng phép so sánh",
+    "Phần 3: Kết hợp hai phương pháp - 5 nguyên tắc",
+    "Phần 4: Ví dụ thực hành - Chứng minh √2 vô tỉ",
+    "Phần kết luận - Tổng kết 5 điểm quan trọng"
+  ],
+
+  "metadata": {
+    "title": "Kinh nghiệm, Kỹ thuật và Phương pháp Giải toán - Polya & Feynman",
+    "artist": "MicroAI Education",
+    "album": "Bài giảng Toán học",
+    "year": "2026",
+    "genre": "Education/Mathematics"
+  },
+
+  "methodologies_covered": {
+    "polya_4_steps": [
+      "Hiểu vấn đề (Understand the Problem)",
+      "Lập kế hoạch (Devise a Plan)",
+      "Thực hiện kế hoạch (Carry Out the Plan)",
+      "Nhìn lại (Look Back)"
+    ],
+    "feynman_technique": [
+      "Viết ra những gì bạn biết",
+      "Giải thích như dạy trẻ 10 tuổi",
+      "Xác định lỗ hổng kiến thức",
+      "Đơn giản hóa và dùng phép so sánh"
+    ],
+    "combined_principles": [
+      "Hiểu trước khi giải",
+      "Đừng tự lừa mình",
+      "Bài toán đơn giản hơn",
+      "Nhiều cách giải",
+      "Học từ sai lầm"
+    ]
+  },
+
+  "notes": [
+    "Bài giảng kết hợp phương pháp tư duy của George Polya và Richard Feynman",
+    "Polya: Nhà toán học Hungary, tác giả 'How to Solve It'",
+    "Feynman: Nhà vật lý Nobel, 'The Great Explainer'",
+    "Ví dụ thực hành: Chứng minh √2 là số vô tỉ bằng phản chứng",
+    "Voice: vi-VN-NamMinhNeural (nam), tốc độ -5%",
+    "Background music: Ambient pink noise 12% volume"
+  ]
+}

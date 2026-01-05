@@ -1,0 +1,68 @@
+# Lesson 002 - Script
+# 5 words: adequate, adhere, adjacent, adjust, administer
+# Format: 9:16 Vertical (1080x1920) - matching lesson-001-v5
+
+lesson:
+  number: 2
+  title: "5 Từ vựng TOEIC Part 5 - Bài 2"
+  theme: "Tiền tố AD-"
+  format: "vertical"  # 9:16 like lesson-001-v5
+
+  words:
+    - word: adequate
+      ipa: "/ˈædɪkwət/"
+      pos: adjective
+      meaning_vi: "đủ, thỏa đáng"
+      example_en: "The budget is adequate for the project."
+      example_vi: "Ngân sách đủ cho dự án."
+      tip: "adequate bằng enough, không phải excellent"
+      collocations: ["adequate resources", "adequate time", "adequate supply"]
+
+    - word: adhere
+      ipa: "/ədˈhɪr/"
+      pos: verb
+      meaning_vi: "tuân thủ, bám vào"
+      example_en: "All employees must adhere to company policies."
+      example_vi: "Tất cả nhân viên phải tuân thủ chính sách công ty."
+      tip: "Luôn dùng với to: adhere to"
+      collocations: ["adhere to rules", "adhere to guidelines", "adhere to policies"]
+
+    - word: adjacent
+      ipa: "/əˈdʒeɪsənt/"
+      pos: adjective
+      meaning_vi: "kế bên, liền kề"
+      example_en: "The parking lot is adjacent to the building."
+      example_vi: "Bãi đỗ xe nằm kế bên tòa nhà."
+      tip: "Luôn dùng với to: adjacent to"
+      collocations: ["adjacent to", "adjacent building", "adjacent room"]
+
+    - word: adjust
+      ipa: "/əˈdʒʌst/"
+      pos: verb
+      meaning_vi: "điều chỉnh"
+      example_en: "Please adjust your schedule accordingly."
+      example_vi: "Vui lòng điều chỉnh lịch trình cho phù hợp."
+      tip: "adjust nghĩa là tinh chỉnh, không phải thay đổi hoàn toàn"
+      collocations: ["adjust the settings", "adjust to changes", "adjust the price"]
+
+    - word: administer
+      ipa: "/ədˈmɪnɪstər/"
+      pos: verb
+      meaning_vi: "quản lý, điều hành"
+      example_en: "She administers the department efficiently."
+      example_vi: "Cô ấy quản lý phòng ban hiệu quả."
+      tip: "administer formal hơn manage"
+      collocations: ["administer a program", "administer a test", "administer funds"]
+
+  quiz:
+    - question: "The budget is _____ for the project."
+      answer: "adequate"
+    - question: "All employees must _____ to company policies."
+      answer: "adhere"
+    - question: "Từ nào nghĩa là kế bên, liền kề?"
+      options: ["A. adequate", "B. adhere", "C. adjacent", "D. adjust"]
+      answer: "C"
+
+  next_lesson:
+    number: 3
+    words: ["admit", "adopt", "advance", "advertise", "advise"]

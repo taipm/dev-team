@@ -1,0 +1,40 @@
+# Daily Agent Performance Statistics
+
+stats:
+  today:
+    date: null
+    tasks_completed: 0
+    tasks_failed: 0
+    research:
+      papers_analyzed: 0
+      digest_generated: false
+    posts:
+      published: 0
+      drafts_created: 0
+    content:
+      videos_created: 0
+      blogs_written: 0
+    time_spent_minutes: 0
+
+  weekly:
+    start_date: null
+    total_tasks: 0
+    completion_rate: 0
+    avg_tasks_per_day: 0
+
+  monthly:
+    month: null
+    total_tasks: 0
+    research_papers: 0
+    posts_published: 0
+    content_pieces: 0
+
+trends:
+  most_productive_day: null
+  avg_completion_time:
+    research: 0
+    post: 0
+    content: 0
+  common_failures: []
+
+learnings_applied: 0

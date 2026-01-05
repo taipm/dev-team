@@ -1,0 +1,6 @@
+file '01-hook.mp4'
+file '02-word.mp4'
+file '03-definition.mp4'
+file '04-example.mp4'
+file '05-tip.mp4'
+file '06-cta.mp4'

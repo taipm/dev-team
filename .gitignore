@@ -52,7 +52,6 @@ api_key*
 *.log
 tmp/
 temp/
-
 # Media files - Large binary files
 *.mp3
 *.mp4
@@ -70,3 +69,6 @@ temp/
 **/media/videos/
 **/media/Tex/
 **/media/texts/
+
+# Node.js
+node_modules

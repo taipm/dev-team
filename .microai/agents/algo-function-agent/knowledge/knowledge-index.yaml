@@ -1,0 +1,221 @@
+# Algo Function Agent Knowledge Index
+# Function-level abstraction knowledge base
+
+version: "1.0"
+agent: algo-function-agent
+
+# Core files - always load
+core_files:
+  - 01-function-taxonomy.md
+  - 02-common-patterns.md
+  - 03-contracts-guide.md
+
+# Keyword mapping for selective loading
+keyword_mapping:
+  # Design workflow
+  design:
+    files: [01-function-taxonomy.md, 02-common-patterns.md, 04-abstraction-levels.md]
+    priority: 1
+  decompose:
+    files: [01-function-taxonomy.md, 04-abstraction-levels.md]
+    priority: 1
+  architecture:
+    files: [01-function-taxonomy.md, 02-common-patterns.md]
+    priority: 1
+
+  # Contract workflow
+  contract:
+    files: [03-contracts-guide.md]
+    priority: 1
+  precondition:
+    files: [03-contracts-guide.md]
+    priority: 1
+  postcondition:
+    files: [03-contracts-guide.md]
+    priority: 1
+  specification:
+    files: [03-contracts-guide.md, 05-handoff-protocol.md]
+    priority: 1
+
+  # Pseudocode workflow
+  pseudocode:
+    files: [02-common-patterns.md, 04-abstraction-levels.md]
+    priority: 1
+  algorithm:
+    files: [02-common-patterns.md]
+    priority: 1
+
+  # Handoff workflow
+  handoff:
+    files: [05-handoff-protocol.md]
+    priority: 1
+  implement:
+    files: [05-handoff-protocol.md]
+    priority: 1
+  go:
+    files: [05-handoff-protocol.md]
+    priority: 2
+  python:
+    files: [05-handoff-protocol.md]
+    priority: 2
+
+  # Domain: Authentication
+  auth:
+    files: [06-domain-auth.md]
+    priority: 1
+  login:
+    files: [06-domain-auth.md]
+    priority: 1
+  logout:
+    files: [06-domain-auth.md]
+    priority: 1
+  register:
+    files: [06-domain-auth.md]
+    priority: 1
+  password:
+    files: [06-domain-auth.md]
+    priority: 1
+  session:
+    files: [06-domain-auth.md]
+    priority: 1
+  token:
+    files: [06-domain-auth.md]
+    priority: 1
+  jwt:
+    files: [06-domain-auth.md]
+    priority: 1
+  oauth:
+    files: [06-domain-auth.md]
+    priority: 1
+
+  # Domain: Data Access
+  crud:
+    files: [07-domain-data.md]
+    priority: 1
+  create:
+    files: [07-domain-data.md]
+    priority: 1
+  read:
+    files: [07-domain-data.md]
+    priority: 1
+  update:
+    files: [07-domain-data.md]
+    priority: 1
+  delete:
+    files: [07-domain-data.md]
+    priority: 1
+  query:
+    files: [07-domain-data.md]
+    priority: 1
+  database:
+    files: [07-domain-data.md]
+    priority: 1
+  repository:
+    files: [07-domain-data.md]
+    priority: 1
+  aggregate:
+    files: [07-domain-data.md]
+    priority: 1
+
+  # Domain: File Operations
+  file:
+    files: [08-domain-file.md]
+    priority: 1
+  upload:
+    files: [08-domain-file.md]
+    priority: 1
+  download:
+    files: [08-domain-file.md]
+    priority: 1
+  storage:
+    files: [08-domain-file.md]
+    priority: 1
+  stream:
+    files: [08-domain-file.md]
+    priority: 1
+
+  # Domain: Communication
+  email:
+    files: [09-domain-communication.md]
+    priority: 1
+  notification:
+    files: [09-domain-communication.md]
+    priority: 1
+  sms:
+    files: [09-domain-communication.md]
+    priority: 1
+  webhook:
+    files: [09-domain-communication.md]
+    priority: 1
+  event:
+    files: [09-domain-communication.md]
+    priority: 1
+  pubsub:
+    files: [09-domain-communication.md]
+    priority: 1
+
+  # Anti-patterns
+  mistake:
+    files: [10-anti-patterns.md]
+    priority: 1
+  wrong:
+    files: [10-anti-patterns.md]
+    priority: 1
+  avoid:
+    files: [10-anti-patterns.md]
+    priority: 1
+  leak:
+    files: [10-anti-patterns.md, 04-abstraction-levels.md]
+    priority: 1
+
+# File descriptions
+files:
+  01-function-taxonomy.md:
+    title: "Function Taxonomy"
+    description: "Classification of functions by domain, operation type, and abstraction level"
+    lines: ~400
+
+  02-common-patterns.md:
+    title: "Common Function Patterns"
+    description: "Reusable patterns: validator, transformer, orchestrator, etc."
+    lines: ~300
+
+  03-contracts-guide.md:
+    title: "Contracts Guide"
+    description: "How to write preconditions, postconditions, invariants"
+    lines: ~250
+
+  04-abstraction-levels.md:
+    title: "Abstraction Levels"
+    description: "When to use high vs low abstraction, leak detection"
+    lines: ~200
+
+  05-handoff-protocol.md:
+    title: "Handoff Protocol"
+    description: "Format for handing off to language-specific agents"
+    lines: ~300
+
+  06-domain-auth.md:
+    title: "Authentication Domain"
+    description: "Functions for login, logout, session, token, password"
+    lines: ~400
+
+  07-domain-data.md:
+    title: "Data Access Domain"
+    description: "CRUD operations, queries, repositories, aggregation"
+    lines: ~400
+
+  08-domain-file.md:
+    title: "File Operations Domain"
+    description: "Upload, download, transform, validate files"
+    lines: ~300
+
+  09-domain-communication.md:
+    title: "Communication Domain"
+    description: "Email, SMS, notifications, webhooks, events"
+    lines: ~300
+
+  10-anti-patterns.md:
+    title: "Anti-Patterns"
+    description: "Common mistakes in function-level design"
+    lines: ~200

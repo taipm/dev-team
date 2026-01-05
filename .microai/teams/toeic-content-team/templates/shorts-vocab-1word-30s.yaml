@@ -1,0 +1,122 @@
+# YouTube Shorts Template: 1 Word Focus (30 seconds)
+# Format: 9:16 (1080x1920)
+# Duration: 30 seconds
+
+template:
+  name: vocab-1word-30s
+  type: shorts
+  duration: 30
+  resolution: 1080x1920
+  fps: 30
+
+structure:
+  - phase: hook
+    duration: 3
+    start: 0
+    end: 3
+    content:
+      audio:
+        - voice: vi
+          text: "Từ này 90% người Việt phát âm sai!"
+      visual:
+        style: attention_grabber
+        animation: zoom_in
+        text_main: "90% SAI"
+        text_sub: null
+
+  - phase: word_intro
+    duration: 5
+    start: 3
+    end: 8
+    content:
+      audio:
+        - voice: en
+          text: "{word}"
+        - voice: en
+          text: "{ipa}"
+      visual:
+        style: word_card
+        text_main: "{word}"
+        text_sub: "{ipa} - {pos}"
+        highlight: true
+
+  - phase: definition
+    duration: 7
+    start: 8
+    end: 15
+    content:
+      audio:
+        - voice: vi
+          text: "Nghĩa là {meaning_vi}"
+      visual:
+        style: definition_card
+        text_main: "{meaning_vi}"
+        text_sub: "{meaning_en}"
+
+  - phase: example
+    duration: 7
+    start: 15
+    end: 22
+    content:
+      audio:
+        - voice: en
+          text: "{example_en}"
+        - voice: vi
+          text: "{example_vi}"
+      visual:
+        style: example_card
+        text_main: "{example_en}"
+        text_sub: "{example_vi}"
+        highlight_word: "{word}"
+
+  - phase: tip
+    duration: 5
+    start: 22
+    end: 27
+    content:
+      audio:
+        - voice: vi
+          text: "Nhớ:"
+        - voice: en
+          text: "{collocations[0]}"
+      visual:
+        style: tip_card
+        text_main: "Collocation"
+        text_sub: "{collocations[0]}"
+
+  - phase: cta
+    duration: 3
+    start: 27
+    end: 30
+    content:
+      audio:
+        - voice: vi
+          text: "Follow để học mỗi ngày!"
+      visual:
+        style: cta_card
+        text_main: "FOLLOW"
+        text_sub: "Học TOEIC mỗi ngày"
+        animation: pulse
+
+# Variables to fill
+variables:
+  - word
+  - ipa
+  - pos
+  - meaning_vi
+  - meaning_en
+  - example_en
+  - example_vi
+  - collocations
+  - tips
+
+# Visual styles
+styles:
+  background: "#1A1A2E"
+  primary_color: "#3DD9FF"
+  accent_color: "#D4EC4E"
+  text_color: "#FFFFFF"
+  font_main: "Arial Unicode"
+  font_size_large: 100
+  font_size_medium: 60
+  font_size_small: 40

@@ -1,0 +1,538 @@
+# Universal Framework - API Project Type Configuration
+# Version: 2.0
+# Purpose: Complete specification for API/Backend projects
+
+type:
+  id: "api"
+  name: "API/Backend Project"
+  version: "2.0"
+
+# =============================================================================
+# API CONTRACT REQUIREMENTS
+# =============================================================================
+
+contract_requirements:
+  mandatory:
+    api_style:
+      options:
+        - "REST"
+        - "GraphQL"
+        - "gRPC"
+        - "WebSocket"
+        - "Hybrid"
+      default: "REST"
+
+    authentication:
+      options:
+        - "none"
+        - "api_key"
+        - "jwt"
+        - "oauth2"
+        - "session"
+        - "custom"
+      default: "jwt"
+
+    data_format:
+      options:
+        - "JSON"
+        - "XML"
+        - "Protocol Buffers"
+        - "MessagePack"
+      default: "JSON"
+
+  by_fidelity_level:
+    prototype:
+      required:
+        - endpoint_list
+        - basic_request_response
+      optional:
+        - validation
+
+    functional:
+      required:
+        - endpoint_specifications
+        - request_validation
+        - error_handling
+        - basic_auth
+      optional:
+        - rate_limiting
+
+    polished:
+      required:
+        - full_api_documentation
+        - comprehensive_validation
+        - proper_error_codes
+        - security_headers
+        - rate_limiting
+        - logging
+      optional:
+        - caching
+
+    realistic:
+      required:
+        - openapi_specification
+        - comprehensive_testing
+        - security_audit
+        - performance_optimization
+        - monitoring
+        - documentation
+        - versioning
+      optional: []
+
+# =============================================================================
+# ENDPOINT SPECIFICATION TEMPLATE
+# =============================================================================
+
+endpoint_template:
+  required_fields:
+    - method
+    - path
+    - description
+    - request
+    - response
+    - errors
+
+  optional_fields:
+    - authentication
+    - rate_limit
+    - caching
+    - examples
+
+  example: |
+    endpoint:
+      method: "POST"
+      path: "/api/v1/users"
+      description: "Create a new user account"
+
+      authentication:
+        required: true
+        type: "jwt"
+        scope: ["admin", "user:create"]
+
+      request:
+        headers:
+          Content-Type: "application/json"
+          Authorization: "Bearer <token>"
+
+        body:
+          type: "object"
+          required: ["email", "password", "name"]
+          properties:
+            email:
+              type: "string"
+              format: "email"
+              description: "User email address"
+            password:
+              type: "string"
+              minLength: 8
+              description: "Password (min 8 chars)"
+            name:
+              type: "string"
+              maxLength: 100
+              description: "User full name"
+
+        example: |
+          {
+            "email": "user@example.com",
+            "password": "securepassword123",
+            "name": "John Doe"
+          }
+
+      response:
+        success:
+          status: 201
+          body:
+            type: "object"
+            properties:
+              id:
+                type: "string"
+                format: "uuid"
+              email:
+                type: "string"
+              name:
+                type: "string"
+              created_at:
+                type: "string"
+                format: "datetime"
+
+          example: |
+            {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "email": "user@example.com",
+              "name": "John Doe",
+              "created_at": "2026-01-04T12:00:00Z"
+            }
+
+      errors:
+        - status: 400
+          code: "INVALID_EMAIL"
+          message: "Email format is invalid"
+
+        - status: 400
+          code: "WEAK_PASSWORD"
+          message: "Password does not meet requirements"
+
+        - status: 409
+          code: "EMAIL_EXISTS"
+          message: "Email already registered"
+
+        - status: 401
+          code: "UNAUTHORIZED"
+          message: "Invalid or missing authentication"
+
+        - status: 403
+          code: "FORBIDDEN"
+          message: "Insufficient permissions"
+
+        - status: 500
+          code: "INTERNAL_ERROR"
+          message: "Internal server error"
+
+      rate_limit:
+        requests: 10
+        period: "1m"
+        scope: "ip"
+
+# =============================================================================
+# DATA MODEL SPECIFICATION
+# =============================================================================
+
+data_model_template:
+  required_fields:
+    - name
+    - description
+    - fields
+    - relationships
+
+  example: |
+    model:
+      name: "User"
+      description: "User account information"
+      table: "users"
+
+      fields:
+        id:
+          type: "uuid"
+          primary: true
+          generated: true
+
+        email:
+          type: "string"
+          unique: true
+          index: true
+          validation: "email"
+
+        password_hash:
+          type: "string"
+          hidden: true
+
+        name:
+          type: "string"
+          maxLength: 100
+
+        role:
+          type: "enum"
+          values: ["user", "admin", "moderator"]
+          default: "user"
+
+        created_at:
+          type: "datetime"
+          default: "now()"
+
+        updated_at:
+          type: "datetime"
+          auto_update: true
+
+      relationships:
+        posts:
+          type: "hasMany"
+          model: "Post"
+          foreign_key: "user_id"
+
+        profile:
+          type: "hasOne"
+          model: "Profile"
+          foreign_key: "user_id"
+
+      indexes:
+        - fields: ["email"]
+          unique: true
+        - fields: ["created_at"]
+          order: "desc"
+
+# =============================================================================
+# ERROR HANDLING SPECIFICATION
+# =============================================================================
+
+error_handling:
+  standard_format: |
+    {
+      "error": {
+        "code": "ERROR_CODE",
+        "message": "Human readable message",
+        "details": {
+          "field": "Additional context"
+        },
+        "request_id": "uuid-for-tracing"
+      }
+    }
+
+  http_status_codes:
+    - code: 200
+      meaning: "Success"
+      use_when: "Request completed successfully"
+
+    - code: 201
+      meaning: "Created"
+      use_when: "Resource created successfully"
+
+    - code: 204
+      meaning: "No Content"
+      use_when: "Success with no response body"
+
+    - code: 400
+      meaning: "Bad Request"
+      use_when: "Invalid request format or validation failed"
+
+    - code: 401
+      meaning: "Unauthorized"
+      use_when: "Missing or invalid authentication"
+
+    - code: 403
+      meaning: "Forbidden"
+      use_when: "Authenticated but insufficient permissions"
+
+    - code: 404
+      meaning: "Not Found"
+      use_when: "Resource does not exist"
+
+    - code: 409
+      meaning: "Conflict"
+      use_when: "Resource already exists or state conflict"
+
+    - code: 422
+      meaning: "Unprocessable Entity"
+      use_when: "Validation errors on correct format"
+
+    - code: 429
+      meaning: "Too Many Requests"
+      use_when: "Rate limit exceeded"
+
+    - code: 500
+      meaning: "Internal Server Error"
+      use_when: "Unexpected server error"
+
+    - code: 503
+      meaning: "Service Unavailable"
+      use_when: "Service temporarily unavailable"
+
+# =============================================================================
+# SECURITY REQUIREMENTS
+# =============================================================================
+
+security:
+  headers:
+    required:
+      - "X-Content-Type-Options: nosniff"
+      - "X-Frame-Options: DENY"
+      - "X-XSS-Protection: 1; mode=block"
+      - "Strict-Transport-Security: max-age=31536000"
+
+    recommended:
+      - "Content-Security-Policy: default-src 'self'"
+      - "Referrer-Policy: strict-origin-when-cross-origin"
+
+  authentication:
+    jwt:
+      algorithm: "RS256 or ES256 preferred"
+      expiration: "15 minutes for access, 7 days for refresh"
+      refresh_rotation: true
+
+    api_key:
+      storage: "Hashed in database"
+      transmission: "Header only, never URL"
+
+  validation:
+    input:
+      - "Validate all input types"
+      - "Sanitize strings for XSS"
+      - "Parameterize SQL queries"
+      - "Validate file uploads"
+
+    output:
+      - "Never expose internal errors"
+      - "Mask sensitive data in logs"
+      - "Consistent error formats"
+
+# =============================================================================
+# MANDATORY TASKS FOR API PROJECTS
+# =============================================================================
+
+mandatory_tasks:
+  phase_define:
+    - task: "TASK-API-001"
+      name: "Define API Contract"
+      description: "Xác định endpoints, methods, request/response"
+      output: "api-contract.yaml"
+      questions:
+        - "API style (REST/GraphQL)?"
+        - "Authentication method?"
+        - "Data format?"
+
+    - task: "TASK-API-002"
+      name: "Define Data Models"
+      description: "Xác định data models và relationships"
+      output: "data-models.yaml"
+
+  phase_decompose:
+    - task: "TASK-API-003"
+      name: "Endpoint Breakdown"
+      description: "Chi tiết hóa từng endpoint"
+      output: "endpoints/*.yaml"
+      dependencies: ["TASK-API-001"]
+
+    - task: "TASK-API-004"
+      name: "Error Catalog"
+      description: "Định nghĩa tất cả error codes"
+      output: "errors.yaml"
+
+  phase_execute:
+    - task: "TASK-API-005"
+      name: "Implement Models"
+      description: "Tạo data models/schemas"
+      output: "src/models/"
+
+    - task: "TASK-API-006"
+      name: "Implement Endpoints"
+      description: "Implement từng endpoint"
+      output: "src/routes/"
+      dependencies: ["TASK-API-005"]
+
+    - task: "TASK-API-007"
+      name: "Add Validation"
+      description: "Implement request validation"
+      output: "src/middleware/validation.js"
+
+    - task: "TASK-API-008"
+      name: "Add Error Handling"
+      description: "Implement error handling"
+      output: "src/middleware/errors.js"
+
+  phase_validate:
+    - task: "TASK-API-VAL-001"
+      name: "Contract Verification"
+      description: "Verify API matches contract"
+      output: "validation-report.md"
+
+    - task: "TASK-API-VAL-002"
+      name: "Integration Testing"
+      description: "Test tất cả endpoints"
+      output: "test-results.md"
+
+# =============================================================================
+# VALIDATION CHECKLIST
+# =============================================================================
+
+validation:
+  contract_compliance:
+    - check: "All endpoints implemented"
+      method: "Compare with api-contract.yaml"
+
+    - check: "Request formats correct"
+      method: "Send test requests"
+
+    - check: "Response formats correct"
+      method: "Validate against schema"
+
+    - check: "Error codes match spec"
+      method: "Trigger each error"
+
+  security:
+    - check: "Authentication enforced"
+    - check: "Authorization correct"
+    - check: "Input validation working"
+    - check: "Security headers present"
+    - check: "No sensitive data leaked"
+
+  performance:
+    - check: "Response time < threshold"
+    - check: "Handles concurrent requests"
+    - check: "No memory leaks"
+    - check: "Database queries optimized"
+
+  reliability:
+    - check: "Graceful error handling"
+    - check: "Proper logging"
+    - check: "Request tracing works"
+
+# =============================================================================
+# HANDOFF TEMPLATE SECTIONS
+# =============================================================================
+
+handoff_sections:
+  required:
+    - section: "API Overview"
+      content: |
+        ## API Overview
+
+        - **Base URL**: `https://api.example.com/v1`
+        - **Authentication**: JWT Bearer token
+        - **Format**: JSON
+        - **Rate Limit**: 100 req/min
+
+    - section: "Endpoints"
+      content: |
+        ## Endpoints
+
+        | Method | Path | Description |
+        |--------|------|-------------|
+        | GET | /users | List users |
+        | POST | /users | Create user |
+        | ... | ... | ... |
+
+        ### Endpoint Details
+
+        #### POST /users
+        [Full specification]
+
+    - section: "Data Models"
+      content: |
+        ## Data Models
+
+        ### User
+        ```typescript
+        interface User {
+          id: string;
+          email: string;
+          name: string;
+          // ...
+        }
+        ```
+
+    - section: "Error Codes"
+      content: |
+        ## Error Codes
+
+        | Code | HTTP | Description |
+        |------|------|-------------|
+        | INVALID_EMAIL | 400 | ... |
+        | ... | ... | ... |
+
+    - section: "Validation Criteria"
+      content: |
+        ## Validation Criteria
+
+        □ All endpoints return correct status codes
+        □ Request validation rejects invalid data
+        □ Authentication required where specified
+        □ Error responses match format
+        □ Response times < 200ms
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+metadata:
+  created_at: "2026-01-04"
+  created_by: "Deep Thinking Team"
+  version: "2.0"

@@ -1,0 +1,23 @@
+# Knowledge Index for Prompt Evolution Agent
+
+core_files:
+  - "03-safety-protocols.md"     # Always load safety rules
+
+knowledge:
+  - file: "01-mutation-strategies.md"
+    topics: [mutation, evolution, strategy]
+    keywords: [mutate, evolve, rephrase, reorder, constraint, example]
+    priority: 1
+    size: 400
+
+  - file: "02-scoring-rubric.md"
+    topics: [scoring, metrics, evaluation]
+    keywords: [score, metric, calculate, tool_success, quality, efficiency]
+    priority: 1
+    size: 350
+
+  - file: "03-safety-protocols.md"
+    topics: [safety, rollback, recovery]
+    keywords: [rollback, failure, safety, protect, version, elite]
+    priority: 0  # Always loaded
+    size: 300

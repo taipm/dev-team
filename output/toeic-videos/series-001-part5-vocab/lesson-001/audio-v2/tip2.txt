@@ -1,0 +1,5 @@
+file '26_word2_tip_vi.mp3'
+file '26_word2_tip_en1.mp3'
+file '26_word2_tip_vi2.mp3'
+file '26_word2_tip_en2.mp3'
+file '26_word2_tip_vi3.mp3'

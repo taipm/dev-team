@@ -1,0 +1,94 @@
+{
+  "video_id": "vocab-001",
+  "format": "shorts",
+  "resolution": "1080x1920",
+  "slides": [
+    {
+      "id": "slide_01",
+      "type": "title_card",
+      "start_ms": 0,
+      "end_ms": 5000,
+      "content": {
+        "title": "ACCOMPLISH",
+        "subtitle": "Từ vựng TOEIC Part 5",
+        "background": "gradient"
+      },
+      "transition": "fade"
+    },
+    {
+      "id": "slide_02",
+      "type": "word_card",
+      "start_ms": 5000,
+      "end_ms": 12000,
+      "content": {
+        "word": "ACCOMPLISH",
+        "ipa": "/əˈkɑːmplɪʃ/",
+        "definition": "hoàn thành, đạt được",
+        "part_of_speech": "verb"
+      },
+      "transition": "slide_left"
+    },
+    {
+      "id": "slide_03",
+      "type": "example_card",
+      "start_ms": 12000,
+      "end_ms": 25000,
+      "content": {
+        "english": "The team accomplished all their goals ahead of schedule.",
+        "vietnamese": "Nhóm đã hoàn thành tất cả mục tiêu trước thời hạn.",
+        "highlight": "accomplished"
+      },
+      "transition": "slide_left"
+    },
+    {
+      "id": "slide_04",
+      "type": "example_card",
+      "start_ms": 25000,
+      "end_ms": 38000,
+      "content": {
+        "english": "She accomplished the difficult task with ease.",
+        "vietnamese": "Cô ấy hoàn thành nhiệm vụ khó khăn một cách dễ dàng.",
+        "highlight": "accomplished"
+      },
+      "transition": "slide_left"
+    },
+    {
+      "id": "slide_05",
+      "type": "tip_card",
+      "start_ms": 38000,
+      "end_ms": 50000,
+      "content": {
+        "title": "Mẹo nhớ nhanh!",
+        "items": [
+          "accomplish a goal",
+          "accomplish a task",
+          "accomplish a mission"
+        ],
+        "warning": "Không dùng: accomplish to do"
+      },
+      "transition": "zoom"
+    },
+    {
+      "id": "slide_06",
+      "type": "summary_card",
+      "start_ms": 50000,
+      "end_ms": 58000,
+      "content": {
+        "text": "ACCOMPLISH = hoàn thành",
+        "note": "Hay gặp trong Part 5 & Part 7"
+      },
+      "transition": "fade"
+    },
+    {
+      "id": "slide_07",
+      "type": "cta_card",
+      "start_ms": 58000,
+      "end_ms": 60000,
+      "content": {
+        "text": "Follow để học TOEIC mỗi ngày!",
+        "action": "subscribe"
+      },
+      "transition": "fade"
+    }
+  ]
+}

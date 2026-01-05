@@ -1,0 +1,121 @@
+# Daily Agent Kanban Board
+# Tracks tasks specific to daily automation
+
+metadata:
+  agent: daily-agent
+  created_at: "2026-01-02"
+  last_updated: "2026-01-03T10:30:00+07:00"
+  sync_with_main: true
+
+columns:
+  backlog:
+    limit: 20
+    tasks: []
+
+  scheduled:
+    limit: 10
+    tasks: []
+
+  in_progress:
+    limit: 3
+    tasks: []
+
+  review:
+    limit: 5
+    tasks: []
+
+  done:
+    limit: 50
+    tasks:
+      - id: "task-1735869600000"
+        title: "Nghien cuu AI Agents & Multi-agent Systems"
+        type: research
+        priority: high
+        created_at: "2026-01-03T10:00:00+07:00"
+        started_at: "2026-01-03T10:00:00+07:00"
+        completed_at: "2026-01-03T10:30:00+07:00"
+        cycle_time_minutes: 30
+        labels: [research, ai-agents, multi-agent]
+      - id: "task-1735869600001"
+        title: "Tao content tu research findings"
+        type: content
+        priority: medium
+        created_at: "2026-01-03T10:00:00+07:00"
+        started_at: "2026-01-03T10:25:00+07:00"
+        completed_at: "2026-01-03T10:30:00+07:00"
+        cycle_time_minutes: 5
+        labels: [content, blog, social]
+      - id: "task-1735869600002"
+        title: "Dang bai tong hop research len Facebook"
+        type: post
+        priority: medium
+        created_at: "2026-01-03T10:00:00+07:00"
+        started_at: "2026-01-03T10:30:00+07:00"
+        completed_at: "2026-01-03T10:30:00+07:00"
+        cycle_time_minutes: 1
+        labels: [facebook, social, draft]
+        action: draft_saved
+      - id: "task-1735836075000"
+        title: "Nghien cuu bai viet phu hop voi deep-research agent"
+        type: research
+        priority: high
+        created_at: "2026-01-02T15:21:15+07:00"
+        started_at: "2026-01-02T22:21:00+07:00"
+        completed_at: "2026-01-02T22:25:00+07:00"
+        cycle_time_minutes: 4
+        labels: [research, ai-agents]
+
+  blocked:
+    tasks: []
+
+wip_rules:
+  in_progress:
+    max: 3
+    per_type:
+      research: 1
+      post: 1
+      content: 1
+    enforce: true
+
+auto_transitions:
+  on_task_start:
+    from: [backlog, scheduled]
+    to: in_progress
+    set:
+      started_at: "{now}"
+      agent: "daily-agent"
+
+  on_task_complete:
+    from: in_progress
+    to: done
+    set:
+      completed_at: "{now}"
+      cycle_time: "{calculated}"
+
+  on_task_block:
+    from: "*"
+    to: blocked
+    require: blocked_reason
+
+  on_schedule_due:
+    from: scheduled
+    to: backlog
+    condition: "scheduled_for <= now"
+
+stats:
+  total_created: 4
+  total_completed: 4
+  total_failed: 0
+  avg_cycle_time_minutes: 10
+  today:
+    completed: 3
+    failed: 0
+    pending: 0
+  this_week:
+    completed: 4
+    throughput_per_day: 2
+
+archive_policy:
+  trigger: "done.count > 50"
+  action: "move_oldest_to_archive"
+  archive_path: "./archive/{YYYY-MM-DD}-board.yaml"

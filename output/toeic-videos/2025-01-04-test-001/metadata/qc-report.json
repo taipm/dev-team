@@ -1,0 +1,73 @@
+{
+  "video_id": "vocab-001",
+  "title": "TOEIC Vocabulary: ACCOMPLISH - Từ Hay Gặp Part 5",
+  "review_timestamp": "2025-01-04T08:28:00Z",
+  "status": "APPROVED_WITH_NOTES",
+
+  "scores": {
+    "overall": 7.5,
+    "technical": {
+      "score": 7.0,
+      "video_playback": 10,
+      "audio_quality": 9,
+      "visual_quality": 2,
+      "notes": "Video chỉ có solid background, cần thêm slides"
+    },
+    "content": {
+      "score": 9.0,
+      "toeic_accuracy": 15,
+      "educational_value": 9,
+      "engagement": 8,
+      "brand_consistency": 4,
+      "notes": "Nội dung TOEIC chính xác, script tốt"
+    },
+    "seo": {
+      "score": 8.0,
+      "title_optimization": 8,
+      "description_quality": 8,
+      "tag_relevance": 8,
+      "notes": "SEO metadata đã được chuẩn bị"
+    }
+  },
+
+  "checklist": {
+    "technical": {
+      "video_plays": true,
+      "audio_clear": true,
+      "visuals_readable": false,
+      "duration_correct": true,
+      "notes": "Cần slides để hoàn thiện video"
+    },
+    "content": {
+      "toeic_accurate": true,
+      "no_errors": true,
+      "language_appropriate": true
+    },
+    "brand": {
+      "visual_identity": false,
+      "watermark_present": false,
+      "cta_included": true,
+      "notes": "Cần thêm visual elements"
+    }
+  },
+
+  "issues": [
+    "Missing slide images - video only has solid background",
+    "No watermark/logo visible",
+    "Thumbnail not generated"
+  ],
+
+  "notes": "Audio production excellent. Script well-structured. TOEIC content accurate. Missing visual elements due to image generation limitation.",
+
+  "recommendations": [
+    "Generate actual slide images using design tools",
+    "Add watermark in bottom-right",
+    "Create thumbnail variants for A/B testing"
+  ],
+
+  "decision": {
+    "status": "APPROVED_WITH_NOTES",
+    "reason": "Audio and script production validated successfully. Visual layer needs completion.",
+    "action": "Can proceed with visual generation separately"
+  }
+}

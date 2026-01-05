@@ -1,0 +1,59 @@
+# Knowledge Index for Language Tagger Agent
+# Version: 1.0.0
+
+files:
+  - id: "01-classification-rules"
+    path: "01-classification-rules.md"
+    description: "Language classification rules với priority order"
+    keywords:
+      - classification
+      - rules
+      - priority
+      - IPA
+      - diacritics
+      - collocation
+      - sentence
+      - default
+    use_when:
+      - "Cần biết thứ tự ưu tiên của rules"
+      - "Xử lý edge cases"
+      - "Implement classification logic"
+
+  - id: "02-english-vocabulary"
+    path: "02-english-vocabulary.txt"
+    description: "Danh sách từ vựng tiếng Anh cho TOEIC"
+    keywords:
+      - vocabulary
+      - words
+      - english
+      - TOEIC
+      - business
+      - finance
+      - marketing
+    use_when:
+      - "Check từ có phải English word không"
+      - "Expand vocabulary list"
+      - "Lesson-specific vocabulary"
+
+  - id: "03-vietnamese-patterns"
+    path: "03-vietnamese-patterns.md"
+    description: "Vietnamese diacritics và instruction patterns"
+    keywords:
+      - vietnamese
+      - diacritics
+      - patterns
+      - phrases
+      - instruction
+      - detection
+    use_when:
+      - "Detect Vietnamese text"
+      - "Identify instruction phrases"
+      - "Split boundaries"
+
+auto_load:
+  - "01-classification-rules"
+
+search_priority:
+  - "01-classification-rules"
+  - "03-vietnamese-patterns"
+  - "02-english-vocabulary"

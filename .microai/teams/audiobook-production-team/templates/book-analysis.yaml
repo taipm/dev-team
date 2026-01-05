@@ -1,0 +1,50 @@
+# Book Analysis Template
+# Output from Book Structure Agent
+
+---
+
+# Basic Information
+book_title: ""
+author: ""
+source_file: ""
+source_type: pdf|epub|docx|txt|url
+
+# Content Statistics
+total_words: 0
+estimated_duration: "0:00:00"
+total_chapters: 0
+
+# Genre Classification
+genre: business|fiction|self_help|technical|biography|history
+genre_confidence: 0.0  # 0.0 - 1.0
+genre_indicators:
+  dialogue_ratio: 0.0
+  statistics_density: low|medium|high
+  framework_mentions: 0
+  case_studies: 0
+  character_mentions: 0
+
+# Structure Analysis
+structure_type: standard_chapters|numbered_sections|unmarked
+has_front_matter: false
+has_back_matter: false
+chapter_pattern_used: ""
+
+# Chapters
+chapters:
+  - number: 0
+    title: ""
+    type: front_matter|chapter|back_matter
+    file: ""
+    start_line: 0
+    word_count: 0
+    estimated_duration: "0:00"
+
+# Recommendations
+narrator_recommendation: single|multi_voice
+pacing_recommendation: slow|moderate|fast
+special_notes: []
+
+# Analysis Metadata
+analysis_date: ""
+analysis_version: "1.0"

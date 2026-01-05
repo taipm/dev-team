@@ -1,0 +1,167 @@
+# Audiobook Production Team - Knowledge Index
+# Version: 1.0
+# Last Updated: 2026-01-04
+
+metadata:
+  team: audiobook-production-team
+  version: "1.0"
+  description: |
+    Knowledge base cho Audiobook Production Team.
+    Bao gồm kiến thức chung và kiến thức chuyên biệt cho từng agent.
+
+# ============================================================
+# SHARED KNOWLEDGE - Accessible to all agents
+# ============================================================
+shared:
+  audiobook_fundamentals:
+    file: shared/audiobook-fundamentals.md
+    description: "Cơ bản về audiobook: cấu trúc, standards, best practices"
+    priority: high
+    load_on: session_start
+
+  tts_best_practices:
+    file: shared/tts-best-practices.md
+    description: "Best practices cho text-to-speech conversion"
+    priority: high
+    load_on: session_start
+
+  audio_standards:
+    file: shared/audio-standards.md
+    description: "Tiêu chuẩn audio: LUFS, sample rate, formats"
+    priority: high
+    load_on: session_start
+
+# ============================================================
+# ROLE-SPECIFIC KNOWLEDGE
+# ============================================================
+by_role:
+  # Content Ingestion Agent
+  content-ingestion:
+    - file: ingestion/file-formats.md
+      description: "Xử lý PDF, EPUB, DOCX, Web content"
+      priority: high
+
+    - file: ingestion/text-cleaning.md
+      description: "Làm sạch text, OCR artifacts, encoding"
+      priority: medium
+
+  # Book Structure Agent
+  book-structure:
+    - file: structure/chapter-patterns.md
+      description: "Patterns nhận dạng chapters, sections"
+      priority: high
+
+    - file: structure/genre-structures.md
+      description: "Cấu trúc đặc trưng theo thể loại"
+      priority: medium
+
+  # Script Adapter Agent
+  script-adapter:
+    - file: script/speech-adaptation.md
+      description: "Chuyển đổi text sang speech-friendly"
+      priority: high
+
+    - file: script/prosody-planning.md
+      description: "Lập kế hoạch prosody: pauses, emphasis"
+      priority: medium
+
+  # Character Voice Agent
+  character-voice:
+    - file: character/dialogue-patterns.md
+      description: "Nhận dạng dialogue và attribution"
+      priority: high
+
+    - file: character/voice-personalities.md
+      description: "Mapping character traits to voices"
+      priority: medium
+
+  # Audio Producer Agent
+  audio-producer:
+    - file: audio/edge-tts-voices.md
+      description: "Catalog voices và cách sử dụng"
+      priority: high
+
+    - file: audio/voice-mapping.md
+      description: "Mapping language/character to voice"
+      priority: high
+
+  # Audio Engineer Agent
+  audio-engineer:
+    - file: audio/mastering-standards.md
+      description: "Tiêu chuẩn mastering audiobook"
+      priority: high
+
+    - file: audio/ffmpeg-commands.md
+      description: "FFmpeg commands reference"
+      priority: medium
+
+  # Quality Reviewer Agent
+  quality-reviewer:
+    - file: quality/qc-checklist.md
+      description: "Checklist QC đầy đủ"
+      priority: high
+
+    - file: quality/acx-requirements.md
+      description: "Yêu cầu Amazon ACX/Audible"
+      priority: medium
+
+  # Cover Designer Agent
+  cover-designer:
+    - file: cover/cover-design-principles.md
+      description: "Nguyên tắc thiết kế cover audiobook"
+      priority: high
+
+    - file: cover/platform-requirements.md
+      description: "Yêu cầu cover từng platform"
+      priority: medium
+
+  # Metadata Agent
+  metadata-agent:
+    - file: metadata/audiobook-metadata.md
+      description: "Schema metadata audiobook"
+      priority: high
+
+    - file: metadata/m4b-chapters.md
+      description: "Tạo chapter markers cho M4B"
+      priority: medium
+
+# ============================================================
+# LOADING RULES
+# ============================================================
+loading_rules:
+  on_session_start:
+    - shared/audiobook-fundamentals.md
+    - shared/audio-standards.md
+
+  on_agent_activate:
+    strategy: "load_shared_then_specific"
+    shared_first: true
+    specific_on_demand: true
+
+  keyword_triggers:
+    fiction:
+      - character/dialogue-patterns.md
+      - character/voice-personalities.md
+    audible:
+      - quality/acx-requirements.md
+    podcast:
+      - metadata/podcast-format.md
+
+# ============================================================
+# KNOWLEDGE DEPENDENCIES
+# ============================================================
+dependencies:
+  audio-producer:
+    requires:
+      - shared/tts-best-practices.md
+      - audio/edge-tts-voices.md
+
+  audio-engineer:
+    requires:
+      - shared/audio-standards.md
+      - audio/mastering-standards.md
+
+  quality-reviewer:
+    requires:
+      - shared/audio-standards.md
+      - quality/qc-checklist.md

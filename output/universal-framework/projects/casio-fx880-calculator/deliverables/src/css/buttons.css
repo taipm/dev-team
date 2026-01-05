@@ -1,0 +1,165 @@
+/* Keypad Button Styles */
+
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: var(--row-gap);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--btn-gap);
+}
+
+/* Base Button Styles */
+.btn {
+  flex: 1;
+  height: var(--btn-height);
+  border-radius: var(--border-radius-md);
+  border: 1px solid transparent;
+  font-family: var(--font-buttons);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus {
+  outline: 2px solid var(--btn-equal-bg);
+  outline-offset: 2px;
+}
+
+.btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Scientific Row - Smaller buttons */
+.scientific-row .btn {
+  height: var(--btn-height-small);
+  font-size: var(--font-size-button-small);
+}
+
+/* Function Row */
+.function-row .btn {
+  height: var(--btn-height-small);
+  font-size: var(--font-size-button-small);
+}
+
+/* Number Buttons */
+.btn-number {
+  background: var(--btn-number-bg);
+  color: var(--btn-number-text);
+  border-color: var(--btn-number-border);
+  box-shadow: var(--btn-number-shadow);
+}
+
+.btn-number:hover {
+  background: var(--btn-number-hover);
+  transform: translateY(-1px);
+}
+
+.btn-number:active,
+.btn-number.active {
+  background: var(--btn-number-active);
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Operator Buttons */
+.btn-operator {
+  background: var(--btn-operator-bg);
+  color: var(--btn-operator-text);
+  border-color: var(--btn-operator-border);
+  box-shadow: var(--btn-operator-shadow);
+}
+
+.btn-operator:hover {
+  background: var(--btn-operator-hover);
+  transform: translateY(-1px);
+}
+
+.btn-operator:active,
+.btn-operator.active {
+  background: var(--btn-operator-active);
+  transform: translateY(0);
+}
+
+/* Function Buttons */
+.btn-function {
+  background: var(--btn-function-bg);
+  color: var(--btn-function-text);
+  border-color: var(--btn-function-border);
+  box-shadow: var(--btn-function-shadow);
+}
+
+.btn-function:hover {
+  background: var(--btn-function-hover);
+  transform: translateY(-1px);
+}
+
+.btn-function:active,
+.btn-function.active {
+  background: var(--btn-function-active);
+  transform: translateY(0);
+}
+
+/* Equal Button */
+.btn-equal {
+  background: var(--btn-equal-bg);
+  color: var(--btn-equal-text);
+  border-color: var(--btn-equal-border);
+  box-shadow: var(--btn-equal-shadow);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-equal:hover {
+  background: var(--btn-equal-hover);
+  transform: translateY(-1px);
+}
+
+.btn-equal:active,
+.btn-equal.active {
+  background: var(--btn-equal-active);
+  transform: translateY(0);
+}
+
+/* Clear Buttons (AC, ON) */
+.btn-clear {
+  background: var(--btn-clear-bg);
+  color: var(--btn-clear-text);
+  border-color: var(--btn-clear-border);
+  box-shadow: var(--btn-clear-shadow);
+}
+
+.btn-clear:hover {
+  background: var(--btn-clear-hover);
+  transform: translateY(-1px);
+}
+
+.btn-clear:active,
+.btn-clear.active {
+  background: var(--btn-clear-active);
+  transform: translateY(0);
+}
+
+/* Delete Button */
+.btn-delete {
+  background: var(--btn-delete-bg);
+  color: var(--btn-delete-text);
+  border-color: var(--btn-delete-border);
+}
+
+.btn-delete:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-delete:active,
+.btn-delete.active {
+  filter: brightness(0.9);
+  transform: translateY(0);
+}

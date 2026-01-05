@@ -1,0 +1,295 @@
+# TOEIC Content Team - Quality Control Standards v1.0
+# Reference: lesson-001-v5.mp4 (benchmark video)
+
+version: "1.0"
+created: "2025-01-04"
+reference_video: "output/toeic-videos/series-001-part5-vocab/lesson-001/lesson-001-v5.mp4"
+
+# =========================================
+# VIDEO SPECIFICATIONS (MANDATORY)
+# =========================================
+video_specs:
+  # Standard Format (16:9) - Full lessons
+  standard:
+    resolution:
+      width: 1920
+      height: 1080
+    aspect_ratio: "16:9"
+    codec: h264
+    fps: 30
+    bitrate_min: 100000  # 100kbps min
+    bitrate_max: 500000  # 500kbps max
+    duration:
+      min: 120   # 2 minutes
+      max: 600   # 10 minutes
+    file_size_max: 50MB
+
+  # Shorts Format (9:16) - YouTube Shorts
+  shorts:
+    resolution:
+      width: 1080
+      height: 1920
+    aspect_ratio: "9:16"
+    codec: h264
+    fps: 30
+    bitrate_min: 80000
+    bitrate_max: 300000
+    duration:
+      min: 15    # 15 seconds
+      max: 60    # 60 seconds
+    file_size_max: 10MB
+
+# =========================================
+# AUDIO SPECIFICATIONS (MANDATORY)
+# =========================================
+audio_specs:
+  codec: aac
+  sample_rate: 24000  # or 44100
+  bitrate: 128000     # 128kbps
+  channels: 1         # mono for voice
+
+  voice_mapping:
+    english:
+      voice: "en-US-JennyNeural"
+      provider: "edge-tts"
+      use_for:
+        - english_words
+        - ipa_pronunciation
+        - english_sentences
+        - collocations
+        - linguistic_terms  # "Collocations:", "Tip:"
+
+    vietnamese:
+      voice: "vi-VN-HoaiMyNeural"
+      provider: "edge-tts"
+      use_for:
+        - vietnamese_explanations
+        - vietnamese_translations
+        - instructions
+        - cta
+
+# =========================================
+# CONTENT QUALITY CHECKLIST
+# =========================================
+quality_checklist:
+  audio:
+    - id: A1
+      name: "Voice Mapping Correct"
+      description: "EN words use Jenny, VI text uses HoaiMy"
+      severity: critical
+
+    - id: A2
+      name: "No Audio Glitches"
+      description: "No clicks, pops, or cut-offs"
+      severity: high
+
+    - id: A3
+      name: "Consistent Volume"
+      description: "No sudden volume changes"
+      severity: medium
+
+    - id: A4
+      name: "Clear Pronunciation"
+      description: "IPA and words pronounced clearly"
+      severity: high
+
+  visual:
+    - id: V1
+      name: "Text Readable"
+      description: "Font size min 40pt, high contrast"
+      severity: critical
+
+    - id: V2
+      name: "Correct Vietnamese Diacritics"
+      description: "Unicode UTF-8, no broken characters"
+      severity: critical
+
+    - id: V3
+      name: "Subtitle Timing Sync"
+      description: "Subtitles match audio timing"
+      severity: high
+
+    - id: V4
+      name: "Brand Consistency"
+      description: "Colors match brand guidelines"
+      severity: medium
+
+  content:
+    - id: C1
+      name: "Accurate Information"
+      description: "Correct IPA, meanings, examples"
+      severity: critical
+
+    - id: C2
+      name: "Engaging Hook"
+      description: "First 3 seconds grab attention"
+      severity: high
+
+    - id: C3
+      name: "Clear Structure"
+      description: "Word → IPA → Meaning → Example → Tip"
+      severity: high
+
+    - id: C4
+      name: "CTA Present"
+      description: "Subscribe/Follow call-to-action at end"
+      severity: medium
+
+    - id: C5
+      name: "Quiz Questions Valid"
+      description: "Questions and answers correct"
+      severity: high
+
+  technical:
+    - id: T1
+      name: "Resolution Correct"
+      description: "Match target format specs"
+      severity: critical
+
+    - id: T2
+      name: "File Size Acceptable"
+      description: "Within size limits"
+      severity: medium
+
+    - id: T3
+      name: "Playback Smooth"
+      description: "No stuttering or frame drops"
+      severity: high
+
+# =========================================
+# SCORING RUBRIC
+# =========================================
+scoring:
+  pass_threshold: 80
+
+  weights:
+    critical: 25  # Each critical = 25 points if failed
+    high: 15      # Each high = 15 points if failed
+    medium: 10    # Each medium = 10 points if failed
+
+  formula: |
+    score = 100 - (critical_failures * 25) - (high_failures * 15) - (medium_failures * 10)
+
+  grades:
+    - range: [90, 100]
+      grade: "A"
+      action: "Publish immediately"
+
+    - range: [80, 89]
+      grade: "B"
+      action: "Publish with minor notes"
+
+    - range: [60, 79]
+      grade: "C"
+      action: "Review and fix issues"
+
+    - range: [0, 59]
+      grade: "F"
+      action: "Quarantine - major rework needed"
+
+# =========================================
+# LANGUAGE TAGGING RULES
+# =========================================
+language_tagging:
+  rules:
+    - pattern: "IPA notation /.../"
+      lang: "en"
+      priority: 1
+
+    - pattern: "Contains Vietnamese diacritics"
+      lang: "vi"
+      priority: 2
+
+    - pattern: "In English vocabulary list"
+      lang: "en"
+      priority: 3
+
+    - pattern: "Linguistic terms (Collocation, Tip, Grammar)"
+      lang: "en"
+      priority: 4
+
+    - pattern: "Full English sentence"
+      lang: "en"
+      priority: 5
+
+    - pattern: "Default"
+      lang: "vi"
+      priority: 99
+
+  mixed_content:
+    strategy: "token-level"
+    example: |
+      "Từ accomplish nghĩa là hoàn thành"
+      → ["Từ", vi] + ["accomplish", en] + ["nghĩa là hoàn thành", vi]
+
+# =========================================
+# OUTPUT STRUCTURE
+# =========================================
+output_structure:
+  required_files:
+    - name: "video.mp4"
+      description: "Main video file"
+
+    - name: "thumbnail.png"
+      description: "1280x720 for standard, 1080x1920 for shorts"
+
+    - name: "metadata.json"
+      description: "Title, description, tags, chapters"
+
+    - name: "script.yaml"
+      description: "Full script with timestamps"
+
+  optional_files:
+    - name: "subtitles.ass"
+      description: "ASS format subtitles"
+
+    - name: "tagged-segments.yaml"
+      description: "Language-tagged script"
+
+    - name: "voiceover.mp3"
+      description: "Audio-only file"
+
+# =========================================
+# QC AUTOMATION
+# =========================================
+automation:
+  pre_export_checks:
+    - check: "ffprobe video specs"
+      command: "ffprobe -v quiet -show_format -show_streams {video}"
+
+    - check: "file size"
+      command: "ls -la {video}"
+
+    - check: "audio duration match"
+      command: "ffprobe -v quiet -show_entries format=duration"
+
+  post_export_validation:
+    - validate: "playback test"
+      method: "ffplay first 10 seconds"
+
+    - validate: "subtitle render"
+      method: "check ASS file exists and non-empty"
+
+    - validate: "metadata complete"
+      method: "check metadata.json has title, description, tags"
+
+# =========================================
+# REFERENCE BENCHMARKS
+# =========================================
+benchmarks:
+  lesson_001_v5:
+    path: "output/toeic-videos/series-001-part5-vocab/lesson-001/lesson-001-v5.mp4"
+    specs:
+      resolution: "1080x1920"
+      duration: "208.656s"
+      bitrate: "113942 bps"
+      file_size: "2.9 MB"
+      codec_video: "h264"
+      codec_audio: "aac"
+      sample_rate: "24000"
+    quality_score: "A"
+    notes:
+      - "Correct EN/VI voice mapping"
+      - "Vietnamese diacritics display correctly"
+      - "Smooth transitions"
+      - "Clear audio"

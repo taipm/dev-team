@@ -1,0 +1,241 @@
+# TOEIC Content Team - Knowledge Index
+# Version: 1.0
+
+knowledge_base:
+  name: toeic-content-team-knowledge
+  version: "1.0"
+  description: Knowledge base cho AI-powered TOEIC video production team
+
+# ═══════════════════════════════════════════════════════════════════════
+# SHARED KNOWLEDGE (All agents)
+# ═══════════════════════════════════════════════════════════════════════
+
+shared:
+  - file: shared/toeic-fundamentals.md
+    description: TOEIC exam structure, scoring, content types
+    agents: all
+    priority: high
+    keywords:
+      - toeic
+      - exam
+      - listening
+      - reading
+      - vocabulary
+      - grammar
+
+  - file: shared/youtube-best-practices.md
+    description: YouTube SEO, algorithm, monetization
+    agents: all
+    priority: high
+    keywords:
+      - youtube
+      - seo
+      - algorithm
+      - monetization
+      - shorts
+      - engagement
+
+  - file: shared/ai-tools-integration.md
+    description: Integration guides for Claude, Ollama, Edge-TTS, FFmpeg
+    agents: all
+    priority: medium
+    keywords:
+      - claude
+      - ollama
+      - edge-tts
+      - ffmpeg
+      - api
+      - integration
+
+# ═══════════════════════════════════════════════════════════════════════
+# AGENT-SPECIFIC KNOWLEDGE
+# ═══════════════════════════════════════════════════════════════════════
+
+content-planner:
+  - file: content-planner/seo-keywords.md
+    description: Keyword research strategies and TOEIC keyword database
+    priority: high
+    keywords:
+      - keywords
+      - seo
+      - research
+      - trends
+
+  - file: content-planner/content-calendar.md
+    description: Content planning and scheduling strategies
+    priority: medium
+    keywords:
+      - calendar
+      - planning
+      - schedule
+      - distribution
+
+script-writer:
+  - file: script-writer/script-formats.md
+    description: Script templates for Shorts and Standard videos
+    priority: high
+    keywords:
+      - script
+      - format
+      - template
+      - structure
+
+  - file: script-writer/toeic-vocabulary.md
+    description: Official TOEIC vocabulary corpus
+    priority: high
+    keywords:
+      - vocabulary
+      - words
+      - corpus
+      - official
+
+audio-producer:
+  - file: audio-producer/edge-tts-voices.md
+    description: Edge-TTS voice configuration and options
+    priority: high
+    keywords:
+      - edge-tts
+      - voice
+      - vietnamese
+      - english
+
+  - file: audio-producer/audio-processing.md
+    description: Audio processing guidelines and FFmpeg commands
+    priority: medium
+    keywords:
+      - audio
+      - processing
+      - normalize
+      - ffmpeg
+
+visual-designer:
+  - file: visual-designer/slide-templates.md
+    description: Slide design templates and specifications
+    priority: high
+    keywords:
+      - slides
+      - templates
+      - design
+      - layout
+
+  - file: visual-designer/brand-guidelines.md
+    description: Brand colors, fonts, and visual identity
+    priority: high
+    keywords:
+      - brand
+      - colors
+      - fonts
+      - identity
+
+video-assembler:
+  - file: video-assembler/ffmpeg-commands.md
+    description: FFmpeg command reference for video assembly
+    priority: high
+    keywords:
+      - ffmpeg
+      - commands
+      - encoding
+      - assembly
+
+  - file: video-assembler/video-formats.md
+    description: Platform-specific video format requirements
+    priority: medium
+    keywords:
+      - formats
+      - resolution
+      - codec
+      - platform
+
+ux-designer:
+  - file: ux-designer/learning-ux-principles.md
+    description: Cognitive load, chunking, dual coding, learning science principles
+    priority: high
+    keywords:
+      - ux
+      - learning
+      - cognitive
+      - chunking
+      - retention
+
+  - file: ux-designer/video-engagement-patterns.md
+    description: YouTube algorithm, retention curves, thumbnails, hooks, CTAs
+    priority: high
+    keywords:
+      - engagement
+      - retention
+      - thumbnail
+      - hook
+      - cta
+      - algorithm
+
+  - file: ux-designer/accessibility-guidelines.md
+    description: Visual, audio, cognitive accessibility for inclusive design
+    priority: high
+    keywords:
+      - accessibility
+      - contrast
+      - captions
+      - wcag
+      - inclusive
+
+quality-reviewer:
+  - file: quality-reviewer/qc-checklist.md
+    description: Quality control checklist and scoring rubric
+    priority: high
+    keywords:
+      - quality
+      - checklist
+      - scoring
+      - validation
+
+  - file: quality-reviewer/seo-guidelines.md
+    description: SEO optimization guidelines for metadata
+    priority: high
+    keywords:
+      - seo
+      - metadata
+      - title
+      - tags
+
+# ═══════════════════════════════════════════════════════════════════════
+# SEARCH CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════
+
+search:
+  method: keyword_match
+  fallback: semantic
+  max_results: 5
+
+# ═══════════════════════════════════════════════════════════════════════
+# LOADING RULES
+# ═══════════════════════════════════════════════════════════════════════
+
+loading:
+  on_session_start:
+    - shared/toeic-fundamentals.md
+    - shared/youtube-best-practices.md
+
+  on_agent_activate:
+    ux-designer:
+      - shared/*
+      - ux-designer/*
+    content-planner:
+      - shared/*
+      - content-planner/*
+    script-writer:
+      - shared/toeic-fundamentals.md
+      - script-writer/*
+    audio-producer:
+      - shared/ai-tools-integration.md
+      - audio-producer/*
+    visual-designer:
+      - shared/youtube-best-practices.md
+      - visual-designer/*
+      - ux-designer/accessibility-guidelines.md
+    video-assembler:
+      - shared/ai-tools-integration.md
+      - video-assembler/*
+    quality-reviewer:
+      - shared/*
+      - quality-reviewer/*
+      - ux-designer/accessibility-guidelines.md

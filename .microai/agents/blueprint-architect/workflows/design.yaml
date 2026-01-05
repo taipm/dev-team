@@ -1,0 +1,106 @@
+# Full Design Workflow
+# Blueprint Architect - Standard design flow
+
+name: design
+description: Full blueprint design workflow with preview
+
+triggers:
+  - "design"
+  - "thiết kế"
+  - "create blueprint"
+  - "tạo blueprint"
+
+phases:
+  - name: understand
+    description: Extract intent and identify domain
+    steps:
+      - action: analyze_request
+        extract:
+          - entities
+          - domain
+          - relationships
+          - complexity
+      - action: check_complexity
+        rules:
+          simple: "< 3 functions, single domain"
+          medium: "3-8 functions, 1-2 domains"
+          complex: "> 8 functions, multiple domains"
+      - action: ask_if_unclear
+        condition: "ambiguity detected"
+
+  - name: preview
+    description: Show function outline for approval
+    steps:
+      - action: generate_outline
+        format: |
+          ╔═══════════════════════════════════════════════════════════════════════════════╗
+          ║  📋 PREVIEW: {project_name}                                                    ║
+          ╠═══════════════════════════════════════════════════════════════════════════════╣
+          ║  Functions identified ({count}):                                               ║
+          ║  {function_tree}                                                               ║
+          ║  Complexity: {complexity}                                                      ║
+          ║  Estimated sections: {sections}                                                ║
+          ╠═══════════════════════════════════════════════════════════════════════════════╣
+          ║  Does this look right? [Enter] to continue, or describe changes.              ║
+          ╚═══════════════════════════════════════════════════════════════════════════════╝
+      - action: wait_for_approval
+        on_change: "refine_and_re-preview"
+        on_approve: "proceed_to_blueprint"
+
+  - name: blueprint
+    description: Generate full specifications
+    steps:
+      - action: generate_specs
+        sections:
+          core:
+            - function_specifications
+            - dependency_graph
+            - abstraction_warnings
+            - open_questions
+          optional:
+            - performance_contracts
+            - concurrency_contracts
+            - pseudocode
+            - handoff_notes
+        optional_trigger:
+          - complexity == "complex"
+          - user_requested
+          - domain in ["payment", "auth"]
+      - action: format_output
+        template: blueprint_template.md
+
+  - name: handoff
+    description: Package for coding agent
+    steps:
+      - action: identify_target
+        default: "go-dev-agent"
+        ask_if_unclear: true
+      - action: add_framework_mappings
+        based_on: target_language
+      - action: list_open_questions
+      - action: save_blueprint
+        path: "output/blueprints/{project}-{type}-{date}.md"
+      - action: confirm_saved
+        display: "📄 Blueprint saved: {filepath}"
+
+  - name: track
+    description: Log quality metrics
+    steps:
+      - action: calculate_completeness
+        components:
+          - signatures
+          - preconditions
+          - postconditions
+          - invariants
+          - dependencies
+          - warnings
+          - questions
+      - action: log_metrics
+        path: "memory/metrics.md"
+      - action: update_context
+        path: "memory/context.md"
+
+output:
+  success: "Blueprint complete! Saved to {filepath}"
+  sections_used: "{core_count} core + {optional_count} optional"
+  next_step: "Hand off to {target_agent} for implementation"

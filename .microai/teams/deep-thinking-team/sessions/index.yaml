@@ -1,0 +1,46 @@
+# Deep Thinking Team - Sessions Index
+# Updated: 2026-01-04
+
+sessions:
+  - id: "DTT-2026-01-04-K8S-001"
+    date: "2026-01-04"
+    topic: "Startup 5 người có nên dùng Kubernetes không?"
+    problem_type: "Strategic/Technical Decision"
+    mode: "Standard"
+    agents: 9
+    phases: 5
+    duration: "~15 minutes"
+    confidence: "HIGH"
+    outcome: "NO Kubernetes - Use simple platforms"
+    path: "archive/2026-01-04-kubernetes-startup/"
+    files:
+      - "session-transcript.md"
+      - "solution-blueprint.md"
+      - "insights.md"
+      - "summary.md"
+    tags:
+      - "kubernetes"
+      - "startup"
+      - "infrastructure"
+      - "decision"
+      - "architecture"
+    key_insight: "K8s solves scaling. Startups need shipping. Wrong tool for stage."
+
+# Statistics
+stats:
+  total_sessions: 1
+  total_insights: 8
+  total_decisions: 3
+  total_action_items: 7
+
+# Quick Access
+recent:
+  - "DTT-2026-01-04-K8S-001"
+
+by_topic:
+  infrastructure:
+    - "DTT-2026-01-04-K8S-001"
+
+by_confidence:
+  high:
+    - "DTT-2026-01-04-K8S-001"

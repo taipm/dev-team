@@ -1,0 +1,30 @@
+/* Calculator Body Styles */
+
+.calculator {
+  width: var(--calc-width);
+  padding: var(--calc-padding);
+  background: var(--body-bg);
+  border: 2px solid var(--body-border);
+  border-radius: var(--body-radius);
+  box-shadow: var(--body-shadow);
+}
+
+.calc-header {
+  text-align: left;
+  margin-bottom: var(--spacing-md);
+  padding: 0 4px;
+}
+
+.calc-header .brand {
+  font-family: var(--font-brand);
+  font-size: var(--font-size-brand);
+  font-weight: bold;
+  color: var(--header-brand);
+  letter-spacing: 2px;
+}
+
+.calc-header .model {
+  font-size: var(--font-size-model);
+  color: var(--header-model);
+  margin-left: 8px;
+}

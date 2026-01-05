@@ -1,0 +1,229 @@
+# Learn Pattern Workflow
+# Continuous learning system for routing improvement
+
+name: learn-pattern
+description: Process interaction data and update routing patterns
+version: 1.0
+
+# Trigger conditions
+triggers:
+  - type: scheduled
+    cron: "0 23 * * *"  # 11:00 PM daily
+    description: Daily batch learning
+
+  - type: event
+    event: routing_correction
+    description: Immediate learning on user correction
+
+  - type: threshold
+    metric: routing_failures
+    value: 3
+    window: 1h
+    description: Learning when failures spike
+
+# Input parameters
+inputs:
+  mode:
+    type: enum
+    values: [immediate, batch, threshold]
+    required: true
+
+  event_data:
+    type: object
+    required: false
+    description: Specific event data for immediate learning
+
+# Main workflow steps
+steps:
+  # Step 1: Collect Data
+  - id: collect_data
+    name: Collect Interaction Data
+    actions:
+      - action: read_file
+        path: memory/learning.md
+        output: current_learning
+
+      - action: read_file
+        path: memory/context.md
+        output: session_data
+
+      - action: aggregate_events
+        sources:
+          - memory/learning.md
+          - ../../memory/context.md
+          - ../../memory/insights.md
+        window: "{mode == 'batch' ? '24h' : '1h'}"
+        output: interaction_events
+
+  # Step 2: Analyze Patterns
+  - id: analyze_patterns
+    name: Analyze Routing Patterns
+    depends_on: [collect_data]
+    actions:
+      # Group events by pattern
+      - action: group_by_pattern
+        events: "{interaction_events}"
+        grouping_keys: [intent, route, outcome]
+        output: pattern_groups
+
+      # Calculate success rates
+      - action: calculate_metrics
+        groups: "{pattern_groups}"
+        metrics:
+          - success_rate
+          - confidence_accuracy
+          - user_corrections
+        output: pattern_metrics
+
+      # Identify significant patterns
+      - action: filter_significant
+        patterns: "{pattern_metrics}"
+        criteria:
+          min_occurrences: 3
+          min_confidence_delta: 5
+        output: significant_patterns
+
+  # Step 3: Detect Changes
+  - id: detect_changes
+    name: Detect Pattern Changes
+    depends_on: [analyze_patterns]
+    actions:
+      # Compare with existing patterns
+      - action: compare_patterns
+        new: "{significant_patterns}"
+        existing: "{current_learning.confirmed_patterns}"
+        output: pattern_changes
+
+      # Categorize changes
+      - action: categorize_changes
+        changes: "{pattern_changes}"
+        categories:
+          - new_patterns      # First time seen
+          - strengthened      # Confidence increased
+          - weakened         # Confidence decreased
+          - invalidated      # Should be removed
+        output: categorized_changes
+
+  # Step 4: Validate Changes
+  - id: validate_changes
+    name: Validate Pattern Changes
+    depends_on: [detect_changes]
+    conditions:
+      - if: "{mode} == 'immediate'"
+        # Immediate learning: auto-apply corrections
+        actions:
+          - action: apply_correction
+            correction: "{event_data}"
+            output: applied_changes
+        next: apply_changes
+
+      - if: "{categorized_changes.new_patterns.length} > 0"
+        # New patterns: may need confirmation
+        actions:
+          - action: evaluate_confidence
+            patterns: "{categorized_changes.new_patterns}"
+            threshold: 90  # Auto-apply if >90% confident
+            output: auto_apply, needs_confirmation
+        next: apply_changes
+
+  # Step 5: Apply Changes
+  - id: apply_changes
+    name: Apply Pattern Updates
+    depends_on: [validate_changes]
+    actions:
+      # Update confirmed patterns
+      - action: update_patterns
+        changes: "{applied_changes}"
+        target: memory/learning.md
+        section: confirmed_patterns
+
+      # Update routing rules if significant
+      - action: conditional_update
+        condition: "{applied_changes.significance} > 'medium'"
+        target: knowledge/02-routing-rules.md
+        changes: "{applied_changes}"
+
+      # Queue patterns needing confirmation
+      - action: queue_for_confirmation
+        patterns: "{needs_confirmation}"
+        target: memory/learning.md
+        section: pending_validation
+
+  # Step 6: Update Metrics
+  - id: update_metrics
+    name: Update Learning Metrics
+    depends_on: [apply_changes]
+    actions:
+      - action: calculate_metrics
+        data:
+          routing_accuracy: "{calculate_accuracy(interaction_events)}"
+          corrections_count: "{count_corrections(interaction_events)}"
+          new_patterns_count: "{categorized_changes.new_patterns.length}"
+          confidence_avg: "{calculate_avg_confidence(pattern_metrics)}"
+        output: updated_metrics
+
+      - action: update_file
+        path: memory/learning.md
+        section: metrics
+        data: "{updated_metrics}"
+
+  # Step 7: Generate Report
+  - id: generate_report
+    name: Generate Learning Report
+    depends_on: [update_metrics]
+    conditions:
+      - if: "{mode} == 'batch'"
+        actions:
+          - action: compile_report
+            template: |
+              ## Learning Report - {{date}}
+
+              ### Metrics
+              - Routing Accuracy: {{metrics.routing_accuracy}}%
+              - User Corrections: {{metrics.corrections_count}}
+              - New Patterns: {{metrics.new_patterns_count}}
+
+              ### Changes Applied
+              {{#each applied_changes}}
+              - **{{this.pattern}}**: {{this.change_type}} ({{this.confidence}}%)
+              {{/each}}
+
+              ### Pending Confirmation
+              {{#each needs_confirmation}}
+              - {{this.pattern}}: {{this.suggested_route}} ({{this.occurrences}} times)
+              {{/each}}
+
+              ### Recommendations
+              {{#each recommendations}}
+              - {{this}}
+              {{/each}}
+            data:
+              date: "{today}"
+              metrics: "{updated_metrics}"
+              applied_changes: "{applied_changes}"
+              needs_confirmation: "{needs_confirmation}"
+              recommendations: "{generate_recommendations(pattern_metrics)}"
+            output: learning_report
+
+          - action: save_report
+            content: "{learning_report}"
+            path: "output/learning/{{date}}-report.md"
+
+# Error handling
+on_error:
+  - step: "*"
+    action: |
+      Log error to memory/errors.md
+      Continue with next step if possible
+      Alert if critical learning data corrupted
+
+# Post-workflow
+post_actions:
+  - action: notify_significant_changes
+    condition: "{applied_changes.length} > 0 AND {mode} == 'immediate'"
+    message: "Routing patterns updated based on your feedback"
+
+  - action: schedule_confirmation_prompt
+    condition: "{needs_confirmation.length} > 0"
+    delay: "next_session"
+    message: "I have {{needs_confirmation.length}} new patterns to confirm with you"

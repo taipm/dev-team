@@ -1,0 +1,67 @@
+{
+  "session_id": "test-negotiate-shorts",
+  "created_at": "2026-01-04T19:29:00Z",
+  "format": "shorts",
+
+  "title": "90% Sai! Từ TOEIC 'negotiate' Bạn Đọc Như Nào? #toeic #shorts",
+  "description": "📚 Từ vựng TOEIC: negotiate /nɪˈɡoʊʃieɪt/\n\n✨ Nghĩa: đàm phán, thương lượng\n🇬🇧 to discuss something to reach an agreement\n\n📌 Ví dụ: We need to negotiate a better deal with the supplier.\n💡 Collocation: negotiate a contract\n\n🎯 Follow để học TOEIC mỗi ngày!\n\n#TOEIC #TOEICVocabulary #HọcTiếngAnh #negotiate #TừVựngTOEIC #shorts",
+
+  "tags": [
+    "TOEIC",
+    "TOEIC vocabulary",
+    "từ vựng TOEIC",
+    "học TOEIC",
+    "negotiate",
+    "business English",
+    "TOEIC Part 5",
+    "luyện thi TOEIC",
+    "tiếng Anh giao tiếp",
+    "TOEIC 2026",
+    "shorts",
+    "học tiếng Anh"
+  ],
+
+  "category": "27",
+  "language": "vi",
+  "made_for_kids": false,
+  "visibility": "public",
+
+  "vocabulary": {
+    "word": "negotiate",
+    "ipa": "/nɪˈɡoʊʃieɪt/",
+    "pos": "verb",
+    "meaning_vi": "đàm phán, thương lượng",
+    "meaning_en": "to discuss something to reach an agreement",
+    "example_en": "We need to negotiate a better deal with the supplier.",
+    "example_vi": "Chúng ta cần đàm phán một thỏa thuận tốt hơn với nhà cung cấp.",
+    "collocation": "negotiate a contract",
+    "toeic_parts": [5, 6, 7]
+  },
+
+  "technical": {
+    "resolution": "1080x1920",
+    "aspect_ratio": "9:16",
+    "duration_seconds": 35.81,
+    "file_size_mb": 0.66,
+    "codec": "H.264",
+    "profile": "High",
+    "fps": 30,
+    "audio_codec": "AAC",
+    "audio_bitrate": "128kbps"
+  },
+
+  "files": {
+    "video": "video/shorts.mp4",
+    "audio": "audio/voiceover_normalized.mp3",
+    "script": "script/script.yaml",
+    "timestamps": "audio/timestamps.json",
+    "slides": [
+      "visuals/slides/01-hook.png",
+      "visuals/slides/02-word.png",
+      "visuals/slides/03-definition.png",
+      "visuals/slides/04-example.png",
+      "visuals/slides/05-tip.png",
+      "visuals/slides/06-cta.png"
+    ]
+  }
+}

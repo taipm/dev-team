@@ -1,0 +1,52 @@
+# Script Segment Template
+# Output from Script Adapter Agent
+
+---
+
+# Chapter Information
+chapter: 1
+title: ""
+original_word_count: 0
+estimated_duration: "0:00"
+genre: ""
+narrator_voice: vi-VN-HoaiMyNeural
+
+# Segments
+segments:
+  - id: "ch1-s001"
+
+    # Original and Adapted Text
+    original: ""
+    adapted: ""
+
+    # Segment Type
+    type: heading|narration|dialogue|attribution|list
+
+    # Language
+    lang: vi|en
+
+    # Voice Assignment
+    voice: vi-VN-HoaiMyNeural
+    character: ""  # For dialogue segments
+
+    # Prosody Settings
+    prosody:
+      rate: "+0%"      # -20% to +20%
+      pitch: "+0Hz"    # -20Hz to +20Hz
+      emphasis: none|moderate|strong
+
+    # Pause Control
+    pauses:
+      before: 0    # milliseconds
+      after: 500   # milliseconds
+
+# Prosody Summary
+prosody_summary:
+  total_segments: 0
+  dialogue_segments: 0
+  narration_segments: 0
+  heading_segments: 0
+  average_pause: 500
+
+# Processing Notes
+processing_notes: []

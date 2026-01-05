@@ -1,0 +1,449 @@
+# Design System Update Template
+# Template cho cập nhật design system dựa trên data
+
+# ═══════════════════════════════════════════════════════════════════════
+# METADATA
+# ═══════════════════════════════════════════════════════════════════════
+
+update_id: "DSU-{YYYY-MM-DD}-{SEQ}"
+version: "{current_version} → {new_version}"
+created_by: ux-designer-agent
+created_at: "{timestamp}"
+status: draft | review | approved | implemented
+
+# ═══════════════════════════════════════════════════════════════════════
+# UPDATE SUMMARY
+# ═══════════════════════════════════════════════════════════════════════
+
+summary:
+  title: "{Short descriptive title}"
+  description: |
+    {Brief description of what's being updated and why}
+
+  trigger:
+    type: ab_test_result | performance_data | accessibility_audit | user_feedback
+    reference: "{reference_id}"  # ABT-xxx, ACC-xxx, etc.
+
+  impact:
+    scope: minor | moderate | major
+    affected_templates: ["{template1}", "{template2}"]
+    affected_agents: [visual-designer, script-writer]  # agents that need to know
+
+# ═══════════════════════════════════════════════════════════════════════
+# CHANGES
+# ═══════════════════════════════════════════════════════════════════════
+
+changes:
+
+  # ─────────────────────────────────────────────────────────────────────
+  # COLOR UPDATES
+  # ─────────────────────────────────────────────────────────────────────
+  colors:
+    enabled: true | false
+
+    updates:
+      - element: "{element_name}"  # e.g., "heading_background"
+        old_value: "{old_hex}"
+        new_value: "{new_hex}"
+        reason: "{why_changing}"
+        evidence: "{data_source}"
+
+      - element: primary
+        old_value: "#FF6B35"
+        new_value: "#FF7B45"
+        reason: "Improved contrast ratio for accessibility"
+        evidence: "ACC-2026-01-04-001"
+
+    additions:
+      - name: "{color_name}"
+        value: "{hex}"
+        use_case: "{when_to_use}"
+        example: "{example_usage}"
+
+    deprecations:
+      - name: "{color_name}"
+        old_value: "{hex}"
+        replacement: "{new_color_name}"
+        removal_date: "{date}"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # TYPOGRAPHY UPDATES
+  # ─────────────────────────────────────────────────────────────────────
+  typography:
+    enabled: true | false
+
+    updates:
+      - element: "{element_name}"  # e.g., "heading_shorts"
+        property: font_size | font_weight | line_height | letter_spacing
+        old_value: "{old_value}"
+        new_value: "{new_value}"
+        reason: "{why_changing}"
+        evidence: "{data_source}"
+
+      - element: body_text
+        property: font_size
+        old_value: "36px"
+        new_value: "40px"
+        reason: "Better mobile readability"
+        evidence: "User feedback + retention data"
+
+    additions:
+      - name: "{typography_style}"
+        font: "{font_name}"
+        size: "{size}px"
+        weight: "{weight}"
+        use_case: "{when_to_use}"
+
+    deprecations:
+      - name: "{typography_style}"
+        replacement: "{new_style}"
+        removal_date: "{date}"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # LAYOUT UPDATES
+  # ─────────────────────────────────────────────────────────────────────
+  layout:
+    enabled: true | false
+
+    updates:
+      - element: "{layout_element}"
+        property: "{property_name}"
+        old_value: "{old_value}"
+        new_value: "{new_value}"
+        reason: "{why_changing}"
+        evidence: "{data_source}"
+
+      - element: safe_zone
+        property: margin
+        old_value: "10%"
+        new_value: "12%"
+        reason: "Better edge visibility on mobile"
+        evidence: "Mobile testing feedback"
+
+    additions:
+      - name: "{layout_pattern}"
+        description: "{description}"
+        use_case: "{when_to_use}"
+        specification:
+          # Layout details
+
+    deprecations:
+      - name: "{layout_pattern}"
+        replacement: "{new_pattern}"
+        removal_date: "{date}"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # COMPONENT UPDATES
+  # ─────────────────────────────────────────────────────────────────────
+  components:
+    enabled: true | false
+
+    updates:
+      - component: "{component_name}"  # e.g., "word_card"
+        changes:
+          - property: "{property}"
+            old_value: "{old}"
+            new_value: "{new}"
+        reason: "{why_changing}"
+        evidence: "{data_source}"
+
+    additions:
+      - name: "{component_name}"
+        type: slide | thumbnail | overlay | transition
+        description: "{description}"
+        use_case: "{when_to_use}"
+        specification:
+          layout: "{layout_description}"
+          colors: ["{color1}", "{color2}"]
+          typography:
+            heading: "{style}"
+            body: "{style}"
+          animations: ["{animation1}"]
+
+    deprecations:
+      - name: "{component_name}"
+        replacement: "{new_component}"
+        migration_guide: |
+          {How to migrate from old to new}
+        removal_date: "{date}"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # TEMPLATE UPDATES
+  # ─────────────────────────────────────────────────────────────────────
+  templates:
+    enabled: true | false
+
+    updates:
+      - template: "{template_name}"
+        file: "{file_path}"
+        changes:
+          - section: "{section_name}"
+            description: "{what_changed}"
+        reason: "{why_changing}"
+        evidence: "{data_source}"
+
+    additions:
+      - name: "{template_name}"
+        type: shorts | standard
+        content_type: vocabulary | listening | grammar | mixed
+        file: "templates/{filename}.yaml"
+        description: "{description}"
+        use_case: "{when_to_use}"
+
+    deprecations:
+      - name: "{template_name}"
+        replacement: "{new_template}"
+        removal_date: "{date}"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # ANIMATION UPDATES
+  # ─────────────────────────────────────────────────────────────────────
+  animations:
+    enabled: true | false
+
+    updates:
+      - animation: "{animation_name}"
+        property: duration | easing | type
+        old_value: "{old}"
+        new_value: "{new}"
+        reason: "{why_changing}"
+
+    additions:
+      - name: "{animation_name}"
+        type: transition | emphasis | reveal
+        duration: "{ms}ms"
+        easing: "{easing_function}"
+        description: "{description}"
+        use_case: "{when_to_use}"
+
+    deprecations:
+      - name: "{animation_name}"
+        replacement: "{new_animation}"
+        removal_date: "{date}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# GUIDELINES UPDATES
+# ═══════════════════════════════════════════════════════════════════════
+
+guidelines:
+
+  new_rules:
+    - category: "{category}"  # visual, audio, content, etc.
+      rule: "{rule_description}"
+      rationale: "{why_this_rule}"
+      example:
+        do: "{good_example}"
+        dont: "{bad_example}"
+
+  updated_rules:
+    - category: "{category}"
+      old_rule: "{old_rule}"
+      new_rule: "{new_rule}"
+      reason: "{why_changing}"
+
+  removed_rules:
+    - category: "{category}"
+      rule: "{rule_being_removed}"
+      reason: "{why_removing}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# TESTING & VALIDATION
+# ═══════════════════════════════════════════════════════════════════════
+
+testing:
+  required: true | false
+
+  ab_test:
+    enabled: true | false
+    test_id: "{ABT-xxx}"
+    duration: "{days} days"
+    success_criteria: "{criteria}"
+
+  validation:
+    - check: "Accessibility compliance"
+      status: pending | passed | failed
+      notes: "{notes}"
+
+    - check: "Visual consistency"
+      status: pending | passed | failed
+      notes: "{notes}"
+
+    - check: "Performance impact"
+      status: pending | passed | failed
+      notes: "{notes}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# ROLLOUT PLAN
+# ═══════════════════════════════════════════════════════════════════════
+
+rollout:
+  strategy: immediate | gradual | test_first
+
+  schedule:
+    - phase: 1
+      date: "{date}"
+      scope: "New videos only"
+      percentage: 25%
+
+    - phase: 2
+      date: "{date}"
+      scope: "All new videos"
+      percentage: 100%
+
+  rollback:
+    trigger: "{what_would_trigger_rollback}"
+    procedure: |
+      1. {step_1}
+      2. {step_2}
+      3. {step_3}
+
+# ═══════════════════════════════════════════════════════════════════════
+# COMMUNICATION
+# ═══════════════════════════════════════════════════════════════════════
+
+communication:
+
+  notify_agents:
+    - agent: visual-designer
+      changes_relevant: [colors, typography, components]
+      action_required: "Update template usage"
+
+    - agent: script-writer
+      changes_relevant: [guidelines]
+      action_required: "Review new rules"
+
+    - agent: quality-reviewer
+      changes_relevant: [all]
+      action_required: "Update QC checklist"
+
+  documentation:
+    - file: "knowledge/visual-designer/brand-guidelines.md"
+      update_required: true
+      changes: "{what_to_update}"
+
+    - file: "knowledge/ux-designer/accessibility-guidelines.md"
+      update_required: true
+      changes: "{what_to_update}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# APPROVAL
+# ═══════════════════════════════════════════════════════════════════════
+
+approval:
+  status: pending | approved | rejected
+
+  reviewers:
+    - agent: "{agent_name}"
+      status: pending | approved | rejected
+      comments: "{comments}"
+      date: "{date}"
+
+  final_approval:
+    approved_by: "{agent}"
+    date: "{date}"
+    notes: "{notes}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# IMPLEMENTATION TRACKING
+# ═══════════════════════════════════════════════════════════════════════
+
+implementation:
+  status: not_started | in_progress | completed
+
+  tasks:
+    - task: "Update brand-guidelines.md"
+      owner: ux-designer
+      status: pending | completed
+      completed_at: null
+
+    - task: "Update slide-templates.md"
+      owner: visual-designer
+      status: pending | completed
+      completed_at: null
+
+    - task: "Update QC checklist"
+      owner: quality-reviewer
+      status: pending | completed
+      completed_at: null
+
+  completed_at: null
+  verified_by: null
+  verification_date: null
+
+# ═══════════════════════════════════════════════════════════════════════
+# CHANGELOG ENTRY
+# ═══════════════════════════════════════════════════════════════════════
+
+changelog:
+  version: "{new_version}"
+  date: "{date}"
+  summary: "{one_line_summary}"
+
+  details: |
+    ## Design System Update {version}
+
+    ### Changes
+    - {change_1}
+    - {change_2}
+    - {change_3}
+
+    ### Reason
+    {why_these_changes}
+
+    ### Evidence
+    - {evidence_1}
+    - {evidence_2}
+
+    ### Migration
+    {any_migration_notes}
+
+# ═══════════════════════════════════════════════════════════════════════
+# EXAMPLES
+# ═══════════════════════════════════════════════════════════════════════
+
+_examples:
+
+  contrast_improvement:
+    update_id: "DSU-2026-01-04-001"
+    summary:
+      title: "Improve Text Contrast for Accessibility"
+      trigger:
+        type: accessibility_audit
+        reference: "ACC-2026-01-04-005"
+    changes:
+      colors:
+        enabled: true
+        updates:
+          - element: body_text_on_dark
+            old_value: "#B8B8B8"
+            new_value: "#D0D0D0"
+            reason: "Increase contrast from 4.2:1 to 5.5:1"
+
+  new_template:
+    update_id: "DSU-2026-01-04-002"
+    summary:
+      title: "Add Quiz Template for Vocabulary"
+      trigger:
+        type: user_feedback
+    changes:
+      templates:
+        enabled: true
+        additions:
+          - name: "shorts-vocab-quiz-30s"
+            type: shorts
+            content_type: vocabulary
+            description: "Quiz format for vocabulary engagement"
+
+  ab_test_winner:
+    update_id: "DSU-2026-01-04-003"
+    summary:
+      title: "Implement Emoji Thumbnails"
+      trigger:
+        type: ab_test_result
+        reference: "ABT-2026-01-04-001"
+    changes:
+      guidelines:
+        new_rules:
+          - category: thumbnail
+            rule: "Include relevant emoji in vocabulary thumbnails"
+            rationale: "A/B test showed +32% CTR"

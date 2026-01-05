@@ -1,0 +1,69 @@
+# Character Voice Map Template
+# Output from Character Voice Agent (Fiction only)
+
+---
+
+# Audiobook Identification
+audiobook_id: ""
+analysis_date: ""
+
+# Statistics
+total_characters: 0
+total_dialogue_segments: 0
+
+# Narrator Configuration
+narrator:
+  voice: vi-VN-HoaiMyNeural
+  role: narrator
+  notes: "All non-dialogue text"
+
+# Character Definitions
+characters:
+  - name: ""
+    # Voice Assignment
+    voice: en-US-GuyNeural
+
+    # Character Traits
+    gender: male|female|unknown
+    age: young|adult|elderly
+    traits:
+      - ""
+
+    # Statistics
+    dialogue_count: 0
+    first_appearance: "chapter-001"
+
+    # Prosody Modifiers
+    prosody:
+      rate: "+0%"
+      pitch: "+0Hz"
+
+    # Notes
+    notes: ""
+
+# Voice Usage Summary
+voice_usage:
+  - voice: vi-VN-HoaiMyNeural
+    characters: ["Narrator"]
+    total_segments: 0
+
+  - voice: en-US-GuyNeural
+    characters: []
+    total_segments: 0
+
+  - voice: en-US-JennyNeural
+    characters: []
+    total_segments: 0
+
+# Prosody Variations
+# When same voice is used for multiple characters
+prosody_variations:
+  - character: ""
+    base_voice: ""
+    variation:
+      rate_modifier: "+5%"
+      pitch_modifier: "+10Hz"
+    note: "Distinguish from other characters using same voice"
+
+# Processing Notes
+notes: []

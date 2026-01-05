@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables for Universal Framework */
+:root {
+  /* Phase colors */
+  --color-phase-define: #3B82F6;
+  --color-phase-decompose: #8B5CF6;
+  --color-phase-prioritize: #F59E0B;
+  --color-phase-sequence: #10B981;
+  --color-phase-execute: #EF4444;
+  --color-phase-review: #6366F1;
+
+  /* Execution phase colors */
+  --color-foundation: #3B82F6;
+  --color-build: #10B981;
+  --color-enhance: #F59E0B;
+  --color-finalize: #8B5CF6;
+
+  /* Status colors */
+  --color-backlog: #6B7280;
+  --color-in-progress: #3B82F6;
+  --color-review: #F59E0B;
+  --color-blocked: #EF4444;
+  --color-done: #10B981;
+  --color-skipped: #9CA3AF;
+
+  /* Priority colors */
+  --color-critical: #EF4444;
+  --color-high: #F97316;
+  --color-medium: #F59E0B;
+  --color-low: #6B7280;
+}
+
+/* Base styles */
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+/* Kanban board scrolling */
+.kanban-board {
+  @apply flex gap-4 overflow-x-auto pb-4;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 #F1F5F9;
+}
+
+.kanban-board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded hover:bg-gray-400;
+}
+
+/* Kanban column */
+.kanban-column {
+  @apply flex-shrink-0 w-80 bg-gray-100 rounded-lg p-3;
+  min-height: 500px;
+}
+
+/* Task card hover effect */
+.task-card {
+  @apply bg-white rounded-lg shadow-sm p-3 cursor-pointer
+         transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+}
+
+.task-card.dragging {
+  @apply shadow-lg rotate-2 opacity-80;
+}
+
+/* Phase progress bar */
+.phase-progress {
+  @apply flex items-center gap-1;
+}
+
+.phase-step {
+  @apply relative flex-1 h-2 rounded-full bg-gray-200 overflow-hidden;
+}
+
+.phase-step.completed {
+  @apply bg-green-500;
+}
+
+.phase-step.current {
+  @apply bg-blue-500;
+}
+
+.phase-step.pending {
+  @apply bg-gray-200;
+}
+
+/* Status badge */
+.status-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+}
+
+.status-badge.backlog {
+  @apply bg-gray-100 text-gray-700;
+}
+
+.status-badge.in_progress {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.status-badge.review {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.status-badge.blocked {
+  @apply bg-red-100 text-red-700;
+}
+
+.status-badge.done {
+  @apply bg-green-100 text-green-700;
+}
+
+.status-badge.skipped {
+  @apply bg-gray-100 text-gray-400;
+}
+
+/* Priority badge */
+.priority-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+}
+
+.priority-badge.critical {
+  @apply bg-red-100 text-red-700;
+}
+
+.priority-badge.high {
+  @apply bg-orange-100 text-orange-700;
+}
+
+.priority-badge.medium {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.priority-badge.low {
+  @apply bg-gray-100 text-gray-600;
+}
+
+/* Execution phase badge */
+.execution-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+}
+
+.execution-badge.FOUNDATION {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.execution-badge.BUILD {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.execution-badge.ENHANCE {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.execution-badge.FINALIZE {
+  @apply bg-violet-100 text-violet-700;
+}
+
+/* Metrics card */
+.metrics-card {
+  @apply bg-white rounded-lg shadow-sm p-4 border border-gray-200;
+}
+
+.metrics-card .value {
+  @apply text-3xl font-bold;
+}
+
+.metrics-card .label {
+  @apply text-sm text-gray-500 mt-1;
+}
+
+/* Modal */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+}
+
+.modal-content {
+  @apply bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden;
+}
+
+/* WIP indicator */
+.wip-indicator {
+  @apply h-1.5 rounded-full overflow-hidden bg-gray-200;
+}
+
+.wip-indicator .fill {
+  @apply h-full rounded-full transition-all duration-300;
+}
+
+.wip-indicator .fill.safe {
+  @apply bg-green-500;
+}
+
+.wip-indicator .fill.warning {
+  @apply bg-amber-500;
+}
+
+.wip-indicator .fill.danger {
+  @apply bg-red-500;
+}
+
+/* Sidebar */
+.sidebar {
+  @apply w-64 bg-white border-r border-gray-200 h-screen flex flex-col;
+}
+
+.sidebar-item {
+  @apply flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-100
+         rounded-lg mx-2 transition-colors;
+}
+
+.sidebar-item.active {
+  @apply bg-blue-50 text-blue-700;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}

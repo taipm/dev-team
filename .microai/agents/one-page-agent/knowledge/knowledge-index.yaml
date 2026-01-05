@@ -1,0 +1,121 @@
+# One-Page Agent Knowledge Index
+# OPPM methodology and templates
+
+version: "1.0"
+agent: one-page-agent
+
+# Core files - always load
+core_files:
+  - 01-oppm-framework.md
+
+# Keyword mapping
+keyword_mapping:
+  # OPPM methodology
+  oppm:
+    files: [01-oppm-framework.md]
+    priority: 1
+  framework:
+    files: [01-oppm-framework.md]
+    priority: 1
+  methodology:
+    files: [01-oppm-framework.md]
+    priority: 1
+  campbell:
+    files: [01-oppm-framework.md]
+    priority: 1
+  one-page:
+    files: [01-oppm-framework.md]
+    priority: 1
+
+  # Templates
+  template:
+    files: [02-templates.md]
+    priority: 1
+  templates:
+    files: [02-templates.md]
+    priority: 1
+  software:
+    files: [02-templates.md]
+    priority: 1
+  sprint:
+    files: [02-templates.md]
+    priority: 1
+  agile:
+    files: [02-templates.md]
+    priority: 1
+  scrum:
+    files: [02-templates.md]
+    priority: 1
+  personal:
+    files: [02-templates.md]
+    priority: 1
+  general:
+    files: [02-templates.md]
+    priority: 1
+
+  # Layout & Visual
+  layout:
+    files: [03-layout-patterns.md]
+    priority: 1
+  visual:
+    files: [03-layout-patterns.md]
+    priority: 1
+  format:
+    files: [03-layout-patterns.md]
+    priority: 1
+  matrix:
+    files: [03-layout-patterns.md]
+    priority: 1
+  timeline:
+    files: [03-layout-patterns.md]
+    priority: 1
+  gantt:
+    files: [03-layout-patterns.md]
+    priority: 2
+
+  # Export
+  export:
+    files: [04-export-guide.md]
+    priority: 1
+  pdf:
+    files: [04-export-guide.md]
+    priority: 1
+  print:
+    files: [04-export-guide.md]
+    priority: 1
+  pandoc:
+    files: [04-export-guide.md]
+    priority: 1
+
+  # Create workflow
+  create:
+    files: [01-oppm-framework.md, 02-templates.md]
+    priority: 1
+  new:
+    files: [01-oppm-framework.md, 02-templates.md]
+    priority: 1
+  tạo:
+    files: [01-oppm-framework.md, 02-templates.md]
+    priority: 1
+
+# File descriptions
+files:
+  01-oppm-framework.md:
+    title: "OPPM Framework & Methodology"
+    description: "Clark A. Campbell's One-Page Project Management methodology, 5 essential elements"
+    lines: ~200
+
+  02-templates.md:
+    title: "Project Templates"
+    description: "Templates for 4 project types: Software, General, Agile, Personal"
+    lines: ~300
+
+  03-layout-patterns.md:
+    title: "Visual Layout Patterns"
+    description: "Layout patterns for header, tasks, timeline, status sections"
+    lines: ~150
+
+  04-export-guide.md:
+    title: "Export & PDF Guide"
+    description: "Instructions for exporting OPPM to PDF using pandoc/wkhtmltopdf"
+    lines: ~100

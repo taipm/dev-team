@@ -4,7 +4,8 @@
       "Bash(npm:*)",
       "Bash(git:*)",
       "Bash(pnpm:*)",
-      "Bash(yarn:*)"
+      "Bash(yarn:*)",
+      "Bash(.microai/agents/claude-watcher/scripts/run.sh:*)"
     ],
     "deny": [
       "Read(.env)",
@@ -20,5 +21,40 @@
     "context7@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/agents/claude-watcher/hooks/pre-tool-use.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/agents/claude-watcher/hooks/post-tool-use.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".microai/agents/claude-watcher/hooks/user-prompt-submit.sh"
+          }
+        ]
+      }
+    ]
   }
 }

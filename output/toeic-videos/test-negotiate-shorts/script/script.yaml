@@ -1,0 +1,124 @@
+# TOEIC Vocabulary Shorts Script
+# Word: negotiate
+# Format: Shorts (30-45s)
+# Generated: 2026-01-04
+
+metadata:
+  session_id: "test-negotiate-shorts"
+  format: shorts
+  target_duration: 35s
+  word: negotiate
+
+vocabulary:
+  word: negotiate
+  ipa: /nɪˈɡoʊʃieɪt/
+  pos: verb
+  meaning_vi: đàm phán, thương lượng
+  meaning_en: to discuss something to reach an agreement
+  example_en: "We need to negotiate a better deal with the supplier."
+  example_vi: "Chúng ta cần đàm phán một thỏa thuận tốt hơn với nhà cung cấp."
+  collocation: "negotiate a contract"
+  toeic_parts: [5, 6, 7]
+  frequency: high
+
+segments:
+  - id: seg_001
+    type: hook
+    slide: 01-hook
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "Từ này 90% người Việt phát âm sai!"
+    duration_estimate: 2.5s
+
+  - id: seg_002
+    type: word
+    slide: 02-word
+    language: en
+    voice: en-US-JennyNeural
+    text: "negotiate"
+    rate: "-10%"
+    duration_estimate: 1.5s
+
+  - id: seg_003
+    type: ipa
+    slide: 02-word
+    language: en
+    voice: en-US-JennyNeural
+    text: "/nɪˈɡoʊʃieɪt/"
+    rate: "-20%"
+    duration_estimate: 2s
+
+  - id: seg_004
+    type: pos
+    slide: 02-word
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "động từ"
+    duration_estimate: 1s
+
+  - id: seg_005
+    type: definition
+    slide: 03-definition
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "Nghĩa là đàm phán, thương lượng"
+    duration_estimate: 2.5s
+
+  - id: seg_006
+    type: definition_en
+    slide: 03-definition
+    language: en
+    voice: en-US-JennyNeural
+    text: "to discuss something to reach an agreement"
+    duration_estimate: 3s
+
+  - id: seg_007
+    type: example_intro
+    slide: 04-example
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "Ví dụ"
+    duration_estimate: 0.8s
+
+  - id: seg_008
+    type: example_en
+    slide: 04-example
+    language: en
+    voice: en-US-JennyNeural
+    text: "We need to negotiate a better deal with the supplier."
+    duration_estimate: 4s
+
+  - id: seg_009
+    type: example_vi
+    slide: 04-example
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "Chúng ta cần đàm phán một thỏa thuận tốt hơn với nhà cung cấp."
+    duration_estimate: 4s
+
+  - id: seg_010
+    type: tip_intro
+    slide: 05-tip
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "Collocation hay gặp"
+    duration_estimate: 1.5s
+
+  - id: seg_011
+    type: collocation
+    slide: 05-tip
+    language: en
+    voice: en-US-JennyNeural
+    text: "negotiate a contract"
+    duration_estimate: 2s
+
+  - id: seg_012
+    type: cta
+    slide: 06-cta
+    language: vi
+    voice: vi-VN-HoaiMyNeural
+    text: "Follow để học TOEIC mỗi ngày!"
+    duration_estimate: 2s
+
+total_segments: 12
+estimated_duration: 27s

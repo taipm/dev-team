@@ -1,0 +1,37 @@
+/* LCD Display Styles */
+
+.display {
+  width: 100%;
+  height: var(--display-height);
+  padding: 12px 16px;
+  background: var(--display-bg);  /* #a8b5a0 - LCD GREEN */
+  border: 2px solid var(--display-border);
+  border-radius: var(--display-radius);
+  box-shadow: var(--display-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.display-expression {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-expression);
+  color: var(--display-text-dim);
+  text-align: right;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.display-result {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-result);
+  color: var(--display-text);
+  font-weight: bold;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,84 @@
+# User Preferences - Learned over time
+# Taipm Agent uses this to personalize interactions
+
+# Last updated: 2026-01-04
+
+user:
+  name: Taipm
+  timezone: Asia/Ho_Chi_Minh
+
+communication:
+  primary_language: vi  # Vietnamese
+  secondary_language: en
+  response_style: concise  # concise | detailed | balanced
+  tone: professional  # professional | casual | formal
+  emoji_usage: minimal  # none | minimal | moderate | heavy
+
+work_patterns:
+  most_active_hours: "09:00-22:00"
+  preferred_session_length: medium  # short | medium | long
+  interruption_tolerance: low  # low | medium | high
+
+proactivity:
+  suggestions: high  # none | low | medium | high
+  reminders: medium
+  auto_actions: medium
+
+content_preferences:
+  output_format: markdown
+  code_style: clean_with_comments
+  documentation_level: moderate  # minimal | moderate | comprehensive
+
+# Frequently used agents (learned from usage)
+preferred_agents:
+  coding:
+    - go-dev-agent
+    - go-review-linus-agent
+  content:
+    - audiobook-production-team
+    - toeic-content-team
+  thinking:
+    - deep-thinking-team
+    - deep-question-agent
+  daily:
+    - daily-agent
+
+# Routing overrides (user-specified preferences)
+routing_preferences:
+  # When ambiguous, prefer these
+  code_review: go-review-linus-agent  # over generic review
+  content_creation: audiobook-production-team  # default for URLs
+  analysis: deep-thinking-team  # for complex problems
+
+# Learned patterns
+patterns:
+  morning_routine:
+    - check_daily_tasks
+    - review_priorities
+    - plan_day
+  content_workflow:
+    - url_to_audiobook
+    - then_social_posts
+  development_workflow:
+    - implement
+    - review
+    - refactor
+
+# Do not disturb
+dnd_contexts:
+  - deep_focus_work
+  - important_meetings
+
+# Auto-approve actions (no confirmation needed)
+auto_approve:
+  - read_files
+  - search_codebase
+  - generate_reports
+  - create_drafts
+
+# Require confirmation
+require_confirmation:
+  - publish_content
+  - commit_changes
+  - send_external
+  - delete_files

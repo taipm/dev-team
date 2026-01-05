@@ -1,0 +1,340 @@
+/* Casio FX-880 VN X - Complete Styles */
+
+/* === DESIGN TOKENS === */
+:root {
+  /* Calculator Body */
+  --body-bg: #1a1a2e;
+  --body-border: #0f0f1a;
+  --body-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --body-radius: 16px;
+
+  /* Header */
+  --header-brand: #ffffff;
+  --header-model: #a0a0a0;
+
+  /* LCD Display */
+  --display-bg: #a8b5a0;
+  --display-text: #1a1a1a;
+  --display-text-dim: #4a4a4a;
+  --display-border: #5a6b52;
+  --display-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
+  --display-radius: 4px;
+
+  /* Buttons - Numbers */
+  --btn-number-bg: #f0f0f0;
+  --btn-number-text: #1a1a1a;
+  --btn-number-border: #d0d0d0;
+  --btn-number-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  --btn-number-hover: #e5e5e5;
+  --btn-number-active: #d5d5d5;
+
+  /* Buttons - Operators */
+  --btn-operator-bg: #ff9500;
+  --btn-operator-text: #ffffff;
+  --btn-operator-border: #e08500;
+  --btn-operator-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-operator-hover: #e68a00;
+  --btn-operator-active: #cc7a00;
+
+  /* Buttons - Function */
+  --btn-function-bg: #505050;
+  --btn-function-text: #ffffff;
+  --btn-function-border: #404040;
+  --btn-function-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-function-hover: #606060;
+  --btn-function-active: #404040;
+
+  /* Buttons - Equal */
+  --btn-equal-bg: #007aff;
+  --btn-equal-text: #ffffff;
+  --btn-equal-border: #0066cc;
+  --btn-equal-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-equal-hover: #0066cc;
+  --btn-equal-active: #0055aa;
+
+  /* Buttons - Clear */
+  --btn-clear-bg: #ff3b30;
+  --btn-clear-text: #ffffff;
+  --btn-clear-border: #e02d24;
+  --btn-clear-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-clear-hover: #e02d24;
+  --btn-clear-active: #c0251e;
+
+  /* Buttons - Delete */
+  --btn-delete-bg: #808080;
+  --btn-delete-text: #ffffff;
+  --btn-delete-border: #707070;
+
+  /* Typography */
+  --font-display: 'SF Mono', 'Consolas', 'Courier New', monospace;
+  --font-buttons: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-brand: 'Arial Black', 'Helvetica Neue', sans-serif;
+
+  --font-size-display-result: 32px;
+  --font-size-display-expression: 14px;
+  --font-size-button: 16px;
+  --font-size-button-small: 12px;
+  --font-size-brand: 18px;
+  --font-size-model: 12px;
+
+  --font-weight-medium: 500;
+
+  /* Spacing */
+  --spacing-md: 16px;
+
+  /* Borders */
+  --border-radius-md: 8px;
+
+  /* Dimensions */
+  --calc-width: 320px;
+  --calc-padding: 16px;
+  --display-height: 80px;
+  --btn-height: 44px;
+  --btn-height-small: 40px;
+  --btn-gap: 8px;
+  --row-gap: 8px;
+}
+
+/* === RESET & BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-buttons);
+  background: linear-gradient(135deg, #1e1e2f 0%, #15152a 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* === CALCULATOR BODY === */
+.calculator {
+  width: var(--calc-width);
+  padding: var(--calc-padding);
+  background: var(--body-bg);
+  border: 2px solid var(--body-border);
+  border-radius: var(--body-radius);
+  box-shadow: var(--body-shadow);
+}
+
+.calc-header {
+  text-align: left;
+  margin-bottom: var(--spacing-md);
+  padding: 0 4px;
+}
+
+.calc-header .brand {
+  font-family: var(--font-brand);
+  font-size: var(--font-size-brand);
+  font-weight: bold;
+  color: var(--header-brand);
+  letter-spacing: 2px;
+}
+
+.calc-header .model {
+  font-size: var(--font-size-model);
+  color: var(--header-model);
+  margin-left: 8px;
+}
+
+/* === LCD DISPLAY === */
+.display {
+  width: 100%;
+  height: var(--display-height);
+  padding: 12px 16px;
+  background: var(--display-bg);
+  border: 2px solid var(--display-border);
+  border-radius: var(--display-radius);
+  box-shadow: var(--display-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.display-expression {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-expression);
+  color: var(--display-text-dim);
+  text-align: right;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.display-result {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-result);
+  color: var(--display-text);
+  font-weight: bold;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* === KEYPAD === */
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: var(--row-gap);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--btn-gap);
+}
+
+/* === BUTTONS BASE === */
+.btn {
+  flex: 1;
+  height: var(--btn-height);
+  border-radius: var(--border-radius-md);
+  border: 1px solid transparent;
+  font-family: var(--font-buttons);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus {
+  outline: 2px solid var(--btn-equal-bg);
+  outline-offset: 2px;
+}
+
+.btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Scientific & Function Rows - Smaller */
+.scientific-row .btn,
+.function-row .btn {
+  height: var(--btn-height-small);
+  font-size: var(--font-size-button-small);
+}
+
+/* === NUMBER BUTTONS === */
+.btn-number {
+  background: var(--btn-number-bg);
+  color: var(--btn-number-text);
+  border-color: var(--btn-number-border);
+  box-shadow: var(--btn-number-shadow);
+}
+
+.btn-number:hover {
+  background: var(--btn-number-hover);
+  transform: translateY(-1px);
+}
+
+.btn-number:active,
+.btn-number.active {
+  background: var(--btn-number-active);
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* === OPERATOR BUTTONS === */
+.btn-operator {
+  background: var(--btn-operator-bg);
+  color: var(--btn-operator-text);
+  border-color: var(--btn-operator-border);
+  box-shadow: var(--btn-operator-shadow);
+}
+
+.btn-operator:hover {
+  background: var(--btn-operator-hover);
+  transform: translateY(-1px);
+}
+
+.btn-operator:active,
+.btn-operator.active {
+  background: var(--btn-operator-active);
+  transform: translateY(0);
+}
+
+/* === FUNCTION BUTTONS === */
+.btn-function {
+  background: var(--btn-function-bg);
+  color: var(--btn-function-text);
+  border-color: var(--btn-function-border);
+  box-shadow: var(--btn-function-shadow);
+}
+
+.btn-function:hover {
+  background: var(--btn-function-hover);
+  transform: translateY(-1px);
+}
+
+.btn-function:active,
+.btn-function.active {
+  background: var(--btn-function-active);
+  transform: translateY(0);
+}
+
+/* === EQUAL BUTTON === */
+.btn-equal {
+  background: var(--btn-equal-bg);
+  color: var(--btn-equal-text);
+  border-color: var(--btn-equal-border);
+  box-shadow: var(--btn-equal-shadow);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-equal:hover {
+  background: var(--btn-equal-hover);
+  transform: translateY(-1px);
+}
+
+.btn-equal:active,
+.btn-equal.active {
+  background: var(--btn-equal-active);
+  transform: translateY(0);
+}
+
+/* === CLEAR BUTTONS === */
+.btn-clear {
+  background: var(--btn-clear-bg);
+  color: var(--btn-clear-text);
+  border-color: var(--btn-clear-border);
+  box-shadow: var(--btn-clear-shadow);
+}
+
+.btn-clear:hover {
+  background: var(--btn-clear-hover);
+  transform: translateY(-1px);
+}
+
+.btn-clear:active,
+.btn-clear.active {
+  background: var(--btn-clear-active);
+  transform: translateY(0);
+}
+
+/* === DELETE BUTTON === */
+.btn-delete {
+  background: var(--btn-delete-bg);
+  color: var(--btn-delete-text);
+  border-color: var(--btn-delete-border);
+}
+
+.btn-delete:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-delete:active,
+.btn-delete.active {
+  filter: brightness(0.9);
+  transform: translateY(0);
+}

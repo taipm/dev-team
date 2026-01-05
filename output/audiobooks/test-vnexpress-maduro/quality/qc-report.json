@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-01-04T18:35:00+07:00",
+  "audiobook_id": "test-vnexpress-maduro",
+  "total_chapters": 1,
+  "total_duration": "1:16",
+  "average_score": 95,
+  "grade": "A",
+  "decision": "APPROVED",
+  "issues": [],
+  "checks": {
+    "file_integrity": "PASS",
+    "format_compliance": "PASS",
+    "loudness_compliance": "PASS",
+    "true_peak": "PASS",
+    "silence_handling": "PASS",
+    "fade_application": "PASS"
+  },
+  "chapter_scores": [
+    {
+      "chapter": 1,
+      "file": "chapter-001.mp3",
+      "score": 95,
+      "duration": "1:16",
+      "loudness_lufs": -14.6,
+      "true_peak_db": -1.7,
+      "issues": []
+    }
+  ],
+  "specifications": {
+    "format": "MP3",
+    "bitrate": "192 kbps",
+    "sample_rate": 44100,
+    "channels": "mono",
+    "loudness_lufs": -14.6,
+    "true_peak_db": -1.7
+  },
+  "recommendations": []
+}

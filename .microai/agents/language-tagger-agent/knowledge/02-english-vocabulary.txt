@@ -1,0 +1,142 @@
+# English Vocabulary List for TOEIC
+# Format: one word per line, lowercase
+# Used by Language Tagger Agent for classification
+
+# === LESSON 001: Achievement Verbs ===
+accomplish
+achieve
+acquire
+attain
+obtain
+
+# === LESSON 002: AD- Prefix Words ===
+adequate
+adhere
+adjacent
+adjust
+administer
+
+# === Common TOEIC Vocabulary ===
+# Business & Office
+appointment
+agreement
+budget
+client
+contract
+deadline
+employee
+employer
+invoice
+manager
+meeting
+negotiation
+presentation
+proposal
+quarterly
+revenue
+salary
+schedule
+supervisor
+
+# Finance
+account
+balance
+deposit
+investment
+loan
+payment
+profit
+transaction
+withdraw
+
+# Marketing
+advertisement
+brand
+campaign
+customer
+discount
+market
+promotion
+sales
+target
+
+# Human Resources
+applicant
+benefits
+candidate
+experience
+interview
+position
+qualifications
+reference
+resume
+training
+
+# Travel & Transportation
+accommodation
+arrival
+boarding
+departure
+destination
+flight
+itinerary
+passenger
+reservation
+terminal
+
+# Technology
+application
+database
+device
+hardware
+network
+software
+system
+update
+upgrade
+
+# Communication
+announcement
+correspondence
+document
+email
+fax
+memo
+message
+newsletter
+report
+
+# === Collocations (common phrases) ===
+# Listed for pattern recognition
+# accomplish a goal
+# accomplish a task
+# accomplish a mission
+# achieve success
+# achieve results
+# acquire knowledge
+# acquire skills
+# attain goals
+# obtain permission
+# obtain approval
+
+# === Linguistic Terms (always English) ===
+Collocation
+Collocations
+Pronunciation
+Grammar
+Vocabulary
+Synonym
+Antonym
+Definition
+
+# === TOEIC Test Terms ===
+TOEIC
+Part
+Reading
+Listening
+question
+answer
+option
+passage
+dialog
+conversation

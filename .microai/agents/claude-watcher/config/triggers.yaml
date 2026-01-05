@@ -1,0 +1,63 @@
+# Claude Watcher - Trigger Configuration
+# Defines when Thinker should be invoked for analysis
+
+triggers:
+  # Trigger 1: After N tool calls
+  tool_count:
+    enabled: true
+    threshold: 15
+    description: "Review after every 15 tool calls"
+
+  # Trigger 2: Pattern detection
+  patterns:
+    enabled: true
+    rules:
+      - name: repeated_errors
+        condition: "same error 3+ times in last 10 calls"
+        urgency: high
+        description: "Detect when Worker keeps hitting same error"
+
+      - name: stuck_loop
+        condition: "same file edited 5+ times"
+        urgency: high
+        description: "Detect when Worker is stuck editing same file repeatedly"
+
+      - name: long_running
+        condition: "no progress for 20+ tool calls"
+        urgency: medium
+        description: "Detect when Worker seems to make no progress"
+
+      - name: excessive_reads
+        condition: "same file read 10+ times"
+        urgency: low
+        description: "Detect when Worker keeps re-reading same file"
+
+  # Trigger 3: Time-based
+  time_based:
+    enabled: true
+    interval_minutes: 10
+    description: "Periodic health check every 10 minutes"
+
+  # Cooldown settings to prevent over-thinking
+  cooldown:
+    min_interval_seconds: 60
+    after_intervention_seconds: 120
+    description: "Minimum time between Thinker invocations"
+
+# Decision thresholds
+decision_thresholds:
+  # Error rate above this triggers HELP/REDIRECT
+  error_rate_warning: 10
+  error_rate_critical: 25
+
+  # Tool diversity (low diversity might indicate stuck)
+  min_tool_diversity: 3
+
+  # Max consecutive same-tool calls before warning
+  max_consecutive_same_tool: 10
+
+# Logging
+logging:
+  enabled: true
+  verbose: false
+  log_file: memory/watcher.log

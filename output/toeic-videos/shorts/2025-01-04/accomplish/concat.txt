@@ -1,0 +1,7 @@
+file '01_hook.mp3'
+file '02_word.mp3'
+file '03_def.mp3'
+file '04_ex_en.mp3'
+file '05_ex_vi.mp3'
+file '06_tip.mp3'
+file '07_cta.mp3'

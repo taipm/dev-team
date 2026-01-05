@@ -1,0 +1,235 @@
+# Language Tagger Agent - Example Input/Output
+# Version: 1.0.0
+
+examples:
+
+  # === SIMPLE CASES ===
+
+  - name: "Pure Vietnamese"
+    input:
+      segment:
+        id: "intro"
+        type: "instruction"
+        raw_text: "Chào mừng bạn đến với bài học từ vựng"
+    output:
+      segment:
+        id: "intro"
+        type: "instruction"
+        tokens:
+          - text: "Chào mừng bạn đến với bài học từ vựng"
+            lang: "vi"
+
+  - name: "Pure English word"
+    input:
+      segment:
+        id: "word1"
+        type: "word"
+        raw_text: "accomplish"
+    output:
+      segment:
+        id: "word1"
+        type: "word"
+        tokens:
+          - text: "accomplish"
+            lang: "en"
+
+  - name: "English sentence"
+    input:
+      segment:
+        id: "example_en"
+        type: "example"
+        raw_text: "She accomplished her goal successfully."
+    output:
+      segment:
+        id: "example_en"
+        type: "example"
+        tokens:
+          - text: "She accomplished her goal successfully."
+            lang: "en"
+
+  # === MIXED CASES ===
+
+  - name: "Vietnamese intro + English word + Vietnamese explanation"
+    input:
+      segment:
+        id: "word1_intro"
+        type: "definition"
+        raw_text: "Từ accomplish nghĩa là hoàn thành"
+    output:
+      segment:
+        id: "word1_intro"
+        type: "definition"
+        tokens:
+          - text: "Từ"
+            lang: "vi"
+          - text: "accomplish"
+            lang: "en"
+          - text: "nghĩa là hoàn thành"
+            lang: "vi"
+
+  - name: "Vietnamese label + English collocations"
+    input:
+      segment:
+        id: "word1_tip"
+        type: "tip"
+        raw_text: "Nhớ collocation: accomplish a goal, accomplish a task"
+    output:
+      segment:
+        id: "word1_tip"
+        type: "tip"
+        tokens:
+          - text: "Nhớ collocation:"
+            lang: "vi"
+          - text: "accomplish a goal, accomplish a task"
+            lang: "en"
+
+  - name: "English sentence with Vietnamese translation"
+    input:
+      segment:
+        id: "word1_example"
+        type: "example_pair"
+        raw_text: "She accomplished her goal. - Cô ấy đã hoàn thành mục tiêu."
+    output:
+      segment:
+        id: "word1_example"
+        type: "example_pair"
+        tokens:
+          - text: "She accomplished her goal."
+            lang: "en"
+          - text: "Cô ấy đã hoàn thành mục tiêu."
+            lang: "vi"
+
+  # === IPA CASES ===
+
+  - name: "IPA pronunciation"
+    input:
+      segment:
+        id: "word1_ipa"
+        type: "pronunciation"
+        raw_text: "/əˈkɑːmplɪʃ/"
+    output:
+      segment:
+        id: "word1_ipa"
+        type: "pronunciation"
+        tokens:
+          - text: "/əˈkɑːmplɪʃ/"
+            lang: "en"
+
+  - name: "Word with IPA"
+    input:
+      segment:
+        id: "word1_full"
+        type: "word_full"
+        raw_text: "accomplish /əˈkɑːmplɪʃ/"
+    output:
+      segment:
+        id: "word1_full"
+        type: "word_full"
+        tokens:
+          - text: "accomplish /əˈkɑːmplɪʃ/"
+            lang: "en"
+
+  # === COMPLEX CASES ===
+
+  - name: "Multiple English words in Vietnamese context"
+    input:
+      segment:
+        id: "tip_multiple"
+        type: "tip"
+        raw_text: "Các từ accomplish, achieve, acquire đều mang nghĩa đạt được"
+    output:
+      segment:
+        id: "tip_multiple"
+        type: "tip"
+        tokens:
+          - text: "Các từ"
+            lang: "vi"
+          - text: "accomplish, achieve, acquire"
+            lang: "en"
+          - text: "đều mang nghĩa đạt được"
+            lang: "vi"
+
+  - name: "Summary with word list"
+    input:
+      segment:
+        id: "summary"
+        type: "summary"
+        raw_text: "Hôm nay chúng ta đã học 5 từ: accomplish, achieve, acquire, attain, obtain"
+    output:
+      segment:
+        id: "summary"
+        type: "summary"
+        tokens:
+          - text: "Hôm nay chúng ta đã học 5 từ:"
+            lang: "vi"
+          - text: "accomplish, achieve, acquire, attain, obtain"
+            lang: "en"
+
+  - name: "Quiz question"
+    input:
+      segment:
+        id: "quiz_q1"
+        type: "quiz"
+        raw_text: "Từ nào có nghĩa là hoàn thành? A. accomplish B. require C. retire"
+    output:
+      segment:
+        id: "quiz_q1"
+        type: "quiz"
+        tokens:
+          - text: "Từ nào có nghĩa là hoàn thành?"
+            lang: "vi"
+          - text: "A. accomplish B. require C. retire"
+            lang: "en"
+
+# === BATCH PROCESSING ===
+
+batch_example:
+  input:
+    segments:
+      - id: "01_intro"
+        type: "intro"
+        raw_text: "Chào mừng bạn đến với bài học từ vựng TOEIC"
+      - id: "02_word"
+        type: "word"
+        raw_text: "accomplish"
+      - id: "03_def"
+        type: "definition"
+        raw_text: "hoàn thành, đạt được"
+      - id: "04_example_en"
+        type: "example"
+        raw_text: "She accomplished her goal."
+      - id: "05_example_vi"
+        type: "translation"
+        raw_text: "Cô ấy đã hoàn thành mục tiêu."
+      - id: "06_tip"
+        type: "tip"
+        raw_text: "Nhớ collocation: accomplish a goal, accomplish a task"
+
+  output:
+    segments:
+      - id: "01_intro"
+        tokens:
+          - text: "Chào mừng bạn đến với bài học từ vựng TOEIC"
+            lang: "vi"
+      - id: "02_word"
+        tokens:
+          - text: "accomplish"
+            lang: "en"
+      - id: "03_def"
+        tokens:
+          - text: "hoàn thành, đạt được"
+            lang: "vi"
+      - id: "04_example_en"
+        tokens:
+          - text: "She accomplished her goal."
+            lang: "en"
+      - id: "05_example_vi"
+        tokens:
+          - text: "Cô ấy đã hoàn thành mục tiêu."
+            lang: "vi"
+      - id: "06_tip"
+        tokens:
+          - text: "Nhớ collocation:"
+            lang: "vi"
+          - text: "accomplish a goal, accomplish a task"
+            lang: "en"

@@ -1,0 +1,189 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-01-04T19:24:00Z",
+  "total_duration_ms": 35814,
+  "segments": [
+    {
+      "id": "seg_001",
+      "type": "hook",
+      "slide": "01-hook",
+      "start_ms": 0,
+      "end_ms": 2500,
+      "text": "Từ này 90% người Việt phát âm sai!",
+      "voice": "vi-VN-HoaiMyNeural"
+    },
+    {
+      "id": "pause_001",
+      "type": "silence",
+      "start_ms": 2500,
+      "end_ms": 3000
+    },
+    {
+      "id": "seg_002",
+      "type": "word",
+      "slide": "02-word",
+      "start_ms": 3000,
+      "end_ms": 4500,
+      "text": "negotiate",
+      "voice": "en-US-JennyNeural"
+    },
+    {
+      "id": "pause_002",
+      "type": "silence",
+      "start_ms": 4500,
+      "end_ms": 4800
+    },
+    {
+      "id": "seg_003",
+      "type": "ipa",
+      "slide": "02-word",
+      "start_ms": 4800,
+      "end_ms": 6800,
+      "text": "/nɪˈɡoʊʃieɪt/",
+      "voice": "en-US-JennyNeural"
+    },
+    {
+      "id": "pause_003",
+      "type": "silence",
+      "start_ms": 6800,
+      "end_ms": 7100
+    },
+    {
+      "id": "seg_004",
+      "type": "pos",
+      "slide": "02-word",
+      "start_ms": 7100,
+      "end_ms": 8100,
+      "text": "động từ",
+      "voice": "vi-VN-HoaiMyNeural"
+    },
+    {
+      "id": "pause_004",
+      "type": "silence",
+      "start_ms": 8100,
+      "end_ms": 8600
+    },
+    {
+      "id": "seg_005",
+      "type": "definition",
+      "slide": "03-definition",
+      "start_ms": 8600,
+      "end_ms": 11100,
+      "text": "Nghĩa là đàm phán, thương lượng",
+      "voice": "vi-VN-HoaiMyNeural"
+    },
+    {
+      "id": "pause_005",
+      "type": "silence",
+      "start_ms": 11100,
+      "end_ms": 11400
+    },
+    {
+      "id": "seg_006",
+      "type": "definition_en",
+      "slide": "03-definition",
+      "start_ms": 11400,
+      "end_ms": 14400,
+      "text": "to discuss something to reach an agreement",
+      "voice": "en-US-JennyNeural"
+    },
+    {
+      "id": "pause_006",
+      "type": "silence",
+      "start_ms": 14400,
+      "end_ms": 14900
+    },
+    {
+      "id": "seg_007",
+      "type": "example_intro",
+      "slide": "04-example",
+      "start_ms": 14900,
+      "end_ms": 15700,
+      "text": "Ví dụ",
+      "voice": "vi-VN-HoaiMyNeural"
+    },
+    {
+      "id": "pause_007",
+      "type": "silence",
+      "start_ms": 15700,
+      "end_ms": 16000
+    },
+    {
+      "id": "seg_008",
+      "type": "example_en",
+      "slide": "04-example",
+      "start_ms": 16000,
+      "end_ms": 20000,
+      "text": "We need to negotiate a better deal with the supplier.",
+      "voice": "en-US-JennyNeural"
+    },
+    {
+      "id": "pause_008",
+      "type": "silence",
+      "start_ms": 20000,
+      "end_ms": 20300
+    },
+    {
+      "id": "seg_009",
+      "type": "example_vi",
+      "slide": "04-example",
+      "start_ms": 20300,
+      "end_ms": 24300,
+      "text": "Chúng ta cần đàm phán một thỏa thuận tốt hơn với nhà cung cấp.",
+      "voice": "vi-VN-HoaiMyNeural"
+    },
+    {
+      "id": "pause_009",
+      "type": "silence",
+      "start_ms": 24300,
+      "end_ms": 24800
+    },
+    {
+      "id": "seg_010",
+      "type": "tip_intro",
+      "slide": "05-tip",
+      "start_ms": 24800,
+      "end_ms": 26300,
+      "text": "Collocation hay gặp",
+      "voice": "vi-VN-HoaiMyNeural"
+    },
+    {
+      "id": "pause_010",
+      "type": "silence",
+      "start_ms": 26300,
+      "end_ms": 26600
+    },
+    {
+      "id": "seg_011",
+      "type": "collocation",
+      "slide": "05-tip",
+      "start_ms": 26600,
+      "end_ms": 28600,
+      "text": "negotiate a contract",
+      "voice": "en-US-JennyNeural"
+    },
+    {
+      "id": "pause_011",
+      "type": "silence",
+      "start_ms": 28600,
+      "end_ms": 29100
+    },
+    {
+      "id": "seg_012",
+      "type": "cta",
+      "slide": "06-cta",
+      "start_ms": 29100,
+      "end_ms": 31100,
+      "text": "Follow để học TOEIC mỗi ngày!",
+      "voice": "vi-VN-HoaiMyNeural"
+    }
+  ],
+  "slides": [
+    {"id": "01-hook", "start_ms": 0, "end_ms": 3000, "duration_s": 3},
+    {"id": "02-word", "start_ms": 3000, "end_ms": 8600, "duration_s": 5.6},
+    {"id": "03-definition", "start_ms": 8600, "end_ms": 14900, "duration_s": 6.3},
+    {"id": "04-example", "start_ms": 14900, "end_ms": 24800, "duration_s": 9.9},
+    {"id": "05-tip", "start_ms": 24800, "end_ms": 29100, "duration_s": 4.3},
+    {"id": "06-cta", "start_ms": 29100, "end_ms": 35814, "duration_s": 6.7}
+  ]
+}

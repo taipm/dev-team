@@ -1,0 +1,121 @@
+# Daily Run Workflow
+# Execute all daily tasks in batch mode
+
+name: daily-run
+description: Execute all daily tasks in batch mode
+version: "1.0"
+
+phases:
+  - id: init
+    name: Initialize Session
+    description: Load memory, prepare environment
+    actions:
+      - action: load_memory
+        files:
+          - context.md
+          - task-queue.yaml
+          - daily-stats.yaml
+      - action: sync_kanban
+        board: ./kanban/board.yaml
+      - action: create_output_folder
+        path: "output/daily/{date}/"
+      - action: update_stats
+        field: today.date
+        value: "{date}"
+    on_error: abort
+
+  - id: prioritize
+    name: Prioritize Tasks
+    description: Sort and filter tasks for execution
+    actions:
+      - action: load_queue
+        file: task-queue.yaml
+      - action: sort_by
+        fields: [priority, scheduled_for, created_at]
+      - action: filter_runnable
+        exclude_status: [blocked, completed]
+      - action: batch_by_type
+        types: [research, content, post, report]
+    checkpoint: true
+    output: prioritized_tasks
+
+  - id: execute_research
+    name: Execute Research Tasks
+    description: Run all research tasks first
+    condition: has_tasks_of_type("research")
+    actions:
+      - action: for_each
+        tasks: prioritized_tasks.research
+        workflow: ./research-task.yaml
+        parallel: false
+    on_error: continue_next
+    sync_point: wait_all
+
+  - id: execute_content
+    name: Execute Content Tasks
+    description: Create content with research insights
+    condition: has_tasks_of_type("content")
+    actions:
+      - action: for_each
+        tasks: prioritized_tasks.content
+        workflow: ./content-task.yaml
+        parallel: true
+        max_workers: 2
+    on_error: continue_next
+    sync_point: wait_all
+
+  - id: execute_posts
+    name: Execute Post Tasks
+    description: Publish prepared content
+    condition: has_tasks_of_type("post")
+    actions:
+      - action: for_each
+        tasks: prioritized_tasks.post
+        workflow: ./fb-post-task.yaml
+        parallel: false
+        requires_confirmation: true
+    on_error: log_and_continue
+    sync_point: wait_all
+
+  - id: generate_report
+    name: Generate Daily Report
+    description: Create summary of all activities
+    workflow: ./daily-report.yaml
+    inputs:
+      completed_tasks: "{completed}"
+      failed_tasks: "{failed}"
+      metrics: "{today_stats}"
+
+  - id: cleanup
+    name: Session Cleanup
+    description: Update memory and archive
+    actions:
+      - action: update_context
+        summary: true
+      - action: archive_completed
+        to: kanban/archive/
+      - action: update_stats
+        calculate:
+          - completion_rate
+          - avg_completion_time
+      - action: log_learnings
+        if_significant: true
+      - action: save_all_memory
+
+error_handling:
+  max_retries: 2
+  retry_delay_ms: 5000
+  on_batch_failure: continue_other_batches
+  on_complete_failure: save_state_and_notify
+
+observer_commands:
+  "*pause": pause_after_current_task
+  "*skip": skip_current_batch
+  "*status": show_progress
+  "*exit": save_and_exit
+
+notifications:
+  on_start: "Starting daily batch run..."
+  on_phase_complete: "Phase {phase_name} completed"
+  on_complete: "Daily run completed: {completed}/{total} tasks"
+  on_error: "Error in {phase}: {error_message}"

@@ -1,0 +1,68 @@
+{
+  "video_id": "vocab-001-negotiate",
+  "qc_timestamp": "2026-01-04T15:12:00+07:00",
+  "qc_version": "1.0",
+  "overall_score": 90,
+  "grade": "A",
+  "action": "PUBLISH IMMEDIATELY",
+  "checks": {
+    "technical": {
+      "score": 28,
+      "max_score": 30,
+      "details": {
+        "T1_resolution": {"status": "pass", "value": "1080x1920", "expected": "1080x1920"},
+        "T2_duration": {"status": "pass", "value": 30, "expected": "15-60s"},
+        "T3_video_codec": {"status": "pass", "value": "h264", "expected": "h264"},
+        "T4_audio_codec": {"status": "pass", "value": "aac", "expected": "aac"},
+        "T5_file_size": {"status": "pass", "value": "0.58 MB", "expected": "< 10 MB"},
+        "T6_bitrate": {"status": "warning", "value": 39450, "note": "May be too low for complex visuals"}
+      }
+    },
+    "content": {
+      "score": 40,
+      "max_score": 40,
+      "details": {
+        "C1_word_accuracy": {"status": "pass", "note": "NEGOTIATE - valid TOEIC vocabulary"},
+        "C2_pronunciation": {"status": "pass", "note": "IPA /nɪˈɡoʊʃieɪt/ correctly shown"},
+        "C3_definition": {"status": "pass", "note": "Vietnamese and English definitions provided"},
+        "C4_example": {"status": "pass", "note": "Business context example provided"},
+        "C5_collocations": {"status": "pass", "note": "2 common collocations included"}
+      }
+    },
+    "seo": {
+      "score": 22,
+      "max_score": 30,
+      "details": {
+        "S1_title": {"status": "pass", "value": "NEGOTIATE - Từ vựng TOEIC Business #shorts", "chars": 43},
+        "S2_description": {"status": "pass", "note": "Keywords and hashtags included"},
+        "S3_tags": {"status": "pass", "count": 12},
+        "S4_thumbnail": {"status": "pass", "file": "thumbnail.png"},
+        "S5_metadata": {"status": "pass", "file": "metadata.json"},
+        "S6_subtitles": {"status": "missing", "note": "subtitles.ass not found"}
+      }
+    }
+  },
+  "issues": [
+    {
+      "severity": "warning",
+      "category": "technical",
+      "code": "T6",
+      "message": "Low bitrate (39450 bps) may affect quality for complex visuals",
+      "recommendation": "Consider increasing CRF value or adding more visual complexity"
+    },
+    {
+      "severity": "info",
+      "category": "seo",
+      "code": "S6",
+      "message": "Subtitles file missing",
+      "recommendation": "Add .ass subtitles for accessibility and SEO"
+    }
+  ],
+  "files_validated": {
+    "shorts.mp4": true,
+    "thumbnail.png": true,
+    "metadata.json": true,
+    "subtitles.ass": false
+  },
+  "recommendation": "Video is ready for publishing. Consider adding subtitles for improved accessibility and SEO ranking."
+}

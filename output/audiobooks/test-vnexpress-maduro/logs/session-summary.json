@@ -1,0 +1,59 @@
+{
+  "session_id": "test-vnexpress-maduro",
+  "status": "COMPLETED",
+  "started_at": "2026-01-04T18:25:00+07:00",
+  "completed_at": "2026-01-04T18:35:00+07:00",
+  "processing_time_minutes": 10,
+
+  "input": {
+    "source": "https://vnexpress.net/loat-nuoc-len-an-vu-my-bat-tong-thong-maduro-5001541.html",
+    "source_type": "url",
+    "word_count": 280,
+    "genre": "news",
+    "language": "vi"
+  },
+
+  "output": {
+    "total_chapters": 1,
+    "total_duration": "1:16",
+    "total_duration_ms": 75936,
+    "formats_created": ["MP3"]
+  },
+
+  "quality": {
+    "average_score": 95,
+    "grade": "A",
+    "decision": "APPROVED",
+    "issues_found": 0
+  },
+
+  "files": {
+    "mp3_chapters": 1,
+    "total_size_mb": 1.74
+  },
+
+  "steps_completed": [
+    "init",
+    "ingestion",
+    "structure",
+    "adaptation",
+    "production",
+    "engineering",
+    "review"
+  ],
+
+  "specifications": {
+    "format": "MP3",
+    "bitrate": "192 kbps",
+    "sample_rate": 44100,
+    "channels": "mono",
+    "loudness_lufs": -14.6,
+    "true_peak_db": -1.7
+  },
+
+  "notes": [
+    "Test run with VnExpress news article",
+    "Single narrator voice (vi-VN-HoaiMyNeural)",
+    "Total 11 TTS segments generated"
+  ]
+}

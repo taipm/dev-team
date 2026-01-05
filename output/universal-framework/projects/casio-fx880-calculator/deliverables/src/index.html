@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casio FX-880 Calculator</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="calculator">
+    <!-- Header -->
+    <div class="calc-header">
+      <span class="brand">CASIO</span>
+      <span class="model">fx-880 VN X</span>
+    </div>
+
+    <!-- Display -->
+    <div class="display">
+      <div class="display-expression"></div>
+      <div class="display-result">0</div>
+    </div>
+
+    <!-- Keypad -->
+    <div class="keypad">
+      <!-- Function Row -->
+      <div class="row function-row">
+        <button class="btn btn-function" data-action="shift">SHIFT</button>
+        <button class="btn btn-function" data-action="alpha">ALPHA</button>
+        <button class="btn btn-function" data-action="mode">MODE</button>
+        <button class="btn btn-clear" data-action="on">ON</button>
+      </div>
+
+      <!-- Scientific Row 1 (placeholder for MVP) -->
+      <div class="row scientific-row">
+        <button class="btn btn-function" data-action="inverse">x⁻¹</button>
+        <button class="btn btn-function" data-action="square">x²</button>
+        <button class="btn btn-function" data-action="power">^</button>
+        <button class="btn btn-function" data-action="log">log</button>
+        <button class="btn btn-function" data-action="ln">ln</button>
+        <button class="btn btn-function" data-action="negate">(-)</button>
+      </div>
+
+      <!-- Scientific Row 2 (placeholder for MVP) -->
+      <div class="row scientific-row">
+        <button class="btn btn-function" data-action="sin">sin</button>
+        <button class="btn btn-function" data-action="cos">cos</button>
+        <button class="btn btn-function" data-action="tan">tan</button>
+        <button class="btn btn-function" data-action="sqrt">√</button>
+        <button class="btn btn-function" data-action="exp">EXP</button>
+        <button class="btn btn-function" data-action="pi">π</button>
+      </div>
+
+      <!-- Number Rows -->
+      <div class="row">
+        <button class="btn btn-number" data-value="7">7</button>
+        <button class="btn btn-number" data-value="8">8</button>
+        <button class="btn btn-number" data-value="9">9</button>
+        <button class="btn btn-delete" data-action="delete">DEL</button>
+        <button class="btn btn-clear" data-action="clear">AC</button>
+      </div>
+
+      <div class="row">
+        <button class="btn btn-number" data-value="4">4</button>
+        <button class="btn btn-number" data-value="5">5</button>
+        <button class="btn btn-number" data-value="6">6</button>
+        <button class="btn btn-operator" data-operator="*">×</button>
+        <button class="btn btn-operator" data-operator="/">÷</button>
+      </div>
+
+      <div class="row">
+        <button class="btn btn-number" data-value="1">1</button>
+        <button class="btn btn-number" data-value="2">2</button>
+        <button class="btn btn-number" data-value="3">3</button>
+        <button class="btn btn-operator" data-operator="+">+</button>
+        <button class="btn btn-operator" data-operator="-">−</button>
+      </div>
+
+      <div class="row">
+        <button class="btn btn-number" data-value="0">0</button>
+        <button class="btn btn-number" data-value=".">.</button>
+        <button class="btn btn-function" data-action="exp10">×10ˣ</button>
+        <button class="btn btn-function" data-action="ans">Ans</button>
+        <button class="btn btn-equal" data-action="equals">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/math-basic.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

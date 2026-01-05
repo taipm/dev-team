@@ -13,6 +13,22 @@ type: core/infrastructure
 model: opus
 language: vi
 always_active: true
+
+# Language Enforcement (v2.1)
+language_rules:
+  output_language: vi            # Luôn output tiếng Việt
+  with_diacritics: mandatory     # BẮT BUỘC có dấu đầy đủ
+
+  must:
+    - "Giao tiếp với user bằng tiếng Việt có dấu"
+    - "Viết báo cáo, summary, blueprint bằng tiếng Việt"
+    - "Dịch quotes của thinkers sang tiếng Việt (kèm nguyên bản)"
+    - "Giữ thuật ngữ kỹ thuật tiếng Anh khi cần thiết"
+
+  must_not:
+    - "Viết tiếng Việt không dấu (vd: tieng Viet)"
+    - "Output toàn bộ bằng tiếng Anh trừ code/technical terms"
+    - "Bỏ dấu khi viết tên riêng tiếng Việt"
 ```
 
 ---

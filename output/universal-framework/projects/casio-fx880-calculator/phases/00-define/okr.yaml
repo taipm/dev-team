@@ -1,0 +1,65 @@
+# Phase 0: DEFINE - OKR Output
+# Project: Casio FX-880 Calculator App
+# Generated: 2026-01-04
+
+objective: |
+  Tạo ứng dụng máy tính khoa học Casio FX-880 với giao diện realistic
+  và đầy đủ chức năng, giúp người dùng có trải nghiệm như sử dụng máy tính thật.
+
+key_results:
+  - id: KR1
+    description: "Core calculator functions working"
+    metric: "Number of functions implemented"
+    baseline: 0
+    target: 50
+    unit: "functions"
+    deadline: "2026-01-06"
+    verification_method: "Function test checklist"
+
+  - id: KR2
+    description: "UI accuracy matching real Casio FX-880"
+    metric: "Visual similarity score"
+    baseline: 0
+    target: 90
+    unit: "percent"
+    deadline: "2026-01-06"
+    verification_method: "Side-by-side comparison"
+
+  - id: KR3
+    description: "Responsive and smooth user experience"
+    metric: "Page load time and interaction latency"
+    baseline: null
+    target: 2
+    unit: "seconds max"
+    deadline: "2026-01-06"
+    verification_method: "Lighthouse performance test"
+
+speed_of_light:
+  value: 16
+  unit: "hours"
+  assumptions:
+    - "Developer familiar with HTML/CSS/JavaScript"
+    - "No external API dependencies"
+    - "Reference images of FX-880 available"
+    - "No complex backend required"
+  breakdown:
+    - item: "UI Design & Layout"
+      hours: 4
+    - item: "Core Math Engine"
+      hours: 4
+    - item: "Scientific Functions"
+      hours: 4
+    - item: "Integration & Polish"
+      hours: 2
+    - item: "Testing"
+      hours: 2
+
+constraints:
+  time: "2 days"
+  resources: "1 developer"
+  technology: "Pure HTML/CSS/JavaScript (no frameworks)"
+
+metadata:
+  created_at: "2026-01-04T22:00:00+07:00"
+  created_by: "DEFINER Agent"
+  version: "1.0"

@@ -1,0 +1,241 @@
+{
+  "video_id": "vocab-001-negotiate",
+  "format": "shorts",
+  "resolution": {
+    "width": 1080,
+    "height": 1920
+  },
+  "slides": [
+    {
+      "id": "HOOK_SLIDE",
+      "type": "hook",
+      "start_time": 0.0,
+      "end_time": 3.0,
+      "duration": 3.0,
+      "elements": [
+        {
+          "type": "text",
+          "content": "80%",
+          "position": {"x": 540, "y": 800},
+          "font_size": 200,
+          "color": "#D4EC4E",
+          "animation": "scale_in"
+        },
+        {
+          "type": "text",
+          "content": "bài TOEIC về business!",
+          "position": {"x": 540, "y": 1100},
+          "font_size": 48,
+          "color": "#FFFFFF",
+          "animation": "fade_in"
+        }
+      ],
+      "background": "#1A1A2E",
+      "transition_in": "fade",
+      "transition_out": "fade"
+    },
+    {
+      "id": "WORD_SLIDE",
+      "type": "word_card",
+      "start_time": 3.0,
+      "end_time": 8.0,
+      "duration": 5.0,
+      "elements": [
+        {
+          "type": "text",
+          "content": "NEGOTIATE",
+          "position": {"x": 540, "y": 700},
+          "font_size": 100,
+          "color": "#3DD9FF",
+          "font_weight": "bold",
+          "animation": "slide_up"
+        },
+        {
+          "type": "text",
+          "content": "/nɪˈɡoʊʃieɪt/",
+          "position": {"x": 540, "y": 850},
+          "font_size": 48,
+          "color": "#AAAAAA",
+          "animation": "fade_in"
+        },
+        {
+          "type": "badge",
+          "content": "verb",
+          "position": {"x": 540, "y": 550},
+          "font_size": 32,
+          "color": "#1A1A2E",
+          "background": "#D4EC4E",
+          "animation": "pop_in"
+        },
+        {
+          "type": "icon",
+          "content": "speaker",
+          "position": {"x": 540, "y": 1000},
+          "size": 64,
+          "color": "#FFFFFF",
+          "animation": "pulse"
+        }
+      ],
+      "background": "#1A1A2E",
+      "transition_in": "fade",
+      "transition_out": "fade"
+    },
+    {
+      "id": "DEF_SLIDE",
+      "type": "definition",
+      "start_time": 8.0,
+      "end_time": 15.0,
+      "duration": 7.0,
+      "elements": [
+        {
+          "type": "text",
+          "content": "đàm phán, thương lượng",
+          "position": {"x": 540, "y": 700},
+          "font_size": 64,
+          "color": "#3DD9FF",
+          "font_weight": "bold",
+          "animation": "slide_right"
+        },
+        {
+          "type": "divider",
+          "position": {"x": 540, "y": 850},
+          "width": 800,
+          "color": "#444444"
+        },
+        {
+          "type": "text",
+          "content": "to discuss something\nto reach an agreement",
+          "position": {"x": 540, "y": 1000},
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "animation": "fade_in"
+        }
+      ],
+      "background": "#1A1A2E",
+      "transition_in": "fade",
+      "transition_out": "fade"
+    },
+    {
+      "id": "EXAMPLE_SLIDE",
+      "type": "example",
+      "start_time": 15.0,
+      "end_time": 22.0,
+      "duration": 7.0,
+      "elements": [
+        {
+          "type": "label",
+          "content": "EXAMPLE",
+          "position": {"x": 540, "y": 500},
+          "font_size": 28,
+          "color": "#D4EC4E"
+        },
+        {
+          "type": "text",
+          "content": "We need to negotiate\nthe contract terms.",
+          "position": {"x": 540, "y": 700},
+          "font_size": 48,
+          "color": "#FFFFFF",
+          "animation": "slide_up"
+        },
+        {
+          "type": "highlight",
+          "word": "negotiate",
+          "color": "#3DD9FF"
+        },
+        {
+          "type": "divider",
+          "position": {"x": 540, "y": 900},
+          "width": 800,
+          "color": "#444444"
+        },
+        {
+          "type": "text",
+          "content": "Chúng ta cần thương lượng\ncác điều khoản hợp đồng.",
+          "position": {"x": 540, "y": 1100},
+          "font_size": 36,
+          "color": "#AAAAAA",
+          "animation": "fade_in"
+        }
+      ],
+      "background": "#1A1A2E",
+      "transition_in": "fade",
+      "transition_out": "fade"
+    },
+    {
+      "id": "TIP_SLIDE",
+      "type": "tip",
+      "start_time": 22.0,
+      "end_time": 27.0,
+      "duration": 5.0,
+      "elements": [
+        {
+          "type": "label",
+          "content": "💡 COLLOCATIONS",
+          "position": {"x": 540, "y": 600},
+          "font_size": 32,
+          "color": "#D4EC4E"
+        },
+        {
+          "type": "text",
+          "content": "negotiate a deal",
+          "position": {"x": 540, "y": 800},
+          "font_size": 56,
+          "color": "#FFFFFF",
+          "animation": "slide_right"
+        },
+        {
+          "type": "text",
+          "content": "negotiate with clients",
+          "position": {"x": 540, "y": 950},
+          "font_size": 56,
+          "color": "#FFFFFF",
+          "animation": "slide_right"
+        }
+      ],
+      "background": "#1A1A2E",
+      "transition_in": "fade",
+      "transition_out": "fade"
+    },
+    {
+      "id": "CTA_SLIDE",
+      "type": "cta",
+      "start_time": 27.0,
+      "end_time": 30.0,
+      "duration": 3.0,
+      "elements": [
+        {
+          "type": "icon",
+          "content": "follow",
+          "position": {"x": 540, "y": 700},
+          "size": 120,
+          "color": "#FF0000",
+          "animation": "bounce"
+        },
+        {
+          "type": "text",
+          "content": "Follow để học\nTOEIC mỗi ngày!",
+          "position": {"x": 540, "y": 950},
+          "font_size": 48,
+          "color": "#FFFFFF",
+          "animation": "scale_in"
+        },
+        {
+          "type": "text",
+          "content": "@TOEICDaily",
+          "position": {"x": 540, "y": 1150},
+          "font_size": 36,
+          "color": "#3DD9FF"
+        }
+      ],
+      "background": "#1A1A2E",
+      "transition_in": "fade",
+      "transition_out": "fade"
+    }
+  ],
+  "global_settings": {
+    "font_family": "Arial Unicode MS",
+    "default_transition": "fade",
+    "transition_duration": 0.3,
+    "fps": 30
+  }
+}

@@ -1,0 +1,111 @@
+# Knowledge Index for One-Page Team
+# Version: 2.0
+
+index:
+  version: "2.0"
+  team: one-page-team
+  description: Knowledge base cho One-Page Team - document stack generation
+
+# Shared Knowledge (all agents)
+shared:
+  - id: oppm-methodology
+    path: shared/oppm-methodology.md
+    keywords: [oppm, methodology, clark campbell, one-page, framework]
+    description: OPPM framework và 5 essential elements
+
+  - id: document-stack
+    path: shared/document-stack.md
+    keywords: [document, stack, technical, planning, tracking, reference]
+    description: Document stack structure và categories
+
+# Agent-Specific Knowledge
+agents:
+  orchestrator:
+    - id: project-analysis
+      path: orchestrator/project-analysis.md
+      keywords: [analysis, project, scope, requirements]
+      description: How to analyze project requirements
+
+    - id: task-assignment
+      path: orchestrator/task-assignment.md
+      keywords: [assignment, delegation, workflow]
+      description: Task assignment patterns
+
+  oppm:
+    - id: oppm-framework
+      path: oppm/oppm-framework.md
+      keywords: [oppm, elements, structure]
+      description: OPPM 5 elements framework
+
+    - id: templates
+      path: oppm/templates.md
+      keywords: [template, software, general, agile, personal]
+      description: 4 OPPM templates
+
+    - id: layout-patterns
+      path: oppm/layout-patterns.md
+      keywords: [layout, visual, box, table]
+      description: Visual layout patterns
+
+    - id: export-guide
+      path: oppm/export-guide.md
+      keywords: [export, pdf, pandoc]
+      description: PDF export instructions
+
+  doc:
+    - id: technical-templates
+      path: doc/technical-templates.md
+      keywords: [technical, setup, pipeline, api]
+      description: Technical documentation templates
+
+    - id: planning-templates
+      path: doc/planning-templates.md
+      keywords: [planning, phase, calendar, risk]
+      description: Planning documentation templates
+
+  track:
+    - id: metrics-guide
+      path: track/metrics-guide.md
+      keywords: [metrics, kpi, dashboard]
+      description: Metrics and KPI tracking guide
+
+    - id: tracker-templates
+      path: track/tracker-templates.md
+      keywords: [tracker, log, retrospective]
+      description: Tracking templates
+
+  sop:
+    - id: sop-templates
+      path: sop/sop-templates.md
+      keywords: [sop, procedure, step]
+      description: SOP templates
+
+    - id: checklist-patterns
+      path: sop/checklist-patterns.md
+      keywords: [checklist, quality, verification]
+      description: Checklist patterns
+
+  template:
+    - id: prompt-patterns
+      path: template/prompt-patterns.md
+      keywords: [prompt, ai, chatgpt]
+      description: Prompt engineering patterns
+
+    - id: style-guide-templates
+      path: template/style-guide-templates.md
+      keywords: [style, brand, seo]
+      description: Style guide templates
+
+# Auto-load configuration
+auto_load:
+  on_team_start:
+    - shared/oppm-methodology.md
+    - shared/document-stack.md
+
+  on_agent_activate:
+    orchestrator: [orchestrator/project-analysis.md]
+    oppm: [oppm/oppm-framework.md, oppm/templates.md]
+    doc: [doc/technical-templates.md, doc/planning-templates.md]
+    track: [track/metrics-guide.md]
+    sop: [sop/sop-templates.md]
+    template: [template/prompt-patterns.md]

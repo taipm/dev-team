@@ -1,0 +1,65 @@
+schema_version: "1.0"
+last_updated: "2026-01-04T00:00:00Z"
+
+current_active: v001
+best_all_time:
+  version: v001
+  score: null
+
+versions:
+  v001:
+    score: null
+    created: "2026-01-04T00:00:00Z"
+    mutation: null
+    parent: null
+    executions: 0
+    status: current
+    notes: "Base version - original prompt"
+
+stats:
+  total_versions: 1
+  total_evolutions: 0
+  avg_improvement: 0
+  rollbacks: 0
+  best_strategy: null
+
+strategy_performance:
+  instruction_rephrase:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  step_reorder:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  constraint_add:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  constraint_remove:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  example_inject:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  emphasis_shift:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  format_change:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  persona_adjust:
+    uses: 0
+    improvements: 0
+    avg_delta: 0
+  v002:
+    score: null
+    created: 2026-01-05T01:54:36Z
+    mutation: example_inject
+    parent: v001
+    parent_score: 86.5000
+    status: current

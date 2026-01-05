@@ -1,0 +1,143 @@
+# Knowledge Index for Taipm Agent
+# Defines what knowledge to load and when
+
+name: taipm-agent
+version: 1.0
+description: Personal AI Operating System - Central Orchestrator
+
+# Knowledge categories
+knowledge:
+  # Always loaded on activation
+  always_load:
+    - file: 01-agent-registry.md
+      purpose: Agent/team catalog for routing decisions
+      priority: critical
+
+    - file: 02-routing-rules.md
+      purpose: Intent detection and routing patterns
+      priority: critical
+
+  # Loaded on demand based on context
+  on_demand:
+    - file: 03-user-preferences-guide.md
+      purpose: Preference capture and application
+      trigger:
+        - new_user
+        - preference_change
+        - explicit_request
+
+    - file: 04-workflow-catalog.md
+      purpose: Available automated workflows
+      trigger:
+        - workflow_request
+        - automation_query
+
+    - file: 05-handoff-protocol.md
+      purpose: Delegation and handoff procedures
+      trigger:
+        - before_handoff
+        - delegation_needed
+
+    - file: 06-learning-patterns.md
+      purpose: Continuous learning system
+      trigger:
+        - learning_batch
+        - routing_correction
+        - pattern_review
+
+# Workflow definitions
+workflows:
+  - file: workflows/route-request.yaml
+    purpose: Main routing workflow
+    trigger: every_request
+
+  - file: workflows/daily-briefing.yaml
+    purpose: Morning briefing generation
+    trigger:
+      - command: ["daily", "morning", "briefing"]
+      - scheduled: "09:00"
+
+  - file: workflows/learn-pattern.yaml
+    purpose: Pattern learning and updates
+    trigger:
+      - scheduled: "23:00"
+      - event: routing_correction
+      - threshold: routing_failures > 3/hour
+
+# Memory integration
+memory:
+  local:
+    - path: memory/context.md
+      purpose: Agent-specific state
+      sync: read_write
+
+    - path: memory/learning.md
+      purpose: Routing patterns and learnings
+      sync: read_write
+
+  unified:
+    - path: ../../memory/context.md
+      purpose: Global context
+      sync: read_write
+
+    - path: ../../memory/preferences.yaml
+      purpose: User preferences
+      sync: read_only
+
+    - path: ../../memory/insights.md
+      purpose: Accumulated insights
+      sync: read_write
+
+# Scripts
+scripts:
+  - file: scripts/validate-routing.sh
+    purpose: Validate routing configuration
+    usage: Manual or CI/CD
+
+  - file: scripts/sync-memory.sh
+    purpose: Sync memory systems
+    usage: Manual or scheduled
+
+# Dependencies
+dependencies:
+  agents:
+    - father-agent  # For agent creation
+    - agent-evaluator  # For agent testing
+    - daily-agent  # For daily operations
+
+  teams:
+    - deep-thinking-team  # For complex analysis
+    - audiobook-production-team  # For content creation
+    - go-team  # For Go development
+
+  skills:
+    - microai:edge-tts  # For audio generation
+    - microai:ollama  # For local LLM
+
+# Metrics to track
+metrics:
+  - name: routing_accuracy
+    description: Percentage of correct routes
+    target: ">90%"
+
+  - name: user_corrections
+    description: Number of user corrections per week
+    target: "<5"
+
+  - name: handoff_success
+    description: Successful handoffs
+    target: ">95%"
+
+  - name: context_preservation
+    description: Context maintained across sessions
+    target: "100%"
+
+# Tags for discovery
+tags:
+  - orchestrator
+  - central
+  - routing
+  - personal
+  - automation
+  - memory
+  - learning

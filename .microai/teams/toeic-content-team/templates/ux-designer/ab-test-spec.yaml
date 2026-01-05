@@ -1,0 +1,311 @@
+# A/B Test Specification Template
+# Template cho định nghĩa và theo dõi A/B tests
+
+# ═══════════════════════════════════════════════════════════════════════
+# METADATA
+# ═══════════════════════════════════════════════════════════════════════
+
+test_id: "ABT-{YYYY-MM-DD}-{SEQ}"
+test_name: "{descriptive_name}"
+created_by: ux-designer-agent
+created_at: "{timestamp}"
+version: "1.0"
+
+# ═══════════════════════════════════════════════════════════════════════
+# TEST DEFINITION
+# ═══════════════════════════════════════════════════════════════════════
+
+hypothesis:
+  statement: "{If we change X, then Y will improve because Z}"
+  expected_outcome: "{+/-}% improvement in {metric}"
+  rationale: "{Why we believe this}"
+
+test_type:
+  category: thumbnail | hook | layout | cta | pacing | color | typography
+  element: "{specific_element_being_tested}"
+  scope: single_video | batch | all_new
+
+# ═══════════════════════════════════════════════════════════════════════
+# VARIANTS
+# ═══════════════════════════════════════════════════════════════════════
+
+variants:
+  control:
+    name: "A - Control"
+    description: "{Current approach}"
+    specification:
+      # For thumbnail tests
+      thumbnail:
+        style: "{style_name}"
+        text: "{text_content}"
+        colors: ["{hex1}", "{hex2}"]
+        elements: ["{element1}", "{element2}"]
+        image_path: "{path}"
+
+      # For hook tests
+      hook:
+        type: question | problem | promise | curiosity | direct
+        script: "{exact_script}"
+        duration: "{seconds}s"
+        visual: "{visual_description}"
+
+      # For layout tests
+      layout:
+        template: "{template_name}"
+        elements_per_slide: {n}
+        text_position: center | top | bottom
+        font_size: "{size}px"
+
+      # For CTA tests
+      cta:
+        placement: early | mid | end
+        script: "{exact_script}"
+        visual: "{visual_description}"
+        duration: "{seconds}s"
+
+  variant:
+    name: "B - Variant"
+    description: "{New approach being tested}"
+    specification:
+      # Same structure as control
+      thumbnail:
+        style: "{style_name}"
+        text: "{text_content}"
+        colors: ["{hex1}", "{hex2}"]
+        elements: ["{element1}", "{element2}"]
+        image_path: "{path}"
+
+      hook:
+        type: question | problem | promise | curiosity | direct
+        script: "{exact_script}"
+        duration: "{seconds}s"
+        visual: "{visual_description}"
+
+      layout:
+        template: "{template_name}"
+        elements_per_slide: {n}
+        text_position: center | top | bottom
+        font_size: "{size}px"
+
+      cta:
+        placement: early | mid | end
+        script: "{exact_script}"
+        visual: "{visual_description}"
+        duration: "{seconds}s"
+
+  # Optional: Third variant for multi-arm tests
+  variant_c:
+    enabled: false
+    name: "C - Alternative"
+    description: "{Alternative approach}"
+    specification: {}
+
+# ═══════════════════════════════════════════════════════════════════════
+# TEST CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════
+
+configuration:
+  duration:
+    minimum_days: 3
+    maximum_days: 14
+    target_days: 7
+
+  sample_size:
+    minimum_videos: 10
+    target_videos: 20
+    allocation: 50/50  # or 50/25/25 for 3 variants
+
+  traffic_split:
+    method: random | sequential | alternating
+    ensure_balance: true
+
+  statistical:
+    confidence_level: 95%
+    minimum_detectable_effect: 20%
+    power: 80%
+
+# ═══════════════════════════════════════════════════════════════════════
+# METRICS
+# ═══════════════════════════════════════════════════════════════════════
+
+metrics:
+  primary:
+    name: "{primary_metric}"  # ctr | watch_time | retention | engagement
+    target: "{target_value}"
+    minimum_improvement: "{%}%"
+
+  secondary:
+    - name: watch_time
+      description: "Average seconds watched"
+    - name: retention_rate
+      description: "Percentage of video watched"
+    - name: engagement_rate
+      description: "(Likes + comments + shares) / views"
+
+  guardrail:
+    - name: "{metric_name}"
+      description: "Must not decrease by more than {%}%"
+      threshold: "{value}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# EXECUTION
+# ═══════════════════════════════════════════════════════════════════════
+
+execution:
+  start_date: "{YYYY-MM-DD}"
+  end_date: "{YYYY-MM-DD}"  # Calculated from start + duration
+
+  videos:
+    control:
+      - video_id: "{id}"
+        title: "{title}"
+        published: "{date}"
+      - video_id: "{id}"
+        title: "{title}"
+        published: "{date}"
+
+    variant:
+      - video_id: "{id}"
+        title: "{title}"
+        published: "{date}"
+      - video_id: "{id}"
+        title: "{title}"
+        published: "{date}"
+
+  checkpoints:
+    - day: 1
+      action: "Initial data check"
+    - day: 3
+      action: "Early results review"
+    - day: 7
+      action: "Primary analysis"
+
+# ═══════════════════════════════════════════════════════════════════════
+# RESULTS (Filled after test completion)
+# ═══════════════════════════════════════════════════════════════════════
+
+results:
+  status: pending | running | completed | cancelled
+  completed_at: null  # "{timestamp}"
+
+  data:
+    control:
+      videos_count: null
+      total_views: null
+      total_impressions: null
+      metrics:
+        ctr: null
+        watch_time: null
+        retention: null
+        engagement: null
+
+    variant:
+      videos_count: null
+      total_views: null
+      total_impressions: null
+      metrics:
+        ctr: null
+        watch_time: null
+        retention: null
+        engagement: null
+
+  analysis:
+    winner: null  # control | variant | inconclusive
+    lift:
+      primary_metric: null  # "{+/-}%"
+      confidence: null  # "{%}%"
+    statistical_significance: null  # true | false
+
+    interpretation: |
+      {Detailed interpretation of results}
+
+# ═══════════════════════════════════════════════════════════════════════
+# DECISION & ACTION
+# ═══════════════════════════════════════════════════════════════════════
+
+decision:
+  outcome: null  # implement_variant | keep_control | extend_test | new_test
+  rationale: null
+
+  implementation:
+    apply_to:
+      - template: "{template_name}"
+        effective_from: "{date}"
+    update_guidelines: true | false
+    notify_agents:
+      - visual-designer
+      - script-writer
+
+  documentation:
+    add_to_best_practices: true | false
+    pattern_name: null  # "{pattern_name}"
+
+# ═══════════════════════════════════════════════════════════════════════
+# LEARNINGS
+# ═══════════════════════════════════════════════════════════════════════
+
+learnings:
+  key_insight: null  # "{main_learning}"
+
+  what_worked: []
+    # - "{learning_1}"
+    # - "{learning_2}"
+
+  what_didnt_work: []
+    # - "{learning_1}"
+    # - "{learning_2}"
+
+  follow_up_tests: []
+    # - hypothesis: "{new_hypothesis}"
+    #   priority: high | medium | low
+
+  notes: |
+    {Additional observations and notes}
+
+# ═══════════════════════════════════════════════════════════════════════
+# EXAMPLES
+# ═══════════════════════════════════════════════════════════════════════
+
+_examples:
+
+  thumbnail_test:
+    test_id: "ABT-2026-01-04-001"
+    test_name: "Emoji vs No Emoji Thumbnails"
+    hypothesis:
+      statement: "If we add relevant emojis to thumbnails, CTR will increase because emojis grab attention"
+      expected_outcome: "+25% CTR"
+    variants:
+      control:
+        name: "A - No Emoji"
+        description: "Text-only thumbnail"
+      variant:
+        name: "B - With Emoji"
+        description: "Same text + relevant emoji"
+
+  hook_test:
+    test_id: "ABT-2026-01-04-002"
+    test_name: "Question vs Direct Hook"
+    hypothesis:
+      statement: "If we start with a question, 5s retention will increase because it triggers curiosity"
+      expected_outcome: "+15% 5-second retention"
+    variants:
+      control:
+        name: "A - Direct"
+        script: "Today's word is 'negotiate'"
+      variant:
+        name: "B - Question"
+        script: "Do you know how to say 'thương lượng' in English?"
+
+  layout_test:
+    test_id: "ABT-2026-01-04-003"
+    test_name: "2-item vs 3-item Slides"
+    hypothesis:
+      statement: "If we reduce items per slide from 3 to 2, retention will improve due to lower cognitive load"
+      expected_outcome: "+10% average retention"
+    variants:
+      control:
+        layout:
+          elements_per_slide: 3
+      variant:
+        layout:
+          elements_per_slide: 2

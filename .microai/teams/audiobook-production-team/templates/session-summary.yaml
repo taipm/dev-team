@@ -1,0 +1,113 @@
+# Session Summary Template
+# Final output from Export step
+
+---
+
+# Session Identification
+session_id: ""
+status: COMPLETED|FAILED|PARTIAL
+
+# Timing
+started_at: ""
+completed_at: ""
+processing_time_minutes: 0
+
+# Input Information
+input:
+  source: ""
+  source_type: pdf|epub|docx|txt|url
+  word_count: 0
+  genre: ""
+  language: vi|en|mixed
+
+# Output Information
+output:
+  total_chapters: 0
+  total_duration: "0:00:00"
+  total_duration_ms: 0
+  formats_created:
+    - MP3
+    - M4B
+  platforms_ready:
+    - ACX
+    - YouTube
+    - Spotify
+    - Local
+
+# Quality Assessment
+quality:
+  average_score: 0
+  grade: A|B|C|D|F
+  decision: APPROVED|APPROVED_WITH_NOTES|REVIEW_REQUIRED|FIXES_REQUIRED|REJECTED
+  issues_found: 0
+  issues: []
+
+# File Statistics
+files:
+  mp3_chapters: 0
+  m4b_audiobook: 0
+  cover_sizes: 0
+  total_size_mb: 0
+
+# Steps Completed
+steps_completed:
+  - init
+  - ingestion
+  - structure
+  - adaptation
+  # - character-voice  # Fiction only
+  - production
+  - engineering
+  - review
+  - cover-design
+  - metadata
+  - export
+
+# Deliverables
+deliverables:
+  mp3:
+    location: distribution/mp3/
+    count: 0
+    tagged: true
+
+  m4b:
+    location: distribution/m4b/audiobook.m4b
+    chapters: true
+
+  covers:
+    location: covers/
+    sizes: [3000, 2400, 1400, 500, 200]
+
+  metadata:
+    location: distribution/metadata/audiobook-metadata.json
+    valid: true
+
+  platforms:
+    acx:
+      ready: true
+      location: distribution/platforms/acx/
+    youtube:
+      ready: true
+      location: distribution/platforms/youtube/
+    spotify:
+      ready: true
+      location: distribution/platforms/spotify/
+    local:
+      ready: true
+      location: distribution/platforms/local/
+
+# Technical Specifications
+specifications:
+  audio:
+    format: MP3
+    bitrate: "192 kbps"
+    sample_rate: 44100
+    channels: mono
+    loudness_lufs: -14
+    true_peak_db: -1.5
+
+# Notes
+notes: []
+
+# Errors (if any)
+errors: []

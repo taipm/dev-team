@@ -1,0 +1,37 @@
+# Daily Agent Knowledge Index
+# Manages knowledge files for the agent
+
+version: "1.0"
+agent: daily-agent
+
+files:
+  - id: task-templates
+    path: ./01-task-templates.md
+    keywords: [task, template, research, post, content, report]
+    description: "Templates for different task types"
+    auto_load: true
+
+  - id: integration-guide
+    path: ./02-integration-guide.md
+    keywords: [integration, deep-research, fb-post, youtube, kanban]
+    description: "How to integrate with sub-agents and teams"
+    auto_load: true
+
+  - id: gmail-guide
+    path: ./03-gmail-integration.md
+    keywords: [gmail, email, oauth]
+    description: "Gmail integration guide (future)"
+    auto_load: false
+
+loading_strategy:
+  on_activation:
+    - task-templates
+    - integration-guide
+
+  on_demand:
+    - gmail-guide
+
+metadata:
+  total_files: 3
+  auto_load_count: 2
+  last_updated: "2026-01-02"

@@ -1,0 +1,505 @@
+# Universal Framework - Algorithm Project Type Configuration
+# Version: 2.0
+# Purpose: Complete specification for Algorithm/Computation projects
+
+type:
+  id: "algorithm"
+  name: "Algorithm/Computation Project"
+  version: "2.0"
+
+# =============================================================================
+# ALGORITHM SPECIFICATION REQUIREMENTS
+# =============================================================================
+
+specification_requirements:
+  mandatory:
+    input_specification:
+      description: "Chi tiết về input data"
+      fields:
+        - format
+        - constraints
+        - edge_cases
+        - examples
+
+    output_specification:
+      description: "Chi tiết về expected output"
+      fields:
+        - format
+        - constraints
+        - examples
+
+    complexity_requirements:
+      description: "Yêu cầu về complexity"
+      fields:
+        - time_complexity
+        - space_complexity
+        - input_size_range
+
+  by_fidelity_level:
+    prototype:
+      required:
+        - basic_io_spec
+        - happy_path_examples
+      optional:
+        - edge_cases
+
+    functional:
+      required:
+        - complete_io_spec
+        - edge_case_handling
+        - basic_complexity
+        - test_cases_10
+      optional:
+        - optimization
+
+    polished:
+      required:
+        - complete_io_spec
+        - all_edge_cases
+        - complexity_analysis
+        - test_cases_50
+        - documentation
+      optional:
+        - benchmarks
+
+    realistic:
+      required:
+        - formal_specification
+        - mathematical_proof
+        - complete_test_suite
+        - performance_benchmarks
+        - complexity_proof
+        - optimization_analysis
+      optional: []
+
+# =============================================================================
+# INPUT/OUTPUT SPECIFICATION TEMPLATE
+# =============================================================================
+
+io_specification:
+  input:
+    template: |
+      input:
+        description: "Mô tả input"
+
+        format:
+          type: "array|object|primitive"
+          structure: |
+            [description of structure]
+
+        constraints:
+          size:
+            min: 1
+            max: 10^6
+          values:
+            min: -10^9
+            max: 10^9
+          special:
+            - "No duplicates"
+            - "Sorted ascending"
+
+        edge_cases:
+          - case: "Empty input"
+            input: []
+            expected: null
+
+          - case: "Single element"
+            input: [1]
+            expected: 1
+
+          - case: "Maximum size"
+            description: "n = 10^6"
+
+        examples:
+          - input: [1, 2, 3, 4, 5]
+            explanation: "Normal case with 5 elements"
+
+          - input: [5, 4, 3, 2, 1]
+            explanation: "Reverse sorted"
+
+  output:
+    template: |
+      output:
+        description: "Mô tả output"
+
+        format:
+          type: "number|array|object|boolean"
+          structure: |
+            [description]
+
+        constraints:
+          precision: "10^-6 for floating point"
+          format: "0-indexed or 1-indexed"
+
+        examples:
+          - input: [1, 2, 3]
+            output: 6
+            explanation: "Sum = 1 + 2 + 3"
+
+# =============================================================================
+# COMPLEXITY SPECIFICATION
+# =============================================================================
+
+complexity_specification:
+  template: |
+    complexity:
+      time:
+        target: "O(n log n)"
+        acceptable: "O(n^2) for n < 1000"
+        worst_case: "O(n^2)"
+        average_case: "O(n log n)"
+        best_case: "O(n)"
+        explanation: |
+          - Sorting takes O(n log n)
+          - Single pass takes O(n)
+          - Total: O(n log n)
+
+      space:
+        target: "O(1) auxiliary"
+        acceptable: "O(n)"
+        explanation: |
+          - In-place sorting
+          - No extra data structures
+
+      trade_offs:
+        - "Có thể đạt O(n) time với O(n) space"
+        - "In-place yêu cầu O(n log n) time"
+
+  common_complexities:
+    time:
+      - "O(1)": "Constant - hash lookup, array access"
+      - "O(log n)": "Binary search, balanced tree operations"
+      - "O(n)": "Linear scan, single pass"
+      - "O(n log n)": "Efficient sorting, divide & conquer"
+      - "O(n^2)": "Nested loops, simple DP"
+      - "O(n^3)": "Matrix multiplication, Floyd-Warshall"
+      - "O(2^n)": "Subset enumeration"
+      - "O(n!)": "Permutation enumeration"
+
+    space:
+      - "O(1)": "Fixed variables only"
+      - "O(log n)": "Recursion stack for balanced divide"
+      - "O(n)": "Linear data structure"
+      - "O(n^2)": "2D matrix"
+
+# =============================================================================
+# TEST CASE SPECIFICATION
+# =============================================================================
+
+test_case_specification:
+  categories:
+    basic:
+      description: "Simple, straightforward cases"
+      count: "5-10 cases"
+      examples:
+        - "Small valid input"
+        - "Expected normal behavior"
+
+    edge:
+      description: "Boundary and special cases"
+      count: "10-20 cases"
+      examples:
+        - "Empty input"
+        - "Single element"
+        - "All same values"
+        - "Maximum values"
+        - "Minimum values"
+        - "Maximum size"
+
+    stress:
+      description: "Performance testing"
+      count: "5-10 cases"
+      examples:
+        - "n = maximum allowed"
+        - "Worst case input"
+        - "Random large input"
+
+    corner:
+      description: "Tricky corner cases"
+      count: "5-10 cases"
+      examples:
+        - "Negative numbers"
+        - "Zeros"
+        - "Overflow potential"
+        - "Floating point precision"
+
+  format: |
+    test_case:
+      id: "TC-001"
+      category: "basic"
+      description: "Sum of positive integers"
+
+      input:
+        data: [1, 2, 3, 4, 5]
+        format: "array of integers"
+
+      expected_output:
+        data: 15
+        format: "integer"
+
+      explanation: "1 + 2 + 3 + 4 + 5 = 15"
+
+      metadata:
+        time_limit: "1s"
+        memory_limit: "256MB"
+
+# =============================================================================
+# ALGORITHM DESIGN TEMPLATE
+# =============================================================================
+
+algorithm_design:
+  template: |
+    algorithm_design:
+      name: "Algorithm Name"
+      type: "sorting|searching|dp|graph|greedy|divide_conquer"
+
+      approach:
+        summary: "One-line description"
+        detailed: |
+          Step-by-step explanation:
+          1. First step
+          2. Second step
+          3. ...
+
+      pseudocode: |
+        function solve(input):
+          // Step 1
+          preprocessed = preprocess(input)
+
+          // Step 2
+          for each element in preprocessed:
+            process(element)
+
+          // Step 3
+          return result
+
+      data_structures:
+        - structure: "Hash Map"
+          purpose: "O(1) lookup for seen elements"
+          operations: ["insert", "lookup"]
+
+        - structure: "Min Heap"
+          purpose: "Maintain k smallest elements"
+          operations: ["insert", "extract_min"]
+
+      key_insights:
+        - "Observation 1 that enables the solution"
+        - "Observation 2 that enables optimization"
+
+      correctness:
+        invariant: "Loop invariant or key property"
+        proof_sketch: |
+          Brief explanation of why algorithm is correct
+
+      optimization_notes:
+        - "Could use X instead of Y for better cache performance"
+        - "Parallizable at step Z"
+
+# =============================================================================
+# MANDATORY TASKS FOR ALGORITHM PROJECTS
+# =============================================================================
+
+mandatory_tasks:
+  phase_define:
+    - task: "TASK-ALG-001"
+      name: "Specify Input/Output"
+      description: "Chi tiết hóa I/O format và constraints"
+      output: "io-specification.yaml"
+      questions:
+        - "Input format chính xác?"
+        - "Output format chính xác?"
+        - "Constraints (size, values)?"
+
+    - task: "TASK-ALG-002"
+      name: "Define Complexity Requirements"
+      description: "Xác định yêu cầu về time/space complexity"
+      output: "complexity-requirements.yaml"
+
+  phase_decompose:
+    - task: "TASK-ALG-003"
+      name: "Identify Edge Cases"
+      description: "Liệt kê tất cả edge cases"
+      output: "edge-cases.yaml"
+      dependencies: ["TASK-ALG-001"]
+
+    - task: "TASK-ALG-004"
+      name: "Design Algorithm"
+      description: "Thiết kế thuật toán với pseudocode"
+      output: "algorithm-design.yaml"
+
+    - task: "TASK-ALG-005"
+      name: "Create Test Suite"
+      description: "Tạo comprehensive test cases"
+      output: "test-cases/*.yaml"
+      dependencies: ["TASK-ALG-003"]
+
+  phase_execute:
+    - task: "TASK-ALG-006"
+      name: "Implement Core Algorithm"
+      description: "Implement thuật toán chính"
+      output: "src/algorithm.{ext}"
+      dependencies: ["TASK-ALG-004"]
+
+    - task: "TASK-ALG-007"
+      name: "Implement Input Parsing"
+      description: "Parse input theo specification"
+      output: "src/parser.{ext}"
+
+    - task: "TASK-ALG-008"
+      name: "Implement Output Formatting"
+      description: "Format output theo specification"
+      output: "src/formatter.{ext}"
+
+  phase_validate:
+    - task: "TASK-ALG-VAL-001"
+      name: "Run Test Suite"
+      description: "Chạy tất cả test cases"
+      output: "test-results.md"
+
+    - task: "TASK-ALG-VAL-002"
+      name: "Verify Complexity"
+      description: "Đo và verify complexity"
+      output: "complexity-analysis.md"
+
+# =============================================================================
+# VALIDATION CHECKLIST
+# =============================================================================
+
+validation:
+  correctness:
+    - check: "All basic test cases pass"
+      weight: "critical"
+
+    - check: "All edge cases handled"
+      weight: "critical"
+
+    - check: "All stress tests pass"
+      weight: "high"
+
+    - check: "Output format exactly matches spec"
+      weight: "high"
+
+  efficiency:
+    - check: "Time complexity matches requirement"
+      method: "Measure with increasing n"
+
+    - check: "Space complexity matches requirement"
+      method: "Monitor memory usage"
+
+    - check: "No TLE on stress tests"
+      method: "Run with time limit"
+
+  robustness:
+    - check: "Handles invalid input gracefully"
+    - check: "No integer overflow"
+    - check: "No floating point precision issues"
+    - check: "No memory leaks"
+
+  code_quality:
+    - check: "Clear variable names"
+    - check: "Documented complexity"
+    - check: "Modular structure"
+
+# =============================================================================
+# HANDOFF TEMPLATE SECTIONS
+# =============================================================================
+
+handoff_sections:
+  required:
+    - section: "Problem Statement"
+      content: |
+        ## Problem Statement
+
+        ### Description
+        [Clear problem description]
+
+        ### Input Format
+        ```
+        [Exact input format with examples]
+        ```
+
+        ### Output Format
+        ```
+        [Exact output format with examples]
+        ```
+
+        ### Constraints
+        - 1 ≤ n ≤ 10^6
+        - -10^9 ≤ values ≤ 10^9
+        - ...
+
+    - section: "Examples"
+      content: |
+        ## Examples
+
+        ### Example 1
+        **Input:**
+        ```
+        [input data]
+        ```
+
+        **Output:**
+        ```
+        [output data]
+        ```
+
+        **Explanation:**
+        [Step by step explanation]
+
+    - section: "Edge Cases"
+      content: |
+        ## Edge Cases to Handle
+
+        | Case | Input | Expected Output |
+        |------|-------|-----------------|
+        | Empty | [] | null |
+        | Single | [1] | 1 |
+        | ... | ... | ... |
+
+    - section: "Algorithm Design"
+      content: |
+        ## Algorithm Design
+
+        ### Approach
+        [Description of approach]
+
+        ### Pseudocode
+        ```
+        [Pseudocode]
+        ```
+
+        ### Complexity
+        - Time: O(n log n)
+        - Space: O(n)
+
+    - section: "Test Cases"
+      content: |
+        ## Test Cases
+
+        ### Basic Tests
+        [List of basic test cases]
+
+        ### Edge Tests
+        [List of edge test cases]
+
+        ### Stress Tests
+        [Description of stress tests]
+
+    - section: "Validation Criteria"
+      content: |
+        ## Validation Criteria
+
+        □ All test cases pass
+        □ Time complexity verified
+        □ Space complexity verified
+        □ Edge cases handled
+        □ Output format exact match
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+metadata:
+  created_at: "2026-01-04"
+  created_by: "Deep Thinking Team"
+  version: "2.0"

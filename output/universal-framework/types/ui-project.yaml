@@ -1,0 +1,452 @@
+# Universal Framework - UI Project Type Configuration
+# Version: 2.0
+# Purpose: Complete specification for UI/Frontend projects
+
+type:
+  id: "ui"
+  name: "UI/Frontend Project"
+  version: "2.0"
+
+# =============================================================================
+# VISUAL REFERENCE REQUIREMENTS
+# =============================================================================
+
+visual_requirements:
+  # Mandatory cho mọi UI project
+  mandatory:
+    reference_source:
+      description: "Nguồn tham khảo visual"
+      options:
+        - "existing_product"      # Sản phẩm có sẵn (Casio FX-880, iPhone, etc.)
+        - "design_mockup"         # Figma, Sketch, Adobe XD
+        - "screenshot"            # Ảnh chụp màn hình
+        - "description_only"      # Chỉ mô tả bằng text
+      collection_method: |
+        1. Nếu existing_product: Thu thập 3-5 ảnh từ nhiều góc
+        2. Nếu design_mockup: Export tất cả screens + assets
+        3. Nếu screenshot: Yêu cầu full-resolution images
+        4. Nếu description_only: Yêu cầu chi tiết extreme
+
+  # Conditional based on fidelity level
+  by_fidelity_level:
+    prototype:
+      required:
+        - layout_description
+      optional:
+        - color_preference
+
+    functional:
+      required:
+        - layout_description
+        - primary_colors
+        - button_styles
+      optional:
+        - typography
+
+    polished:
+      required:
+        - full_color_palette
+        - typography_system
+        - component_styles
+        - spacing_system
+      optional:
+        - animations
+
+    realistic:
+      required:
+        - exact_reference_images
+        - exact_color_codes
+        - exact_font_specs
+        - exact_dimensions
+        - exact_shadows
+        - exact_border_radius
+        - exact_gradients
+        - texture_references
+        - interactive_state_specs
+      optional: []  # Everything is required
+
+# =============================================================================
+# DESIGN TOKENS SPECIFICATION
+# =============================================================================
+
+design_tokens:
+  colors:
+    structure:
+      primary: "Main brand/action color"
+      secondary: "Supporting color"
+      background: "Body background"
+      surface: "Card/component backgrounds"
+      text_primary: "Main text color"
+      text_secondary: "Muted text color"
+      border: "Default border color"
+      error: "Error/danger states"
+      success: "Success states"
+      warning: "Warning states"
+
+    format: |
+      colors:
+        primary: "#007AFF"          # Hex required
+        primary_rgb: "0, 122, 255"  # RGB for transparency
+        primary_hsl: "211, 100%, 50%"  # HSL optional
+
+  typography:
+    structure:
+      font_family_primary: "Main font"
+      font_family_secondary: "Accent font (optional)"
+      font_family_mono: "Code/display font"
+
+      sizes:
+        xs: "10-11px"
+        sm: "12-13px"
+        base: "14-16px"
+        lg: "18-20px"
+        xl: "24-28px"
+        xxl: "32-40px"
+        display: "48px+"
+
+      weights:
+        light: 300
+        normal: 400
+        medium: 500
+        semibold: 600
+        bold: 700
+
+    format: |
+      typography:
+        font_primary: "'SF Pro Display', -apple-system, sans-serif"
+        font_mono: "'SF Mono', 'Consolas', monospace"
+        size_base: "16px"
+        line_height: 1.5
+
+  spacing:
+    structure:
+      unit: "Base spacing unit (usually 4px or 8px)"
+      scale: "Multipliers: 0.5x, 1x, 1.5x, 2x, 3x, 4x, 6x, 8x"
+
+    format: |
+      spacing:
+        unit: "8px"
+        xs: "4px"    # 0.5x
+        sm: "8px"    # 1x
+        md: "16px"   # 2x
+        lg: "24px"   # 3x
+        xl: "32px"   # 4x
+        xxl: "48px"  # 6x
+
+  borders:
+    structure:
+      width: "1px, 2px"
+      style: "solid, dashed, none"
+      radius: "0, 4px, 8px, 12px, 16px, 9999px"
+
+    format: |
+      borders:
+        radius_sm: "4px"
+        radius_md: "8px"
+        radius_lg: "16px"
+        radius_full: "9999px"
+        width_default: "1px"
+
+  shadows:
+    structure:
+      levels: "none, sm, md, lg, xl"
+
+    format: |
+      shadows:
+        sm: "0 1px 2px rgba(0,0,0,0.05)"
+        md: "0 4px 6px rgba(0,0,0,0.1)"
+        lg: "0 10px 15px rgba(0,0,0,0.1)"
+        xl: "0 20px 25px rgba(0,0,0,0.15)"
+
+# =============================================================================
+# COMPONENT SPECIFICATION TEMPLATE
+# =============================================================================
+
+component_template:
+  required_fields:
+    - name
+    - purpose
+    - html_structure
+    - css_classes
+    - visual_specs
+
+  optional_fields:
+    - javascript_behavior
+    - accessibility
+    - responsive_behavior
+    - animation
+
+  example: |
+    component:
+      name: "Calculator Button"
+      purpose: "Numeric input button for calculator keypad"
+
+      html_structure: |
+        <button class="btn btn-number" data-value="7">7</button>
+
+      css_classes:
+        - btn: "Base button styles"
+        - btn-number: "Number button variant"
+        - btn-operator: "Operator button variant"
+        - btn-equal: "Equals button variant"
+        - btn-clear: "Clear/AC button variant"
+
+      visual_specs:
+        dimensions:
+          width: "50px"
+          height: "40px"
+          padding: "8px 12px"
+
+        colors:
+          background: "#F0F0F0"
+          text: "#1A1A1A"
+          border: "#CCCCCC"
+
+        typography:
+          font_size: "16px"
+          font_weight: 500
+
+        states:
+          hover:
+            background: "#E5E5E5"
+            transform: "translateY(-1px)"
+          active:
+            background: "#D5D5D5"
+            transform: "translateY(0)"
+            box_shadow: "inset 0 2px 4px rgba(0,0,0,0.1)"
+          disabled:
+            opacity: 0.5
+            cursor: "not-allowed"
+
+        borders:
+          radius: "6px"
+          width: "1px"
+          style: "solid"
+
+        shadow: "0 2px 4px rgba(0,0,0,0.1)"
+
+      accessibility:
+        role: "button"
+        aria_label: "Number 7"
+        keyboard: "Enter/Space to activate"
+
+# =============================================================================
+# LAYOUT SPECIFICATION
+# =============================================================================
+
+layout_spec:
+  container:
+    description: "Main container specs"
+    fields:
+      - max_width
+      - padding
+      - background
+      - border_radius
+      - shadow
+
+  grid:
+    description: "Grid/flex layout specs"
+    fields:
+      - columns
+      - rows
+      - gap
+      - alignment
+
+  responsive:
+    breakpoints:
+      mobile: "320px - 480px"
+      tablet: "481px - 768px"
+      desktop: "769px - 1024px"
+      wide: "1025px+"
+
+    strategy:
+      - "mobile-first"
+      - "desktop-first"
+      - "adaptive"
+
+# =============================================================================
+# MANDATORY TASKS FOR UI PROJECTS
+# =============================================================================
+
+mandatory_tasks:
+  phase_define:
+    - task: "TASK-VR-001"
+      name: "Collect Visual References"
+      description: "Thu thập tất cả visual references cho project"
+      output: "references/ folder with images"
+      questions:
+        - "Sản phẩm tham khảo là gì?"
+        - "Có ảnh reference không?"
+        - "Fidelity level mong muốn?"
+
+    - task: "TASK-VR-002"
+      name: "Define Fidelity Level"
+      description: "Xác định mức độ chi tiết visual"
+      output: "fidelity_level trong okr.yaml"
+
+  phase_decompose:
+    - task: "TASK-DS-001"
+      name: "Extract Design Tokens"
+      description: "Trích xuất colors, fonts, spacing từ references"
+      output: "design-tokens.yaml"
+      dependencies: ["TASK-VR-001"]
+
+    - task: "TASK-DS-002"
+      name: "Component Inventory"
+      description: "Liệt kê tất cả UI components cần xây dựng"
+      output: "component-inventory.yaml"
+
+    - task: "TASK-DS-003"
+      name: "Layout Specification"
+      description: "Mô tả chi tiết layout structure"
+      output: "layout-spec.yaml"
+
+  phase_execute:
+    - task: "TASK-CSS-001"
+      name: "Implement Design Tokens"
+      description: "Tạo CSS variables từ design tokens"
+      output: "css/variables.css"
+      dependencies: ["TASK-DS-001"]
+
+    - task: "TASK-CSS-002"
+      name: "Implement Component Styles"
+      description: "Style từng component theo specs"
+      output: "css/components/*.css"
+      dependencies: ["TASK-CSS-001", "TASK-DS-002"]
+
+  phase_validate:
+    - task: "TASK-VAL-001"
+      name: "Visual Comparison"
+      description: "So sánh output với reference images"
+      output: "validation-report.md"
+      criteria:
+        - "Color accuracy ≥ 95%"
+        - "Layout match ≥ 90%"
+        - "Typography match ≥ 95%"
+
+# =============================================================================
+# VALIDATION CHECKLIST
+# =============================================================================
+
+validation:
+  visual_fidelity:
+    - check: "Colors match reference"
+      method: "Side-by-side comparison"
+      tolerance: "5% deviation allowed"
+
+    - check: "Typography matches"
+      method: "Font inspection"
+      criteria: "Same family, size within 2px"
+
+    - check: "Spacing is consistent"
+      method: "Measure padding/margins"
+      criteria: "Within 4px of spec"
+
+    - check: "Shadows match"
+      method: "Visual comparison"
+      criteria: "Similar depth and blur"
+
+    - check: "Border radius matches"
+      method: "Visual comparison"
+      criteria: "Within 2px"
+
+  functionality:
+    - check: "All interactive elements respond"
+    - check: "Hover states visible"
+    - check: "Active states visible"
+    - check: "Focus states accessible"
+    - check: "Disabled states correct"
+
+  responsiveness:
+    - check: "Mobile layout correct"
+    - check: "Tablet layout correct"
+    - check: "Desktop layout correct"
+    - check: "No horizontal scroll on mobile"
+
+  accessibility:
+    - check: "Color contrast ratio ≥ 4.5:1"
+    - check: "Focus indicators visible"
+    - check: "Keyboard navigation works"
+    - check: "Screen reader compatible"
+
+# =============================================================================
+# HANDOFF TEMPLATE SECTIONS
+# =============================================================================
+
+handoff_sections:
+  required:
+    - section: "Visual References"
+      content: |
+        ## Visual References
+
+        ### Reference Images
+        [Include actual images or links]
+
+        ### Key Visual Elements
+        - Element 1: [description with exact specs]
+        - Element 2: [description with exact specs]
+
+    - section: "Design Tokens"
+      content: |
+        ## Design Tokens
+
+        ### Colors
+        ```css
+        :root {
+          --color-primary: #HEXCODE;
+          --color-secondary: #HEXCODE;
+          /* ... all colors */
+        }
+        ```
+
+        ### Typography
+        ```css
+        :root {
+          --font-primary: 'Font Name', fallback;
+          --font-size-base: 16px;
+          /* ... all typography */
+        }
+        ```
+
+        ### Spacing
+        ```css
+        :root {
+          --spacing-unit: 8px;
+          /* ... all spacing */
+        }
+        ```
+
+    - section: "Component Specifications"
+      content: |
+        ## Component Specifications
+
+        ### Component: [Name]
+        - Dimensions: [exact]
+        - Colors: [exact hex]
+        - Typography: [exact specs]
+        - States: [hover, active, disabled]
+        - Code template: [HTML + CSS]
+
+    - section: "Validation Criteria"
+      content: |
+        ## Validation Criteria
+
+        ### Visual Checks
+        □ Colors match reference (tolerance: ±5%)
+        □ Typography matches (size ±2px)
+        □ Spacing consistent (±4px)
+        □ All components rendered
+
+        ### Functional Checks
+        □ Interactive states working
+        □ Keyboard accessible
+        □ No visual bugs
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+metadata:
+  created_at: "2026-01-04"
+  created_by: "Deep Thinking Team"
+  version: "2.0"

@@ -1,0 +1,240 @@
+# Diagram Session Summary
+
+> **Session**: {{SESSION_ID}}
+> **Project**: {{PROJECT_NAME}}
+> **Completed**: {{TIMESTAMP}}
+
+---
+
+## Session Overview
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║                    DIAGRAM GENERATION COMPLETE                ║
+╠══════════════════════════════════════════════════════════════╣
+║  Project: {{PROJECT_NAME_PADDED}}                            ║
+║  Session: {{SESSION_ID_PADDED}}                              ║
+║  Duration: {{DURATION_PADDED}}                               ║
+║  Status: {{STATUS_PADDED}}                                   ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## Generated Diagrams
+
+| # | Type | File | Status | Accuracy |
+|---|------|------|--------|----------|
+{{#DIAGRAMS}}
+| {{INDEX}} | {{TYPE_EMOJI}} {{TYPE}} | `{{FILENAME}}` | {{STATUS}} | {{ACCURACY}}% |
+{{/DIAGRAMS}}
+
+### Diagram Legend
+- 🏛️ Architecture (C4)
+- ⏱️ Sequence
+- 📦 Class/Entity
+- 🗄️ ERD (Database)
+- 📂 Directory
+- 🧠 Logic (Flowchart)
+- 🎨 UI/UX Flow
+
+---
+
+## Execution Timeline
+
+```
+{{TIMELINE}}
+```
+
+### Phase Breakdown
+
+| Phase | Duration | Agents | Status |
+|-------|----------|--------|--------|
+| 1. Init | {{INIT_DURATION}} | Maestro | {{INIT_STATUS}} |
+| 2. Explore | {{EXPLORE_DURATION}} | Explorer | {{EXPLORE_STATUS}} |
+| 3. Generate | {{GENERATE_DURATION}} | 7 parallel | {{GENERATE_STATUS}} |
+| 4. Verify | {{VERIFY_DURATION}} | Validator | {{VERIFY_STATUS}} |
+| 5. Aggregate | {{AGGREGATE_DURATION}} | Maestro | {{AGGREGATE_STATUS}} |
+
+---
+
+## Quality Report
+
+### Overall Score: **{{OVERALL_SCORE}}%**
+
+```
+Architecture  [{{ARCH_BAR}}] {{ARCH_SCORE}}%
+Sequence      [{{SEQ_BAR}}] {{SEQ_SCORE}}%
+Class         [{{CLASS_BAR}}] {{CLASS_SCORE}}%
+ERD           [{{ERD_BAR}}] {{ERD_SCORE}}%
+Directory     [{{DIR_BAR}}] {{DIR_SCORE}}%
+Logic         [{{LOGIC_BAR}}] {{LOGIC_SCORE}}%
+UI/UX         [{{UIUX_BAR}}] {{UIUX_SCORE}}%
+```
+
+### Verification Summary
+- **Total Checks**: {{TOTAL_CHECKS}}
+- **Passed**: {{PASSED_CHECKS}} ({{PASS_PERCENT}}%)
+- **Failed**: {{FAILED_CHECKS}}
+- **Warnings**: {{WARNINGS}}
+
+---
+
+## Output Files
+
+### Diagrams
+```
+{{OUTPUT_DIR}}/diagrams/
+{{#DIAGRAM_FILES}}
+├── {{FILENAME}} ({{SIZE}})
+{{/DIAGRAM_FILES}}
+```
+
+### Reports
+```
+{{OUTPUT_DIR}}/
+├── README.md
+├── exploration-report.md
+└── verification/
+    └── verification-report.md
+```
+
+---
+
+## Key Findings
+
+### Architecture
+{{#ARCH_FINDINGS}}
+- {{FINDING}}
+{{/ARCH_FINDINGS}}
+
+### Data Model
+{{#DATA_FINDINGS}}
+- {{FINDING}}
+{{/DATA_FINDINGS}}
+
+### API/Flows
+{{#FLOW_FINDINGS}}
+- {{FINDING}}
+{{/FLOW_FINDINGS}}
+
+---
+
+## Issues Discovered
+
+### Critical ({{CRITICAL_COUNT}})
+{{#CRITICAL_ISSUES}}
+- **{{DIAGRAM}}**: {{ISSUE}}
+{{/CRITICAL_ISSUES}}
+
+### Warnings ({{WARNING_COUNT}})
+{{#WARNING_ISSUES}}
+- **{{DIAGRAM}}**: {{ISSUE}}
+{{/WARNING_ISSUES}}
+
+---
+
+## Next Steps
+
+### Immediate Actions
+{{#IMMEDIATE_ACTIONS}}
+1. {{ACTION}}
+{{/IMMEDIATE_ACTIONS}}
+
+### Recommendations
+{{#RECOMMENDATIONS}}
+- {{RECOMMENDATION}}
+{{/RECOMMENDATIONS}}
+
+---
+
+## How to Use Diagrams
+
+### View in Browser
+Most Markdown viewers support Mermaid. Open the `.mmd` files in:
+- VS Code (with Mermaid extension)
+- GitHub (native support)
+- Notion (paste as code block)
+
+### Export to Image
+```bash
+# Install mermaid-cli
+npm install -g @mermaid-js/mermaid-cli
+
+# Export to SVG
+mmdc -i {{OUTPUT_DIR}}/diagrams/architecture.mmd -o architecture.svg
+
+# Export to PNG
+mmdc -i {{OUTPUT_DIR}}/diagrams/architecture.mmd -o architecture.png
+
+# Export all
+for f in {{OUTPUT_DIR}}/diagrams/*.mmd; do
+  mmdc -i "$f" -o "${f%.mmd}.svg"
+done
+```
+
+### Include in Documentation
+```markdown
+# Architecture
+
+\`\`\`mermaid
+{{ARCH_PREVIEW}}
+\`\`\`
+```
+
+---
+
+## Session Metadata
+
+```yaml
+session:
+  id: {{SESSION_ID}}
+  project: {{PROJECT_NAME}}
+  root_path: {{ROOT_PATH}}
+
+timing:
+  started: {{START_TIME}}
+  completed: {{END_TIME}}
+  duration: {{DURATION}}
+
+agents:
+  total: 10
+  active:
+    - maestro
+    - explorer
+    - architect
+    - sequencer
+    - classifier
+    - modeler
+    - mapper
+    - logician
+    - designer
+    - validator
+
+outputs:
+  diagrams: {{DIAGRAM_COUNT}}
+  reports: {{REPORT_COUNT}}
+  total_files: {{TOTAL_FILES}}
+  total_size: {{TOTAL_SIZE}}
+
+quality:
+  overall_score: {{OVERALL_SCORE}}
+  checks_passed: {{PASSED_CHECKS}}/{{TOTAL_CHECKS}}
+  critical_issues: {{CRITICAL_COUNT}}
+  warnings: {{WARNING_COUNT}}
+
+status: {{FINAL_STATUS}}
+```
+
+---
+
+## Feedback
+
+If you found issues with the generated diagrams:
+1. Check the verification report for known issues
+2. Review the exploration report for source context
+3. Regenerate specific diagrams using individual agents
+
+---
+
+*Generated by Diagram Team - {{TIMESTAMP}}*

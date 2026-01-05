@@ -1,0 +1,82 @@
+[Script Info]
+Title: TOEIC Lesson 002 - 5 Words AD- Prefix
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+Timer: 100.0000
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Arial,70,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,200,1
+Style: Word,Arial,100,&H0000D4FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,5,2,5,50,50,400,1
+Style: IPA,Arial,50,&H00B8B8B8,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,550,1
+Style: Meaning,Arial,60,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,700,1
+Style: Example,Arial,50,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,8,50,50,850,1
+Style: Tip,Arial,45,&H004FF57A,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,2,1,5,50,50,1000,1
+Style: Quiz,Arial,60,&H00FF6B35,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,400,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+
+; Intro (0:00 - 0:07)
+Dialogue: 0,0:00:00.00,0:00:07.00,Title,,0,0,0,,5 Từ vựng TOEIC Part 5\N{\fs50}Bài 2 - Tiền tố AD-
+
+; Word 1: adequate (0:07 - 0:27)
+Dialogue: 0,0:00:07.00,0:00:10.00,Word,,0,0,0,,ADEQUATE
+Dialogue: 0,0:00:10.00,0:00:13.00,IPA,,0,0,0,,/ˈædɪkwət/ - adjective
+Dialogue: 0,0:00:13.00,0:00:16.00,Meaning,,0,0,0,,đủ, thỏa đáng
+Dialogue: 0,0:00:16.00,0:00:19.00,Example,,0,0,0,,The budget is adequate for the project.
+Dialogue: 0,0:00:19.00,0:00:22.00,Example,,0,0,0,,Ngân sách đủ cho dự án.
+Dialogue: 0,0:00:22.00,0:00:25.00,Tip,,0,0,0,,adequate = enough, không phải excellent
+Dialogue: 0,0:00:25.00,0:00:29.00,Tip,,0,0,0,,Collocations: adequate resources, time, supply
+
+; Word 2: adhere (0:29 - 0:49)
+Dialogue: 0,0:00:29.00,0:00:32.00,Word,,0,0,0,,ADHERE
+Dialogue: 0,0:00:32.00,0:00:35.00,IPA,,0,0,0,,/ədˈhɪr/ - verb
+Dialogue: 0,0:00:35.00,0:00:38.00,Meaning,,0,0,0,,tuân thủ, bám vào
+Dialogue: 0,0:00:38.00,0:00:42.00,Example,,0,0,0,,All employees must adhere to company policies.
+Dialogue: 0,0:00:42.00,0:00:45.00,Example,,0,0,0,,Tất cả nhân viên phải tuân thủ chính sách công ty.
+Dialogue: 0,0:00:45.00,0:00:47.00,Tip,,0,0,0,,Luôn dùng với TO → adhere to
+Dialogue: 0,0:00:47.00,0:00:51.00,Tip,,0,0,0,,Collocations: adhere to rules, guidelines, policies
+
+; Word 3: adjacent (0:51 - 1:11)
+Dialogue: 0,0:00:51.00,0:00:54.00,Word,,0,0,0,,ADJACENT
+Dialogue: 0,0:00:54.00,0:00:57.00,IPA,,0,0,0,,/əˈdʒeɪsənt/ - adjective
+Dialogue: 0,0:00:57.00,0:01:00.00,Meaning,,0,0,0,,kế bên, liền kề
+Dialogue: 0,0:01:00.00,0:01:04.00,Example,,0,0,0,,The parking lot is adjacent to the building.
+Dialogue: 0,0:01:04.00,0:01:07.00,Example,,0,0,0,,Bãi đỗ xe nằm kế bên tòa nhà.
+Dialogue: 0,0:01:07.00,0:01:09.00,Tip,,0,0,0,,Luôn dùng với TO → adjacent to
+Dialogue: 0,0:01:09.00,0:01:13.00,Tip,,0,0,0,,Collocations: adjacent to, adjacent building, room
+
+; Word 4: adjust (1:13 - 1:33)
+Dialogue: 0,0:01:13.00,0:01:16.00,Word,,0,0,0,,ADJUST
+Dialogue: 0,0:01:16.00,0:01:19.00,IPA,,0,0,0,,/əˈdʒʌst/ - verb
+Dialogue: 0,0:01:19.00,0:01:22.00,Meaning,,0,0,0,,điều chỉnh
+Dialogue: 0,0:01:22.00,0:01:26.00,Example,,0,0,0,,Please adjust your schedule accordingly.
+Dialogue: 0,0:01:26.00,0:01:29.00,Example,,0,0,0,,Vui lòng điều chỉnh lịch trình cho phù hợp.
+Dialogue: 0,0:01:29.00,0:01:32.00,Tip,,0,0,0,,adjust = tinh chỉnh, không phải thay đổi hoàn toàn
+Dialogue: 0,0:01:32.00,0:01:35.00,Tip,,0,0,0,,Collocations: adjust settings, to changes, price
+
+; Word 5: administer (1:35 - 1:55)
+Dialogue: 0,0:01:35.00,0:01:38.00,Word,,0,0,0,,ADMINISTER
+Dialogue: 0,0:01:38.00,0:01:41.00,IPA,,0,0,0,,/ədˈmɪnɪstər/ - verb
+Dialogue: 0,0:01:41.00,0:01:44.00,Meaning,,0,0,0,,quản lý, điều hành
+Dialogue: 0,0:01:44.00,0:01:48.00,Example,,0,0,0,,She administers the department efficiently.
+Dialogue: 0,0:01:48.00,0:01:51.00,Example,,0,0,0,,Cô ấy quản lý phòng ban hiệu quả.
+Dialogue: 0,0:01:51.00,0:01:53.00,Tip,,0,0,0,,administer formal hơn manage
+Dialogue: 0,0:01:53.00,0:01:57.00,Tip,,0,0,0,,Collocations: administer a program, test, funds
+
+; Quiz (1:57 - 2:40)
+Dialogue: 0,0:01:57.00,0:02:00.00,Quiz,,0,0,0,,QUIZ TIME!
+Dialogue: 0,0:02:00.00,0:02:08.00,Quiz,,0,0,0,,Q1: The budget is _____ for the project.
+Dialogue: 0,0:02:08.00,0:02:12.00,Meaning,,0,0,0,,Đáp án: ADEQUATE
+Dialogue: 0,0:02:12.00,0:02:20.00,Quiz,,0,0,0,,Q2: All employees must _____ to policies.
+Dialogue: 0,0:02:20.00,0:02:24.00,Meaning,,0,0,0,,Đáp án: ADHERE
+Dialogue: 0,0:02:24.00,0:02:32.00,Quiz,,0,0,0,,Q3: Từ nào nghĩa là kế bên?\NA. adequate  B. adhere  C. adjacent  D. adjust
+Dialogue: 0,0:02:32.00,0:02:36.00,Meaning,,0,0,0,,Đáp án: C - ADJACENT
+
+; Summary (2:36 - 2:50)
+Dialogue: 0,0:02:36.00,0:02:45.00,Title,,0,0,0,,TÓM TẮT: 5 từ tiền tố AD-\N{\fs50}adequate, adhere, adjacent, adjust, administer
+
+; CTA (2:50 - 3:03)
+Dialogue: 0,0:02:50.00,0:03:03.00,Quiz,,0,0,0,,LIKE - SUBSCRIBE - BẬT THÔNG BÁO\N{\fs40}Bài 3: admit, adopt, advance, advertise, advise

@@ -1,0 +1,111 @@
+/* Casio FX-880 VN X Design Tokens */
+/* CRITICAL: EXACT values from HANDOFF spec */
+
+:root {
+  /* === CALCULATOR BODY === */
+  --body-bg: #1a1a2e;              /* Dark navy/charcoal */
+  --body-border: #0f0f1a;          /* Darker border */
+  --body-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --body-radius: 16px;
+
+  /* === HEADER === */
+  --header-bg: transparent;
+  --header-text: #c0c0c0;          /* Silver/light gray */
+  --header-brand: #ffffff;         /* White for CASIO */
+  --header-model: #a0a0a0;         /* Gray for model number */
+
+  /* === LCD DISPLAY === */
+  --display-bg: #a8b5a0;           /* LCD green - CRITICAL! */
+  --display-text: #1a1a1a;         /* Near black */
+  --display-text-dim: #4a4a4a;     /* Dimmer for expression */
+  --display-border: #5a6b52;       /* Darker green border */
+  --display-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
+  --display-radius: 4px;
+
+  /* === BUTTONS - NUMBERS (0-9, .) === */
+  --btn-number-bg: #f0f0f0;        /* Light gray */
+  --btn-number-text: #1a1a1a;      /* Near black */
+  --btn-number-border: #d0d0d0;    /* Slightly darker gray */
+  --btn-number-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  --btn-number-hover: #e5e5e5;     /* Slightly darker on hover */
+  --btn-number-active: #d5d5d5;    /* More pressure effect */
+
+  /* === BUTTONS - OPERATORS (+, -, x, ÷) === */
+  --btn-operator-bg: #ff9500;      /* Orange */
+  --btn-operator-text: #ffffff;    /* White */
+  --btn-operator-border: #e08500;  /* Darker orange */
+  --btn-operator-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-operator-hover: #e68a00;
+  --btn-operator-active: #cc7a00;
+
+  /* === BUTTONS - FUNCTION (SHIFT, ALPHA, MODE, scientific) === */
+  --btn-function-bg: #505050;      /* Dark gray */
+  --btn-function-text: #ffffff;    /* White */
+  --btn-function-border: #404040;
+  --btn-function-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-function-hover: #606060;
+  --btn-function-active: #404040;
+
+  /* === BUTTONS - EQUAL (=) === */
+  --btn-equal-bg: #007aff;         /* Blue/Teal */
+  --btn-equal-text: #ffffff;       /* White */
+  --btn-equal-border: #0066cc;
+  --btn-equal-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-equal-hover: #0066cc;
+  --btn-equal-active: #0055aa;
+
+  /* === BUTTONS - CLEAR (AC, ON) === */
+  --btn-clear-bg: #ff3b30;         /* Red */
+  --btn-clear-text: #ffffff;       /* White */
+  --btn-clear-border: #e02d24;
+  --btn-clear-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --btn-clear-hover: #e02d24;
+  --btn-clear-active: #c0251e;
+
+  /* === BUTTONS - DELETE (DEL) === */
+  --btn-delete-bg: #808080;        /* Medium gray */
+  --btn-delete-text: #ffffff;
+  --btn-delete-border: #707070;
+
+  /* === TYPOGRAPHY === */
+  --font-display: 'SF Mono', 'Consolas', 'Courier New', monospace;
+  --font-buttons: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-brand: 'Arial Black', 'Helvetica Neue', sans-serif;
+
+  --font-size-display-result: 32px;
+  --font-size-display-expression: 14px;
+  --font-size-button: 16px;
+  --font-size-button-small: 12px;
+  --font-size-brand: 18px;
+  --font-size-model: 12px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* === SPACING === */
+  --spacing-unit: 8px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* === BORDERS === */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-width: 1px;
+
+  /* === DIMENSIONS === */
+  --calc-width: 320px;
+  --calc-padding: 16px;
+  --display-height: 80px;
+  --btn-width: 52px;
+  --btn-height: 44px;
+  --btn-width-small: 48px;
+  --btn-height-small: 40px;
+  --btn-gap: 8px;
+  --row-gap: 8px;
+}

@@ -1,0 +1,81 @@
+{
+  "session_id": "warren-buffett-2024-letter",
+  "status": "COMPLETED",
+  "started_at": "2026-01-04T18:45:00+07:00",
+  "completed_at": "2026-01-04T19:11:00+07:00",
+  "processing_time_minutes": 26,
+
+  "input": {
+    "source": "Warren Buffett 2024 Shareholder Letter",
+    "source_url": "https://www.berkshirehathaway.com/letters/2024ltr.pdf",
+    "source_type": "translated",
+    "original_language": "en",
+    "target_language": "vi",
+    "word_count": 850,
+    "genre": "business"
+  },
+
+  "output": {
+    "total_chapters": 1,
+    "total_duration": "4:22",
+    "total_duration_seconds": 262,
+    "file_size_mb": 6.0,
+    "formats_created": ["MP3"],
+    "files": {
+      "voiceover_only": "warren-buffett-2024-letter.mp3",
+      "with_music": "warren-buffett-2024-letter-with-music.mp3",
+      "final": "warren-buffett-2024-final.mp3"
+    }
+  },
+
+  "quality": {
+    "average_score": 95,
+    "grade": "A",
+    "decision": "APPROVED",
+    "loudness_lufs": -14.6,
+    "true_peak_db": -1.7
+  },
+
+  "production": {
+    "segments_generated": 22,
+    "voice": "vi-VN-HoaiMyNeural",
+    "tts_engine": "Edge-TTS",
+    "background_music": {
+      "type": "ambient",
+      "source": "generated",
+      "description": "Pink noise filtered to low frequencies (50-300Hz)",
+      "mix_level": "15%",
+      "fade_in": "3s",
+      "fade_out": "3s"
+    }
+  },
+
+  "content_sections": [
+    "Giới thiệu",
+    "Về hiệu suất hoạt động",
+    "Về vị thế tiền mặt",
+    "Về sai lầm và trách nhiệm",
+    "Về việc chọn lãnh đạo",
+    "Về tiền tệ và giá trị doanh nghiệp",
+    "Về các công ty Nhật Bản",
+    "Về thuế và đất nước",
+    "Về kế nhiệm",
+    "Nguyên tắc đầu tư",
+    "Kết luận"
+  ],
+
+  "metadata": {
+    "title": "Thư gửi cổ đông Berkshire Hathaway năm 2024",
+    "artist": "Warren Buffett",
+    "album": "Berkshire Hathaway Shareholder Letters",
+    "year": "2024",
+    "genre": "Business/Finance"
+  },
+
+  "notes": [
+    "Vietnamese translation of key excerpts from Warren Buffett's 2024 Annual Letter to Berkshire Hathaway Shareholders",
+    "Original letter published February 2024",
+    "Covers major topics: performance, cash position, mistakes, leadership, succession, investment principles",
+    "Background music: ambient pink noise at 15% volume with fade in/out"
+  ]
+}

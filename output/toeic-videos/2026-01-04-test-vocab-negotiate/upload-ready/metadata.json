@@ -1,0 +1,86 @@
+{
+  "video_id": "vocab-001-negotiate",
+  "session_id": "2026-01-04-test-vocab-negotiate",
+  "format": "shorts",
+  "platform": "youtube",
+  "word": "NEGOTIATE",
+  "category": "vocabulary",
+  "title": "NEGOTIATE - Từ vựng TOEIC Business #shorts",
+  "description": "🎯 Học từ NEGOTIATE với phát âm chuẩn!\n\n📚 NEGOTIATE /nɪˈɡoʊʃieɪt/\n✅ Nghĩa: đàm phán, thương lượng\n✅ Example: We need to negotiate the contract terms.\n\n💡 Collocations:\n• negotiate a deal\n• negotiate with clients\n\n🔔 Follow để học TOEIC mỗi ngày!\n\n#TOEIC #vocabulary #learnenglish #tuvungTOEIC #hoctiengAnh #businessEnglish #negotiate #TOEICshorts",
+  "tags": [
+    "TOEIC",
+    "vocabulary",
+    "từ vựng TOEIC",
+    "learn English",
+    "negotiate",
+    "business English",
+    "TOEIC Part 5",
+    "học tiếng Anh",
+    "tiếng Anh thương mại",
+    "phát âm tiếng Anh",
+    "TOEIC shorts",
+    "English vocabulary"
+  ],
+  "seo": {
+    "primary_keyword": "TOEIC vocabulary",
+    "secondary_keywords": [
+      "negotiate nghĩa là gì",
+      "từ vựng TOEIC",
+      "business English"
+    ],
+    "hashtags": [
+      "#TOEIC",
+      "#vocabulary",
+      "#learnenglish",
+      "#tuvungTOEIC",
+      "#hoctiengAnh",
+      "#businessEnglish",
+      "#negotiate",
+      "#TOEICshorts"
+    ]
+  },
+  "video_specs": {
+    "resolution": "1080x1920",
+    "aspect_ratio": "9:16",
+    "duration": 30.216,
+    "fps": 30,
+    "codec_video": "H.264",
+    "codec_audio": "AAC",
+    "audio_bitrate": "192 kbps",
+    "sample_rate": 44100,
+    "file_size_bytes": 614356
+  },
+  "content": {
+    "word": "NEGOTIATE",
+    "ipa": "/nɪˈɡoʊʃieɪt/",
+    "pos": "verb",
+    "meaning_vi": "đàm phán, thương lượng",
+    "meaning_en": "to discuss something to reach an agreement",
+    "example_en": "We need to negotiate the contract terms.",
+    "example_vi": "Chúng ta cần thương lượng các điều khoản hợp đồng.",
+    "collocations": [
+      "negotiate a deal",
+      "negotiate with clients",
+      "negotiate terms"
+    ]
+  },
+  "production": {
+    "created_at": "2026-01-04T15:00:00+07:00",
+    "pipeline_version": "1.0",
+    "tts_engine": "edge-tts",
+    "voices": {
+      "vietnamese": "vi-VN-HoaiMyNeural",
+      "english": "en-US-JennyNeural"
+    },
+    "audio_normalized": true,
+    "audio_loudness": "-14 LUFS"
+  },
+  "publishing": {
+    "status": "ready",
+    "visibility": "public",
+    "category": "Education",
+    "language": "vi",
+    "made_for_kids": false,
+    "scheduled_time": null
+  }
+}

@@ -1,10 +1,11 @@
-# Create Team Workflow v2.0
+# Create Team Workflow v2.1
 # Father Agent - Team Creation Process with Schema Validation
+# Updated for v2.2: Added mandatory Design Review phase (DEEP mode)
 
 workflow:
   name: create-team
-  version: "2.0"
-  description: Tạo team mới với multi-agent collaboration theo schema chuẩn
+  version: "2.1"
+  description: Tạo team mới với multi-agent collaboration (with Deep Design Review)
 
 schemas:
   team: "../../schemas/team-v1.0.schema.yaml"
@@ -104,7 +105,92 @@ phases:
           Confirm trước khi tạo?
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 3: CREATE STRUCTURE
+# PHASE 3: DESIGN REVIEW (MANDATORY - DEEP MODE)
+# Teams are critical infrastructure, always require deep review
+# ════════════════════════════════════════════════════════════════════
+  - id: design_review
+    name: "Design Review (Mandatory - Deep)"
+    description: Create design document and submit to Deep Thinking Team for comprehensive review
+    actions:
+      - load_template: |
+          Load knowledge/16-design-document-template.md
+
+      - generate_design_doc: |
+          Create design document with:
+          - operation_type: "create-team"
+          - name: "{team_name}"
+          - uuid: "{generate_uuid}"
+          - review_mode: "deep"  # Teams always use deep mode
+
+          Inputs:
+          - team_name
+          - team_domain
+          - team_type
+          - team_complexity
+          - num_agents
+          - agent_designs (from Phase 2)
+
+          Output: .microai/agents/father-agent/designs/{team_name}-design.md
+
+      - display_info: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  DESIGN DOCUMENT CREATED                                       ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Team: {team_name}                                             ║
+          ║  Type: {team_type}                                             ║
+          ║  Agents: {num_agents}                                          ║
+          ║                                                                ║
+          ║  Review Mode: DEEP (teams require comprehensive review)       ║
+          ║  Estimated Duration: 2-4 hours                                 ║
+          ║                                                                ║
+          ║  Submitting to Deep Thinking Team...                          ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+      - invoke_deep_thinking: |
+          Submit to /microai:deep-thinking with:
+          - mode: deep
+          - problem: |
+              Review this team design:
+
+              Team: {team_name}
+              Type: {team_type}
+              Domain: {team_domain}
+              Complexity: {team_complexity}
+              Agents: {num_agents}
+
+              Design Document: {design_doc_path}
+
+              Key questions:
+              1. Is the team structure sound for the intended purpose?
+              2. Are agent roles well-defined with clear boundaries?
+              3. Is the communication pattern appropriate?
+              4. Are there critical risks in this team design?
+              5. Better alternatives or team patterns?
+
+      - approval_gate: |
+          Handle review_result:
+
+          **approved:**
+          - Display: "DESIGN APPROVED. Proceeding with team creation..."
+          - Update design doc status: approved
+          - Continue to Phase 4
+
+          **rejected:**
+          - Display: "DESIGN REJECTED. Reason: {rejection_reason}"
+          - Display: "Action Required: Revise design and resubmit"
+          - Display: "(Skip is NOT allowed for team creation)"
+          - Update design doc status: rejected
+          - GOTO Phase 3.1 (Loop back - NO SKIP ALLOWED)
+
+          **approved-with-conditions:**
+          - Display: "APPROVED WITH CONDITIONS"
+          - List all conditions
+          - Apply conditions to design
+          - Update design doc status: approved-with-conditions
+          - Continue to Phase 4
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: CREATE STRUCTURE (renumbered from Phase 3)
 # ════════════════════════════════════════════════════════════════════
   - id: create_structure
     name: "Create Team Directory"
@@ -135,7 +221,7 @@ phases:
           - Add full frontmatter nếu complexity = full
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 4: CREATE AGENTS
+# PHASE 5: CREATE AGENTS (renumbered from Phase 4)
 # ════════════════════════════════════════════════════════════════════
   - id: create_agents
     name: "Create Team Agents"
@@ -175,7 +261,7 @@ phases:
           - Check có Persona và Core Responsibilities sections
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 5: CREATE STEPS
+# PHASE 6: CREATE STEPS (renumbered from Phase 5)
 # ════════════════════════════════════════════════════════════════════
   - id: create_steps
     name: "Create Workflow Steps"
@@ -208,7 +294,7 @@ phases:
           - session-summary-template.md
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 6: VALIDATE & REGISTER
+# PHASE 7: VALIDATE & REGISTER (renumbered from Phase 6)
 # ════════════════════════════════════════════════════════════════════
   - id: validate
     name: "Validate & Register"
@@ -243,6 +329,11 @@ phases:
           1. .microai/commands/{team_name}-session.md
           2. Copy to .claude/commands/microai/{team_name}-session.md
 
+      - archive_design: |
+          Archive design document:
+          - Source: .microai/agents/father-agent/designs/{team_name}-design.md
+          - Dest: .microai/agents/father-agent/designs/archive/{date}-create-team-{team_name}.md
+
       - summary: |
           Hiển thị summary:
 
@@ -257,6 +348,9 @@ phases:
           ║  ├── knowledge/                                               ║
           ║  └── ...                                                      ║
           ╠═══════════════════════════════════════════════════════════════╣
+          ║  Design Review: PASSED (Deep Mode) ✓                          ║
+          ║  Design Doc: designs/archive/{date}-create-team-{team_name}   ║
+          ║                                                                ║
           ║  Validation: PASSED                                            ║
           ║  Command: /microai:{team_name}-session                        ║
           ╚═══════════════════════════════════════════════════════════════╝

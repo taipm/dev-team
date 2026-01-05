@@ -1,374 +1,513 @@
-# Dynamic Test Cases for Real Execution Testing
-# Version: 1.0
-# Purpose: Standard test prompts for evaluating agent intelligence through actual execution
+# Advanced Dynamic Test Cases v2.0
+# Designed by: Deep Thinking Team (Dijkstra, Linus, Polya, Munger)
+# Purpose: Differentiate LLM capabilities across complexity tiers
 
-version: "1.0"
-description: |
-  Test cases for dynamic evaluation via Ollama/Claude execution.
-  Each test includes prompt, expected keywords, and scoring.
+metadata:
+  version: "2.0"
+  designed_by: "Deep Thinking Team (Dijkstra, Linus, Polya, Munger)"
+  total_tests: 20
+  max_score: 100
+  philosophy: "Quality of reasoning > Presence of keywords"
 
-# ════════════════════════════════════════════════════════════════════
-# REASONING TESTS (20 points total)
-# ════════════════════════════════════════════════════════════════════
+  tiers:
+    - name: "Easy"
+      score_range: "1-3"
+      expected: "All models pass (80%+)"
+    - name: "Medium"
+      score_range: "3-5"
+      expected: "Local models 40-60%, Cloud 70%+"
+    - name: "Hard"
+      score_range: "5-8"
+      expected: "Local 20-40%, Cloud 50-70%"
+    - name: "Expert"
+      score_range: "8-12"
+      expected: "Differentiates opus > sonnet > haiku"
 
-reasoning_tests:
-  description: "Đánh giá khả năng suy luận logic và giải quyết vấn đề"
-  total_points: 20
+# =============================================================================
+# TIER 1: EASY (15 points total) - All models should score 80%+
+# =============================================================================
 
-  # Logic tests (7 points)
-  logic:
-    - id: R-L1
-      prompt: "All programmers use computers. John is a programmer. Does John use a computer?"
-      keywords: ["yes", "correct", "true", "does", "uses"]
-      points: 2
-      difficulty: easy
-
-    - id: R-L2
-      prompt: "If it rains, the ground gets wet. The ground is wet. Did it rain?"
-      keywords: ["not necessarily", "cannot conclude", "might", "other reasons", "fallacy"]
-      points: 3
-      difficulty: medium
-
-    - id: R-L3
-      prompt: "No fish can fly. Some pets are fish. Can all pets fly?"
-      keywords: ["no", "not all", "some cannot", "fish cannot"]
-      points: 2
-      difficulty: easy
-
-  # Multi-step tests (8 points)
-  multistep:
-    - id: R-M1
-      prompt: "Module A imports B. B imports C. C imports D. What is the correct initialization order?"
-      keywords: ["D", "C", "B", "A"]
-      order_matters: true
-      points: 3
-      difficulty: medium
-
-    - id: R-M2
-      prompt: |
-        There are 3 servers: Web, API, Database.
-        - Web depends on API
-        - API depends on Database
-        If Database fails, which services are affected?
-      keywords: ["API", "Web", "both", "all", "cascade"]
-      points: 3
-      difficulty: medium
-
-    - id: R-M3
-      prompt: "Task X takes 2 hours. Task Y takes 3 hours and depends on X. Task Z takes 1 hour and depends on Y. Total time if run sequentially?"
-      keywords: ["6", "six", "hours"]
-      points: 2
-      difficulty: easy
-
-  # Edge case tests (5 points)
-  edge:
-    - id: R-E1
-      prompt: "Service A calls B. B calls A. What problem does this create?"
-      keywords: ["circular", "cycle", "infinite", "loop", "deadlock", "stack overflow"]
-      points: 3
-      difficulty: medium
-
-    - id: R-E2
-      prompt: "What happens when you divide by zero in most programming languages?"
-      keywords: ["error", "exception", "undefined", "crash", "infinity", "NaN"]
-      points: 2
-      difficulty: easy
-
-# ════════════════════════════════════════════════════════════════════
-# ADAPTABILITY TESTS (15 points total)
-# ════════════════════════════════════════════════════════════════════
-
-adaptability_tests:
-  description: "Đánh giá khả năng xử lý tình huống mơ hồ và phục hồi lỗi"
+easy_tier:
   total_points: 15
-
-  # Ambiguity handling (8 points)
-  ambiguity:
-    - id: A-A1
-      prompt: "Fix the bug"
-      keywords: ["which", "what", "where", "more information", "clarify", "specify", "details"]
+  tests:
+    - id: "E-1"
+      name: "Basic Syllogism"
+      category: "Logic"
+      difficulty: 1
       points: 3
-      difficulty: medium
+      prompt: "All Go functions that return errors should be checked. The function ReadFile returns an error. What should the caller do?"
+      keywords: ["check", "handle", "error", "if err", "nil"]
+      rubric: |
+        3 pts: States to check error with code pattern
+        2 pts: States to handle error without code
+        1 pt: Mentions error handling vaguely
 
-    - id: A-A2
-      prompt: "Make it faster"
-      keywords: ["what", "which", "component", "specific", "measure", "current", "target"]
+    - id: "E-2"
+      name: "Simple Dependency"
+      category: "Reasoning"
+      difficulty: 1
       points: 3
-      difficulty: medium
+      prompt: "Package A imports B. Package B has no imports. What initializes first?"
+      keywords: ["B", "first", "before", "dependency"]
+      rubric: |
+        3 pts: Correct answer with Go init explanation
+        2 pts: Correct answer without explanation
+        1 pt: Mentions dependency but unclear
 
-    - id: A-A3
-      prompt: "Review the code"
-      keywords: ["which", "file", "what", "focus", "specific", "security", "performance", "style"]
-      points: 2
-      difficulty: easy
-
-  # Error recovery (7 points)
-  recovery:
-    - id: A-R1
-      prompt: "Run command: xyz_nonexistent_command_12345"
-      keywords: ["not found", "doesn't exist", "error", "invalid", "unknown", "try", "did you mean"]
+    - id: "E-3"
+      name: "Interface Implicit"
+      category: "Go Knowledge"
+      difficulty: 1
       points: 3
-      difficulty: medium
+      prompt: "In Go, does a struct need to explicitly declare that it implements an interface?"
+      keywords: ["no", "implicit", "duck typing", "automatically"]
+      rubric: |
+        3 pts: Explains implicit satisfaction
+        2 pts: Correct with brief explanation
+        1 pt: Correct answer only
 
-    - id: A-R2
-      prompt: "Read file: /this/path/does/not/exist/anywhere.txt"
-      keywords: ["not found", "doesn't exist", "cannot", "check path", "verify", "create"]
-      points: 2
-      difficulty: easy
+    - id: "E-4"
+      name: "Map Concurrency"
+      category: "Concurrency"
+      difficulty: 1
+      points: 3
+      prompt: "Two goroutines write to the same map without synchronization. What happens?"
+      keywords: ["race", "data race", "crash", "fatal", "unsafe", "undefined"]
+      rubric: |
+        3 pts: Identifies race with consequences
+        2 pts: Mentions race condition
+        1 pt: Says it's unsafe
 
-    - id: A-R3
-      prompt: "Deploy to production environment: undefined_env_xyz"
-      keywords: ["not found", "unknown", "available environments", "check", "verify", "configure"]
-      points: 2
-      difficulty: easy
+    - id: "E-5"
+      name: "Nil vs Empty Slice"
+      category: "Go Knowledge"
+      difficulty: 1
+      points: 3
+      prompt: "What is the difference between 'var s []int' and 's := []int{}'?"
+      keywords: ["nil", "empty", "allocated", "json", "marshal"]
+      rubric: |
+        3 pts: Explains nil vs empty with JSON difference
+        2 pts: Identifies nil vs empty correctly
+        1 pt: Knows different but unclear
 
-# ════════════════════════════════════════════════════════════════════
-# OUTPUT QUALITY TESTS (10 points total)
-# ════════════════════════════════════════════════════════════════════
+# =============================================================================
+# TIER 2: MEDIUM (25 points total) - Local 40-60%, Cloud 70%+
+# =============================================================================
 
-output_tests:
-  description: "Đánh giá chất lượng và format của output"
+medium_tier:
+  total_points: 25
+  tests:
+    - id: "M-1"
+      name: "Complex Dependency Chain"
+      category: "Reasoning"
+      difficulty: 3
+      points: 5
+      prompt: |
+        Service dependencies:
+        - API Gateway → Auth Service → User DB
+        - API Gateway → Product Service → Product DB
+        - Product Service → Cache Service
+        - Auth Service → Cache Service
+        In what order should services start for a clean boot sequence?
+      keywords: ["DB", "Cache", "Auth", "Product", "Gateway"]
+      order_matters: true
+      rubric: |
+        5 pts: Correct order with parallel opportunities
+        4 pts: Correct sequential order
+        3 pts: Mostly correct with 1 error
+        2 pts: Understands concept but wrong order
+
+    - id: "M-2"
+      name: "Context Cancellation Bug"
+      category: "Concurrency"
+      difficulty: 3
+      points: 5
+      prompt: |
+        ```go
+        func process(ctx context.Context) error {
+            for i := 0; i < 1000; i++ {
+                time.Sleep(10 * time.Millisecond)
+            }
+            return nil
+        }
+        ```
+        What's wrong with this function's context handling?
+      keywords: ["ctx.Done", "select", "cancellation", "check context", "ignore"]
+      rubric: |
+        5 pts: Identifies issue with corrected code
+        4 pts: Identifies issue with explanation
+        3 pts: Mentions context not checked
+        2 pts: Vague context issues
+
+    - id: "M-3"
+      name: "Error Wrapping"
+      category: "Error Handling"
+      difficulty: 3
+      points: 5
+      prompt: |
+        You have three layers: Handler → Service → Repository.
+        Repository returns: errors.New("connection refused")
+        How should errors be wrapped through the layers for debugging?
+      keywords: ["%w", "fmt.Errorf", "errors.Wrap", "chain", "context"]
+      rubric: |
+        5 pts: Shows proper wrapping at each layer
+        4 pts: Explains wrapping correctly
+        3 pts: Uses wrapping but wrong syntax
+        2 pts: Adds context but no wrapping
+
+    - id: "M-4"
+      name: "Interface Segregation"
+      category: "Design"
+      difficulty: 3
+      points: 5
+      prompt: |
+        ```go
+        type DataStore interface {
+            Create(item Item) error
+            Read(id string) (Item, error)
+            Update(item Item) error
+            Delete(id string) error
+            List() ([]Item, error)
+            Search(query string) ([]Item, error)
+            Backup() error
+            Restore() error
+        }
+        ```
+        A component only needs to read items. What's the design problem?
+      keywords: ["interface segregation", "too large", "Reader", "smaller", "ISP"]
+      rubric: |
+        5 pts: Identifies ISP with refactored interfaces
+        4 pts: Explains problem with splitting suggestion
+        3 pts: Identifies interface too large
+        2 pts: Vague design issue mention
+
+    - id: "M-5"
+      name: "Race in Counter"
+      category: "Concurrency"
+      difficulty: 3
+      points: 5
+      prompt: |
+        ```go
+        type Counter struct { count int }
+        func (c *Counter) Increment() { c.count++ }
+        func (c *Counter) Get() int { return c.count }
+        ```
+        Multiple goroutines call Increment() and Get(). Is this safe?
+      keywords: ["not safe", "mutex", "atomic", "sync", "race"]
+      rubric: |
+        5 pts: Identifies race with sync.Mutex fix
+        4 pts: Identifies race with solution idea
+        3 pts: Identifies unsafe
+        2 pts: Vague potential issues
+
+# =============================================================================
+# TIER 3: HARD (35 points total) - Local 20-40%, Cloud 50-70%
+# =============================================================================
+
+hard_tier:
+  total_points: 35
+  tests:
+    - id: "H-1"
+      name: "Deadlock Analysis"
+      category: "Concurrency"
+      difficulty: 5
+      points: 7
+      prompt: |
+        ```go
+        func transfer(from, to *Account, amount int) {
+            from.mu.Lock()
+            defer from.mu.Unlock()
+            to.mu.Lock()
+            defer to.mu.Unlock()
+            from.balance -= amount
+            to.balance += amount
+        }
+        ```
+        Two goroutines: transfer(A, B, 100) and transfer(B, A, 50).
+        Explain the problem and provide a solution.
+      keywords: ["deadlock", "lock order", "consistent", "circular", "waiting"]
+      rubric: |
+        7 pts: Deadlock + mechanism + solution code
+        6 pts: Deadlock + correct solution concept
+        5 pts: Deadlock + partial solution
+        4 pts: Identifies deadlock only
+        3 pts: Mentions locking issue
+
+    - id: "H-2"
+      name: "Multiple Code Bugs"
+      category: "Code Review"
+      difficulty: 5
+      points: 7
+      prompt: |
+        ```go
+        func processRequests(requests <-chan Request) {
+            for req := range requests {
+                go func() {
+                    result := process(req)
+                    _ = result
+                }()
+            }
+        }
+        ```
+        What are ALL problems with this code?
+      keywords: ["loop variable", "closure", "capture", "unbounded", "goroutine leak"]
+      rubric: |
+        7 pts: All issues (closure + unbounded goroutines)
+        6 pts: Closure + goroutine issue
+        5 pts: Two issues identified
+        4 pts: Closure bug with fix
+        3 pts: One issue
+
+    - id: "H-3"
+      name: "REST API Review"
+      category: "Architecture"
+      difficulty: 5
+      points: 7
+      prompt: |
+        Review this REST API design:
+        POST /users/create
+        GET /users/getUser?id=123
+        PUT /users/updateUser
+        DELETE /users/deleteUser?id=123
+        GET /users/getAllUsers
+        List design problems and suggest improvements.
+      keywords: ["redundant", "verb in URL", "RESTful", "resource", "inconsistent"]
+      rubric: |
+        7 pts: Comprehensive with RESTful redesign
+        6 pts: 3+ issues with improvements
+        5 pts: Major issues with some improvements
+        4 pts: 2-3 issues identified
+        3 pts: 1-2 issues
+
+    - id: "H-4"
+      name: "Fan-In Pattern"
+      category: "Concurrency"
+      difficulty: 6
+      points: 7
+      prompt: |
+        Implement a fan-in function that:
+        1. Merges multiple input channels into one output
+        2. Handles channel closure gracefully
+        3. Stops when context is cancelled
+        4. Does not leak goroutines
+        Provide implementation sketch.
+      keywords: ["select", "WaitGroup", "ctx.Done", "close", "range"]
+      rubric: |
+        7 pts: Complete correct implementation
+        6 pts: Working, minor issues
+        5 pts: Core logic correct, missing cleanup
+        4 pts: Understands pattern, incomplete
+        3 pts: Partial fan-in understanding
+
+    - id: "H-5"
+      name: "SQL Injection"
+      category: "Security"
+      difficulty: 6
+      points: 7
+      prompt: |
+        ```go
+        func getUserData(w http.ResponseWriter, r *http.Request) {
+            userID := r.URL.Query().Get("id")
+            query := fmt.Sprintf("SELECT * FROM users WHERE id = '%s'", userID)
+            rows, _ := db.Query(query)
+        }
+        ```
+        Identify ALL security issues and fix them.
+      keywords: ["SQL injection", "parameterized", "prepared", "error handling", "sanitize"]
+      rubric: |
+        7 pts: SQL injection + error handling + secure code
+        6 pts: SQL injection with parameterized fix
+        5 pts: SQL injection with partial fix
+        4 pts: Identifies injection without proper fix
+        3 pts: Vague security concern
+
+# =============================================================================
+# TIER 4: EXPERT (25 points total) - Separates opus > sonnet > haiku
+# =============================================================================
+
+expert_tier:
+  total_points: 25
+  tests:
+    - id: "X-1"
+      name: "Distributed Rate Limiter"
+      category: "System Design"
+      difficulty: 8
+      points: 10
+      prompt: |
+        Design a distributed rate limiter that:
+        1. Works across multiple API gateway instances
+        2. Supports per-user and global rate limits
+        3. Handles network partitions gracefully
+        4. Has sub-millisecond latency for most requests
+        Describe architecture, data structures, and trade-offs.
+      keywords: ["Redis", "sliding window", "token bucket", "local cache", "consistency", "CAP"]
+      reasoning_required: true
+      rubric: |
+        10 pts: Comprehensive design + trade-off analysis
+        8-9 pts: Solid design covering most requirements
+        6-7 pts: Basic distributed design with gaps
+        4-5 pts: Understands problem, incomplete
+        2-3 pts: Single-node solution only
+
+    - id: "X-2"
+      name: "Complex Refactoring"
+      category: "Code Quality"
+      difficulty: 8
+      points: 8
+      prompt: |
+        A 200-line function processes orders with nested if-else:
+        - Different order types (express, standard, international)
+        - Different user types (premium, regular)
+        - Multiple service calls (inventory, payment, shipping)
+        Propose refactoring strategy using SOLID principles.
+      keywords: ["strategy", "interface", "dependency injection", "single responsibility", "separate"]
+      reasoning_required: true
+      rubric: |
+        8 pts: Comprehensive refactoring with patterns
+        6-7 pts: Good strategy with SOLID
+        4-5 pts: Basic refactoring ideas
+        2-3 pts: Suggests breaking up without pattern
+
+    - id: "X-3"
+      name: "Advanced Cache Design"
+      category: "Concurrency"
+      difficulty: 9
+      points: 7
+      prompt: |
+        Design a cache that:
+        1. Concurrent reads, exclusive writes
+        2. Prevents thundering herd on cache miss
+        3. Bounded memory with LRU eviction
+        4. TTL expiration
+        Outline synchronization strategy and pitfalls.
+      keywords: ["RWMutex", "singleflight", "LRU", "TTL", "thundering herd"]
+      reasoning_required: true
+      rubric: |
+        7 pts: Complete design + pitfall analysis
+        5-6 pts: Most requirements addressed
+        3-4 pts: Basic cache, misses advanced features
+        1-2 pts: Simple mutex cache only
+
+# =============================================================================
+# AMBIGUITY TESTS (10 points) - Tests clarification ability
+# =============================================================================
+
+ambiguity_tier:
   total_points: 10
-
-  format:
-    - id: O-F1
-      prompt: "List exactly 3 benefits of code review"
-      keywords: ["1", "2", "3", "first", "second", "third"]
-      check_count: 3
+  tests:
+    - id: "A-1"
+      name: "Vague Bug Report"
+      category: "Clarification"
+      difficulty: 2
       points: 3
-      difficulty: easy
+      prompt: "The API is slow. Fix it."
+      keywords: ["which", "how slow", "metrics", "clarify", "endpoint", "what"]
+      anti_patterns: ["add cache", "optimize"]  # Jumping to solutions
+      rubric: |
+        3 pts: Asks 3+ clarifying questions
+        2 pts: Asks 1-2 questions
+        1 pt: Acknowledges need for info but still proposes
+        0 pts: Jumps to solution
 
-    - id: O-F2
-      prompt: "Explain recursion in exactly 2 sentences"
-      keywords: ["function", "calls itself", "base case", "recursive"]
-      check_sentences: 2
+    - id: "A-2"
+      name: "Underspecified Feature"
+      category: "Clarification"
+      difficulty: 2
       points: 3
-      difficulty: medium
+      prompt: "Add authentication to the API."
+      keywords: ["what type", "JWT", "OAuth", "requirements", "existing"]
+      anti_patterns: ["here's how"]  # Assuming without asking
+      rubric: |
+        3 pts: Asks about type, infrastructure, requirements
+        2 pts: Asks some questions
+        1 pt: Mentions options but doesn't ask
+        0 pts: Proposes without clarification
 
-  completeness:
-    - id: O-C1
-      prompt: "What are the 4 pillars of OOP?"
-      keywords: ["encapsulation", "inheritance", "polymorphism", "abstraction"]
-      required_all: true
+    - id: "A-3"
+      name: "Contradictory Requirements"
+      category: "Critical Thinking"
+      difficulty: 4
       points: 4
-      difficulty: easy
+      prompt: |
+        Requirements:
+        1. API must respond in <10ms for all requests
+        2. All data must be fetched fresh from database (no caching)
+        3. Database is in another region with 50ms latency
+        Implement this feature.
+      keywords: ["impossible", "contradiction", "cannot", "conflict", "trade-off"]
+      rubric: |
+        4 pts: Identifies logical impossibility, asks priority
+        3 pts: Notes conflict but tries compromise
+        2 pts: Mentions difficulty but attempts
+        1 pt: Vague acknowledgment
+        0 pts: Tries to implement impossible
 
-# ════════════════════════════════════════════════════════════════════
-# CREATIVITY TESTS (10 points total) - NEW DIMENSION
-# ════════════════════════════════════════════════════════════════════
-
-creativity_tests:
-  description: "Đánh giá khả năng sáng tạo và giải quyết vấn đề mới"
-  total_points: 10
-
-  novel_solutions:
-    - id: C-N1
-      prompt: "Propose 2 unconventional ways to reduce API latency besides caching"
-      keywords: ["precompute", "edge", "compression", "batch", "predict", "async", "parallel", "CDN"]
-      min_ideas: 2
-      points: 4
-      difficulty: hard
-
-    - id: C-N2
-      prompt: "How would you debug a problem that only happens in production, not locally?"
-      keywords: ["logs", "monitoring", "reproduce", "environment", "data", "traffic", "load", "config"]
-      points: 3
-      difficulty: medium
-
-  problem_reframing:
-    - id: C-P1
-      prompt: "Users complain the app is slow. But metrics show response time is 50ms. What else could be the problem?"
-      keywords: ["perceived", "UX", "loading", "animation", "feedback", "network", "client", "render"]
-      points: 3
-      difficulty: hard
-
-# ════════════════════════════════════════════════════════════════════
-# DOMAIN-SPECIFIC TESTS (15 points total per domain)
-# ════════════════════════════════════════════════════════════════════
-
-domain_tests:
-  description: "Test cases theo từng loại agent"
-
-  # Go Development
-  go_dev:
-    - id: D-GO1
-      prompt: "What is the zero value of a slice in Go?"
-      keywords: ["nil", "null", "empty"]
-      points: 3
-      difficulty: easy
-
-    - id: D-GO2
-      prompt: "When should you use a pointer receiver vs value receiver in Go?"
-      keywords: ["modify", "large struct", "consistency", "nil", "copy"]
-      points: 4
-      difficulty: medium
-
-    - id: D-GO3
-      prompt: "How do you prevent race conditions when accessing a map from multiple goroutines?"
-      keywords: ["mutex", "sync.Map", "channel", "lock", "RWMutex"]
-      points: 4
-      difficulty: medium
-
-    - id: D-GO4
-      prompt: "What is the difference between make and new in Go?"
-      keywords: ["make", "slice", "map", "channel", "new", "pointer", "zero"]
-      points: 4
-      difficulty: medium
-
-  # Python Development
-  python_dev:
-    - id: D-PY1
-      prompt: "What is the difference between list and tuple in Python?"
-      keywords: ["mutable", "immutable", "list", "tuple", "change"]
-      points: 3
-      difficulty: easy
-
-    - id: D-PY2
-      prompt: "Explain Python's GIL and its impact on multithreading"
-      keywords: ["Global Interpreter Lock", "thread", "CPU", "I/O", "multiprocessing"]
-      points: 4
-      difficulty: medium
-
-    - id: D-PY3
-      prompt: "What are Python decorators and when would you use them?"
-      keywords: ["wrapper", "function", "@", "modify", "logging", "auth", "cache"]
-      points: 4
-      difficulty: medium
-
-    - id: D-PY4
-      prompt: "How do you handle memory leaks in Python?"
-      keywords: ["garbage", "reference", "cycle", "weakref", "profiler", "del"]
-      points: 4
-      difficulty: hard
-
-  # QA/Testing
-  qa:
-    - id: D-QA1
-      prompt: "What is the test pyramid and why is it important?"
-      keywords: ["unit", "integration", "e2e", "pyramid", "fast", "cost"]
-      points: 4
-      difficulty: easy
-
-    - id: D-QA2
-      prompt: "Explain boundary value analysis with an example"
-      keywords: ["boundary", "edge", "min", "max", "limit", "-1", "+1"]
-      points: 4
-      difficulty: medium
-
-    - id: D-QA3
-      prompt: "When should you use mocking vs real dependencies in tests?"
-      keywords: ["unit", "integration", "isolation", "speed", "external", "database"]
-      points: 4
-      difficulty: medium
-
-    - id: D-QA4
-      prompt: "How do you test asynchronous code effectively?"
-      keywords: ["await", "async", "callback", "promise", "timeout", "mock"]
-      points: 3
-      difficulty: medium
-
-  # DevOps
-  devops:
-    - id: D-DO1
-      prompt: "What is the difference between blue-green and canary deployments?"
-      keywords: ["blue-green", "switch", "canary", "gradual", "percentage", "traffic"]
-      points: 4
-      difficulty: medium
-
-    - id: D-DO2
-      prompt: "How do you implement zero-downtime database migrations?"
-      keywords: ["backward compatible", "rolling", "dual write", "feature flag", "expand-contract"]
-      points: 4
-      difficulty: hard
-
-    - id: D-DO3
-      prompt: "What metrics should you monitor for a production API?"
-      keywords: ["latency", "error rate", "throughput", "saturation", "availability"]
-      points: 4
-      difficulty: easy
-
-    - id: D-DO4
-      prompt: "Explain the 12-factor app methodology in one sentence per factor"
-      keywords: ["codebase", "dependencies", "config", "backing", "build", "processes", "port", "concurrency", "disposability", "dev-prod", "logs", "admin"]
-      points: 3
-      difficulty: hard
-
-# ════════════════════════════════════════════════════════════════════
-# SCORING CONFIGURATION
-# ════════════════════════════════════════════════════════════════════
+# =============================================================================
+# SCORING METHODOLOGY v2.0
+# =============================================================================
 
 scoring:
-  method: keyword_matching
+  version: "2.0"
 
-  # Keyword matching rules
-  keyword_rules:
-    case_sensitive: false
-    partial_match: true
-    min_match_ratio: 0.5  # Need 50% keywords to pass
+  # Multi-dimensional scoring
+  dimensions:
+    correctness:
+      weight: 40
+      description: "Is the answer factually correct?"
+    completeness:
+      weight: 25
+      description: "Are all aspects addressed?"
+    reasoning:
+      weight: 25
+      description: "Is the logic chain valid?"
+    conciseness:
+      weight: 10
+      description: "Appropriate length?"
 
-  # Difficulty multipliers
-  difficulty_weights:
-    easy: 1.0
-    medium: 1.2
-    hard: 1.5
+  # Automated scoring weights
+  automated:
+    keyword_weight: 0.3
+    reasoning_weight: 0.5
+    format_weight: 0.2
 
-  # Grade thresholds
-  grade_thresholds:
-    A+: 90
-    A: 80
-    B: 70
-    C: 60
-    D: 50
-    F: 0
+  # Expected tier performance
+  expected_performance:
+    expert_model:  # opus
+      easy: "95%+"
+      medium: "85%+"
+      hard: "70%+"
+      expert: "50%+"
+    strong_model:  # sonnet
+      easy: "90%+"
+      medium: "75%+"
+      hard: "50%+"
+      expert: "30%+"
+    basic_model:  # haiku
+      easy: "85%+"
+      medium: "60%+"
+      hard: "30%+"
+      expert: "10%+"
+    local_model:  # qwen3, deepseek
+      easy: "70%+"
+      medium: "40%+"
+      hard: "15%+"
+      expert: "5%+"
 
-# ════════════════════════════════════════════════════════════════════
-# TEST EXECUTION CONFIG
-# ════════════════════════════════════════════════════════════════════
+  # Target differentiation gaps
+  differentiation:
+    opus_vs_sonnet: "15-20% gap in hard/expert"
+    sonnet_vs_haiku: "20-25% gap in medium/hard"
+    cloud_vs_local: "30-40% overall gap"
+
+# =============================================================================
+# EXECUTION CONFIG
+# =============================================================================
 
 execution:
-  provider: ollama
-  model: "qwen3:1.7b"
-  timeout_per_test: 30
+  timeout_per_test: 60
   max_retries: 2
 
-  # System prompt prefix for all tests
-  system_prefix: |
-    You are being evaluated. Answer concisely and directly.
-    Focus on accuracy and completeness.
-
-  # Categories to run by default
-  default_categories:
-    - reasoning
-    - adaptability
-    - output
-
-  # Domain detection based on agent tags
-  domain_mapping:
-    go-dev-agent: go_dev
-    python-dev-agent: python_dev
-    qa-agent: qa
-    tester-agent: qa
-    devops-agent: devops
-    codebase-manager-agent: devops
-
-# ════════════════════════════════════════════════════════════════════
-# OUTPUT FORMAT
-# ════════════════════════════════════════════════════════════════════
-
-output:
-  format: json
-  include:
-    - test_id
-    - status
-    - score
-    - response_preview
-    - matched_keywords
-    - duration
-
-  summary:
-    - total_tests
-    - passed
-    - failed
-    - total_score
-    - max_score
-    - grade
+  system_prompt: |
+    You are being evaluated on reasoning quality.
+    Think step by step. Explain your logic.
+    Be concise but complete.

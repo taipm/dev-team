@@ -1,0 +1,24 @@
+{
+  "name": "uf-pms",
+  "version": "1.0.0",
+  "description": "Universal Framework Project Management System",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev -w @uf-pms/backend",
+    "dev:frontend": "npm run dev -w @uf-pms/frontend",
+    "build": "npm run build -w @uf-pms/backend && npm run build -w @uf-pms/frontend",
+    "start": "npm run start -w @uf-pms/backend",
+    "db:up": "docker-compose up -d mongodb",
+    "db:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

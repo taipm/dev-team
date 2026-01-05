@@ -1,0 +1,112 @@
+# Research Task Workflow
+# Dispatch to deep-research team for arxiv paper analysis
+
+name: research-task
+description: Research arxiv papers using deep-research team
+version: "1.0"
+
+pre_conditions:
+  - check: memory_loaded
+  - check: output_folder_exists
+
+inputs:
+  topic:
+    type: string
+    required: true
+    description: Research topic
+  max_papers:
+    type: number
+    default: 5
+    description: Maximum papers to analyze
+  categories:
+    type: array
+    default: ["cs.AI", "cs.LG"]
+    description: arXiv categories to search
+
+steps:
+  - id: prepare
+    name: Prepare Research
+    actions:
+      - action: load_interests
+        file: ./memory/user-interests.yaml
+        fallback: use_input_topic
+      - action: determine_topics
+        source: input_or_interests
+      - action: update_kanban
+        status: in_progress
+        agent: daily-agent
+      - action: log
+        message: "Starting research on: {topic}"
+
+  - id: dispatch
+    name: Dispatch to Deep Research
+    agent_call:
+      type: Task
+      subagent_type: Explore
+      prompt: |
+        Research the following topic on arXiv:
+
+        Topic: {topic}
+        Categories: {categories}
+        Max papers: {max_papers}
+
+        Tasks:
+        1. Search arxiv for recent papers on this topic
+        2. Analyze top {max_papers} most relevant papers
+        3. Create a digest summarizing key findings
+        4. Identify trends and patterns
+        5. Save results to output/daily/{date}/research/
+
+        Output format:
+        - digest.md: Summary of all papers
+        - papers/{arxiv_id}.md: Individual paper analysis
+        - papers.bib: BibTeX export if available
+    timeout_ms: 600000  # 10 minutes
+    capture_output: true
+
+  - id: collect
+    name: Collect Results
+    actions:
+      - action: verify_output
+        path: "output/daily/{date}/research/"
+        required_files:
+          - digest.md
+      - action: extract_summary
+        from: digest.md
+        to: task_result
+      - action: update_kanban
+        status: completed
+        cycle_time: calculated
+      - action: log
+        message: "Research completed: {papers_count} papers analyzed"
+
+post_actions:
+  - action: log_metrics
+    metrics:
+      papers_analyzed: "{papers_count}"
+      time_spent: "{duration_minutes}"
+      topic: "{topic}"
+  - action: update_context
+    field: last_research
+    value:
+      date: "{date}"
+      topic: "{topic}"
+      papers: "{papers_count}"
+  - action: notify_if_important
+    condition: has_breakthrough_findings
+
+on_error:
+  - action: save_partial_results
+    enabled: true
+  - action: update_kanban
+    status: failed
+    error: "{error_message}"
+  - action: log_error
+    file: memory/errors.log
+    include:
+      - timestamp
+      - task_id
+      - error_message
+      - stack_trace
+  - action: continue_workflow
+    enabled: true

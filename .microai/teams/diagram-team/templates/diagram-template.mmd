@@ -1,0 +1,155 @@
+%% ============================================================
+%% Diagram: {{DIAGRAM_TYPE}}
+%% Project: {{PROJECT_NAME}}
+%% Session: {{SESSION_ID}}
+%% Agent: {{AGENT_NAME}}
+%% Generated: {{TIMESTAMP}}
+%% ============================================================
+
+%% -----------------------------------------------------------
+%% ARCHITECTURE DIAGRAM (C4 Context)
+%% -----------------------------------------------------------
+%% Uncomment and modify for architecture diagrams
+%%
+%% C4Context
+%%     title System Context - {{PROJECT_NAME}}
+%%
+%%     Person(user, "User", "End user of the system")
+%%
+%%     System(system, "{{PROJECT_NAME}}", "Main system description")
+%%
+%%     System_Ext(external, "External System", "External dependency")
+%%
+%%     Rel(user, system, "Uses")
+%%     Rel(system, external, "Calls")
+
+%% -----------------------------------------------------------
+%% SEQUENCE DIAGRAM
+%% -----------------------------------------------------------
+%% Uncomment and modify for sequence diagrams
+%%
+%% sequenceDiagram
+%%     autonumber
+%%     participant Client
+%%     participant API
+%%     participant Service
+%%     participant Database
+%%
+%%     Client->>+API: Request
+%%     API->>+Service: Process
+%%     Service->>+Database: Query
+%%     Database-->>-Service: Result
+%%     Service-->>-API: Response
+%%     API-->>-Client: Result
+
+%% -----------------------------------------------------------
+%% CLASS DIAGRAM
+%% -----------------------------------------------------------
+%% Uncomment and modify for class diagrams
+%%
+%% classDiagram
+%%     class ClassName {
+%%         +Type publicField
+%%         -Type privateField
+%%         +publicMethod() ReturnType
+%%         -privateMethod() void
+%%     }
+%%
+%%     class Interface {
+%%         <<interface>>
+%%         +methodSignature()
+%%     }
+%%
+%%     Interface <|.. ClassName : implements
+%%     ClassName --> Dependency : uses
+
+%% -----------------------------------------------------------
+%% ERD DIAGRAM
+%% -----------------------------------------------------------
+%% Uncomment and modify for ERD diagrams
+%%
+%% erDiagram
+%%     TABLE_A ||--o{ TABLE_B : "has many"
+%%
+%%     TABLE_A {
+%%         uuid id PK
+%%         string name
+%%         timestamp created_at
+%%     }
+%%
+%%     TABLE_B {
+%%         uuid id PK
+%%         uuid table_a_id FK
+%%         string value
+%%     }
+
+%% -----------------------------------------------------------
+%% DIRECTORY STRUCTURE
+%% -----------------------------------------------------------
+%% Uncomment and modify for directory diagrams
+%%
+%% graph TD
+%%     root["{{PROJECT_NAME}}/"]
+%%     root --> src["src/"]
+%%     root --> tests["tests/"]
+%%     root --> docs["docs/"]
+%%
+%%     src --> components["components/"]
+%%     src --> services["services/"]
+
+%% -----------------------------------------------------------
+%% FLOWCHART / LOGIC DIAGRAM
+%% -----------------------------------------------------------
+%% Uncomment and modify for logic flow diagrams
+%%
+%% flowchart TD
+%%     A([Start]) --> B{Condition?}
+%%     B -->|Yes| C[Action A]
+%%     B -->|No| D[Action B]
+%%     C --> E([End])
+%%     D --> E
+
+%% -----------------------------------------------------------
+%% UI/UX STATE DIAGRAM
+%% -----------------------------------------------------------
+%% Uncomment and modify for UI/UX flow diagrams
+%%
+%% stateDiagram-v2
+%%     [*] --> Initial
+%%
+%%     Initial --> Loading: action
+%%     Loading --> Success: data received
+%%     Loading --> Error: error
+%%
+%%     Success --> [*]
+%%     Error --> Initial: retry
+
+%% -----------------------------------------------------------
+%% ACTUAL DIAGRAM CONTENT
+%% -----------------------------------------------------------
+%% Replace this comment with the actual diagram
+
+{{DIAGRAM_CONTENT}}
+
+%% -----------------------------------------------------------
+%% METADATA (for verification)
+%% -----------------------------------------------------------
+%% source_files:
+{{#SOURCE_FILES}}
+%%   - {{FILE_PATH}}
+{{/SOURCE_FILES}}
+%%
+%% entities:
+{{#ENTITIES}}
+%%   - {{ENTITY_NAME}}: {{ENTITY_TYPE}}
+{{/ENTITIES}}
+%%
+%% relationships:
+{{#RELATIONSHIPS}}
+%%   - {{RELATION_TYPE}}: {{SOURCE}} -> {{TARGET}}
+{{/RELATIONSHIPS}}
+%%
+%% verification_hints:
+%%   entity_count: {{ENTITY_COUNT}}
+%%   relation_count: {{RELATION_COUNT}}
+%%   complexity: {{COMPLEXITY}}

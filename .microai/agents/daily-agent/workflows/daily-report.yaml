@@ -1,0 +1,152 @@
+# Daily Report Workflow
+# Generate daily summary report
+
+name: daily-report
+description: Generate comprehensive daily summary report
+version: "1.0"
+
+pre_conditions:
+  - check: memory_loaded
+
+inputs:
+  completed_tasks:
+    type: array
+    default: []
+  failed_tasks:
+    type: array
+    default: []
+  include_metrics:
+    type: boolean
+    default: true
+
+steps:
+  - id: gather_data
+    name: Gather Report Data
+    actions:
+      - action: load_daily_stats
+        file: memory/daily-stats.yaml
+      - action: load_context
+        file: memory/context.md
+      - action: scan_output_folder
+        path: "output/daily/{date}/"
+        collect:
+          - research_digest
+          - posts_published
+          - content_created
+      - action: load_kanban_metrics
+        board: ./kanban/board.yaml
+    output: report_data
+
+  - id: generate_sections
+    name: Generate Report Sections
+    actions:
+      - action: generate_summary
+        template: |
+          ## Summary
+
+          - Tasks Completed: {completed_count}
+          - Tasks Failed: {failed_count}
+          - Completion Rate: {completion_rate}%
+          - Time Spent: {total_time} minutes
+
+      - action: generate_research_section
+        condition: has_research
+        template: |
+          ## Research Highlights
+
+          **Topic**: {research_topic}
+          **Papers Analyzed**: {papers_count}
+
+          ### Key Findings
+          {research_highlights}
+
+      - action: generate_content_section
+        condition: has_content
+        template: |
+          ## Content Created
+
+          {content_list}
+
+      - action: generate_posts_section
+        condition: has_posts
+        template: |
+          ## Posts Published
+
+          {posts_list}
+
+      - action: generate_metrics_section
+        condition: include_metrics
+        template: |
+          ## Metrics
+
+          | Metric | Value |
+          |--------|-------|
+          | Research Papers | {papers_count} |
+          | Posts Published | {posts_count} |
+          | Content Pieces | {content_count} |
+          | Avg Task Time | {avg_time} min |
+
+      - action: generate_learnings_section
+        template: |
+          ## Learnings
+
+          {new_learnings}
+
+      - action: generate_tomorrow_section
+        template: |
+          ## Tomorrow's Focus
+
+          {pending_priorities}
+
+  - id: compile_report
+    name: Compile Final Report
+    actions:
+      - action: load_template
+        file: templates/daily-summary.md
+      - action: fill_template
+        data: report_data
+      - action: format_markdown
+        clean: true
+
+  - id: save_report
+    name: Save Report
+    actions:
+      - action: save_file
+        path: "output/daily/{date}/summary.md"
+        content: "{compiled_report}"
+      - action: log
+        message: "Daily report saved to: output/daily/{date}/summary.md"
+
+  - id: display_summary
+    name: Display Summary
+    actions:
+      - action: display
+        format: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║                    DAILY REPORT - {date}                       ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Tasks Completed: {completed_count}                            ║
+          ║  Tasks Failed:    {failed_count}                               ║
+          ║  Completion Rate: {completion_rate}%                           ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Research: {papers_count} papers | Posts: {posts_count}        ║
+          ║  Content:  {content_count} pieces                              ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Full report: output/daily/{date}/summary.md                   ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+post_actions:
+  - action: update_context
+    field: last_report
+    value:
+      date: "{date}"
+      path: "output/daily/{date}/summary.md"
+  - action: archive_if_end_of_week
+    condition: is_sunday
+    to: "output/daily/archive/{week}/"
+
+on_error:
+  - action: generate_minimal_report
+    include: [summary, errors]
+  - action: log_error
+    file: memory/errors.log

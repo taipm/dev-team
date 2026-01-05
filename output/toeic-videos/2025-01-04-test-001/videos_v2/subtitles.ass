@@ -1,0 +1,73 @@
+[Script Info]
+Title: TOEIC Vocabulary - ACCOMPLISH
+ScriptType: v4.00+
+Collisions: Normal
+PlayDepth: 0
+PlayResX: 1080
+PlayResY: 1920
+Timer: 100.0000
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Roboto,90,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,400,1
+Style: Subtitle,Roboto,50,&H00D4EC4E,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,500,1
+Style: Word,Roboto,100,&H00D4EC4E,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,600,1
+Style: IPA,Roboto,45,&H00B8B8B8,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,720,1
+Style: Definition,Roboto,60,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,850,1
+Style: ExampleLabel,Roboto,45,&H003DD9FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,2,1,5,50,50,400,1
+Style: ExampleEN,Roboto,50,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,600,1
+Style: ExampleVI,Roboto,42,&H00B8B8B8,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,900,1
+Style: Challenge,Roboto,55,&H003DD9FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,500,1
+Style: Question,Roboto,50,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,700,1
+Style: Answer,Roboto,60,&H004FF57A,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,700,1
+Style: Tip,Roboto,50,&H003DD9FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,400,1
+Style: Correct,Roboto,45,&H004FF57A,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,550,1
+Style: Wrong,Roboto,45,&H006B6BFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,750,1
+Style: Summary,Roboto,70,&H00D4EC4E,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,600,1
+Style: SummaryDef,Roboto,55,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,750,1
+Style: CTA,Roboto,65,&H00356BFF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,600,1
+Style: CTASub,Roboto,45,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,750,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+; === PHASE 1: HOOK (0-3s) ===
+Dialogue: 0,0:00:00.00,0:00:03.00,Title,,0,0,0,,TỪ VỰNG TOEIC
+Dialogue: 0,0:00:00.00,0:00:03.00,Subtitle,,0,0,0,,Hay gặp Part 5!
+
+; === PHASE 2: PRESENT (3-15s) ===
+Dialogue: 0,0:00:03.00,0:00:15.00,Word,,0,0,0,,ACCOMPLISH
+Dialogue: 0,0:00:05.00,0:00:15.00,IPA,,0,0,0,,/əˈkɑːmplɪʃ/
+Dialogue: 0,0:00:08.00,0:00:15.00,Definition,,0,0,0,,hoàn thành, đạt được
+
+; === PHASE 3: EXAMPLE 1 (15-25s) ===
+Dialogue: 0,0:00:15.00,0:00:25.00,ExampleLabel,,0,0,0,,VÍ DỤ TOEIC 1
+Dialogue: 0,0:00:16.00,0:00:25.00,ExampleEN,,0,0,0,,The team {\c&H356BFF&}accomplished{\c} all their
+Dialogue: 0,0:00:16.00,0:00:25.00,ExampleEN,,0,0,150,,goals ahead of schedule.
+Dialogue: 0,0:00:20.00,0:00:25.00,ExampleVI,,0,0,0,,Nhóm đã hoàn thành tất cả mục tiêu
+Dialogue: 0,0:00:20.00,0:00:25.00,ExampleVI,,0,0,100,,trước thời hạn.
+
+; === PHASE 4: EXAMPLE 2 (25-35s) ===
+Dialogue: 0,0:00:25.00,0:00:35.00,ExampleLabel,,0,0,0,,VÍ DỤ TOEIC 2
+Dialogue: 0,0:00:26.00,0:00:35.00,ExampleEN,,0,0,0,,She {\c&H356BFF&}accomplished{\c} the difficult
+Dialogue: 0,0:00:26.00,0:00:35.00,ExampleEN,,0,0,150,,task with ease.
+Dialogue: 0,0:00:30.00,0:00:35.00,ExampleVI,,0,0,0,,Cô ấy hoàn thành nhiệm vụ
+Dialogue: 0,0:00:30.00,0:00:35.00,ExampleVI,,0,0,100,,khó khăn một cách dễ dàng.
+
+; === PHASE 5: ACTIVE RECALL CHALLENGE (35-47s) ===
+Dialogue: 0,0:00:35.00,0:00:47.00,Challenge,,0,0,0,,THỬ THÁCH!
+Dialogue: 0,0:00:36.00,0:00:42.00,Question,,0,0,0,,Điền từ vào chỗ trống:
+Dialogue: 0,0:00:36.00,0:00:42.00,Question,,0,0,150,,She _____ the difficult task.
+Dialogue: 0,0:00:42.00,0:00:47.00,Answer,,0,0,0,,✓ Đáp án: ACCOMPLISHED
+
+; === PHASE 6: REINFORCE (47-55s) ===
+Dialogue: 0,0:00:47.00,0:00:55.00,Tip,,0,0,0,,MẸO NHỚ NHANH
+Dialogue: 0,0:00:48.00,0:00:55.00,Correct,,0,0,0,,✓ accomplish a goal
+Dialogue: 0,0:00:49.00,0:00:55.00,Correct,,0,0,100,,✓ accomplish a task
+Dialogue: 0,0:00:50.00,0:00:55.00,Correct,,0,0,200,,✓ accomplish a mission
+Dialogue: 0,0:00:51.00,0:00:55.00,Wrong,,0,0,0,,✗ KHÔNG dùng: accomplish to do
+
+; === PHASE 7: CTA (55-60s) ===
+Dialogue: 0,0:00:55.00,0:00:60.00,Summary,,0,0,0,,ACCOMPLISH
+Dialogue: 0,0:00:55.00,0:00:60.00,SummaryDef,,0,0,0,,= hoàn thành, đạt được
+Dialogue: 0,0:00:57.00,0:00:60.00,CTA,,0,0,300,,FOLLOW
+Dialogue: 0,0:00:57.00,0:00:60.00,CTASub,,0,0,0,,để học TOEIC mỗi ngày!

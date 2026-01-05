@@ -1,0 +1,376 @@
+# Universal Framework - Project Type Registry
+# Version: 2.0
+# Purpose: Enable type-aware project handling for maximum output quality
+
+registry:
+  version: "2.0"
+  description: |
+    Project Type System giúp Framework tự động detect và apply
+    type-specific requirements, questions, tasks, và validation criteria.
+
+    Đây là giải pháp cho vấn đề: LLM cần EXPLICIT specs, không thể assume.
+
+# =============================================================================
+# PROJECT TYPES DEFINITION
+# =============================================================================
+
+types:
+  # -------------------------------------------------------------------------
+  # UI/FRONTEND PROJECTS
+  # -------------------------------------------------------------------------
+  ui:
+    id: "ui"
+    name: "UI/Frontend Project"
+    description: "Projects với visual interface - web, mobile, desktop apps"
+
+    detection_keywords:
+      - "giao diện"
+      - "UI"
+      - "interface"
+      - "app"
+      - "ứng dụng"
+      - "web"
+      - "mobile"
+      - "desktop"
+      - "calculator"
+      - "máy tính"
+      - "form"
+      - "dashboard"
+      - "realistic"
+      - "visual"
+
+    config_file: "ui-project.yaml"
+
+    required_phases:
+      - visual_reference_collection
+      - design_system_definition
+      - component_breakdown
+      - visual_validation
+
+    quality_dimensions:
+      - visual_fidelity
+      - user_experience
+      - responsiveness
+      - accessibility
+
+  # -------------------------------------------------------------------------
+  # API/BACKEND PROJECTS
+  # -------------------------------------------------------------------------
+  api:
+    id: "api"
+    name: "API/Backend Project"
+    description: "REST APIs, GraphQL, microservices, backend systems"
+
+    detection_keywords:
+      - "API"
+      - "REST"
+      - "GraphQL"
+      - "backend"
+      - "server"
+      - "microservice"
+      - "endpoint"
+      - "service"
+      - "database"
+
+    config_file: "api-project.yaml"
+
+    required_phases:
+      - api_contract_definition
+      - data_model_design
+      - endpoint_specification
+      - integration_testing
+
+    quality_dimensions:
+      - correctness
+      - performance
+      - security
+      - documentation
+
+  # -------------------------------------------------------------------------
+  # ALGORITHM/COMPUTATION PROJECTS
+  # -------------------------------------------------------------------------
+  algorithm:
+    id: "algorithm"
+    name: "Algorithm/Computation Project"
+    description: "Algorithms, data processing, ML models, computation logic"
+
+    detection_keywords:
+      - "algorithm"
+      - "thuật toán"
+      - "xử lý"
+      - "tính toán"
+      - "ML"
+      - "machine learning"
+      - "data"
+      - "processing"
+      - "optimization"
+
+    config_file: "algorithm-project.yaml"
+
+    required_phases:
+      - input_output_specification
+      - algorithm_design
+      - complexity_analysis
+      - correctness_verification
+
+    quality_dimensions:
+      - correctness
+      - efficiency
+      - edge_case_handling
+      - scalability
+
+  # -------------------------------------------------------------------------
+  # DOCUMENTATION PROJECTS
+  # -------------------------------------------------------------------------
+  documentation:
+    id: "documentation"
+    name: "Documentation Project"
+    description: "Technical docs, guides, specifications, reports"
+
+    detection_keywords:
+      - "tài liệu"
+      - "document"
+      - "guide"
+      - "specification"
+      - "report"
+      - "manual"
+      - "hướng dẫn"
+
+    config_file: "documentation-project.yaml"
+
+    required_phases:
+      - content_structure
+      - audience_definition
+      - format_specification
+      - review_process
+
+    quality_dimensions:
+      - clarity
+      - completeness
+      - accuracy
+      - organization
+
+  # -------------------------------------------------------------------------
+  # HYBRID PROJECTS
+  # -------------------------------------------------------------------------
+  hybrid:
+    id: "hybrid"
+    name: "Hybrid/Full-Stack Project"
+    description: "Projects combining multiple types (UI + API + Algorithm)"
+
+    detection_keywords:
+      - "full-stack"
+      - "fullstack"
+      - "end-to-end"
+      - "complete"
+      - "toàn bộ"
+
+    config_file: "hybrid-project.yaml"
+
+    required_phases:
+      - component_identification
+      - type_assignment_per_component
+      - integration_planning
+      - cross_type_validation
+
+    quality_dimensions:
+      - component_quality
+      - integration_quality
+      - overall_coherence
+
+# =============================================================================
+# CLASSIFICATION RULES
+# =============================================================================
+
+classification:
+  # Priority order khi multiple types match
+  priority_order:
+    - hybrid      # Check first: có nhiều type không?
+    - ui          # Visual projects need special care
+    - api         # Backend systems
+    - algorithm   # Pure computation
+    - documentation  # Default for text-heavy
+
+  # Minimum confidence để assign type
+  confidence_threshold: 0.6
+
+  # Strategy khi không rõ type
+  fallback_strategy: "ask_user"
+
+  # Multi-type handling
+  multi_type:
+    enabled: true
+    max_types: 3
+    combination_strategy: "union_requirements"
+
+# =============================================================================
+# FIDELITY LEVELS
+# =============================================================================
+
+fidelity_levels:
+  prototype:
+    level: 1
+    name: "Prototype/POC"
+    description: "Chỉ cần hoạt động, không quan tâm chi tiết"
+    visual_requirement: "basic layout only"
+    detail_level: "minimal"
+
+  functional:
+    level: 2
+    name: "Functional MVP"
+    description: "Hoạt động đúng với UI cơ bản"
+    visual_requirement: "clean, consistent styling"
+    detail_level: "moderate"
+
+  polished:
+    level: 3
+    name: "Polished Product"
+    description: "Production-ready, UI đẹp"
+    visual_requirement: "professional design"
+    detail_level: "high"
+
+  realistic:
+    level: 4
+    name: "Realistic/Skeuomorphic"
+    description: "Giống thật, chi tiết cao, như sản phẩm thương mại"
+    visual_requirement: "exact visual replication"
+    detail_level: "maximum"
+    required_assets:
+      - reference_images
+      - exact_colors
+      - exact_fonts
+      - exact_dimensions
+      - exact_shadows
+      - exact_textures
+
+# =============================================================================
+# MANDATORY QUESTIONS BY TYPE
+# =============================================================================
+
+mandatory_questions:
+  all_types:
+    - question: "Mục tiêu chính của project là gì?"
+      field: "primary_goal"
+
+    - question: "Target users là ai?"
+      field: "target_users"
+
+    - question: "Fidelity level mong muốn? (prototype/functional/polished/realistic)"
+      field: "fidelity_level"
+      default: "functional"
+
+    - question: "Có reference/example nào không?"
+      field: "references"
+
+  ui_specific:
+    - question: "Reference images của UI mong muốn?"
+      field: "visual_references"
+      required: true
+
+    - question: "Color scheme chính xác? (hex codes)"
+      field: "color_scheme"
+      required_if: "fidelity_level >= polished"
+
+    - question: "Typography (font family, sizes)?"
+      field: "typography"
+      required_if: "fidelity_level >= polished"
+
+    - question: "Kích thước chính xác (width, height, padding)?"
+      field: "dimensions"
+      required_if: "fidelity_level >= realistic"
+
+    - question: "Có interactive states (hover, active, disabled)?"
+      field: "interaction_states"
+      default: true
+
+    - question: "Responsive requirements?"
+      field: "responsive"
+      default: "desktop-first"
+
+  api_specific:
+    - question: "API style (REST/GraphQL/gRPC)?"
+      field: "api_style"
+
+    - question: "Authentication method?"
+      field: "auth_method"
+
+    - question: "Expected request/response formats?"
+      field: "data_formats"
+
+    - question: "Performance requirements (RPS, latency)?"
+      field: "performance_requirements"
+
+  algorithm_specific:
+    - question: "Input format và constraints?"
+      field: "input_spec"
+
+    - question: "Expected output format?"
+      field: "output_spec"
+
+    - question: "Time/space complexity requirements?"
+      field: "complexity_requirements"
+
+    - question: "Edge cases cần handle?"
+      field: "edge_cases"
+
+# =============================================================================
+# VALIDATION CRITERIA BY TYPE
+# =============================================================================
+
+validation_criteria:
+  ui:
+    visual_checklist:
+      - "Colors match reference exactly (±5%)"
+      - "Fonts match specified family and sizes"
+      - "Spacing/padding consistent with reference"
+      - "Shadows and borders match"
+      - "Interactive states implemented"
+      - "Responsive behavior correct"
+
+    functional_checklist:
+      - "All buttons clickable"
+      - "All inputs functional"
+      - "Navigation works"
+      - "Error states handled"
+
+  api:
+    contract_checklist:
+      - "All endpoints implemented"
+      - "Request validation working"
+      - "Response format correct"
+      - "Error codes appropriate"
+      - "Authentication enforced"
+
+    performance_checklist:
+      - "Response time within limits"
+      - "Concurrent requests handled"
+      - "No memory leaks"
+
+  algorithm:
+    correctness_checklist:
+      - "All test cases pass"
+      - "Edge cases handled"
+      - "Output format correct"
+
+    efficiency_checklist:
+      - "Time complexity as specified"
+      - "Space complexity as specified"
+      - "No unnecessary operations"
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+metadata:
+  created_at: "2026-01-04"
+  created_by: "Deep Thinking Team"
+  version: "2.0"
+  changelog:
+    - version: "2.0"
+      date: "2026-01-04"
+      changes:
+        - "Initial Type Registry creation"
+        - "Added 5 project types"
+        - "Added fidelity levels"
+        - "Added mandatory questions"
+        - "Added validation criteria"

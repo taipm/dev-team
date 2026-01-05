@@ -1,0 +1,123 @@
+[Script Info]
+Title: TOEIC Vocabulary Lesson 001 - 5 Words (Vietnamese with diacritics)
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+Timer: 100.0000
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Helvetica,80,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,500,1
+Style: Subtitle,Helvetica,45,&H00D4EC4E,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,600,1
+Style: WordNum,Helvetica,40,&H003DD9FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,2,1,5,50,50,400,1
+Style: Word,Helvetica,90,&H00D4EC4E,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,4,2,5,50,50,550,1
+Style: IPA,Helvetica,40,&H00B8B8B8,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,680,1
+Style: Def,Helvetica,55,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,2,5,50,50,800,1
+Style: ExEN,Helvetica,42,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,600,1
+Style: ExVI,Helvetica,38,&H00B8B8B8,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,850,1
+Style: Tip,Helvetica,40,&H003DD9FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,2,1,5,50,50,500,1
+Style: TipText,Helvetica,36,&H004FF57A,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,650,1
+Style: TipWrong,Helvetica,36,&H006B6BFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,750,1
+Style: Quiz,Helvetica,50,&H003DD9FF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,500,1
+Style: QuizQ,Helvetica,42,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,700,1
+Style: QuizA,Helvetica,55,&H004FF57A,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,700,1
+Style: Summary,Helvetica,60,&H00D4EC4E,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,500,1
+Style: SumText,Helvetica,38,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,1,5,50,50,650,1
+Style: CTA,Helvetica,55,&H00356BFF,&H000000FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,3,2,5,50,50,600,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+
+; === INTRO (0:00 - 0:12.29) ===
+Dialogue: 0,0:00:00.00,0:00:04.44,Title,,0,0,0,,BÀI 1
+Dialogue: 0,0:00:00.00,0:00:04.44,Subtitle,,0,0,0,,Từ vựng TOEIC Part 5
+Dialogue: 0,0:00:04.44,0:00:07.85,Title,,0,0,0,,5 ĐỘNG TỪ
+Dialogue: 0,0:00:04.44,0:00:07.85,Subtitle,,0,0,0,,thường gặp nhất
+Dialogue: 0,0:00:07.85,0:00:12.29,ExEN,,0,0,500,,accomplish
+Dialogue: 0,0:00:07.85,0:00:12.29,ExEN,,0,0,580,,achieve
+Dialogue: 0,0:00:07.85,0:00:12.29,ExEN,,0,0,660,,acknowledge
+Dialogue: 0,0:00:07.85,0:00:12.29,ExEN,,0,0,740,,acquire
+Dialogue: 0,0:00:07.85,0:00:12.29,ExEN,,0,0,820,,adapt
+
+; === WORD 1: ACCOMPLISH (0:12.29 - 0:33.48) ===
+Dialogue: 0,0:00:12.29,0:00:14.00,WordNum,,0,0,0,,TỪ 1/5
+Dialogue: 0,0:00:14.00,0:00:33.48,Word,,0,0,0,,ACCOMPLISH
+Dialogue: 0,0:00:15.80,0:00:33.48,IPA,,0,0,0,,/əˈkɑːmplɪʃ/ - verb
+Dialogue: 0,0:00:15.80,0:00:33.48,Def,,0,0,0,,hoàn thành, đạt được
+Dialogue: 0,0:00:18.56,0:00:25.56,ExEN,,0,0,0,,The team accomplished all their goals ahead of schedule.
+Dialogue: 0,0:00:22.16,0:00:25.56,ExVI,,0,0,0,,Nhóm đã hoàn thành tất cả mục tiêu trước thời hạn.
+Dialogue: 0,0:00:25.56,0:00:33.48,Tip,,0,0,0,,Collocations:
+Dialogue: 0,0:00:25.56,0:00:33.48,TipText,,0,0,0,,accomplish a goal
+Dialogue: 0,0:00:25.56,0:00:33.48,TipText,,0,0,80,,accomplish a task
+Dialogue: 0,0:00:25.56,0:00:33.48,TipWrong,,0,0,0,,accomplish to do = SAI
+
+; === WORD 2: ACHIEVE (0:33.48 - 0:51.65) ===
+Dialogue: 0,0:00:33.48,0:00:35.23,WordNum,,0,0,0,,TỪ 2/5
+Dialogue: 0,0:00:35.23,0:00:51.65,Word,,0,0,0,,ACHIEVE
+Dialogue: 0,0:00:36.84,0:00:51.65,IPA,,0,0,0,,/əˈtʃiːv/ - verb
+Dialogue: 0,0:00:36.84,0:00:51.65,Def,,0,0,0,,đạt được, giành được
+Dialogue: 0,0:00:39.53,0:00:46.51,ExEN,,0,0,0,,She achieved remarkable success in her career.
+Dialogue: 0,0:00:42.96,0:00:46.51,ExVI,,0,0,0,,Cô ấy đã đạt được thành công đáng kể trong sự nghiệp.
+Dialogue: 0,0:00:46.51,0:00:51.65,Tip,,0,0,0,,So sánh:
+Dialogue: 0,0:00:46.51,0:00:51.65,TipText,,0,0,0,,achieve = nhấn mạnh kết quả
+Dialogue: 0,0:00:46.51,0:00:51.65,TipText,,0,0,80,,accomplish = nhấn mạnh quá trình
+
+; === WORD 3: ACKNOWLEDGE (0:51.65 - 1:11.33) ===
+Dialogue: 0,0:00:51.65,0:00:53.38,WordNum,,0,0,0,,TỪ 3/5
+Dialogue: 0,0:00:53.38,0:01:11.33,Word,,0,0,0,,ACKNOWLEDGE
+Dialogue: 0,0:00:55.18,0:01:11.33,IPA,,0,0,0,,/əkˈnɑːlɪdʒ/ - verb
+Dialogue: 0,0:00:55.18,0:01:11.33,Def,,0,0,0,,thừa nhận, công nhận
+Dialogue: 0,0:00:57.99,0:01:04.92,ExEN,,0,0,0,,The manager acknowledged the employee's contribution.
+Dialogue: 0,0:01:01.64,0:01:04.92,ExVI,,0,0,0,,Quản lý đã công nhận đóng góp của nhân viên.
+Dialogue: 0,0:01:04.92,0:01:11.33,Tip,,0,0,0,,Phát âm: ack-NOW-ledge
+Dialogue: 0,0:01:04.92,0:01:11.33,TipText,,0,0,0,,acknowledge receipt
+
+; === WORD 4: ACQUIRE (1:11.33 - 1:31.18) ===
+Dialogue: 0,0:01:11.33,0:01:13.08,WordNum,,0,0,0,,TỪ 4/5
+Dialogue: 0,0:01:13.08,0:01:31.18,Word,,0,0,0,,ACQUIRE
+Dialogue: 0,0:01:14.74,0:01:31.18,IPA,,0,0,0,,/əˈkwaɪər/ - verb
+Dialogue: 0,0:01:14.74,0:01:31.18,Def,,0,0,0,,có được, thu được, mua lại
+Dialogue: 0,0:01:18.08,0:01:25.52,ExEN,,0,0,0,,The company acquired a smaller competitor last year.
+Dialogue: 0,0:01:21.80,0:01:25.52,ExVI,,0,0,0,,Công ty đã mua lại một đối thủ nhỏ hơn năm ngoái.
+Dialogue: 0,0:01:25.52,0:01:31.18,Tip,,0,0,0,,Collocations:
+Dialogue: 0,0:01:25.52,0:01:31.18,TipText,,0,0,0,,acquire skills
+Dialogue: 0,0:01:25.52,0:01:31.18,TipText,,0,0,80,,acquire knowledge
+
+; === WORD 5: ADAPT (1:31.18 - 1:50.90) ===
+Dialogue: 0,0:01:31.18,0:01:33.96,WordNum,,0,0,0,,TỪ 5/5
+Dialogue: 0,0:01:33.96,0:01:50.90,Word,,0,0,0,,ADAPT
+Dialogue: 0,0:01:35.54,0:01:50.90,IPA,,0,0,0,,/əˈdæpt/ - verb
+Dialogue: 0,0:01:35.54,0:01:50.90,Def,,0,0,0,,thích nghi, điều chỉnh
+Dialogue: 0,0:01:38.35,0:01:45.72,ExEN,,0,0,0,,Employees must adapt to the new working environment.
+Dialogue: 0,0:01:42.14,0:01:45.72,ExVI,,0,0,0,,Nhân viên phải thích nghi với môi trường làm việc mới.
+Dialogue: 0,0:01:45.72,0:01:50.90,Tip,,0,0,0,,Phân biệt:
+Dialogue: 0,0:01:45.72,0:01:50.90,TipText,,0,0,0,,adapt = thay đổi để phù hợp
+Dialogue: 0,0:01:45.72,0:01:50.90,TipText,,0,0,80,,adopt = chấp nhận, áp dụng
+
+; === QUIZ (1:50.90 - 2:48.10) ===
+Dialogue: 0,0:01:50.90,0:01:54.21,Quiz,,0,0,0,,KIỂM TRA NHANH
+Dialogue: 0,0:01:54.21,0:02:04.47,QuizQ,,0,0,0,,Câu 1: The team _____ all their goals.
+Dialogue: 0,0:02:04.47,0:02:08.47,Quiz,,0,0,0,,Suy nghĩ...
+Dialogue: 0,0:02:08.47,0:02:12.07,QuizA,,0,0,0,,accomplished
+Dialogue: 0,0:02:12.07,0:02:21.00,QuizQ,,0,0,0,,Câu 2: She _____ remarkable success.
+Dialogue: 0,0:02:21.00,0:02:24.34,QuizA,,0,0,0,,achieved
+Dialogue: 0,0:02:24.34,0:02:36.41,QuizQ,,0,0,0,,Câu 3: Từ nào = thừa nhận?
+Dialogue: 0,0:02:24.34,0:02:36.41,ExEN,,0,0,150,,A. accomplish  B. achieve
+Dialogue: 0,0:02:24.34,0:02:36.41,ExEN,,0,0,230,,C. acknowledge  D. acquire
+Dialogue: 0,0:02:36.41,0:02:44.24,Quiz,,0,0,0,,Suy nghĩ...
+Dialogue: 0,0:02:44.24,0:02:48.10,QuizA,,0,0,0,,C. acknowledge
+
+; === SUMMARY (2:48.10 - 3:02.00) ===
+Dialogue: 0,0:02:48.10,0:02:50.84,Summary,,0,0,0,,TÓM TẮT BÀI 1
+Dialogue: 0,0:02:50.84,0:03:02.00,SumText,,0,0,450,,accomplish = hoàn thành
+Dialogue: 0,0:02:50.84,0:03:02.00,SumText,,0,0,520,,achieve = đạt được
+Dialogue: 0,0:02:50.84,0:03:02.00,SumText,,0,0,590,,acknowledge = công nhận
+Dialogue: 0,0:02:50.84,0:03:02.00,SumText,,0,0,660,,acquire = thu được
+Dialogue: 0,0:02:50.84,0:03:02.00,SumText,,0,0,730,,adapt = thích nghi
+
+; === PREVIEW & CTA (3:02 - 3:19) ===
+Dialogue: 0,0:03:02.00,0:03:09.13,Summary,,0,0,0,,BÀI 2 SẼ HỌC:
+Dialogue: 0,0:03:02.00,0:03:09.13,SumText,,0,0,0,,adequate, adhere, adjacent, adjust, administer
+Dialogue: 0,0:03:09.13,0:03:13.33,Tip,,0,0,0,,Xem lại sau 1 ngày để nhớ lâu!
+Dialogue: 0,0:03:13.33,0:03:19.02,CTA,,0,0,0,,ĐĂNG KÝ KÊNH
+Dialogue: 0,0:03:13.33,0:03:19.02,Subtitle,,0,0,0,,để học TOEIC mỗi ngày!

@@ -1,0 +1,82 @@
+# Quick Design Workflow
+# Blueprint Architect - Fast mode for simple specs
+
+name: quick-design
+description: Streamlined workflow for simple, single-function specs
+
+triggers:
+  - "quick"
+  - "nhanh"
+  - "simple"
+  - "đơn giản"
+  - "one function"
+  - "một hàm"
+
+conditions:
+  - "< 3 functions"
+  - "single domain"
+  - "no complex dependencies"
+
+phases:
+  - name: quick_understand
+    description: Fast intent extraction
+    steps:
+      - action: extract_essentials
+        fields:
+          - function_name
+          - inputs
+          - outputs
+          - main_purpose
+      - action: infer_domain
+        from: keywords
+
+  - name: quick_spec
+    description: Generate minimal spec
+    steps:
+      - action: generate_signature
+        format: "{name}({params}) → {return_type}"
+      - action: generate_contract
+        include:
+          - preconditions (1-3)
+          - postconditions (success + failure)
+          - invariants (if security-relevant)
+      - action: skip_optional
+        reason: "simple spec doesn't need performance/concurrency"
+
+  - name: quick_output
+    description: Minimal output format
+    format: |
+      ## Quick Blueprint: {function_name}
+
+      **Signature:**
+      ```
+      {signature}
+      ```
+
+      **Contract:**
+      - Pre: {preconditions}
+      - Post(success): {success_condition}
+      - Post(failure): error ∈ {error_types}
+
+      **Implementation Note:**
+      {one_line_hint}
+
+      ---
+      *Quick blueprint by Blueprint Architect*
+
+  - name: quick_save
+    description: Save and confirm
+    steps:
+      - action: save_blueprint
+        path: "output/blueprints/{function_name}-quick-{date}.md"
+      - action: confirm
+        display: "✅ Quick blueprint saved!"
+
+model_routing:
+  use: haiku
+  reason: "Simple specs don't need opus-level reasoning"
+
+output:
+  format: minimal
+  sections: 3 (signature, contract, note)
+  file_suffix: "-quick-"

@@ -1,0 +1,106 @@
+{
+  "series": {
+    "id": "series-001-part5-vocab",
+    "name": "TOEIC Part 5 Vocabulary",
+    "total_lessons": 20,
+    "words_per_lesson": 5
+  },
+  "lesson": {
+    "id": "lesson-001",
+    "number": 1,
+    "title": "Bài 1: Động từ thường gặp",
+    "date": "2025-01-04"
+  },
+  "navigation": {
+    "previous": null,
+    "current": "lesson-001",
+    "next": "lesson-002"
+  },
+  "content": {
+    "new_words": [
+      {
+        "word": "accomplish",
+        "ipa": "/əˈkɑːmplɪʃ/",
+        "pos": "verb",
+        "definition_vi": "hoàn thành, đạt được",
+        "example_en": "The team accomplished all their goals ahead of schedule.",
+        "example_vi": "Nhóm đã hoàn thành tất cả mục tiêu trước thời hạn.",
+        "collocations": ["accomplish a goal", "accomplish a task", "accomplish a mission"],
+        "common_mistake": "Không dùng: accomplish to do"
+      },
+      {
+        "word": "achieve",
+        "ipa": "/əˈtʃiːv/",
+        "pos": "verb",
+        "definition_vi": "đạt được, giành được",
+        "example_en": "She achieved remarkable success in her career.",
+        "example_vi": "Cô ấy đã đạt được thành công đáng kể trong sự nghiệp.",
+        "collocations": ["achieve success", "achieve a goal", "achieve results"],
+        "common_mistake": "achieve vs accomplish: achieve nhấn mạnh kết quả, accomplish nhấn mạnh quá trình"
+      },
+      {
+        "word": "acknowledge",
+        "ipa": "/əkˈnɑːlɪdʒ/",
+        "pos": "verb",
+        "definition_vi": "thừa nhận, công nhận",
+        "example_en": "The manager acknowledged the employee's contribution.",
+        "example_vi": "Quản lý đã công nhận đóng góp của nhân viên.",
+        "collocations": ["acknowledge receipt", "acknowledge a mistake", "acknowledge someone's help"],
+        "common_mistake": "Phát âm: ack-NOW-ledge, không phải ack-know-ledge"
+      },
+      {
+        "word": "acquire",
+        "ipa": "/əˈkwaɪər/",
+        "pos": "verb",
+        "definition_vi": "có được, thu được, mua lại",
+        "example_en": "The company acquired a smaller competitor last year.",
+        "example_vi": "Công ty đã mua lại một đối thủ nhỏ hơn năm ngoái.",
+        "collocations": ["acquire skills", "acquire knowledge", "acquire a company"],
+        "common_mistake": "acquire vs obtain: acquire thường dùng cho quá trình dài hơn"
+      },
+      {
+        "word": "adapt",
+        "ipa": "/əˈdæpt/",
+        "pos": "verb",
+        "definition_vi": "thích nghi, điều chỉnh",
+        "example_en": "Employees must adapt to the new working environment.",
+        "example_vi": "Nhân viên phải thích nghi với môi trường làm việc mới.",
+        "collocations": ["adapt to changes", "adapt quickly", "adapt a strategy"],
+        "common_mistake": "adapt vs adopt: adapt = thay đổi để phù hợp, adopt = chấp nhận/áp dụng"
+      }
+    ],
+    "review_words": [],
+    "quiz": [
+      {
+        "type": "fill_blank",
+        "question": "The team ___ all their goals ahead of schedule.",
+        "answer": "accomplished",
+        "options": null
+      },
+      {
+        "type": "fill_blank",
+        "question": "She ___ remarkable success in her career.",
+        "answer": "achieved",
+        "options": null
+      },
+      {
+        "type": "multiple_choice",
+        "question": "Từ nào nghĩa là 'thừa nhận, công nhận'?",
+        "answer": "acknowledge",
+        "options": ["accomplish", "achieve", "acknowledge", "acquire"]
+      }
+    ]
+  },
+  "preview_next": {
+    "lesson": "lesson-002",
+    "words": ["adequate", "adhere", "adjacent", "adjust", "administer"]
+  },
+  "spaced_repetition": {
+    "review_schedule": {
+      "day_1": "2025-01-05",
+      "day_3": "2025-01-07",
+      "day_7": "2025-01-11",
+      "day_14": "2025-01-18"
+    }
+  }
+}

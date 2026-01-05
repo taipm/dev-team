@@ -1,10 +1,11 @@
 # Clone Agent Workflow
 # Extracted from father-agent for v2.0
+# Updated for v2.2: Added mandatory Design Review phase
 
 workflow:
   name: clone-agent
-  description: Clone agent có sẵn cho project/domain khác
-  version: "1.0"
+  description: Clone agent có sẵn cho project/domain khác (with Design Review)
+  version: "2.0"
 
 # ════════════════════════════════════════════════════════════════════
 # PHASE 1: SELECT SOURCE
@@ -61,12 +62,145 @@ phases:
         output: customize_items
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 3: COPY STRUCTURE
+# PHASE 3: DESIGN REVIEW (MANDATORY - v2.2)
+# ════════════════════════════════════════════════════════════════════
+  - id: design_review
+    name: Design Review (Mandatory)
+    description: Create design document and submit to Deep Thinking Team
+    steps:
+      - id: 3.1
+        action: load_template
+        template: "knowledge/16-design-document-template.md"
+        output: design_template
+
+      - id: 3.2
+        action: generate
+        type: design_document
+        inputs:
+          - source_agent
+          - new_agent_name
+          - new_domain
+          - customize_items
+        template: design_template
+        vars:
+          operation_type: "clone-agent"
+          name: "{new_agent_name}"
+          uuid: "{generate_uuid}"
+        output_path: ".microai/agents/father-agent/designs/{new_agent_name}-design.md"
+        output: design_doc_path
+
+      - id: 3.3
+        action: display
+        type: info
+        template: |
+          ╔═══════════════════════════════════════════════════════════════╗
+          ║  DESIGN DOCUMENT CREATED                                       ║
+          ╠═══════════════════════════════════════════════════════════════╣
+          ║  Clone: {source_agent} → {new_agent_name}                     ║
+          ║  Path: {design_doc_path}                                       ║
+          ║                                                                ║
+          ║  Submitting to Deep Thinking Team for mandatory review...     ║
+          ╚═══════════════════════════════════════════════════════════════╝
+
+      - id: 3.4
+        action: determine_review_mode
+        criteria:
+          standard:
+            - domain_change: true
+            - persona_change: true
+          quick:
+            - customize_items_count: "<= 2"
+            - no_domain_change: true
+        output: review_mode
+
+      - id: 3.5
+        name: "Submit to Deep Thinking Team"
+        action: invoke_skill
+        skill: "microai:deep-thinking"
+        args:
+          problem: |
+            Review this clone design:
+
+            Source: {source_agent}
+            New Agent: {new_agent_name}
+            Domain Change: {new_domain}
+            Customizations: {customize_items}
+
+            Design Document: {design_doc_path}
+
+            Key questions:
+            1. Is this clone justified or should we extend source instead?
+            2. Are the customizations appropriate?
+            3. Any risks with this modification?
+          mode: "{review_mode}"
+        output: review_result
+
+      - id: 3.6
+        action: parse_review
+        input: review_result
+        output: review_status
+
+      - id: 3.7
+        name: "Approval Gate"
+        action: branch
+        on: review_status
+        cases:
+          approved:
+            - action: display
+              message: |
+                ╔═══════════════════════════════════════════════════════════════╗
+                ║  DESIGN APPROVED ✓                                            ║
+                ║  Proceeding with clone...                                     ║
+                ╚═══════════════════════════════════════════════════════════════╝
+            - action: update_design_doc
+              path: "{design_doc_path}"
+              field: status
+              value: "approved"
+            - action: continue
+
+          rejected:
+            - action: display
+              message: |
+                ╔═══════════════════════════════════════════════════════════════╗
+                ║  DESIGN REJECTED ✗                                            ║
+                ╠═══════════════════════════════════════════════════════════════╣
+                ║  Reason: {review_result.rejection_reason}                     ║
+                ║                                                                ║
+                ║  Action Required: Revise design and resubmit                  ║
+                ║  (Skip is NOT allowed)                                        ║
+                ╚═══════════════════════════════════════════════════════════════╝
+            - action: update_design_doc
+              path: "{design_doc_path}"
+              field: status
+              value: "rejected"
+            - action: goto
+              target: 3.1
+
+          approved-with-conditions:
+            - action: display
+              message: |
+                ╔═══════════════════════════════════════════════════════════════╗
+                ║  DESIGN APPROVED WITH CONDITIONS                              ║
+                ╠═══════════════════════════════════════════════════════════════╣
+                {for condition in review_result.conditions}
+                ║  - {condition}                                                ║
+                {endfor}
+                ╚═══════════════════════════════════════════════════════════════╝
+            - action: apply_conditions
+              conditions: review_result.conditions
+            - action: update_design_doc
+              path: "{design_doc_path}"
+              field: status
+              value: "approved-with-conditions"
+            - action: continue
+
+# ════════════════════════════════════════════════════════════════════
+# PHASE 4: COPY STRUCTURE (renumbered from Phase 3)
 # ════════════════════════════════════════════════════════════════════
   - id: copy_structure
     name: Copy cấu trúc
     steps:
-      - id: 3.1
+      - id: 4.1
         action: copy_directory
         source: ".microai/agents/{source_agent}/"
         dest: ".microai/agents/{new_agent_name}/"
@@ -74,19 +208,19 @@ phases:
           - "memory/*"
           - "*.log"
 
-      - id: 3.2
+      - id: 4.2
         action: rename_files
         path: ".microai/agents/{new_agent_name}/"
         pattern: "{source_agent}"
         replace: "{new_agent_name}"
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 4: ADAPT CONTENT
+# PHASE 5: ADAPT CONTENT (renumbered from Phase 4)
 # ════════════════════════════════════════════════════════════════════
   - id: adapt_content
     name: Adapt nội dung
     steps:
-      - id: 4.1
+      - id: 5.1
         action: edit
         file: ".microai/agents/{new_agent_name}/agent.md"
         changes:
@@ -103,25 +237,25 @@ phases:
               - "Role mới cho agent này?"
               - "Identity mới?"
 
-      - id: 4.2
+      - id: 5.2
         action: edit_knowledge
         condition: "knowledge in customize_items"
         path: ".microai/agents/{new_agent_name}/knowledge/"
         for_each: knowledge_files
         prompt: "Customize knowledge file {file}?"
 
-      - id: 4.3
+      - id: 5.3
         action: update_index
         file: ".microai/agents/{new_agent_name}/knowledge/knowledge-index.yaml"
         update_references: true
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 5: REGISTER NEW COMMAND
+# PHASE 6: REGISTER NEW COMMAND (renumbered from Phase 5)
 # ════════════════════════════════════════════════════════════════════
   - id: register
     name: Register command mới
     steps:
-      - id: 5.1
+      - id: 6.1
         action: generate
         type: command
         template: "knowledge/02-command-template.md"
@@ -130,29 +264,35 @@ phases:
           agent_path: ".microai/agents/{new_agent_name}/agent.md"
         output: ".microai/commands/{new_agent_name}.md"
 
-      - id: 5.2
+      - id: 6.2
         action: copy
         source: ".microai/commands/{new_agent_name}.md"
         dest: ".claude/commands/microai/{new_agent_name}.md"
 
 # ════════════════════════════════════════════════════════════════════
-# PHASE 6: VERIFY & SUMMARY
+# PHASE 7: VERIFY & SUMMARY (renumbered from Phase 6)
 # ════════════════════════════════════════════════════════════════════
   - id: verify
     name: Verify và summary
     steps:
-      - id: 6.1
+      - id: 7.1
         action: validate
         script: ".microai/scripts/validate-agent-v2.sh"
         args: ["{new_agent_name}"]
 
-      - id: 6.2
+      - id: 7.2
         action: diff
         source: ".microai/agents/{source_agent}/agent.md"
         target: ".microai/agents/{new_agent_name}/agent.md"
         display: summary
 
-      - id: 6.3
+      - id: 7.3
+        name: "Archive Design Document"
+        action: move
+        source: ".microai/agents/father-agent/designs/{new_agent_name}-design.md"
+        dest: ".microai/agents/father-agent/designs/archive/{date}-clone-agent-{new_agent_name}.md"
+
+      - id: 7.4
         action: display
         type: summary
         template: |
@@ -166,6 +306,9 @@ phases:
           {for item in customize_items}
           ║    - {item}                                                     ║
           {endfor}
+          ║                                                                 ║
+          ║  Design Review: PASSED ✓                                       ║
+          ║  Design Doc: designs/archive/{date}-clone-agent-{new_agent_name}║
           ║                                                                 ║
           ║  Test: /microai:{new_agent_name}                               ║
           ╚═══════════════════════════════════════════════════════════════╝

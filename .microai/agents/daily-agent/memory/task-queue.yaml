@@ -1,0 +1,83 @@
+# Daily Agent Task Queue
+# Manages pending tasks across sessions
+
+queue: []
+  # All tasks completed for 2026-01-03
+
+completed:
+  - id: "task-1735869600000"
+    type: "research"
+    title: "Nghien cuu AI Agents & Multi-agent Systems"
+    description: "Tim va phan tich cac papers moi nhat ve AI agents, multi-agent systems, agent orchestration"
+    priority: "high"
+    source: "user"
+    created_at: "2026-01-03T10:00:00+07:00"
+    completed_at: "2026-01-03T10:30:00+07:00"
+    config:
+      topic: "AI agents, multi-agent systems, agent orchestration, LLM agents"
+      max_papers: 5
+      categories:
+        - cs.AI
+        - cs.CL
+        - cs.MA
+    status: "completed"
+    output: "output/daily/2026-01-03/research/digest.md"
+    papers_analyzed: 5
+
+  - id: "task-1735869600001"
+    type: "content"
+    title: "Tao content tu research findings"
+    description: "Tao blog post va social media snippets tu research digest"
+    priority: "medium"
+    source: "workflow"
+    created_at: "2026-01-03T10:00:00+07:00"
+    completed_at: "2026-01-03T10:30:00+07:00"
+    depends_on: "task-1735869600000"
+    config:
+      formats:
+        - blog
+        - social
+    status: "completed"
+    output: "output/daily/2026-01-03/content/"
+
+  - id: "task-1735869600002"
+    type: "post"
+    title: "Dang bai tong hop research len Facebook"
+    description: "Dang bai tong hop key findings len Facebook Page"
+    priority: "medium"
+    source: "workflow"
+    created_at: "2026-01-03T10:00:00+07:00"
+    completed_at: "2026-01-03T10:30:00+07:00"
+    depends_on: "task-1735869600001"
+    requires_confirmation: true
+    status: "completed"
+    action: "draft_saved"
+    output: "output/daily/2026-01-03/facebook/drafts/ai-agents-2026.md"
+
+  - id: "task-1735836075000"
+    type: "research"
+    title: "Nghien cuu bai viet phu hop voi deep-research agent"
+    description: "Tim va phan tich cac papers tren arxiv phu hop voi kha nang cua deep-research agent"
+    priority: "high"
+    source: "user"
+    created_at: "2026-01-02T15:21:15+07:00"
+    completed_at: "2026-01-02T22:25:00+07:00"
+    config:
+      topic: "AI agents, multi-agent systems, LLM research"
+      max_papers: 5
+      categories:
+        - cs.AI
+        - cs.CL
+        - cs.MA
+    status: "completed"
+    output: "output/daily/2026-01-02/research/digest.md"
+    papers_analyzed: 5
+
+schedule:
+  daily: []
+  weekly: []
+
+metadata:
+  last_processed: "2026-01-03T10:30:00+07:00"
+  total_completed: 4
+  total_failed: 0

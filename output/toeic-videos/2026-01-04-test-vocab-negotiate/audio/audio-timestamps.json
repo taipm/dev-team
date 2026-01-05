@@ -1,0 +1,150 @@
+{
+  "video_id": "vocab-001-negotiate",
+  "total_duration": 30.216,
+  "normalized": true,
+  "loudness": "-14 LUFS",
+  "sample_rate": 44100,
+  "bitrate": "192 kbps",
+  "segments": [
+    {
+      "id": "01-hook",
+      "section": "hook",
+      "start": 0.000,
+      "end": 4.056,
+      "duration": 4.056,
+      "lang": "vi",
+      "voice": "vi-VN-HoaiMyNeural",
+      "text": "Từ này xuất hiện trong 80% bài TOEIC về business!",
+      "slide_id": "HOOK_SLIDE"
+    },
+    {
+      "id": "02-word",
+      "section": "word",
+      "start": 4.056,
+      "end": 6.072,
+      "duration": 2.016,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "NEGOTIATE",
+      "slide_id": "WORD_SLIDE"
+    },
+    {
+      "id": "03-ipa",
+      "section": "word",
+      "start": 6.072,
+      "end": 7.872,
+      "duration": 1.800,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "/nɪˈɡoʊʃieɪt/",
+      "slide_id": "WORD_SLIDE"
+    },
+    {
+      "id": "04-pronounce",
+      "section": "word",
+      "start": 7.872,
+      "end": 9.696,
+      "duration": 1.824,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "negotiate",
+      "slide_id": "WORD_SLIDE"
+    },
+    {
+      "id": "05-meaning-vi",
+      "section": "definition",
+      "start": 9.696,
+      "end": 11.976,
+      "duration": 2.280,
+      "lang": "vi",
+      "voice": "vi-VN-HoaiMyNeural",
+      "text": "đàm phán, thương lượng",
+      "slide_id": "DEF_SLIDE"
+    },
+    {
+      "id": "06-meaning-en",
+      "section": "definition",
+      "start": 11.976,
+      "end": 14.952,
+      "duration": 2.976,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "to discuss something to reach an agreement",
+      "slide_id": "DEF_SLIDE"
+    },
+    {
+      "id": "07-example-en",
+      "section": "example",
+      "start": 14.952,
+      "end": 18.168,
+      "duration": 3.216,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "We need to negotiate the contract terms.",
+      "slide_id": "EXAMPLE_SLIDE"
+    },
+    {
+      "id": "08-example-vi",
+      "section": "example",
+      "start": 18.168,
+      "end": 21.336,
+      "duration": 3.168,
+      "lang": "vi",
+      "voice": "vi-VN-HoaiMyNeural",
+      "text": "Chúng ta cần thương lượng các điều khoản hợp đồng.",
+      "slide_id": "EXAMPLE_SLIDE"
+    },
+    {
+      "id": "09-tip-intro",
+      "section": "tip",
+      "start": 21.336,
+      "end": 22.968,
+      "duration": 1.632,
+      "lang": "vi",
+      "voice": "vi-VN-HoaiMyNeural",
+      "text": "Kết hợp với:",
+      "slide_id": "TIP_SLIDE"
+    },
+    {
+      "id": "10-collocation-1",
+      "section": "tip",
+      "start": 22.968,
+      "end": 25.056,
+      "duration": 2.088,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "negotiate a deal",
+      "slide_id": "TIP_SLIDE"
+    },
+    {
+      "id": "11-collocation-2",
+      "section": "tip",
+      "start": 25.056,
+      "end": 27.480,
+      "duration": 2.424,
+      "lang": "en",
+      "voice": "en-US-JennyNeural",
+      "text": "negotiate with clients",
+      "slide_id": "TIP_SLIDE"
+    },
+    {
+      "id": "12-cta",
+      "section": "cta",
+      "start": 27.480,
+      "end": 30.216,
+      "duration": 2.736,
+      "lang": "vi",
+      "voice": "vi-VN-HoaiMyNeural",
+      "text": "Follow để học TOEIC mỗi ngày!",
+      "slide_id": "CTA_SLIDE"
+    }
+  ],
+  "slide_timing": [
+    {"slide_id": "HOOK_SLIDE", "start": 0.000, "end": 4.056, "duration": 4.056},
+    {"slide_id": "WORD_SLIDE", "start": 4.056, "end": 9.696, "duration": 5.640},
+    {"slide_id": "DEF_SLIDE", "start": 9.696, "end": 14.952, "duration": 5.256},
+    {"slide_id": "EXAMPLE_SLIDE", "start": 14.952, "end": 21.336, "duration": 6.384},
+    {"slide_id": "TIP_SLIDE", "start": 21.336, "end": 27.480, "duration": 6.144},
+    {"slide_id": "CTA_SLIDE", "start": 27.480, "end": 30.216, "duration": 2.736}
+  ]
+}

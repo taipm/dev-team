@@ -1,0 +1,141 @@
+---
+chapter: 1
+title: "Loạt nước lên án vụ Mỹ bắt Tổng thống Maduro"
+original_word_count: 280
+estimated_duration: "2:00"
+genre: news
+narrator_voice: vi-VN-HoaiMyNeural
+
+segments:
+  - id: "ch1-s001"
+    original: "Loạt nước lên án vụ Mỹ bắt Tổng thống Maduro"
+    adapted: "Loạt nước lên án vụ Mỹ bắt Tổng thống Maduro"
+    type: heading
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "-5%"
+      pitch: "+0Hz"
+    pauses:
+      before: 500
+      after: 1000
+
+  - id: "ch1-s002"
+    original: "Lãnh đạo nhiều nước lên án chiến dịch quân sự Mỹ bắt Tổng thống Venezuela Maduro, cho rằng đây là hành động nguy hiểm, đe dọa luật pháp quốc tế."
+    adapted: "Lãnh đạo nhiều nước lên án chiến dịch quân sự Mỹ bắt Tổng thống Venezuela Maduro, cho rằng đây là hành động nguy hiểm, đe dọa luật pháp quốc tế."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 800
+
+  - id: "ch1-s003"
+    original: "Tổng thư ký Liên Hợp Quốc Antonio Guterres bày tỏ lo ngại rằng luật pháp quốc tế không còn được tôn trọng, gọi cuộc đột kích là \"tiền lệ nguy hiểm\"."
+    adapted: "Tổng thư ký Liên Hợp Quốc Antonio Guterres bày tỏ lo ngại rằng luật pháp quốc tế không còn được tôn trọng, gọi cuộc đột kích là tiền lệ nguy hiểm."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 800
+
+  - id: "ch1-s004"
+    original: "Trung Quốc lên án những gì họ gọi là \"hành động bá quyền\" của Mỹ đe dọa hòa bình khu vực."
+    adapted: "Trung Quốc lên án những gì họ gọi là hành động bá quyền của Mỹ đe dọa hòa bình khu vực."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 600
+
+  - id: "ch1-s005"
+    original: "Tổng thống Brazil nhận định chiến dịch này đã vượt qua \"ranh giới không thể chấp nhận được\", so sánh với những chương đen tối trong lịch sử can thiệp của Mỹ vào Mỹ Latinh."
+    adapted: "Tổng thống Brazil nhận định chiến dịch này đã vượt qua ranh giới không thể chấp nhận được, so sánh với những chương đen tối trong lịch sử can thiệp của Mỹ vào Mỹ Latinh."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 800
+
+  - id: "ch1-s006"
+    original: "Cuba gọi cuộc tấn công là \"tội ác\", trong khi Mexico phản đối mạnh mẽ hành động này."
+    adapted: "Cuba gọi cuộc tấn công là tội ác, trong khi Mexico phản đối mạnh mẽ hành động này."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 600
+
+  - id: "ch1-s007"
+    original: "Hội đồng Bảo an Liên Hợp Quốc đã lên lịch họp khẩn cấp vào ngày 5 tháng 1 để thảo luận về khiếu nại của Venezuela."
+    adapted: "Hội đồng Bảo an Liên Hợp Quốc đã lên lịch họp khẩn cấp vào ngày năm tháng một để thảo luận về khiếu nại của Venezuela."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 1000
+
+  - id: "ch1-s008"
+    original: "Một số đồng minh phương Tây ủng hộ chiến dịch này."
+    adapted: "Một số đồng minh phương Tây ủng hộ chiến dịch này."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 500
+
+  - id: "ch1-s009"
+    original: "Pháp hoan nghênh việc loại bỏ Maduro, Anh từ chối công nhận ông là tổng thống, và Argentina ăn mừng sự can thiệp như một bước tiến cho tự do."
+    adapted: "Pháp hoan nghênh việc loại bỏ Maduro, Anh từ chối công nhận ông là tổng thống, và Argentina ăn mừng sự can thiệp như một bước tiến cho tự do."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 1000
+
+  - id: "ch1-s010"
+    original: "Cuộc đột kích vào sáng sớm ngày 3 tháng 1 có sự tham gia của khoảng 150 máy bay từ 20 căn cứ tiến hành không kích trước khi lực lượng đặc biệt đưa Maduro và vợ ông ra khỏi Caracas."
+    adapted: "Cuộc đột kích vào sáng sớm ngày ba tháng một có sự tham gia của khoảng một trăm năm mươi máy bay từ hai mươi căn cứ tiến hành không kích trước khi lực lượng đặc biệt đưa Maduro và vợ ông ra khỏi Caracas."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 800
+
+  - id: "ch1-s011"
+    original: "Cặp đôi hiện đang đối mặt với các cáo buộc liên bang tại Manhattan liên quan đến vũ khí và ma túy."
+    adapted: "Cặp đôi hiện đang đối mặt với các cáo buộc liên bang tại Manhattan liên quan đến vũ khí và ma túy."
+    type: narration
+    lang: vi
+    voice: vi-VN-HoaiMyNeural
+    prosody:
+      rate: "+0%"
+    pauses:
+      before: 0
+      after: 1500

@@ -1,0 +1,209 @@
+# Route Request Workflow
+# Main routing logic for Taipm Agent
+
+name: route-request
+description: Smart routing từ user input đến agent/team phù hợp
+version: 1.0
+
+# Trigger conditions
+triggers:
+  - type: user_input
+    description: Any user request to Taipm Agent
+
+# Input parameters
+inputs:
+  user_input:
+    type: string
+    required: true
+    description: Raw user input
+
+  session_context:
+    type: object
+    required: false
+    description: Current session context from memory
+
+# Pre-conditions
+pre_conditions:
+  - check: memory_loaded
+    description: Unified memory must be loaded
+    action_if_false: load_memory
+
+  - check: preferences_loaded
+    description: User preferences must be loaded
+    action_if_false: load_preferences
+
+# Main workflow steps
+steps:
+  # Step 1: Intent Detection
+  - id: detect_intent
+    name: Detect Intent from Input
+    description: Analyze user input to determine intent
+    actions:
+      - action: extract_keywords
+        from: "{user_input}"
+        output: keywords
+
+      - action: match_patterns
+        input: "{keywords}"
+        against: knowledge/02-routing-rules.md
+        output: pattern_matches
+
+      - action: calculate_confidence
+        matches: "{pattern_matches}"
+        output: intent_result
+        # intent_result: { intent, confidence, possible_routes }
+
+  # Step 2: Check Confidence
+  - id: check_confidence
+    name: Evaluate Routing Confidence
+    depends_on: [detect_intent]
+    conditions:
+      - if: "{intent_result.confidence} >= 80"
+        goto: prepare_handoff
+
+      - if: "{intent_result.confidence} >= 50 AND {intent_result.confidence} < 80"
+        goto: check_preferences
+
+      - if: "{intent_result.confidence} < 50"
+        goto: clarify_intent
+
+  # Step 3a: Clarify Intent (low confidence)
+  - id: clarify_intent
+    name: Ask User for Clarification
+    actions:
+      - action: ask_user
+        question: |
+          Tôi chưa chắc về request của bạn. Bạn muốn:
+          {{#each intent_result.possible_routes}}
+          - {{this.route}}: {{this.description}}
+          {{/each}}
+        options: "{intent_result.possible_routes}"
+        output: user_choice
+
+      - action: update_intent
+        choice: "{user_choice}"
+        output: intent_result
+
+    next: prepare_handoff
+
+  # Step 3b: Check Preferences (medium confidence)
+  - id: check_preferences
+    name: Apply User Preferences
+    actions:
+      - action: lookup_preference
+        intent: "{intent_result.intent}"
+        preferences: "{session_context.preferences}"
+        output: preference_override
+
+      - action: resolve_route
+        intent_result: "{intent_result}"
+        preference: "{preference_override}"
+        output: final_route
+
+    next: prepare_handoff
+
+  # Step 4: Prepare Handoff Package
+  - id: prepare_handoff
+    name: Prepare Handoff Package
+    depends_on: [detect_intent]
+    actions:
+      - action: build_handoff_package
+        template: knowledge/05-handoff-protocol.md
+        data:
+          from: taipm-agent
+          to: "{final_route.agent}"
+          context: "{session_context}"
+          request:
+            original_input: "{user_input}"
+            detected_intent: "{intent_result.intent}"
+            confidence: "{intent_result.confidence}"
+          instructions:
+            language: "{preferences.communication.primary_language}"
+            style: "{preferences.communication.response_style}"
+        output: handoff_package
+
+  # Step 5: Check if Direct Handling
+  - id: check_direct
+    name: Check for Direct Handling
+    depends_on: [prepare_handoff]
+    conditions:
+      - if: "{final_route.type} == 'direct'"
+        goto: handle_directly
+
+      - else:
+        goto: execute_handoff
+
+  # Step 6a: Handle Directly
+  - id: handle_directly
+    name: Handle Request Directly
+    actions:
+      - action: process_request
+        input: "{user_input}"
+        context: "{session_context}"
+        output: direct_response
+
+    next: log_and_complete
+
+  # Step 6b: Execute Handoff
+  - id: execute_handoff
+    name: Delegate to Agent/Team
+    actions:
+      - action: invoke_agent
+        agent: "{final_route.agent}"
+        package: "{handoff_package}"
+        timeout_ms: 600000  # 10 minutes
+        output: agent_response
+
+      - action: process_return
+        response: "{agent_response}"
+        output: processed_response
+
+    next: log_and_complete
+
+  # Step 7: Log and Complete
+  - id: log_and_complete
+    name: Log Routing and Complete
+    actions:
+      - action: log_routing
+        data:
+          input: "{user_input}"
+          intent: "{intent_result.intent}"
+          route: "{final_route.agent}"
+          confidence: "{intent_result.confidence}"
+          outcome: "{processed_response.status}"
+        to: memory/learning.md
+
+      - action: update_memory
+        context: "{processed_response.memory_updates}"
+        to: ../../memory/context.md
+
+      - action: return_response
+        response: "{processed_response.content}"
+
+# Error handling
+on_error:
+  - step: detect_intent
+    action: |
+      Notify user: "Không thể phân tích request. Vui lòng thử lại."
+      Log error to memory
+
+  - step: execute_handoff
+    action: |
+      Check for partial results
+      Notify user with error context
+      Offer alternatives: retry | different agent | cancel
+
+# Post-workflow actions
+post_actions:
+  - action: update_routing_stats
+    description: Update routing statistics for learning
+
+  - action: check_learning_triggers
+    description: Check if any learning thresholds crossed
+
+# Observer commands available during workflow
+observer_commands:
+  - "*status": Show current routing step
+  - "*cancel": Cancel routing, return to Taipm
+  - "*force:<agent>": Override routing to specific agent
+  - "*direct": Cancel delegation, handle directly

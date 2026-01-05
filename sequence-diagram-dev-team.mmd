@@ -1,0 +1,157 @@
+sequenceDiagram
+    autonumber
+
+    participant User
+    participant FatherAgent as Father Agent
+    participant DesignDoc as Design Document
+    participant DeepThinking as Deep Thinking Team
+    participant Maestro as Maestro
+    participant Agents as Parallel Agents
+    participant ClaudeAPI as Claude API
+    participant Output as Output
+
+    rect rgb(200, 220, 255)
+    Note over User,ClaudeAPI: FLOW 1: Agent Creation (Design Review + Deep Thinking)
+
+    User->>FatherAgent: /create agent<br/>Domain, Patterns, Style
+    FatherAgent->>FatherAgent: Phase 1: DISCOVER<br/>Validate input
+    FatherAgent->>FatherAgent: Phase 2: CHECK<br/>Overlap detection
+
+    alt Overlap Detected
+        FatherAgent->>User: Suggest extend existing?
+        User->>FatherAgent: Create anyway
+    end
+
+    FatherAgent->>DesignDoc: Phase 3: CREATE<br/>Design Document
+    DesignDoc->>DesignDoc: Generate UUID<br/>Populate template
+
+    FatherAgent->>DeepThinking: Submit Design<br/>for mandatory review
+    rect rgb(255, 200, 200)
+    DeepThinking->>DeepThinking: Socrates: Clarify intent
+    DeepThinking->>DeepThinking: Aristotle: Logic check
+    DeepThinking->>DeepThinking: Musk: First principles
+    DeepThinking->>DeepThinking: Feynman: Simplification
+    DeepThinking->>DeepThinking: Munger: Risk analysis
+    DeepThinking->>DeepThinking: Phase 5: SYNTHESIZE<br/>Decision
+    end
+
+    alt Review Status
+        rect rgb(150, 255, 150)
+        DeepThinking-->>FatherAgent: APPROVED ✓
+        else
+        rect rgb(255, 150, 150)
+        DeepThinking-->>FatherAgent: REJECTED<br/>Revision required
+        FatherAgent->>FatherAgent: Goto Design phase<br/>(no skip allowed)
+        FatherAgent->>DeepThinking: Resubmit design
+        DeepThinking-->>FatherAgent: APPROVED
+        else
+        rect rgb(255, 255, 150)
+        DeepThinking-->>FatherAgent: APPROVED WITH<br/>CONDITIONS
+        FatherAgent->>FatherAgent: Apply conditions
+        end
+    end
+
+    FatherAgent->>FatherAgent: Phase 4: STRUCTURE<br/>Create directories
+    FatherAgent->>FatherAgent: Phase 5: CONTENT<br/>Generate files
+    FatherAgent->>FatherAgent: Phase 6: REGISTER<br/>Create command
+    FatherAgent->>FatherAgent: Phase 7: VERIFY<br/>Validate creation
+    FatherAgent->>DesignDoc: Archive design document
+
+    FatherAgent-->>User: AGENT CREATED ✓<br/>Command registered
+    end
+
+    rect rgb(220, 200, 255)
+    Note over User,Agents: FLOW 2: Team Execution (Maestro Orchestration + Parallel)
+
+    User->>Maestro: /start {problem}
+    Maestro->>Maestro: Load team config
+    Maestro->>Maestro: Initialize state
+
+    rect rgb(200, 200, 220)
+    Maestro->>Agents: PHASE 1: UNDERSTAND<br/>@Socrates + @Aristotle
+    Agents->>Agents: Parse problem<br/>Clarify assumptions<br/>Define constraints
+    Agents-->>Maestro: Problem Definition
+    end
+
+    Maestro->>Agents: PHASE 2: DECONSTRUCT<br/>@Musk + @Feynman
+    Agents->>Agents: Decompose to basics<br/>Simplify model
+    Agents-->>Maestro: First Principles
+
+    Maestro->>Agents: PHASE 3: CHALLENGE<br/>@Munger + @Grove
+    Agents->>Agents: Risk analysis<br/>Failure modes<br/>Premortem
+    Agents-->>Maestro: Risk Assessment
+
+    par Parallel Phase 4
+        Maestro->>Agents: @Polya: Problem-Solving
+        Agents->>Agents: Systematic steps
+        and
+        Maestro->>Agents: @Builders: Architecture
+        Agents->>Agents: Algorithm & Design
+        and
+        Maestro->>Agents: @Executors: Strategy
+        Agents->>Agents: Customer + Business
+    end
+    Agents-->>Maestro: Solution Options
+
+    Maestro->>Agents: PHASE 5: SYNTHESIZE<br/>@Da Vinci + All
+    Agents->>Agents: Integrate perspectives<br/>Create blueprint
+    Agents-->>Maestro: Final Solution
+
+    Maestro-->>User: SOLUTION BLUEPRINT ✓<br/>Action Plan + Risks
+    end
+
+    rect rgb(255, 240, 200)
+    Note over User,Output: FLOW 3: Diagram Generation (Parallel Workers)
+
+    User->>Maestro: /diagram {project_path}
+    Maestro->>Maestro: Phase 1: EXPLORE
+
+    rect rgb(200, 200, 200)
+    Maestro->>Agents: EXPLORER analyzes<br/>Scan structure<br/>Detect tech stack<br/>Map components
+    Agents-->>Maestro: exploration-report.md
+    Maestro->>Maestro: Signal: exploration_complete
+    end
+
+    Maestro->>Agents: Phase 2: GENERATE (Parallel)
+    par Parallel Diagram Generation
+        rect rgb(255, 220, 200)
+        Agents->>Agents: Architect:<br/>C4 Context
+        and
+        Agents->>Agents: Sequencer:<br/>Sequence Diagram
+        and
+        Agents->>Agents: Classifier:<br/>Class Diagram
+        and
+        Agents->>Agents: Modeler:<br/>ERD Schema
+        and
+        Agents->>Agents: Mapper:<br/>Directory Tree
+        and
+        Agents->>Agents: Logician:<br/>Logic Flow
+        and
+        Agents->>Agents: Designer:<br/>UI/UX Flow
+        end
+    end
+
+    Agents-->>Maestro: 7 Mermaid diagrams
+    Maestro->>Maestro: Signal: all_diagrams_ready<br/>Sync all workers
+
+    Maestro->>Agents: Phase 3: VERIFY<br/>Deep validation
+
+    rect rgb(200, 220, 200)
+    Agents->>Agents: Check entity exists
+    Agents->>Agents: Validate relationships
+    Agents->>Agents: Verify completeness
+    Agents->>Agents: Match naming
+    Agents->>Agents: API accuracy check
+    Agents->>Agents: ERD accuracy check
+    Agents-->>Maestro: verification-report.md
+    end
+
+    Maestro->>Maestro: Phase 4: AGGREGATE
+
+    Maestro->>Output: Collect all diagrams
+    Maestro->>Output: Create README index
+    Maestro->>Output: Generate summary
+
+    Maestro-->>User: DIAGRAMS READY ✓<br/>output/{project}/diagrams/
+    User->>Output: View diagrams<br/>in output folder
+    end

@@ -1,0 +1,25 @@
+{
+  "agent": "go-dev-agent",
+  "domain": "go_dev",
+  "timestamp": "2026-01-03T09:23:29Z",
+  "model": "qwen3:1.7b",
+  "scores": {
+    "reasoning": {"score": 9.59, "max": 20},
+    "adaptability": {"score": 5.00, "max": 15},
+    "output": {"score": 8.00, "max": 10},
+    "creativity": {"score": 4.89, "max": 10},
+    "domain": {"score": 10.80, "max": 15}
+  },
+  "total": {
+    "score": 38.28,
+    "max": 70,
+    "percentage": 54,
+    "grade": "D",
+    "level": "Limited"
+  },
+  "tests": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "video_id": "vocab-001",
+  "title": "TOEIC Vocabulary: ACCOMPLISH - Từ Hay Gặp Part 5",
+  "type": "vocabulary",
+  "format": "shorts",
+  "duration_target": "60s",
+  "level": "intermediate",
+
+  "keywords": {
+    "primary": "từ vựng TOEIC accomplish",
+    "secondary": ["TOEIC vocabulary", "học từ vựng TOEIC", "TOEIC part 5"]
+  },
+
+  "content": {
+    "word": "accomplish",
+    "ipa": "/əˈkɑːmplɪʃ/",
+    "part_of_speech": "verb",
+    "definition": "hoàn thành, đạt được (mục tiêu, nhiệm vụ)",
+    "vietnamese": "hoàn thành",
+    "toeic_frequency": "high",
+    "toeic_parts": ["Part 5", "Part 6", "Part 7"]
+  },
+
+  "examples": [
+    {
+      "english": "The team accomplished all their goals ahead of schedule.",
+      "vietnamese": "Nhóm đã hoàn thành tất cả mục tiêu trước thời hạn."
+    },
+    {
+      "english": "She accomplished the difficult task with ease.",
+      "vietnamese": "Cô ấy hoàn thành nhiệm vụ khó khăn một cách dễ dàng."
+    }
+  ],
+
+  "collocations": [
+    "accomplish a goal",
+    "accomplish a task",
+    "accomplish an objective",
+    "accomplish a mission"
+  ],
+
+  "common_mistakes": {
+    "wrong": "accomplish to do",
+    "correct": "accomplish + noun (không dùng to + verb)"
+  },
+
+  "tip": "ACCOMPLISH luôn đi với danh từ (goal, task, mission), không dùng với động từ!"
+}

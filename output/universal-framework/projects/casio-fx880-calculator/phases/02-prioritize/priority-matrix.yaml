@@ -1,0 +1,196 @@
+# Phase 2: PRIORITIZE - Priority Matrix
+# Project: Casio FX-880 Calculator App
+# Generated: 2026-01-04
+
+prioritization_method: "impact_effort_matrix"
+formula: "priority_score = impact / effort"
+
+# Impact: 1-5 (contribution to KRs)
+# Effort: 1-5 (time + complexity)
+# Score: Higher = do first
+
+tasks_scored:
+  - task_id: "TASK-001"
+    name: "Research Casio FX-880 layout"
+    impact: 4
+    effort: 1
+    priority_score: 4.00
+    rationale: "Foundation for everything, quick win"
+
+  - task_id: "TASK-002"
+    name: "Design color palette & typography"
+    impact: 4
+    effort: 1
+    priority_score: 4.00
+    rationale: "Essential for realistic UI, low effort"
+
+  - task_id: "TASK-003"
+    name: "Create HTML structure"
+    impact: 5
+    effort: 2
+    priority_score: 2.50
+    rationale: "Core structure, enables all other work"
+
+  - task_id: "TASK-004"
+    name: "Style calculator body"
+    impact: 5
+    effort: 3
+    priority_score: 1.67
+    rationale: "Major visual impact"
+
+  - task_id: "TASK-005"
+    name: "Style display screen"
+    impact: 4
+    effort: 2
+    priority_score: 2.00
+    rationale: "LCD effect important for realism"
+
+  - task_id: "TASK-006"
+    name: "Style keypad buttons"
+    impact: 5
+    effort: 3
+    priority_score: 1.67
+    rationale: "Core interaction element"
+
+  - task_id: "TASK-007"
+    name: "Implement basic arithmetic"
+    impact: 5
+    effort: 2
+    priority_score: 2.50
+    rationale: "Core functionality, must have"
+
+  - task_id: "TASK-008"
+    name: "Implement scientific functions"
+    impact: 4
+    effort: 3
+    priority_score: 1.33
+    rationale: "Important but can defer"
+
+  - task_id: "TASK-009"
+    name: "Implement memory functions"
+    impact: 3
+    effort: 2
+    priority_score: 1.50
+    rationale: "Nice to have"
+
+  - task_id: "TASK-010"
+    name: "Wire buttons to display"
+    impact: 5
+    effort: 2
+    priority_score: 2.50
+    rationale: "Makes calculator functional"
+
+  - task_id: "TASK-011"
+    name: "Add keyboard support"
+    impact: 3
+    effort: 2
+    priority_score: 1.50
+    rationale: "Enhancement, not core"
+
+  - task_id: "TASK-012"
+    name: "Implement calculation history"
+    impact: 2
+    effort: 2
+    priority_score: 1.00
+    rationale: "Nice to have feature"
+
+  - task_id: "TASK-013"
+    name: "Add sound effects"
+    impact: 1
+    effort: 1
+    priority_score: 1.00
+    rationale: "Polish, lowest priority"
+
+  - task_id: "TASK-014"
+    name: "Responsive design"
+    impact: 3
+    effort: 2
+    priority_score: 1.50
+    rationale: "Important for mobile, can defer"
+
+  - task_id: "TASK-015"
+    name: "Final testing & polish"
+    impact: 4
+    effort: 3
+    priority_score: 1.33
+    rationale: "Required for quality"
+
+# Sorted by priority_score
+priority_ranking:
+  1: { task: "TASK-001", score: 4.00 }
+  2: { task: "TASK-002", score: 4.00 }
+  3: { task: "TASK-003", score: 2.50 }
+  4: { task: "TASK-007", score: 2.50 }
+  5: { task: "TASK-010", score: 2.50 }
+  6: { task: "TASK-005", score: 2.00 }
+  7: { task: "TASK-004", score: 1.67 }
+  8: { task: "TASK-006", score: 1.67 }
+  9: { task: "TASK-009", score: 1.50 }
+  10: { task: "TASK-011", score: 1.50 }
+  11: { task: "TASK-014", score: 1.50 }
+  12: { task: "TASK-008", score: 1.33 }
+  13: { task: "TASK-015", score: 1.33 }
+  14: { task: "TASK-012", score: 1.00 }
+  15: { task: "TASK-013", score: 1.00 }
+
+# 80/20 Classification
+categories:
+  must_do:
+    description: "Top 20% - Critical for MVP"
+    tasks:
+      - task_id: "TASK-001"
+        rationale: "Foundation - must research first"
+      - task_id: "TASK-002"
+        rationale: "Design tokens needed for all CSS"
+      - task_id: "TASK-003"
+        rationale: "Core structure"
+    count: 3
+    hours: 2.0
+
+  should_do:
+    description: "Next 30% - Important for quality"
+    tasks:
+      - task_id: "TASK-007"
+        rationale: "Core math functionality"
+      - task_id: "TASK-010"
+        rationale: "Integration makes it work"
+      - task_id: "TASK-005"
+        rationale: "Display is key UI element"
+      - task_id: "TASK-004"
+        rationale: "Body frame for realism"
+      - task_id: "TASK-006"
+        rationale: "Buttons are main interaction"
+    count: 5
+    hours: 7.0
+
+  could_do:
+    description: "Next 30% - Nice to have"
+    tasks:
+      - task_id: "TASK-009"
+        rationale: "Memory is useful but not core"
+      - task_id: "TASK-011"
+        rationale: "Keyboard is convenience"
+      - task_id: "TASK-014"
+        rationale: "Mobile support"
+      - task_id: "TASK-008"
+        rationale: "Scientific functions"
+      - task_id: "TASK-015"
+        rationale: "Testing can be lighter for MVP"
+    count: 5
+    hours: 5.5
+
+  eliminate:
+    description: "Bottom 20% - Skip for MVP"
+    tasks:
+      - task_id: "TASK-012"
+        rationale: "History not essential"
+        risk_if_skipped: "Low - basic calc works without"
+      - task_id: "TASK-013"
+        rationale: "Sound is polish"
+        risk_if_skipped: "Low - UX enhancement only"
+    count: 2
+    hours: 1.5
+
+metadata:
+  created_at: "2026-01-04T22:10:00+07:00"
+  created_by: "PRIORITIZER Agent"
